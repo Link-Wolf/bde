@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Inscription } from '../dist/inscription/inscription.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContributionModule } from './contribution/contribution.module';
@@ -15,11 +14,11 @@ import { InscriptionModule } from './inscription/inscription.module';
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			host: 'localhost',
-			port: 4343,
-			username: 'root',
-			password: 'root',
-			database: 'bdedb',
-			entities: [User, Contribution, Event, Inscription],
+			port: 5432,
+			username: 'test',
+			password: 'test',
+			database: 'postgres',
+			entities: [User, Contribution, Event],
 			synchronize: true
 		}),
 		ContributionModule,
