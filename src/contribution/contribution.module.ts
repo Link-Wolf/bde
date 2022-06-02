@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ContributionService } from './contribution.service';
 import { ContributionController } from './contribution.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Contribution } from './contribution.entity'
 
 @Module({
-  providers: [ContributionService],
-  controllers: [ContributionController]
+	imports: [TypeOrmModule.forFeature([Contribution])],
+	providers: [ContributionService],
+	controllers: [ContributionController]
 })
-export class ContributionModule {}
+export class ContributionModule { }
