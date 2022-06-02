@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { InscriptionController } from './inscription.controller';
+import { Inscription } from './inscription.entity';
 import { InscriptionService } from './inscription.service';
-import { InscriptionController } from './inscription.controller';
 
 @Module({
-  controllers: [InscriptionController],
-  providers: [InscriptionService]
+	imports: [TypeOrmModule.forFeature([Inscription])],
+	controllers: [InscriptionController],
+	providers: [InscriptionService]
 })
-export class InscriptionModule {}
+export class InscriptionModule { }

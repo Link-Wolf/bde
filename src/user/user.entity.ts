@@ -1,12 +1,9 @@
 import { Contribution } from "src/contribution/contribution.entity";
 import { Inscription } from "src/inscription/inscription.entity";
-import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class User {
-	@PrimaryGeneratedColumn()
-	id: number
-
 	@PrimaryColumn()
 	login: string
 
