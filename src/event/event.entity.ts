@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Inscription } from "src/inscription/inscription.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Event {
@@ -16,4 +17,7 @@ export class Event {
 
 	@Column()
 	nb_places: number
+
+	@OneToMany(() => Inscription, (inscription) => inscription.user)
+	inscriptions: Inscription[];
 }
