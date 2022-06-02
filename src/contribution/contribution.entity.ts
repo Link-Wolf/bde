@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class User {
+export class Contribution {
 	@PrimaryColumn()
 	begin_date: Date
 
