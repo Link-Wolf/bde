@@ -1,5 +1,5 @@
-import { Inscription } from "src/inscription/inscription.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Inscription } from "../../dist/inscription/inscription.entity";
 
 @Entity()
 export class Event {

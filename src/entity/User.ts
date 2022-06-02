@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 
@@ -8,7 +8,10 @@ export class User {
 	login: string
 
 	@Column()
-	fullname: string
+	firstname: string
+
+	@Column()
+	lastname: string
 
 	@Column()
 	isPremium: boolean
