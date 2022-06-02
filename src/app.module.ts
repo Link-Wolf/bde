@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ContributionModule } from './contribution/contribution.module';
 
 @Module({
 	imports: [
@@ -14,7 +15,8 @@ import { AppService } from './app.service';
 			database: 'bdedb',
 			entities: [],
 			synchronize: true
-		})
+		}),
+		ContributionModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
