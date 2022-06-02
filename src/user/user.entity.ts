@@ -1,7 +1,12 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Contribution } from "src/contribution/contribution.entity";
+import { Inscription } from "src/inscription/inscription.entity";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
+	@PrimaryGeneratedColumn()
+	id: number
+
 	@PrimaryColumn()
 	login: string
 
@@ -13,4 +18,10 @@ export class User {
 
 	@Column()
 	isDirection: boolean
+
+	@OneToMany(() => Contribution, (contribution) => contribution.user)
+	contributions: Contribution[];
+
+	@OneToMany(() => Inscription, (inscription) => inscription.user)
+	inscriptions: Inscription[];
 }

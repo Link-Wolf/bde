@@ -1,7 +1,11 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { User } from "src/user/user.entity";
+import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Contribution {
+	@PrimaryGeneratedColumn()
+	id: number
+
 	@PrimaryColumn()
 	begin_date: Date
 
@@ -10,4 +14,7 @@ export class Contribution {
 
 	@Column()
 	end_date: Date
+
+	@ManyToOne(() => User, (user) => user.contributions)
+	user: User
 }
