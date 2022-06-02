@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { Inscription } from './inscription.entity';
+import { Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
 
 @Controller('inscription')
@@ -7,18 +6,18 @@ export class InscriptionController {
 	constructor(private inscriptionService: InscriptionService) { }
 
 	@Get()
-	findAll(): Promise<Inscription[]> {
+	findAll() {
 		return this.inscriptionService.findAll();
 	}
 
 	@Get(':id')
-	findOne(@Param('id', ParseIntPipe) id: number): Promise<Inscription> {
+	findOne(@Param('id', ParseIntPipe) id: number) {
 		return this.inscriptionService.findOne(id);
 	}
 
 	@Post()
-	create(@Body() inscription: Inscription) {
-		this.inscriptionService.create(inscription);
+	create() {
+		this.inscriptionService.create();
 	}
 
 	@Delete(':id')

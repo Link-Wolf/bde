@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { Contribution } from './contribution.entity';
+import { Contribution } from '../entity/Contribution';
 import { ContributionService } from './contribution.service';
 
 @Controller('contribution')
