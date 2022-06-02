@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContributionModule } from './contribution/contribution.module';
 import { EventModule } from './event/event.module';
+import { InscriptionModule } from './inscription/inscription.module';
 
 @Module({
 	imports: [
@@ -18,7 +19,8 @@ import { EventModule } from './event/event.module';
 			synchronize: true
 		}),
 		ContributionModule,
-		EventModule
+		EventModule,
+		InscriptionModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
