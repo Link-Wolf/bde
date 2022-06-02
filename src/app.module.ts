@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Inscription } from '../dist/inscription/inscription.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Contribution } from './contribution/contribution.entity';
 import { ContributionModule } from './contribution/contribution.module';
-import { Event } from './event/event.entity';
+import { Contribution } from './entity/Contribution';
+import { Event } from './entity/Event';
+import { User } from './entity/User';
 import { EventModule } from './event/event.module';
-import { Inscription } from './inscription/inscription.entity';
 import { InscriptionModule } from './inscription/inscription.module';
-import { User } from './user/user.entity';
 
 @Module({
 	imports: [
