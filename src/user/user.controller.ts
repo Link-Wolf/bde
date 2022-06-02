@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { User } from './user.entity';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { User } from '../entity/User';
 import { UserService } from './user.service';
 
 @Controller('user')

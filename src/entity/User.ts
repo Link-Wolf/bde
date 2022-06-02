@@ -1,4 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Contribution } from "./Contribution";
+import { Event } from "./Event";
 
 @Entity()
 export class User {
@@ -6,10 +8,7 @@ export class User {
 	login: string
 
 	@Column()
-	firstname: string
-
-	@Column()
-	lastname: string
+	fullname: string
 
 	@Column()
 	isPremium: boolean
@@ -17,9 +16,10 @@ export class User {
 	@Column()
 	isDirection: boolean
 
-	@ZeroToOne(() => Contribution, (contribution) => contribution.user)
+	@OneToMany(() => Contribution, (contribution) => contribution.user)
 	contributions: Contribution[];
 
-	@OneToMany(() => Inscription, (inscription) => inscription.user)
-	inscriptions: Inscription[];
+	@ManyToMany(() => Event)
+	@JoinTable()
+	events: Event[]
 }
