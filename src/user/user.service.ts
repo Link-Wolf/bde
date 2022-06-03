@@ -8,15 +8,15 @@ import { UserDto } from './user.dto';
 export class UserService {
 	constructor(
 		@InjectRepository(User)
-		private usersRepository: Repository<User>,
+		private userRepository: Repository<User>,
 	) { }
 
 	findAll(): Promise<User[]> {
-		return this.usersRepository.find();
+		return this.userRepository.find();
 	}
 
 	findOne(login: string): Promise<User> {
-		return this.usersRepository.findOneBy({ login: login });
+		return this.userRepository.findOneBy({ login: login });
 	}
 
 	async create(userDto: UserDto): Promise<void> {
@@ -29,16 +29,16 @@ export class UserService {
 			contributions: [],
 			events: []
 		}
-		console.log("Trying to create user :")
+		console.log("Create the user :")
 		console.log(user)
-		await this.usersRepository.save(user);
+		await this.userRepository.save(user);
 	}
 
 	async removeOne(login: string): Promise<void> {
-		await this.usersRepository.delete({ login: login });
+		await this.userRepository.delete({ login: login });
 	}
 
 	async removeAll(): Promise<void> {
-		await this.usersRepository.delete({});
+		await this.userRepository.delete({});
 	}
 }
