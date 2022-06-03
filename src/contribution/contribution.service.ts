@@ -15,20 +15,20 @@ export class ContributionService {
 		return this.usersRepository.find();
 	}
 
-	findOne(id: number): Promise<Contribution> {
-		return this.usersRepository.findOneBy({ id: id });
+	findOne(userLogin: string): Promise<Contribution> {
+		return this.usersRepository.findOneBy({ userLogin: userLogin });
 	}
 
 	async create(contribution: ContributionDto): Promise<void> {
-		await this.usersRepository.save({
-			begin_date: Date.now(),
+		this.usersRepository.save({
+			begin_date: new Date(Date.now()),
 			cost: Number(contribution.cost),
-			end_date: Date.now(),
+			end_date: new Date(Date.now()),
 		});
 	}
 
-	async removeOne(id: number): Promise<void> {
-		await this.usersRepository.delete({ id: id });
+	async removeOne(userLogin: string): Promise<void> {
+		await this.usersRepository.delete({ userLogin: userLogin });
 	}
 
 	async removeAll(): Promise<void> {

@@ -12,9 +12,9 @@ export class ContributionController {
 		return this.contributionService.findAll();
 	}
 
-	@Get(':id')
-	findOne(@Param('id', ParseIntPipe) id: number): Promise<Contribution> {
-		return this.contributionService.findOne(id);
+	@Get(':login')
+	findOne(@Param('login', ParseIntPipe) login: string): Promise<Contribution> {
+		return this.contributionService.findOne(login);
 	}
 
 	@Post()
@@ -22,9 +22,9 @@ export class ContributionController {
 		this.contributionService.create(contribution);
 	}
 
-	@Delete(':id')
-	remove(@Param('id', ParseIntPipe) id: number) {
-		this.contributionService.removeOne(id);
+	@Delete(':login')
+	remove(@Param('login', ParseIntPipe) login: string) {
+		this.contributionService.removeOne(login);
 	}
 
 	@Delete()
