@@ -23,7 +23,12 @@ export class UserController {
 	}
 
 	@Delete(':login')
-	remove(@Param('login') login: string) {
-		this.UserService.remove(login);
+	removeOne(@Param('login') login: string) {
+		this.UserService.removeOne(login);
+	}
+
+	@Delete()
+	removeAll() {
+		this.UserService.removeAll();
 	}
 }
