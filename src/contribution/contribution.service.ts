@@ -20,10 +20,13 @@ export class ContributionService {
 	}
 
 	async create(contribution: ContributionDto): Promise<void> {
+		let today = new Date(Date.now());
+		let due = new Date(Date.now());
+		due.setMonth(due.getMonth() + 6)
 		this.usersRepository.save({
-			begin_date: new Date(Date.now()),
+			begin_date: today,
 			cost: Number(contribution.cost),
-			end_date: new Date(Date.now()),
+			end_date: due,
 		});
 	}
 
