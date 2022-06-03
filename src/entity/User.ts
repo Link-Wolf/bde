@@ -7,16 +7,26 @@ export class User {
 	@PrimaryColumn()
 	login: string
 
-	@Column()
+	@Column({
+		nullable: false
+	})
 	firstname: string
 
-	@Column()
+	@Column({
+		nullable: false
+	})
 	lastname: string
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: false
+	})
 	isPremium: boolean
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: false
+	})
 	isDirection: boolean
 
 	@OneToMany(() => Contribution, (contribution) => contribution.user)

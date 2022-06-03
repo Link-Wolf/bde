@@ -6,6 +6,7 @@ import { ContributionModule } from './contribution/contribution.module';
 import { Contribution } from './entity/Contribution';
 import { Event } from './entity/Event';
 import { User } from './entity/User';
+import { UserModule } from './user/user.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 
@@ -19,8 +20,9 @@ import { InscriptionModule } from './inscription/inscription.module';
 			password: 'test',
 			database: 'postgres',
 			entities: [User, Contribution, Event],
-			synchronize: true
+			synchronize: false
 		}),
+		UserModule,
 		ContributionModule,
 		EventModule,
 		InscriptionModule
