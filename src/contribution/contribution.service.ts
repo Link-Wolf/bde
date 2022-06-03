@@ -26,7 +26,6 @@ export class ContributionService {
 		let due = new Date(Date.now());
 		due.setMonth(due.getMonth() + 6)
 		await this.contributionRepository.save({
-			userLogin: contribution.user,
 			begin_date: today,
 			cost: 10,
 			end_date: due,
