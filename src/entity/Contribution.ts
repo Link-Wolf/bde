@@ -21,7 +21,7 @@ export class Contribution {
 
 	@Column({
 		type: 'timestamptz',
-		nullable:false
+		nullable: false
 	})
 	end_date: Date
 
