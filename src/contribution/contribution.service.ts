@@ -20,7 +20,7 @@ export class ContributionService {
 	}
 
 	async create(contribution: ContributionDto): Promise<void> {
-		this.usersRepository.save({
+		await this.usersRepository.save({
 			begin_date: Date.now(),
 			cost: Number(contribution.cost),
 			end_date: Date.now(),
