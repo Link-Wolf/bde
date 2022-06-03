@@ -13,10 +13,16 @@ export class Contribution {
 	@CreateDateColumn()
 	begin_date: Date
 
-	@Column()
+	@Column({
+		nullable: true,
+		default: 10
+	})
 	cost: number
 
-	@Column({ type: 'timestamptz' })
+	@Column({
+		type: 'timestamptz',
+		nullable:false
+	})
 	end_date: Date
 
 	@ManyToOne(() => User, (user) => user.contributions)
