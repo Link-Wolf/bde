@@ -5,30 +5,30 @@ import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-	constructor(private UserService: UserService) { }
+	constructor(private userService: UserService) { }
 
 	@Get()
 	findAll(): Promise<User[]> {
-		return this.UserService.findAll();
+		return this.userService.findAll();
 	}
 
 	@Get(':login')
 	findOne(@Param('login') login: string): Promise<User> {
-		return this.UserService.findOne(login);
+		return this.userService.findOne(login);
 	}
 
 	@Post()
 	create(@Body() user: UserDto) {
-		this.UserService.create(user);
+		this.userService.create(user);
 	}
 
 	@Delete(':login')
 	removeOne(@Param('login') login: string) {
-		this.UserService.removeOne(login);
+		this.userService.removeOne(login);
 	}
 
 	@Delete()
 	removeAll() {
-		this.UserService.removeAll();
+		this.userService.removeAll();
 	}
 }
