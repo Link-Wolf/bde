@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinTable } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from './User'
 
 @Entity()
@@ -19,6 +19,5 @@ export class Event {
 	nb_places: number
 
 	@ManyToMany(() => User)
-	@JoinTable()
 	users: User[]
 }
