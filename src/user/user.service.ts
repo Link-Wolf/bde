@@ -31,7 +31,7 @@ export class UserService {
 		}
 		console.log("Trying to create user :")
 		console.log(user)
-		this.usersRepository.save(user);
+		await this.usersRepository.save(user);
 	}
 
 	async removeOne(login: string): Promise<void> {
