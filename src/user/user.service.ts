@@ -34,7 +34,11 @@ export class UserService {
 		this.usersRepository.save(user);
 	}
 
-	async remove(login: string): Promise<void> {
+	async removeOne(login: string): Promise<void> {
 		await this.usersRepository.delete({ login: login });
+	}
+
+	async removeAll(): Promise<void> {
+		await this.usersRepository.delete({});
 	}
 }
