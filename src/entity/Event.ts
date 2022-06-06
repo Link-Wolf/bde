@@ -28,6 +28,30 @@ export class Event {
 	})
 	nb_places: number
 
+	@Column({
+		nullable: true,
+		length: 4242
+	})
+	desc: string
+
+	@Column({
+		type: 'timestamptz',
+		nullable: false
+	})
+	begin_date: Date
+
+	@Column({
+		type: 'timestamptz',
+		nullable: true
+	})
+	end_date: Date
+
+	@Column({
+		nullable: true,
+		default: false
+	})
+	is_active: boolean
+
 	@ManyToMany(() => User)
 	users: User[]
 }
