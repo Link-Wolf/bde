@@ -33,6 +33,6 @@ export class User {
 	contributions: Contribution[];
 
 	@ManyToMany(() => Event)
-	@JoinTable()
-	events: Event[]
+	@JoinTable({ name: 'inscriptions' })
+	inscriptions: Event[]
 }
