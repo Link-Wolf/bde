@@ -27,7 +27,7 @@ export class UserService {
 			isPremium: (userDto.isPremium === '1'),
 			isDirection: (userDto.isDirection === '1'),
 			contributions: [],
-			events: []
+			inscriptions: []
 		}
 		console.log("Create the user :")
 		console.log(user)
