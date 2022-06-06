@@ -47,7 +47,8 @@ export class Event {
 	end_date: Date
 
 	@ManyToMany(() => User, {
-		onDelete: "CASCADE"
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE"
 	})
 	users: User[]
 }

@@ -25,9 +25,7 @@ export class Contribution {
 	})
 	end_date: Date
 
-	@ManyToOne(() => User, (user) => user.contributions, {
-		onDelete: "CASCADE"
-	})
+	@ManyToOne(() => User, (user) => user.contributions)
 	@JoinColumn({ name: "userLogin" })
 	user: User
 }
