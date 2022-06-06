@@ -25,9 +25,7 @@ export class Contribution {
 	})
 	end_date: Date
 
-	@ManyToOne(() => User, (user) => user.contributions, {
-		cascade: ["insert", "update", "recover", "remove", "soft-remove"]
-	})
+	@ManyToOne(() => User, (user) => user.contributions)
 	@JoinColumn({ name: "userLogin" })
 	user: User
 }
