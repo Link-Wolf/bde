@@ -10,16 +10,16 @@ export class EventService {
 		private usersRepository: Repository<Event>,
 	) { }
 
-	findAll(): Promise<Event[]> {
+	async findAll(): Promise<Event[]> {
 		return this.usersRepository.find();
 	}
 
-	findOne(id: number): Promise<Event> {
+	async findOne(id: number): Promise<Event> {
 		return this.usersRepository.findOneBy({ id: id });
 	}
 
 	async create(event: Event): Promise<void> {
-		this.usersRepository.save(event);
+		await this.usersRepository.save(event);
 	}
 
 	async remove(id: number): Promise<void> {
