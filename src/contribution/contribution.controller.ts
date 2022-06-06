@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
-import { ContributionDto } from './contribution.dto';
+import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
 import { ContributionService } from './contribution.service';
 
 @Controller('contribution')
@@ -13,7 +13,7 @@ export class ContributionController {
 	}
 
 	@Get(':login')
-	findOne(@Param('login', ParseIntPipe) login: string): Promise<Contribution> {
+	findOne(@Param('login') login: string): Promise<Contribution> {
 		return this.contributionService.findOne(login);
 	}
 
@@ -22,9 +22,9 @@ export class ContributionController {
 		this.contributionService.create(contribution);
 	}
 
-	@Patch()
-	update(@Body() contribution: ContributionDto) {
-		this.contributionService.update(contribution);
+	@Patch(':login')
+	update(@Param('login') login: string, @Body() contribution: ContributionUpdateDto) {
+		this.contributionService.update(login, contribution);
 	}
 
 	@Delete(':login')

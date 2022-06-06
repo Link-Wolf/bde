@@ -18,23 +18,39 @@ export class ContributionService {
 	}
 
 	findOne(userLogin: string): Promise<Contribution> {
-		return this.contributionRepository.find({
+		return this.contributionRepository.findOne({
 			where: { userLogin: userLogin },
 			order: { begin_date: "DESC"},
-			take: 1
-		})[0];
+		});
 	}
 
 	async update(userLogin: string, contribution: ContributionUpdateDto): Promise<void> {
-		let cont = await this.contributionRepository.find({
+		let cont = await this.contributionRepository.findOne({
 			where: { userLogin: userLogin },
 			order: { begin_date: "DESC"},
-			take: 1
-		})[0];
+		});
+		let begin = new Date(cont.begin_date);
+		let end = new Date(cont.end_date);
+		if("begin_date" in contribution)
+		{
+			let cont_begin = new Date(contribution.begin_date);
+			begin.setFullYear(
+				cont_begin.getFullYear(),
+				cont_begin.getMonth(),
+				cont_begin.getDate())
+		}
+		if ("end_date" in contribution)
+		{
+			let cont_end = new Date(contribution.end_date);
+			end.setFullYear(
+				cont_end.getFullYear(),
+				cont_end.getMonth(),
+				cont_end.getDate())
+		}
 		await this.contributionRepository.update(cont, {
-			begin_date: new Date(contribution.begin_date) || cont.begin_date,
-			cost: Number(contribution.cost) || cont.cost,
-			end_date: new Date(contribution.end_date) || cont.end_date,
+			begin_date: begin || cont.begin_date,
+			cost: "cost" in contribution ? Number(contribution.cost) : cont.cost,
+			end_date: end || cont.end_date,
 			user: await this.userService
 				.findOne(contribution.user) || cont.user
 		});
