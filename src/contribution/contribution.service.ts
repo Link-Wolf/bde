@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
 import { UserService } from '../user/user.service';
-import { ContributionDto } from './contribution.dto';
+import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
@@ -18,7 +18,26 @@ export class ContributionService {
 	}
 
 	findOne(userLogin: string): Promise<Contribution> {
-		return this.contributionRepository.findOneBy({ userLogin: userLogin });
+		return this.contributionRepository.find({
+			where: { userLogin: userLogin },
+			order: { begin_date: "DESC"},
+			take: 1
+		})[0];
+	}
+
+	async update(userLogin: string, contribution: ContributionUpdateDto): Promise<void> {
+		let cont = await this.contributionRepository.find({
+			where: { userLogin: userLogin },
+			order: { begin_date: "DESC"},
+			take: 1
+		})[0];
+		await this.contributionRepository.update(cont, {
+			begin_date: new Date(contribution.begin_date) || cont.begin_date,
+			cost: Number(contribution.cost) || cont.cost,
+			end_date: new Date(contribution.end_date) || cont.end_date,
+			user: await this.userService
+				.findOne(contribution.user) || cont.user
+		});
 	}
 
 	async create(contribution: ContributionDto): Promise<void> {

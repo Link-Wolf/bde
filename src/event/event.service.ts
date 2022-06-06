@@ -27,7 +27,7 @@ export class EventService {
 
 	async create(eventDto: EventDto): Promise<void> {
 		const event = {
-			name: eventDto.name,
+			name: String(eventDto.name),
 			cost: Number(eventDto.cost),
 			premium_cost: Number(eventDto.premium_cost || eventDto.cost),
 			nb_places: Number(eventDto.nb_places),
