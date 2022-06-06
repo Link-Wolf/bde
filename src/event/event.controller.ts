@@ -8,11 +8,6 @@ export class EventController {
 	constructor(private eventService: EventService) { }
 
 	@Get()
-	findCurrent(): Promise<Event[]> {
-		return this.eventService.findCurrent();
-	}
-
-	@Get('all')
 	findAll(): Promise<Event[]> {
 		return this.eventService.findAll();
 	}
