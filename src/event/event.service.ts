@@ -32,8 +32,8 @@ export class EventService {
 			premium_cost: Number(eventDto.premium_cost || eventDto.cost),
 			nb_places: Number(eventDto.nb_places),
 			desc: String(eventDto.desc || eventDto.name),
-			begin_date: Date(eventDto.begin_date),
-			end_date: Date(eventDto.end_date)
+			begin_date: new Date(eventDto.begin_date),
+			end_date: new Date(eventDto.end_date)
 
 		}
 		console.log("Create the event :")
