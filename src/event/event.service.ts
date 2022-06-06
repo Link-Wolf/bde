@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LessThanOrEqual, Repository } from 'typeorm';
-import { isNull } from 'util';
+import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
 import { EventDto } from './event.dto';
 
@@ -18,7 +17,7 @@ export class EventService {
 
 	findCurrent(): Promise<Event[]> {
 		return this.eventRepository.findBy({
-			end_date: IsNull() || LessThanOrEqual(Date.now())
+			end_date: IsNull() || MoreThanOrEqual(new Date(Date.now()))
 		});
 	}
 
