@@ -20,7 +20,7 @@ import { InscriptionModule } from './inscription/inscription.module';
 			password: 'test',
 			database: 'postgres',
 			entities: [User, Contribution, Event],
-			synchronize: true
+			synchronize: false
 		}),
 		UserModule,
 		ContributionModule,
