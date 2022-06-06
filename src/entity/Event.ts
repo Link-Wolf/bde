@@ -46,12 +46,6 @@ export class Event {
 	})
 	end_date: Date
 
-	@Column({
-		nullable: true,
-		default: false
-	})
-	is_active: boolean
-
 	@ManyToMany(() => User)
 	users: User[]
 }
