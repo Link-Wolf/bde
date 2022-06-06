@@ -29,10 +29,21 @@ export class User {
 	})
 	isDirection: boolean
 
+<<<<<<< HEAD
 	@OneToMany(() => Contribution, (contribution) => contribution.user)
 	contributions: Contribution[];
 
 	@ManyToMany(() => Event)
+=======
+	@OneToMany(() => Contribution, (contribution) => contribution.user, {
+		onDelete: "CASCADE"
+	})
+	contributions: Contribution[];
+
+	@ManyToMany(() => Event, {
+		onDelete: "CASCADE"
+	})
+>>>>>>> 982d0de5572619535d1952ab40be3afbd008cccf
 	@JoinTable({ name: 'inscriptions' })
 	inscriptions: Event[]
 }
