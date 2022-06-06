@@ -29,13 +29,11 @@ export class EventService {
 		let old_event = await this.eventRepository.findOneBy({ id: id })
 		let begin = new Date(old_event.begin_date);
 		let end = new Date(old_event.end_date);
-		if("begin_date" in event)
-		{
+		if ("begin_date" in event) {
 			let event_begin = new Date(event.begin_date);
 			begin.setTime(event_begin.getTime())
 		}
-		if ("end_date" in event)
-		{
+		if ("end_date" in event) {
 			let event_end = new Date(event.end_date);
 			end.setTime(event_end.getTime())
 		}
@@ -48,16 +46,16 @@ export class EventService {
 			nb_places: Number(event.nb_places) || old_event.nb_places,
 			desc: String(event.desc) || old_event.desc,
 			begin_date: begin || old_event.begin_date,
-			end_date: end //|| old_event.end_date
+			end_date: end || old_event.end_date
 		})
 		console.log(old_event)
 		console.log(end)
-    }
+	}
 
 	async create(eventDto: EventDto): Promise<void> {
 		let begin = new Date(eventDto.begin_date);
 		let end = new Date(eventDto.end_date);
-		const event = {
+		await this.eventRepository.save({
 			name: String(eventDto.name),
 			cost: Number(eventDto.cost),
 			premium_cost: Number(eventDto.premium_cost || eventDto.cost),
@@ -65,10 +63,7 @@ export class EventService {
 			desc: String(eventDto.desc || eventDto.name),
 			begin_date: begin,
 			end_date: "end_date" in eventDto ? end : null
-		}
-		console.log("Create the event :")
-		console.log(event)
-		await this.eventRepository.save(event);
+		});
 	}
 
 	async removeOne(id: number): Promise<void> {
