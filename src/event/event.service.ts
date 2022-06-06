@@ -15,6 +15,10 @@ export class EventService {
 		return this.eventRepository.find();
 	}
 
+	findCurrent(): Promise<Event[]> {
+		return this.eventRepository.find();
+	}
+
 	findOne(id: number): Promise<Event> {
 		return this.eventRepository.findOneBy({ id: id });
 	}
