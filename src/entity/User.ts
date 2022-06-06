@@ -29,14 +29,10 @@ export class User {
 	})
 	isDirection: boolean
 
-	@OneToMany(() => Contribution, (contribution) => contribution.user, {
-		cascade: true
-	})
+	@OneToMany(() => Contribution, (contribution) => contribution.user)
 	contributions: Contribution[];
 
-	@ManyToMany(() => Event, {
-		cascade: true
-	})
+	@ManyToMany(() => Event)
 	@JoinTable({ name: 'inscriptions' })
 	inscriptions: Event[]
 }
