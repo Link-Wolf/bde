@@ -30,12 +30,12 @@ export class User {
 	isDirection: boolean
 
 	@OneToMany(() => Contribution, (contribution) => contribution.user, {
-		cascade: true
+		onDelete: "CASCADE"
 	})
 	contributions: Contribution[];
 
 	@ManyToMany(() => Event, {
-		cascade: true
+		onDelete: "CASCADE"
 	})
 	@JoinTable({ name: 'inscriptions' })
 	inscriptions: Event[]
