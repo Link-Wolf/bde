@@ -28,6 +28,11 @@ export class EventController {
 		this.eventService.update(id, event);
 	}
 
+	@Patch(':id/inscription')
+	subscribe(@Param('id') id: number, @Body(new EventSubDtoPipe()) event: EventSubDto) {
+		this.eventService.update(id, event);
+	}
+
 	@Delete(':id')
 	removeOne(@Param('id', ParseIntPipe) id: number) {
 		this.eventService.removeOne(id);
