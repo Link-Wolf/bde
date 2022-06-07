@@ -20,53 +20,17 @@ export class ContributionService {
 	findOne(userLogin: string): Promise<Contribution> {
 		return this.contributionRepository.findOne({
 			where: { userLogin: userLogin },
-			order: { begin_date: "DESC"},
+			order: { begin_date: "DESC" },
 		});
 	}
 
 	async update(userLogin: string, contribution: ContributionUpdateDto): Promise<void> {
-		let cont = await this.contributionRepository.findOne({
-			where: { userLogin: userLogin },
-			order: { begin_date: "DESC"},
-		});
-		let begin = new Date(cont.begin_date);
-		let end = new Date(cont.end_date);
-		if("begin_date" in contribution)
-		{
-			let cont_begin = new Date(contribution.begin_date);
-			begin.setFullYear(
-				cont_begin.getFullYear(),
-				cont_begin.getMonth(),
-				cont_begin.getDate())
-		}
-		if ("end_date" in contribution)
-		{
-			let cont_end = new Date(contribution.end_date);
-			end.setFullYear(
-				cont_end.getFullYear(),
-				cont_end.getMonth(),
-				cont_end.getDate())
-		}
-		await this.contributionRepository.update(cont, {
-			begin_date: begin || cont.begin_date,
-			cost: "cost" in contribution ? Number(contribution.cost) : cont.cost,
-			end_date: end || cont.end_date,
-			user: await this.userService
-				.findOne(contribution.user) || cont.user
-		});
+		await this.contributionRepository.update(userLogin, contribution);
 	}
 
-	async create(contribution: ContributionDto): Promise<void> {
-		let today = new Date(Date.now());
-		let due = new Date(Date.now());
-		due.setMonth(due.getMonth() + 6)
-		await this.contributionRepository.save({
-			begin_date: today,
-			cost: 10,
-			end_date: due,
-			user: await this.userService
-				.findOne(contribution.user)
-		});
+	async create(contributionData: ContributionDto): Promise<void> {
+		await this.contributionRepository.save(contributionData);
+		this.userService.update(contributionData.userLogin, { isPremium: true });
 	}
 
 	async removeOne(userLogin: string): Promise<void> {
