@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes } from '@ne
 import { User } from '../entity/User';
 import { UserDto } from './user.dto';
 import { UserService } from './user.service';
-import { UserDtoValidationPipe } from './user.pipe';
+import { UserDtoPipe } from './user.pipe';
 
 @Controller('user')
 export class UserController {
@@ -19,12 +19,12 @@ export class UserController {
 	}
 
 	@Post()
-	create(@Body(new UserDtoValidationPipe()) user: UserDto) {
+	create(@Body(new UserDtoPipe()) user: UserDto) {
 		this.userService.create(user);
 	}
 
 	@Patch(':login')
-	update(@Param('login') login: string, @Body(new UserDtoValidationPipe()) user: UserDto) {
+	update(@Param('login') login: string, @Body(new UserDtoPipe()) user: UserDto) {
 		this.userService.update(login, user);
 	}
 
