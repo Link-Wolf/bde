@@ -25,16 +25,7 @@ export class UserService {
 	}
 
 	async create(userDto: UserDto): Promise<void> {
-		var user: User = {
-			login: userDto.login,
-			firstname: userDto.firstname,
-			lastname: userDto.lastname,
-			isPremium: userDto.isPremium,
-			isDirection: userDto.isDirection,
-			contributions: [],
-			inscriptions: []
-		}
-		await this.userRepository.save(user);
+		await this.userRepository.save(userDto);
 	}
 
 	async removeOne(login: string): Promise<void> {

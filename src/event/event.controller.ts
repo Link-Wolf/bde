@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from 
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto } from './event.dto';
+import { EventDtoPipe } from './event.pipe';
 
 @Controller('event')
 export class EventController {
@@ -18,12 +19,12 @@ export class EventController {
 	}
 
 	@Post()
-	create(@Body() event: EventDto) {
+	create(@Body(new EventDtoPipe()) event: EventDto) {
 		this.eventService.create(event);
 	}
 
 	@Patch(':id')
-	update(@Param('id') id: number, @Body() event: EventDto) {
+	update(@Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
 		this.eventService.update(id, event);
 	}
 
