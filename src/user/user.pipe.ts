@@ -2,7 +2,7 @@ import { ArgumentMetadata } from "@nestjs/common";
 import { Injectable, PipeTransform } from "@nestjs/common";
 
 @Injectable()
-export class UserDtoValidationPipe implements PipeTransform {
+export class UserDtoPipe implements PipeTransform {
 	transform(value: any, metadata: ArgumentMetadata) {
 		console.log(value);
 		if ("isPremium" in value) {
