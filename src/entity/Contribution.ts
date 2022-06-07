@@ -6,10 +6,16 @@ export class Contribution {
 	// @PrimaryGeneratedColumn()
 	// id: number
 
+	private static due(): Date {
+		let due = new Date(Date.now())
+		due.setMonth(due.getMonth() + 6)
+		return due;
+	}
+
 	@PrimaryColumn()
 	userLogin: string
 
-	@PrimaryColumn({ type: 'timestamptz' })
+	@PrimaryColumn({ type: 'timestamptz', default: new Date(Date.now()) })
 	@CreateDateColumn()
 	begin_date: Date
 
@@ -21,7 +27,8 @@ export class Contribution {
 
 	@Column({
 		type: 'timestamptz',
-		nullable: false
+		nullable: false,
+		default: Contribution.due()
 	})
 	end_date: Date
 
