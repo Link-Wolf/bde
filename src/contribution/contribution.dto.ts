@@ -1,10 +1,14 @@
+import { User } from "../entity/User"
+
 export class ContributionDto {
-	user: string
+	user: User
+	userLogin: string
 }
 
 export class ContributionUpdateDto {
-	user: string
+	user: User
+	userLogin: string
 	begin_date: string
 	end_date: string
-	cost: string
+	cost: number
 }
