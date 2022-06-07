@@ -26,30 +26,6 @@ export class EventService {
 	}
 
 	async update(id: number, eventData: EventDto): Promise<void> {
-		// let old_event = await this.eventRepository.findOne({ where: { id: id } })
-		// let begin = new Date(old_event.begin_date);
-		// let end = new Date(old_event.end_date);
-		// if ("begin_date" in event) {
-		// 	let event_begin = new Date(event.begin_date);
-		// 	begin.setTime(event_begin.getTime())
-		// }
-		// if ("end_date" in event) {
-		// 	let event_end = new Date(event.end_date);
-		// 	end.setTime(event_end.getTime())
-		// }
-		// console.log(event)
-		// console.log(old_event)
-		// await this.eventRepository.update(id, {
-		// 	name: "name" in event ? String(event.name) : old_event.name,
-		// 	cost: Number(event.cost) || old_event.cost,
-		// 	premium_cost: Number(event.premium_cost) || old_event.premium_cost,
-		// 	nb_places: Number(event.nb_places) || old_event.nb_places,
-		// 	desc: String(event.desc) || old_event.desc,
-		// 	begin_date: begin || old_event.begin_date,
-		// 	end_date: end || old_event.end_date
-		// })
-		// console.log(old_event)
-		// console.log(end)
 		await this.eventRepository.update(id, eventData);
 	}
 

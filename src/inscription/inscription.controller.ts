@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
 
 @Controller('inscription')
@@ -15,9 +15,10 @@ export class InscriptionController {
 		return this.inscriptionService.findOne(id);
 	}
 
-	@Post()
-	create() {
-		this.inscriptionService.create();
+	@Post(':id')
+	subscribe(@Param('id', ParseIntPipe) id: number) {
+		//get login connecté
+		this.inscriptionService.subscribe(id, login);
 	}
 
 	// @Patch(':login')
@@ -25,7 +26,7 @@ export class InscriptionController {
 	// 	this.inscriptionService.update(login, contribution);
 	// }
 
-	@Delete(':id')
+	@Delete(':event/:login')
 	remove(@Param('id', ParseIntPipe) id: number) {
 		this.inscriptionService.remove(id);
 	}
