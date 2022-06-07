@@ -4,7 +4,6 @@ import { Injectable, PipeTransform } from "@nestjs/common";
 @Injectable()
 export class UserDtoPipe implements PipeTransform {
 	transform(value: any, metadata: ArgumentMetadata) {
-		console.log(value);
 		if ("isPremium" in value) {
 			if (value.isPremium === "true")
 				value.isPremium = true;
