@@ -19,18 +19,21 @@ export class UserService {
 		return this.userRepository.findOneBy({ login: login });
 	}
 
+	async update(login: string, userData: any): Promise<void> {
+		//var old_user = await this.findOne(login);
+		await this.userRepository.update(login, userData);
+	}
+
 	async create(userDto: UserDto): Promise<void> {
 		var user: User = {
 			login: userDto.login,
 			firstname: userDto.firstname,
 			lastname: userDto.lastname,
-			isPremium: (userDto.isPremium === '1'),
-			isDirection: (userDto.isDirection === '1'),
+			isPremium: userDto.isPremium,
+			isDirection: userDto.isDirection,
 			contributions: [],
 			inscriptions: []
 		}
-		console.log("Create the user :")
-		console.log(user)
 		await this.userRepository.save(user);
 	}
 
