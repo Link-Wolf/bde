@@ -25,45 +25,36 @@ export class EventService {
 		return this.eventRepository.findOneBy({ id: id });
 	}
 
-	async update(id: number, event: EventDto): Promise<void> {
-		let old_event = await this.eventRepository.findOneBy({ id: id })
-		let begin = new Date(old_event.begin_date);
-		let end = new Date(old_event.end_date);
-		if ("begin_date" in event) {
-			let event_begin = new Date(event.begin_date);
-			begin.setTime(event_begin.getTime())
-		}
-		if ("end_date" in event) {
-			let event_end = new Date(event.end_date);
-			end.setTime(event_end.getTime())
-		}
-		console.log(event)
-		console.log(old_event)
-		await this.eventRepository.update(old_event, {
-			name: String(event.name) || old_event.name,
-			cost: Number(event.cost) || old_event.cost,
-			premium_cost: Number(event.premium_cost) || old_event.premium_cost,
-			nb_places: Number(event.nb_places) || old_event.nb_places,
-			desc: String(event.desc) || old_event.desc,
-			begin_date: begin || old_event.begin_date,
-			end_date: end || old_event.end_date
-		})
-		console.log(old_event)
-		console.log(end)
+	async update(id: number, eventData: EventDto): Promise<void> {
+		// let old_event = await this.eventRepository.findOne({ where: { id: id } })
+		// let begin = new Date(old_event.begin_date);
+		// let end = new Date(old_event.end_date);
+		// if ("begin_date" in event) {
+		// 	let event_begin = new Date(event.begin_date);
+		// 	begin.setTime(event_begin.getTime())
+		// }
+		// if ("end_date" in event) {
+		// 	let event_end = new Date(event.end_date);
+		// 	end.setTime(event_end.getTime())
+		// }
+		// console.log(event)
+		// console.log(old_event)
+		// await this.eventRepository.update(id, {
+		// 	name: "name" in event ? String(event.name) : old_event.name,
+		// 	cost: Number(event.cost) || old_event.cost,
+		// 	premium_cost: Number(event.premium_cost) || old_event.premium_cost,
+		// 	nb_places: Number(event.nb_places) || old_event.nb_places,
+		// 	desc: String(event.desc) || old_event.desc,
+		// 	begin_date: begin || old_event.begin_date,
+		// 	end_date: end || old_event.end_date
+		// })
+		// console.log(old_event)
+		// console.log(end)
+		await this.eventRepository.update(id, eventData);
 	}
 
 	async create(eventDto: EventDto): Promise<void> {
-		let begin = new Date(eventDto.begin_date);
-		let end = new Date(eventDto.end_date);
-		await this.eventRepository.save({
-			name: String(eventDto.name),
-			cost: Number(eventDto.cost),
-			premium_cost: Number(eventDto.premium_cost || eventDto.cost),
-			nb_places: Number(eventDto.nb_places),
-			desc: String(eventDto.desc || eventDto.name),
-			begin_date: begin,
-			end_date: "end_date" in eventDto ? end : null
-		});
+		await this.eventRepository.save(eventDto);
 	}
 
 	async removeOne(id: number): Promise<void> {
