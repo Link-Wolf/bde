@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
+import { Stud } from '../entity/Stud';
 import { StudService } from '../stud/stud.service';
 import { EventDto } from './event.dto';
 
@@ -34,9 +35,10 @@ export class EventService {
 	async subscribe(id: number, login: string): Promise<void> {
 		let event = await this.findOne(id);
 		console.log(event);
-		if (!("studs" in event))
-			event.studs = [];
+		event.studs = await this.getStuds(id);
+		console.log(event.studs);
 		event.studs.push(await this.studService.findOne(login));
+		console.log(event.studs);
 		await this.eventRepository.save(event);
 	}
 
@@ -50,5 +52,9 @@ export class EventService {
 
 	async removeAll(): Promise<void> {
 		await this.eventRepository.delete({});
+	}
+
+	async getStuds(id: number): Promise<Stud[]> {
+		return this.eventRepository.query("SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin\" FROM inscriptions insc WHERE \"eventId\" = '" + id + "' );");
 	}
 }

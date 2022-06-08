@@ -12,7 +12,7 @@ export class Contribution {
 		return due;
 	}
 
-	@PrimaryColumn()
+	@PrimaryColumn({ type: "text" })
 	studLogin: string
 
 	@PrimaryColumn({ type: 'timestamptz', default: new Date(Date.now()) })
@@ -20,6 +20,7 @@ export class Contribution {
 	begin_date: Date
 
 	@Column({
+		type: "double precision",
 		nullable: true,
 		default: 10
 	})
