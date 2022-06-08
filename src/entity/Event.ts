@@ -1,8 +1,14 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from './User'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { InscriptionService } from "../inscription/inscription.service";
+import { Inscription } from "./Inscription";
+import { Stud } from "./Stud";
 
 @Entity()
 export class Event {
+	// constructor(
+	// 	private inscriptionService: InscriptionService
+	// ) { }
+
 	@PrimaryGeneratedColumn()
 	id: number
 
@@ -46,9 +52,10 @@ export class Event {
 	})
 	end_date: Date
 
-	@ManyToMany(() => User, {
-		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
-	})
-	users: User[]
+	@OneToMany(() => Inscription, (inscription) => inscription.event)
+	inscriptions: Inscription
+
+	// subscribe(stud: Stud) {
+	// 	this.inscriptionService.create(stud, this)
+	// }
 }

@@ -3,10 +3,10 @@ import { ContributionService } from './contribution.service';
 import { ContributionController } from './contribution.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Contribution } from '../entity/Contribution';
-import { UserModule } from '../user/user.module';
+import { StudModule } from '../stud/stud.module';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Contribution]), UserModule],
+	imports: [TypeOrmModule.forFeature([Contribution]), StudModule],
 	providers: [ContributionService],
 	controllers: [ContributionController]
 })

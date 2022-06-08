@@ -1,9 +1,15 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { InscriptionService } from "../inscription/inscription.service";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
+import { Inscription } from "./Inscription";
 
 @Entity()
-export class User {
+export class Stud {
+	// constructor(
+	// 	private inscriptionService: InscriptionService
+	// ) { }
+
 	@PrimaryColumn()
 	login: string
 
@@ -29,16 +35,17 @@ export class User {
 	})
 	isDirection: boolean
 
-	@OneToMany(() => Contribution, (contribution) => contribution.user, {
+	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
+		onUpdate: "CASCADE",
+		cascade: true
 	})
 	contributions: Contribution[];
 
-	@ManyToMany(() => Event, {
-		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
-	})
-	@JoinTable({ name: 'inscriptions' })
-	inscriptions: Event[]
+	@OneToMany(() => Inscription, (inscription) => inscription.stud)
+	inscriptions: Inscription
+
+	// subscribe(event: Event) {
+	// 	this.inscriptionService.create(this, event)
+	// }
 }

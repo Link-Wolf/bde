@@ -14,7 +14,8 @@ export class ContributionController {
 	}
 
 	@Get(':login')
-	findOne(@Param('login') login: string): Promise<Contribution> {
+	async findOne(@Param('login') login: string): Promise<Contribution> {
+		console.log(await this.contributionService.findOne(login));
 		return this.contributionService.findOne(login);
 	}
 
