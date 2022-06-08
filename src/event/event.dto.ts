@@ -7,8 +7,3 @@ export class EventDto {
 	begin_date: Date;
 	end_date: Date;
 }
-
-export class EventSubDto {
-	id: number
-	login: string
-}

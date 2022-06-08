@@ -1,6 +1,6 @@
 import { IsBooleanString } from "class-validator";
 
-export class StudDto {
+export class UserDto {
 	login: string;
 	firstname: string;
 	lastname: string;

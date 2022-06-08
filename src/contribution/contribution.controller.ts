@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
 import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
-import { ContributionDtoPipe, ContributionUpdateDtoPipe } from './contribution.pipe';
+import { ContributionDtoPipe } from './contribution.pipe';
 import { ContributionService } from './contribution.service';
 
 @Controller('contribution')
@@ -14,8 +14,7 @@ export class ContributionController {
 	}
 
 	@Get(':login')
-	async findOne(@Param('login') login: string): Promise<Contribution> {
-		console.log(await this.contributionService.findOne(login));
+	findOne(@Param('login') login: string): Promise<Contribution> {
 		return this.contributionService.findOne(login);
 	}
 
@@ -25,7 +24,7 @@ export class ContributionController {
 	}
 
 	@Patch(':login')
-	update(@Param('login') login: string, @Body(ContributionUpdateDtoPipe) contribution: ContributionUpdateDto) {
+	update(@Param('login') login: string, @Body(ContributionDtoPipe) contribution: ContributionUpdateDto) {
 		this.contributionService.update(login, contribution);
 	}
 

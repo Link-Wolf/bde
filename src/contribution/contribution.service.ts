@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
-import { StudService } from '../stud/stud.service';
+import { UserService } from '../user/user.service';
 import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
 
 @Injectable()
@@ -10,37 +10,34 @@ export class ContributionService {
 	constructor(
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
-		private studService: StudService
+		private userService: UserService
 	) { }
 
-	async findAll(): Promise<Contribution[]> {
-		let conts = this.contributionRepository.find();
-		console.log(await conts)
-		return conts;
+	findAll(): Promise<Contribution[]> {
+		return this.contributionRepository.find();
 	}
 
-	async findOne(studLogin: string): Promise<Contribution> {
-		let cont = this.contributionRepository.findOne({
-			where: { login: studLogin },
+	findOne(userLogin: string): Promise<Contribution> {
+		return this.contributionRepository.findOne({
+			where: { userLogin: userLogin },
 			order: { begin_date: "DESC" },
 		});
-		console.log(await cont);
-		return cont;
 	}
 
-	async update(studLogin: string, contribution: ContributionUpdateDto): Promise<void> {
-		await this.contributionRepository.update(studLogin, contribution);
+	async update(userLogin: string, contribution: ContributionUpdateDto): Promise<void> {
+		await this.contributionRepository.update(userLogin, contribution);
 	}
 
-	async create(contributionData: any): Promise<void> {
-		console.log(await this.contributionRepository.save(contributionData));
+	async create(contributionData: ContributionDto): Promise<void> {
+		await this.contributionRepository.save(contributionData);
+		this.userService.update(contributionData.userLogin, { isPremium: true });
 	}
 
-	async removeOne(studLogin: string): Promise<void> {
-		console.log(await this.contributionRepository.delete({ login: studLogin }));
+	async removeOne(userLogin: string): Promise<void> {
+		await this.contributionRepository.delete({ userLogin: userLogin });
 	}
 
 	async removeAll(): Promise<void> {
-		console.log(await this.contributionRepository.delete({}));
+		await this.contributionRepository.delete({});
 	}
 }

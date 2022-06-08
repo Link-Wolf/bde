@@ -3,10 +3,11 @@ import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto } from './event.dto';
 import { EventDtoPipe } from './event.pipe';
+import { InscriptionService } from '../inscription/inscription.service';
 
 @Controller('event')
 export class EventController {
-	constructor(private eventService: EventService) { }
+	constructor(private eventService: EventService){}
 
 	@Get()
 	findAll(): Promise<Event[]> {
@@ -23,13 +24,13 @@ export class EventController {
 		this.eventService.create(event);
 	}
 
-	@Patch(':id/inscription')
-	subscribe(@Param('id') id: number, @Body('login') login: string) {
-		this.eventService.subscribe(id, login);
+	@Patch(':id')
+	update(@Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
+		this.eventService.update(id, event);
 	}
 
-	@Patch(':id')
-	update(@Param('id') id: number, @Body(EventDtoPipe) event: EventDto) {
+	@Patch(':id/inscription')
+	subscribe(@Param('id') id: number, @Body(new EventSubDtoPipe()) event: EventSubDto) {
 		this.eventService.update(id, event);
 	}
 

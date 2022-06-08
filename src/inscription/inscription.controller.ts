@@ -15,6 +15,12 @@ export class InscriptionController {
 		return this.inscriptionService.findOne(id);
 	}
 
+	@Post(':id')
+	subscribe(@Param('id', ParseIntPipe) id: number) {
+		//get login connecté
+		this.inscriptionService.subscribe(id, login);
+	}
+
 	// @Patch(':login')
 	// update(@Param('login') login: string, @Body() contribution: InscriptionUpdateDto) {
 	// 	this.inscriptionService.update(login, contribution);

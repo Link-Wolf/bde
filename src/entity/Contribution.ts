@@ -1,4 +1,4 @@
-import { Stud } from "./Stud";
+import { User } from "./User";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 @Entity()
@@ -13,7 +13,7 @@ export class Contribution {
 	}
 
 	@PrimaryColumn()
-	login: string
+	userLogin: string
 
 	@PrimaryColumn({ type: 'timestamptz', default: new Date(Date.now()) })
 	@CreateDateColumn()
@@ -32,10 +32,7 @@ export class Contribution {
 	})
 	end_date: Date
 
-	@ManyToOne(() => Stud, (stud) => stud.contributions, {
-		onDelete: "CASCADE",
-		onUpdate: "CASCADE",
-	})
-	@JoinColumn({ name: "login" })
-	stud: Stud
+	@ManyToOne(() => User, (user) => user.contributions)
+	@JoinColumn({ name: "userLogin" })
+	user: User
 }
