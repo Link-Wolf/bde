@@ -5,8 +5,8 @@ import { AppService } from './app.service';
 import { ContributionModule } from './contribution/contribution.module';
 import { Contribution } from './entity/Contribution';
 import { Event } from './entity/Event';
-import { User } from './entity/User';
-import { UserModule } from './user/user.module';
+import { Stud } from './entity/Stud';
+import { StudModule } from './stud/stud.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 
@@ -18,11 +18,11 @@ import { InscriptionModule } from './inscription/inscription.module';
 			port: 5432,
 			username: 'test',
 			password: 'test',
-			database: 'postgres',
-			entities: [User, Contribution, Event],
+			database: 'bde',
+			entities: [Stud, Contribution, Event],
 			synchronize: true
 		}),
-		UserModule,
+		StudModule,
 		ContributionModule,
 		EventModule,
 		InscriptionModule

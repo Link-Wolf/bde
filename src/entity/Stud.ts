@@ -3,7 +3,7 @@ import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 
 @Entity()
-export class User {
+export class Stud {
 	@PrimaryColumn()
 	login: string
 
@@ -29,7 +29,7 @@ export class User {
 	})
 	isDirection: boolean
 
-	@OneToMany(() => Contribution, (contribution) => contribution.user, {
+	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
@@ -39,6 +39,5 @@ export class User {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
-	@JoinTable({ name: 'inscriptions' })
 	inscriptions: Event[]
 }
