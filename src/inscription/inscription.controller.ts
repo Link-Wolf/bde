@@ -10,21 +10,18 @@ export class InscriptionController {
 		return this.inscriptionService.findAll();
 	}
 
-	@Get(':id')
+	@Get('event/:id')
 	findOne(@Param('id', ParseIntPipe) id: number) {
 		return this.inscriptionService.findOne(id);
 	}
 
-	// @Post(':id')
-	// subscribe(@Param('id', ParseIntPipe) id: number) {
-	// 	//get login connecté
-	// 	this.inscriptionService.subscribe(id, login);
-	// }
+	@Get('stud/:login')
 
-	// @Patch(':login')
-	// update(@Param('login') login: string, @Body() contribution: InscriptionUpdateDto) {
-	// 	this.inscriptionService.update(login, contribution);
-	// }
+	@Post() //body id + login
+
+	@Delete('event/:id')
+
+	@Delete('stud/:login')
 
 	@Delete(':event/:login')
 	remove(@Param('id', ParseIntPipe) id: number) {
