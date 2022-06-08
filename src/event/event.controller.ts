@@ -7,7 +7,7 @@ import { InscriptionService } from '../inscription/inscription.service';
 
 @Controller('event')
 export class EventController {
-	constructor(private eventService: EventService){}
+	constructor(private eventService: EventService) { }
 
 	@Get()
 	findAll(): Promise<Event[]> {
@@ -30,8 +30,8 @@ export class EventController {
 	}
 
 	@Patch(':id/inscription')
-	subscribe(@Param('id') id: number, @Body(new EventSubDtoPipe()) event: EventSubDto) {
-		this.eventService.update(id, event);
+	subscribe(@Param('id') id: number, @Body('login') login: string) {
+		this.eventService.subscribe(id, login);
 	}
 
 	@Delete(':id')

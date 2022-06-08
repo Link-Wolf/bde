@@ -1,13 +1,13 @@
-import { User } from "../entity/User"
+import { Stud } from "../entity/Stud"
 
 export class ContributionDto {
-	user: User
-	userLogin: string
+	stud: Stud
+	studLogin: string
 }
 
 export class ContributionUpdateDto {
-	user: User
-	userLogin: string
+	stud: Stud
+	studLogin: string
 	begin_date: string
 	end_date: string
 	cost: number

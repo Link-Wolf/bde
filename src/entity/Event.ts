@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from './User'
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Stud } from './Stud'
 
 @Entity()
 export class Event {
@@ -46,9 +46,10 @@ export class Event {
 	})
 	end_date: Date
 
-	@ManyToMany(() => User, {
+	@ManyToMany(() => Stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
-	users: User[]
+	@JoinTable({ name: 'inscriptions' })
+	studs: Stud[]
 }

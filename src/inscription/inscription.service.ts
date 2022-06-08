@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class InscriptionService {
-	constructor(
-		@InjectRepository(Inscription)
-		private inscriptionRepository: Repository<Inscription>,
-	) { }
+	// constructor(
+	// 	@InjectRepository(Inscription)
+	// 	private inscriptionRepository: Repository<Inscription>,
+	// ) { }
 
 	findAll() {
 		return "all inscription";
@@ -17,9 +17,9 @@ export class InscriptionService {
 		return `inscription ${id}`;
 	}
 
-	async subscribe(id: number, login: string) {
-		await this.inscriptionRepository.save()
-	}
+	// async subscribe(id: number, login: string) {
+	// 	await this.inscriptionRepository.save()
+	// }
 
 	async create() {
 		return "inscription created";
