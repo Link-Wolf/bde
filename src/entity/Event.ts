@@ -1,4 +1,5 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, Repository } from "typeorm";
 import { Stud } from './Stud'
 
 @Entity()
@@ -7,30 +8,34 @@ export class Event {
 	id: number
 
 	@Column({
-		nullable: false
+		nullable: false,
+		type: "text",
 	})
 	name: string
 
 	@Column({
-		nullable: false
+		nullable: false,
+		type: "integer"
 	})
 	cost: number
 
 	@Column({
+		type: "integer",
 		nullable: true,
 		default: 0
 	})
 	premium_cost: number
 
 	@Column({
+		type: "integer",
 		nullable: true,
 		default: -42
 	})
 	nb_places: number
 
 	@Column({
+		type: "text",
 		nullable: true,
-		length: 4242
 	})
 	desc: string
 
@@ -46,7 +51,7 @@ export class Event {
 	})
 	end_date: Date
 
-	@ManyToMany(() => Stud, {
+	@ManyToMany(() => Stud, (stud) => stud.inscriptions, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
