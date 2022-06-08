@@ -13,7 +13,7 @@ export class Contribution {
 	}
 
 	@PrimaryColumn()
-	studLogin: string
+	login: string
 
 	@PrimaryColumn({ type: 'timestamptz', default: new Date(Date.now()) })
 	@CreateDateColumn()
@@ -36,6 +36,6 @@ export class Contribution {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
-	@JoinColumn({ name: "studLogin" })
+	@JoinColumn({ name: "login" })
 	stud: Stud
 }

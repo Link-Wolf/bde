@@ -43,7 +43,7 @@ export class Stud {
 	contributions: Contribution[];
 
 	@OneToMany(() => Inscription, (inscription) => inscription.stud)
-	inscriptions: Inscription
+	inscriptions: Inscription[]
 
 	// subscribe(event: Event) {
 	// 	this.inscriptionService.create(this, event)

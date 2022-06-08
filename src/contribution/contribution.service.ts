@@ -13,15 +13,19 @@ export class ContributionService {
 		private studService: StudService
 	) { }
 
-	findAll(): Promise<Contribution[]> {
-		return this.contributionRepository.find();
+	async findAll(): Promise<Contribution[]> {
+		let conts = this.contributionRepository.find();
+		console.log(await conts)
+		return conts;
 	}
 
-	findOne(studLogin: string): Promise<Contribution> {
-		return this.contributionRepository.findOne({
-			where: { studLogin: studLogin },
+	async findOne(studLogin: string): Promise<Contribution> {
+		let cont = this.contributionRepository.findOne({
+			where: { login: studLogin },
 			order: { begin_date: "DESC" },
 		});
+		console.log(await cont);
+		return cont;
 	}
 
 	async update(studLogin: string, contribution: ContributionUpdateDto): Promise<void> {
@@ -29,14 +33,14 @@ export class ContributionService {
 	}
 
 	async create(contributionData: any): Promise<void> {
-		await this.contributionRepository.save(contributionData);
+		console.log(await this.contributionRepository.save(contributionData));
 	}
 
 	async removeOne(studLogin: string): Promise<void> {
-		await this.contributionRepository.delete({ studLogin: studLogin });
+		console.log(await this.contributionRepository.delete({ login: studLogin }));
 	}
 
 	async removeAll(): Promise<void> {
-		await this.contributionRepository.delete({});
+		console.log(await this.contributionRepository.delete({}));
 	}
 }
