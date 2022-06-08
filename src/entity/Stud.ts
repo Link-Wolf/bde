@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 
@@ -35,7 +35,7 @@ export class Stud {
 	})
 	contributions: Contribution[];
 
-	@ManyToMany(() => Event, {
+	@ManyToMany(() => Event, (inscription) => inscription.studs, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
