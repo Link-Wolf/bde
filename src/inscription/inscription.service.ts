@@ -1,31 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class InscriptionService {
-	// constructor(
-	// 	@InjectRepository(Inscription)
-	// 	private inscriptionRepository: Repository<Inscription>,
-	// ) { }
+	constructor(
+		private manager: EntityManager
+	) { }
+
+	removeAll() {
+		this.manager.query(`DELETE FROM "inscriptions"`);
+	}
+
+	removeByStud(login: string) {
+		this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
+	}
+
+	removeByEvent(id: number) {
+		this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
+	}
+
+	link(id: number, login: string) {
+		this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
+	}
+
+	findByStud(login: string) {
+		this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}'`);
+	}
+
+	findByEvent(id: number) {
+		this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`);
+	}
 
 	findAll() {
-		return "all inscription";
+		this.manager.query(`SELECT * FROM "inscriptions"`);
 	}
 
-	findOne(id: number) {
-		return `inscription ${id}`;
-	}
+	async remove(id: number, login: string) {
+		this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 
-	// async subscribe(id: number, login: string) {
-	// 	await this.inscriptionRepository.save()
-	// }
-
-	async create() {
-		return "inscription created";
-	}
-
-	async remove(id: number) {
-		return `inscription ${id} deleted`;
 	}
 }
