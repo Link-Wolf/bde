@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { CustomLogger } from '../logger/CustomLogger.class';
+=======
+>>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
 =======
 >>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
 import { StudService } from '../stud/stud.service';
@@ -12,7 +15,11 @@ import { ContributionDto } from './contribution.dto';
 @Injectable()
 export class ContributionService {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private readonly logger = new CustomLogger();
+=======
+	private readonly logger = new Logger(ContributionService.name)
+>>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
 =======
 	private readonly logger = new Logger(ContributionService.name)
 >>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
