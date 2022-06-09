@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
@@ -8,6 +8,8 @@ import { EventDto } from './event.dto';
 
 @Injectable()
 export class EventService {
+	private readonly logger = new Logger(EventService.name)
+
 	constructor(
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
@@ -33,10 +35,11 @@ export class EventService {
 	}
 
 	async subscribe(id: number, login: string): Promise<void> {
-		
+
 		let event = await this.findOne(id);
 		event.studs = await this.getStuds(id);
 		event.studs.push(await this.studService.findOne(login));
+		console.log(event);
 		await this.eventRepository.save(event);
 	}
 
