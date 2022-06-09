@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -17,21 +17,41 @@ export class StudService {
 		return this.studRepository.find();
 	}
 
-	findOne(login: string): Promise<Stud> {
-		return this.studRepository.findOneBy({ login: login });
+	async findOne(login: string): Promise<Stud> {
+		let stud = await this.studRepository.findOneBy({ login: login });
+		if (!stud) {
+			this.logger.warn(`No user found with login >${login}<`)
+			throw new NotFoundException()
+		}
+		return stud
 	}
 
 	async update(login: string, studData: any): Promise<void> {
-		//var old_stud = await this.findOne(login);
-		await this.studRepository.update(login, studData);
+		try {
+			await this.studRepository.update(login, studData);
+		} catch (error) {
+			this.logger.error(`Failed to update user >${login}<`)
+			throw new NotFoundException(error)
+		}
 	}
 
 	async create(studDto: StudDto): Promise<void> {
-		await this.studRepository.save(studDto);
+		//TODO: si le pelot existe deja -> check
+		try {
+			await this.studRepository.save(studDto);
+		} catch (error) {
+			this.logger.error(`Failed to create user >${studDto.login}<`)
+			throw new NotFoundException(error)
+		}
 	}
 
 	async removeOne(login: string): Promise<void> {
-		await this.studRepository.delete({ login: login });
+		try {
+			await this.studRepository.delete({ login: login });
+		} catch (error) {
+			this.logger.error(`Failed to delete user >${login}<`)
+			throw new NotFoundException(error)
+		}
 	}
 
 	async removeAll(): Promise<void> {
