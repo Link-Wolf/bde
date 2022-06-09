@@ -1,13 +1,14 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
+import { CustomLogger } from '../logger/CustomLogger';
 import { StudService } from '../stud/stud.service';
 import { ContributionDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
-	private readonly logger = new Logger(ContributionService.name)
+	private readonly logger = new CustomLogger(ContributionService.name)
 
 	constructor(
 		@InjectRepository(Contribution)
@@ -29,7 +30,7 @@ export class ContributionService {
 	async update(studLogin: string, contribution: any): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			this.logger.error(`Failed on update user ${studLogin}`)
+			this.logger.error(`Failed on update contuser ${studLogin}`)
 		}
 		await this.contributionRepository.update(studLogin, contribution);
 	}
