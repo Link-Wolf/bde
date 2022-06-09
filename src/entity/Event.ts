@@ -1,5 +1,4 @@
-import { InjectRepository } from "@nestjs/typeorm";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, Repository } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Stud } from './Stud'
 
 @Entity()
