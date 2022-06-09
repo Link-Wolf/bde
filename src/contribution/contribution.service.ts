@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
 import { StudService } from '../stud/stud.service';
-import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
+import { ContributionDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
@@ -26,17 +26,18 @@ export class ContributionService {
 		});
 	}
 
-	async update(studLogin: string, contribution: ContributionUpdateDto): Promise<void> {
-		try {
-			await this.contributionRepository.update(studLogin, contribution);
-		} catch (error) {
+	async update(studLogin: string, contribution: any): Promise<void> {
+		let cont = await this.findOne(studLogin)
+		if (!cont) {
 			this.logger.error(`Failed on update user ${studLogin}`)
 		}
+		await this.contributionRepository.update(studLogin, contribution);
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
+		console.log(contributionData)
 		await this.contributionRepository.save(contributionData);
-		this.studService.update(contributionData.studLogin, { isPremium: true });
+		this.studService.update(contributionData.stud.login, { isPremium: true });
 	}
 
 	async removeOne(studLogin: string): Promise<void> {
