@@ -1,19 +1,20 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
 import { Stud } from '../entity/Stud';
+import { CustomLogger } from '../logger/CustomLogger.class';
 import { StudService } from '../stud/stud.service';
 import { EventDto } from './event.dto';
 
 @Injectable()
 export class EventService {
-	private readonly logger = new Logger(EventService.name)
 
 	constructor(
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
-		private studService: StudService
+		private studService: StudService,
+		private readonly logger: CustomLogger
 	) { }
 
 	findAll(): Promise<Event[]> {
