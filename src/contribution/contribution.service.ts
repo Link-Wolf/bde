@@ -1,14 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
+<<<<<<< HEAD
 import { CustomLogger } from '../logger/CustomLogger.class';
+=======
+>>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
 import { StudService } from '../stud/stud.service';
 import { ContributionDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
+<<<<<<< HEAD
 	private readonly logger = new CustomLogger();
+=======
+	private readonly logger = new Logger(ContributionService.name)
+>>>>>>> parent of d32f131... Merge branch 'master' of github.com:Link-Wolf/bde
 
 	constructor(
 		@InjectRepository(Contribution)
@@ -30,7 +37,7 @@ export class ContributionService {
 	async update(studLogin: string, contribution: any): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			this.logger.error(`Failed on update contuser ${studLogin}`)
+			this.logger.error(`Failed on update user ${studLogin}`)
 		}
 		await this.contributionRepository.update(studLogin, contribution);
 	}
