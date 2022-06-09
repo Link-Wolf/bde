@@ -33,12 +33,10 @@ export class EventService {
 	}
 
 	async subscribe(id: number, login: string): Promise<void> {
+		
 		let event = await this.findOne(id);
-		console.log(event);
 		event.studs = await this.getStuds(id);
-		console.log(event.studs);
 		event.studs.push(await this.studService.findOne(login));
-		console.log(event.studs);
 		await this.eventRepository.save(event);
 	}
 
