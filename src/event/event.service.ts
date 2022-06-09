@@ -9,12 +9,12 @@ import { EventDto } from './event.dto';
 
 @Injectable()
 export class EventService {
+	private readonly logger = new CustomLogger()
 
 	constructor(
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
 		private studService: StudService,
-		private readonly logger: CustomLogger
 	) { }
 
 	findAll(): Promise<Event[]> {

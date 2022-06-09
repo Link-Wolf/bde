@@ -7,10 +7,11 @@ import { StudDto } from './stud.dto';
 
 @Injectable()
 export class StudService {
+	private readonly logger = new CustomLogger()
+
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
-		private readonly logger: CustomLogger
 	) { }
 
 	findAll(): Promise<Stud[]> {

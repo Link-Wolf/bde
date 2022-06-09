@@ -8,11 +8,12 @@ import { ContributionDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
+	private readonly logger = new CustomLogger();
+
 	constructor(
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
 		private studService: StudService,
-		private logger = new CustomLogger(new LogService())
 	) { }
 
 	findAll(): Promise<Contribution[]> {
