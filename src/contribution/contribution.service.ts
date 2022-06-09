@@ -12,7 +12,7 @@ export class ContributionService {
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
 		private studService: StudService,
-		private logger: CustomLogger
+		private logger = new CustomLogger(new LogService())
 	) { }
 
 	findAll(): Promise<Contribution[]> {

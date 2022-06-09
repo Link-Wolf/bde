@@ -4,7 +4,7 @@ import { LogService } from './logger.service';
 @Injectable()
 export class CustomLogger extends ConsoleLogger {
 	constructor(
-		private logService: LogService
+		private logService : LogService
 	) {
 		super();
 	}
