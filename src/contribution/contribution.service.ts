@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
@@ -7,6 +7,8 @@ import { ContributionDto, ContributionUpdateDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
+	private readonly logger = new Logger(ContributionService.name)
+
 	constructor(
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
@@ -25,7 +27,11 @@ export class ContributionService {
 	}
 
 	async update(studLogin: string, contribution: ContributionUpdateDto): Promise<void> {
-		await this.contributionRepository.update(studLogin, contribution);
+		try {
+			await this.contributionRepository.update(studLogin, contribution);
+		} catch (error) {
+			this.logger.error(`Failed on update user ${studLogin}`)
+		}
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
