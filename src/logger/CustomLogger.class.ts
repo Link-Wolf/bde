@@ -1,19 +1,15 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 import { LogService } from './logger.service';
 
-@Injectable()
 export class CustomLogger extends ConsoleLogger {
-	constructor(
-		private logService : LogService
-	) {
-		super();
-	}
+	// private logService: LogService
+
 	async error(message: any, stack?: string, context?: string) {
-		this.logService.create(message, "error");
+		// this.logService.create(message, "error");
 		super.error(message, stack, context);
 	}
 	async warn(message: any, stack?: string, context?: string) {
-		this.logService.create(message, "warn");
+		// this.logService.create(message, "warn");
 		super.warn(message, stack, context);
 	}
 	log(message: any, stack?: string, context?: string) {

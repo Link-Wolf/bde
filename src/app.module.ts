@@ -10,6 +10,7 @@ import { StudModule } from './stud/stud.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { Log } from './entity/Log';
+import { LogModule } from './logger/logger.module';
 
 @Module({
 	imports: [
@@ -26,7 +27,8 @@ import { Log } from './entity/Log';
 		StudModule,
 		ContributionModule,
 		EventModule,
-		InscriptionModule
+		InscriptionModule,
+		LogModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
