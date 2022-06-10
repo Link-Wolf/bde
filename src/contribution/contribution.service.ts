@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Catch, HttpException, HttpStatus, Injectable, NotFoundException, UseFilters } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
+import { HttpExceptionFilter } from '../http-exception.filter';
 import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
 import { ContributionDto } from './contribution.dto';
@@ -30,7 +31,8 @@ export class ContributionService {
 	async update(studLogin: string, contribution: any): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			this.logger.error(`no contribution for that student`);
+			await this.logger.error(`no contribution for that student`);
+			throw new HttpException(`no contribution for that student`, HttpStatus.NOT_FOUND);
 		}
 		await this.contributionRepository.update(cont, contribution);
 	}

@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseFilters } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
+import { HttpExceptionFilter } from '../http-exception.filter';
 import { ContributionDto } from './contribution.dto';
 import { ContributionDtoPipe } from './contribution.pipe';
 import { ContributionService } from './contribution.service';
@@ -20,21 +21,21 @@ export class ContributionController {
 
 	@Post()
 	create(@Body(ContributionDtoPipe) contribution: ContributionDto) {
-		this.contributionService.create(contribution);
+		return this.contributionService.create(contribution);
 	}
 
 	@Patch(':login')
 	update(@Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
-		this.contributionService.update(login, contribution);
+		return this.contributionService.update(login, contribution);
 	}
 
 	@Delete(':login')
 	remove(@Param('login', ParseIntPipe) login: string) {
-		this.contributionService.removeOne(login);
+		return this.contributionService.removeOne(login);
 	}
 
 	@Delete()
 	removeAll() {
-		this.contributionService.removeAll();
+		return this.contributionService.removeAll();
 	}
 }
