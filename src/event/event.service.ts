@@ -13,7 +13,7 @@ export class EventService {
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
 		private studService: StudService,
-		private readonly logger = new Logger()// CustomLogger
+		// private readonly logger = new Logger()// CustomLogger
 	) { }
 
 	findAll(): Promise<Event[]> {
@@ -29,7 +29,7 @@ export class EventService {
 	async findOne(id: number): Promise<Event> {
 		let event = await this.eventRepository.findOneBy({ id: id });
 		if (!event) {
-			this.logger.warn(`No event found with id >${id}<`)
+			// this.logger.warn(`No event found with id >${id}<`)
 			throw new NotFoundException()
 		}
 		return event
@@ -39,7 +39,7 @@ export class EventService {
 		try {
 			await this.eventRepository.update(id, eventData);
 		} catch (error) {
-			this.logger.error(`Failed to update event >${id}<`)
+			// this.logger.error(`Failed to update event >${id}<`)
 			throw new NotFoundException()
 		}
 	}
@@ -53,20 +53,20 @@ export class EventService {
 		// }
 		event.studs = await this.getStuds(id);
 		if (!event.studs) {
-			this.logger.warn(`No students found for event >${id}<`)
+			// this.logger.warn(`No students found for event >${id}<`)
 			throw new NotFoundException()
 		}
 		try {
 			event.studs.push(await this.studService.findOne(login));
 		} catch (error) {
-			this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
+			// this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
 			throw new NotFoundException(error)
 		}
 		console.log(event);
 		try {
 			await this.eventRepository.save(event);
 		} catch (error) {
-			this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
+			// this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
 			throw new NotFoundException(error)
 		}
 	}
@@ -75,7 +75,7 @@ export class EventService {
 		try {
 			await this.eventRepository.save(eventDto);
 		} catch (error) {
-			this.logger.error(`Failed to create event >${eventDto.name}<`)
+			// this.logger.error(`Failed to create event >${eventDto.name}<`)
 			throw new NotFoundException(error)
 		}
 	}
@@ -84,7 +84,7 @@ export class EventService {
 		try {
 			await this.eventRepository.delete({ id: id });
 		} catch (error) {
-			this.logger.error(`Failed to delete event >${id}<`)
+			// this.logger.error(`Failed to delete event >${id}<`)
 			throw new NotFoundException(error)
 		}
 	}
