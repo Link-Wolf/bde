@@ -33,21 +33,21 @@ export class LoggerService {
 
 	async log(message: string) {
 		Logger.log(message);
-		await this.logRepertory.save({
-			date: new Date(Date.now()),
-			message: message,
-			type: "log"
-		})
+		// await this.logRepertory.save({
+		// 	date: new Date(Date.now()),
+		// 	message: message,
+		// 	type: "log"
+		// })
 		this.logfile("log", message)
 	}
 
 	async verbose(message: string) {
 		Logger.verbose(message);
-		await this.logRepertory.save({
-			date: new Date(Date.now()),
-			message: message,
-			type: "verbose"
-		})
+		// await this.logRepertory.save({
+		// 	date: new Date(Date.now()),
+		// 	message: message,
+		// 	type: "verbose"
+		// })
 		this.logfile("verbose", message)
 	}
 
