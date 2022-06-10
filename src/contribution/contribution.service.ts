@@ -1,4 +1,4 @@
-import { Catch, HttpException, HttpStatus, Injectable, NotFoundException, UseFilters } from '@nestjs/common';
+import { Catch, HttpException, HttpStatus, Injectable, NotFoundException, UnprocessableEntityException, UseFilters } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
@@ -31,10 +31,16 @@ export class ContributionService {
 	async update(studLogin: string, contribution: any): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			await this.logger.error(`no contribution for that student`);
-			throw new HttpException(`no contribution for that student`, HttpStatus.NOT_FOUND);
+			await this.logger.error(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
+			throw new NotFoundException(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
 		}
-		await this.contributionRepository.update(cont, contribution);
+		try {
+			await this.contributionRepository.update(cont, contribution);
+		}
+		catch {
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
+			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database`);
+		}
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
