@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
@@ -12,7 +12,7 @@ export class ContributionService {
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
 		private studService: StudService,
-		private logger = new CustomLogger(new LogService())
+		private readonly logger = new Logger()//CustomLogger
 	) { }
 
 	findAll(): Promise<Contribution[]> {
