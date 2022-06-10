@@ -13,7 +13,9 @@ export class LoggerService {
 	error(message: string) {
 		Logger.error(message);
 		this.logRepertory.save({
-			bla
+			date: new Date(Date.now()),
+			message: message,
+			type: "error"
 		})
 		// append file
 	}
@@ -21,7 +23,9 @@ export class LoggerService {
 	warning(message: string) {
 		Logger.warn(message);
 		this.logRepertory.save({
-			bla
+			date: new Date(Date.now()),
+			message: message,
+			type: "warn"
 		})
 		// append file
 	}
@@ -29,7 +33,9 @@ export class LoggerService {
 	log(message: string) {
 		Logger.log(message);
 		this.logRepertory.save({
-			bla
+			date: new Date(Date.now()),
+			message: message,
+			type: "log"
 		})
 		// append file
 	}
@@ -37,7 +43,9 @@ export class LoggerService {
 	verbose(message: string) {
 		Logger.verbose(message);
 		this.logRepertory.save({
-			bla
+			date: new Date(Date.now()),
+			message: message,
+			type: "verbose"
 		})
 		// append file
 	}
