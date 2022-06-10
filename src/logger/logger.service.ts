@@ -53,7 +53,7 @@ export class LoggerService {
 
 	async logfile(type: string, message: string) {
 		let today = new Date(Date.now())
-		let file = today.toLocaleDateString().replace('/', '-') + ".log"
+		let file = today.toLocaleDateString().replace('/', '-').replace('/', '-') + ".log"
 		let time = today.getHours().toLocaleString() + ':' + today.getMinutes().toLocaleString() + ':' + today.getSeconds().toLocaleString()
 		console.log(today)
 		console.log(file)
