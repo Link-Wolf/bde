@@ -58,7 +58,7 @@ export class LoggerService {
 		console.log(today)
 		console.log(file)
 		console.log(time)
-		fs.appendFile(file, '\n' + time + '[' + type.toUpperCase() + "] : " + message, (err) => {
+		fs.appendFile(file, time + '[' + type.toUpperCase() + "] : " + message + '\n', (err) => {
 		    if (err) throw err;
 		    console.log('The logs were updated!');
 		});
