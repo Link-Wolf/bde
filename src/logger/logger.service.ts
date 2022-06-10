@@ -10,7 +10,7 @@ export class LoggerService {
 		private logRepertory: Repository<Log>
 	) { }
 
-	logError(message: string) {
+	error(message: string) {
 		Logger.error(message);
 		this.logRepertory.save({
 			bla
@@ -18,7 +18,7 @@ export class LoggerService {
 		// append file
 	}
 
-	logWarning(message: string) {
+	warning(message: string) {
 		Logger.warn(message);
 		this.logRepertory.save({
 			bla
@@ -26,7 +26,7 @@ export class LoggerService {
 		// append file
 	}
 
-	logLog(message: string) {
+	log(message: string) {
 		Logger.log(message);
 		this.logRepertory.save({
 			bla
@@ -34,7 +34,7 @@ export class LoggerService {
 		// append file
 	}
 
-	logVerbose(message: string) {
+	verbose(message: string) {
 		Logger.verbose(message);
 		this.logRepertory.save({
 			bla
