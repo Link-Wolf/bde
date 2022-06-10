@@ -28,7 +28,7 @@ export class LoggerService {
 			message: message,
 			type: "warn"
 		})
-		this.logfile("warn", message)
+		this.logfile("warning", message)
 	}
 
 	async log(message: string) {
@@ -64,12 +64,9 @@ export class LoggerService {
 		if (today.getSeconds() < 10)
 			seconds = '0' + seconds
 		let time = hours + ':' + minutes + ':' + seconds
-		console.log(today)
-		console.log(file)
-		console.log(time)
-		fs.appendFile(file, time + '[' + type.toUpperCase() + "] : " + message + '\n', (err) => {
+		let style = ' [' + type.toUpperCase() + ']'
+		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) +  ' : ' + message + '\n', (err) => {
 		    if (err) throw err;
-		    console.log('The logs were updated!');
 		});
 
 
