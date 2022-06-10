@@ -16,15 +16,22 @@ export class ContributionService {
 		private logger: LoggerService,
 	) { }
 
-	findAll(): Promise<Contribution[]> {
-		return this.contributionRepository.find();
+	async findAll(): Promise<Contribution[]> {
+		try {
+			return this.contributionRepository.find();
+		}
+		catch{
+			await this.logger.error(`ptdr tu pue]`);
+			throw new UnprocessableEntityException(`ptdr tu pue]`);
+		}
 	}
 
-	findOne(studLogin: string): Promise<Contribution> {
+	async findOne(studLogin: string): Promise<Contribution> {
 		return this.contributionRepository.findOne({
 			where: { studLogin: studLogin },
 			order: { begin_date: "DESC" },
 		});
+		// TODO: if null -> warn / try catch-> err UnprocessableEntityException
 	}
 
 	async update(studLogin: string, contribution: any): Promise<void> {
@@ -43,22 +50,28 @@ export class ContributionService {
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
-		if (!contributionData.stud) {
-			this.logger.error(`student not founded`);
-		}
 		await this.contributionRepository.save(contributionData);
-		this.studService.update(contributionData.stud.login, { isPremium: true });
+		try {
+			this.studService.update(contributionData.stud.login, { isPremium: true });
+		}
+		catch {
+			await this.logger.error(`Failed to update contribution of student ${contributionData.stud.login} on database`);
+			throw new UnprocessableEntityException(`Failed to update contribution of student ${contributionData.stud.login} on database`);
+		}
 	}
 
 	async removeOne(studLogin: string): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			this.logger.error(`no contribution for that student`);
+			await this.logger.warn(`lol stud exists pas`);
+			throw new NotFoundException(`lol stud exists pas`);
 		}
 		await this.contributionRepository.delete({ studLogin: studLogin });
+		//TODO: faire un find avant et warn si pas de contrib pour l'user / try catch err UnprocessableEntityException
 	}
 
 	async removeAll(): Promise<void> {
 		await this.contributionRepository.delete({});
+		//TODO: try catch err UnprocessableEntityException
 	}
 }
