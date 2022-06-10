@@ -1,5 +1,6 @@
-import { ArgumentMetadata, LoggerService, NotFoundException } from "@nestjs/common";
+import { ArgumentMetadata, NotFoundException } from "@nestjs/common";
 import { Injectable, PipeTransform } from "@nestjs/common";
+import { LoggerService } from "../logger/logger.service";
 import { StudService } from "../stud/stud.service";
 import { ContributionDto } from "./contribution.dto";
 
