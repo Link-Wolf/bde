@@ -54,7 +54,16 @@ export class LoggerService {
 	async logfile(type: string, message: string) {
 		let today = new Date(Date.now())
 		let file = "logs/" + today.toLocaleDateString().replace('/', '-').replace('/', '-') + ".log"
-		let time = today.getHours().toLocaleString() + ':' + today.getMinutes().toLocaleString() + ':' + today.getSeconds().toLocaleString()
+		let hours = today.getHours().toLocaleString()
+		let minutes = today.getMinutes().toLocaleString()
+		let seconds = today.getSeconds().toLocaleString()
+		if (today.getHours() < 10)
+			hours = '0' + hours
+		if (today.getMinutes() < 10)
+			minutes = '0' + minutes
+		if (today.getSeconds() < 10)
+			seconds = '0' + seconds
+		let time = hours + ':' + minutes + ':' + seconds
 		console.log(today)
 		console.log(file)
 		console.log(time)
