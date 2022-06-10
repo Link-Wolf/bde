@@ -19,9 +19,6 @@ export class LoggerService {
 			type: "error"
 		})
 		this.logfile("error", message)
-
-
-		// append file
 	}
 
 	async warn(message: string) {
@@ -32,8 +29,6 @@ export class LoggerService {
 			type: "warn"
 		})
 		this.logfile("warn", message)
-
-		// append file
 	}
 
 	async log(message: string) {
@@ -44,8 +39,6 @@ export class LoggerService {
 			type: "log"
 		})
 		this.logfile("log", message)
-
-		// append file
 	}
 
 	async verbose(message: string) {
@@ -56,13 +49,16 @@ export class LoggerService {
 			type: "verbose"
 		})
 		this.logfile("verbose", message)
-		// append file
 	}
 
 	logfile(type: string, message: string) {
-		let file = (new Date(Date.now())).toLocaleDateString() + ".log"
+		let today = new Date(Date.now())
+		let file = today.toLocaleDateString() + ".log"
+		let time = today.getHours().toLocaleString() + ':' + today.getMinutes().toLocaleString() + ':' + today.getSeconds().toLocaleString()
+		console.log(today)
 		console.log(file)
-		fs.appendFile(file, '\n' + '[' + type.toUpperCase() + "] : " + message, (err) => {
+		console.log(time)
+		fs.appendFile(file, '\n' + time + '[' + type.toUpperCase() + "] : " + message, (err) => {
 		    if (err) throw err;
 		    console.log('The logs were updated!');
 		});
