@@ -33,6 +33,7 @@ export class ContributionService {
 				where: { studLogin: studLogin },
 				order: { begin_date: "DESC" },
 			});
+			
 			if (!cont)
 				this.logger.warn(`No contribution found for student ${studLogin}`)
 			else
