@@ -10,10 +10,11 @@ export class StudService {
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
-		private readonly logger: LoggerService// CustomLogger
+		private readonly logger: LoggerService
 	) { }
 
 	findAll(): Promise<Stud[]> {
+		this.logger.log(`Get all students`)
 		return this.studRepository.find();
 	}
 
