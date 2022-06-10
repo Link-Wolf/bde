@@ -10,6 +10,7 @@ import { StudModule } from './stud/stud.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
+import { Log } from './entity/Log';
 
 @Module({
 	imports: [
@@ -20,7 +21,7 @@ import { LoggerModule } from './logger/logger.module';
 			username: 'test',
 			password: 'test',
 			database: 'bde',
-			entities: [Stud, Contribution, Event],
+			entities: [Stud, Contribution, Event, Log],
 			synchronize: true
 		}),
 		StudModule,
