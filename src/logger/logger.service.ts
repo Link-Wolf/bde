@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Log } from '../entity/Log';
+import * as fs from 'fs';
 
 @Injectable()
 export class LoggerService {
@@ -59,6 +60,16 @@ export class LoggerService {
 	}
 
 	logfile(type: string, message: string) {
-		
+		let file = (new Date(Date.now())).toLocaleDateString() + ".log"
+		console.log(file)
+		fs.appendFile(file, '\n' + '[' + type.toUpperCase() + "] : " + message, (err) => {
+		    if (err) throw err;
+		    console.log('The logs were updated!');
+		});
+
+
+
+
+
 	}
 }
