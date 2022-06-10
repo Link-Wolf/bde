@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { ConsoleLogger, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Log } from '../entity/Log';
@@ -15,14 +15,19 @@ export class LoggerService {
 		this.logRepertory.save({
 			bla
 		})
+		this.logfile("error", message)
+
+
 		// append file
 	}
 
-	warning(message: string) {
+	warn(message: string) {
 		Logger.warn(message);
 		this.logRepertory.save({
 			bla
 		})
+		this.logfile("warn", message)
+
 		// append file
 	}
 
@@ -31,6 +36,8 @@ export class LoggerService {
 		this.logRepertory.save({
 			bla
 		})
+		this.logfile("log", message)
+
 		// append file
 	}
 
@@ -39,6 +46,11 @@ export class LoggerService {
 		this.logRepertory.save({
 			bla
 		})
+		this.logfile("verbose", message)
 		// append file
+	}
+
+	logfile(type: string, message: string) {
+		
 	}
 }
