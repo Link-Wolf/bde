@@ -9,7 +9,6 @@ import { Stud } from './entity/Stud';
 import { StudModule } from './stud/stud.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
-import { Log } from './entity/Log';
 
 @Module({
 	imports: [
@@ -20,13 +19,13 @@ import { Log } from './entity/Log';
 			username: 'test',
 			password: 'test',
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Log],
+			entities: [Stud, Contribution, Event],
 			synchronize: true
 		}),
 		StudModule,
 		ContributionModule,
 		EventModule,
-		InscriptionModule
+		InscriptionModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
