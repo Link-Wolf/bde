@@ -8,7 +8,7 @@ export class ContributionDtoPipe implements PipeTransform {
 	constructor(
 		private studService: StudService
 	) { }
-	async transform(value: any, metadata: ArgumentMetadata) {
+	async transform(value: any, _metadata: ArgumentMetadata) {
 		let ret = new ContributionDto();
 		if ("cost" in value)
 			ret.cost = Number(value.cost)
@@ -16,8 +16,14 @@ export class ContributionDtoPipe implements PipeTransform {
 			ret.stud = await this.studService.findOne(value.studLogin)
 		if ("begin_date" in value)
 			ret.begin_date = new Date(value.begin_date)
+		else
+			ret.begin_date = new Date(Date.now())
 		if ("end_date" in value)
 			ret.end_date = new Date(value.end_date)
+		else {
+			ret.end_date = new Date(Date.now())
+			ret.end_date.setMonth(ret.begin_date.getMonth() + 6)
+		}
 		return ret;
 	}
 }
