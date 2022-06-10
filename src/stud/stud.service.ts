@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Injectable } from '@nestjs/common';
-=======
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
->>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -10,42 +6,51 @@ import { StudDto } from './stud.dto';
 
 @Injectable()
 export class StudService {
-
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
-<<<<<<< HEAD
-=======
 		private readonly logger = new Logger()// CustomLogger
->>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 	) { }
 
 	findAll(): Promise<Stud[]> {
 		return this.studRepository.find();
 	}
 
-	findOne(login: string): Promise<Stud> {
-		return this.studRepository.findOneBy({ login: login });
+	async findOne(login: string): Promise<Stud> {
+		let stud = await this.studRepository.findOneBy({ login: login });
+		if (!stud) {
+			this.logger.warn(`No user found with login >${login}<`)
+			throw new NotFoundException()
+		}
+		return stud
 	}
 
 	async update(login: string, studData: any): Promise<void> {
-		var stud = await this.findOne(login);
-		if (!stud) {
-			//ERROR: there is no stud ${login}
+		try {
+			await this.studRepository.update(login, studData);
+		} catch (error) {
+			this.logger.error(`Failed to update user >${login}<`)
+			throw new NotFoundException(error)
 		}
-		await this.studRepository.update(stud, studData);
 	}
 
 	async create(studDto: StudDto): Promise<void> {
-		await this.studRepository.save(studDto);
+		//TODO: si le pelot existe deja -> check
+		try {
+			await this.studRepository.save(studDto);
+		} catch (error) {
+			this.logger.error(`Failed to create user >${studDto.login}<`)
+			throw new NotFoundException(error)
+		}
 	}
 
 	async removeOne(login: string): Promise<void> {
-		var stud = await this.findOne(login);
-		if (!stud) {
-			//ERROR: there is no stud ${login}
+		try {
+			await this.studRepository.delete({ login: login });
+		} catch (error) {
+			this.logger.error(`Failed to delete user >${login}<`)
+			throw new NotFoundException(error)
 		}
-		await this.studRepository.delete({ login: login });
 	}
 
 	async removeAll(): Promise<void> {
