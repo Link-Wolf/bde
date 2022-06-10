@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -14,22 +14,36 @@ export class StudService {
 	) { }
 
 	findAll(): Promise<Stud[]> {
-		this.logger.log(`Get all students`)
-		return this.studRepository.find();
+		try {
+			let studs = this.studRepository.find();
+			this.logger.log(`Get all students`)
+			return studs;
+		}
+		catch {
+			this.logger.error(`lol nop`)
+			throw new InternalServerErrorException();
+		}
 	}
 
 	async findOne(login: string): Promise<Stud> {
-		let stud = await this.studRepository.findOneBy({ login: login });
-		if (!stud) {
-			this.logger.warn(`No user found with login >${login}<`)
-			throw new NotFoundException()
+		try {
+			let stud = await this.studRepository.findOneBy({ login: login });
+			if (!stud) {
+				this.logger.warn(`No stud found with login >${login}<`)
+			}
+			this.logger.log(`Finding user ${login}`);
+			return stud
 		}
-		return stud
+		catch {
+			this.logger.error(`lol nop`)
+			throw new InternalServerErrorException();
+		}
 	}
 
 	async update(login: string, studData: any): Promise<void> {
 		try {
 			await this.studRepository.update(login, studData);
+			this.logger.log(`Update stud ${login} with value ${studData}`);
 		} catch (error) {
 			this.logger.error(`Failed to update user >${login}<`)
 			throw new NotFoundException(error)
@@ -40,6 +54,7 @@ export class StudService {
 		//TODO: si le pelot existe deja -> check
 		try {
 			await this.studRepository.save(studDto);
+			this.logger.log(`Create stud ${studDto.login} with value ${studDto}`);
 		} catch (error) {
 			this.logger.error(`Failed to create user >${studDto.login}<`)
 			throw new NotFoundException(error)
