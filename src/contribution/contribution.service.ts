@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
@@ -18,20 +18,30 @@ export class ContributionService {
 
 	async findAll(): Promise<Contribution[]> {
 		try {
-			return this.contributionRepository.find();
-		}
-		catch{
-			await this.logger.error(`ptdr tu pue]`);
-			throw new UnprocessableEntityException(`ptdr tu pue]`);
+			let contribs = this.contributionRepository.find();
+			await this.logger.log(`Got all contributions`);
+			return contribs
+		} catch(error) {
+			await this.logger.error(`Failed to get all contributions`);
+			throw new InternalServerErrorException(`Failed to get all contributions (${error})`);
 		}
 	}
 
 	async findOne(studLogin: string): Promise<Contribution> {
-		return this.contributionRepository.findOne({
-			where: { studLogin: studLogin },
-			order: { begin_date: "DESC" },
-		});
-		// TODO: if null -> warn / try catch-> err UnprocessableEntityException
+		try {
+			let cont = this.contributionRepository.findOne({
+				where: { studLogin: studLogin },
+				order: { begin_date: "DESC" },
+			});
+			if (!cont)
+				this.logger.warn(`No contribution found for student ${studLogin}`)
+			else
+				this.logger.log(`Got last contribution of student ${studLogin}`)
+			return cont
+		} catch (error) {
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
+			throw new InternalServerErrorException(`Failed to find contribution for student ${studLogin} on database (${error})`);
+		}
 	}
 
 	async update(studLogin: string, contribution: any): Promise<void> {
@@ -42,15 +52,20 @@ export class ContributionService {
 		}
 		try {
 			await this.contributionRepository.update(cont, contribution);
-		}
-		catch {
+			this.logger.log(`Successfully updated current contribution of student ${studLogin}`)
+		} catch (error) {
 			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
-			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database`);
+			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database (${error})`);
 		}
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
-		await this.contributionRepository.save(contributionData);
+		try {
+			await this.contributionRepository.save(contributionData);
+
+		} catch(error) {
+
+		}
 		try {
 			this.studService.update(contributionData.stud.login, { isPremium: true });
 		}
@@ -63,15 +78,24 @@ export class ContributionService {
 	async removeOne(studLogin: string): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			await this.logger.warn(`lol stud exists pas`);
-			throw new NotFoundException(`lol stud exists pas`);
+			await this.logger.warn(`Failed to delete contributions of student ${studLogin}, no contribution found`);
 		}
-		await this.contributionRepository.delete({ studLogin: studLogin });
-		//TODO: faire un find avant et warn si pas de contrib pour l'user / try catch err UnprocessableEntityException
+		try {
+			await this.contributionRepository.delete({ studLogin: studLogin });
+			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`)
+		} catch (error) {
+			this.logger.error(`Failed to delete all contributions of student ${studLogin}`)
+			throw new UnprocessableEntityException(`Failed to delete contributions of student ${studLogin} on database (${error})`);
+		}
 	}
 
 	async removeAll(): Promise<void> {
-		await this.contributionRepository.delete({});
-		//TODO: try catch err UnprocessableEntityException
+		try {
+			await this.contributionRepository.delete({});
+			this.logger.log(`Successfully deleted all contributions`)
+		} catch (error) {
+			this.logger.error(`Failed to delete all contributions`)
+			throw new UnprocessableEntityException(`Failed to delete all contributions on database (${error})`);
+		}
 	}
 }
