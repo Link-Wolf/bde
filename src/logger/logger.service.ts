@@ -51,9 +51,9 @@ export class LoggerService {
 		this.logfile("verbose", message)
 	}
 
-	logfile(type: string, message: string) {
+	async logfile(type: string, message: string) {
 		let today = new Date(Date.now())
-		let file = today.toLocaleDateString() + ".log"
+		let file = today.toLocaleDateString().replace('/', '-') + ".log"
 		let time = today.getHours().toLocaleString() + ':' + today.getMinutes().toLocaleString() + ':' + today.getSeconds().toLocaleString()
 		console.log(today)
 		console.log(file)
