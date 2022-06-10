@@ -1,4 +1,3 @@
-import { IsBooleanString } from "class-validator";
 
 export class StudDto {
 	login: string;

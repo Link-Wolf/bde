@@ -1,9 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
 import { Stud } from '../entity/Stud';
-import { CustomLogger } from '../logger/CustomLogger.class';
 import { StudService } from '../stud/stud.service';
 import { EventDto } from './event.dto';
 
@@ -13,8 +12,7 @@ export class EventService {
 	constructor(
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
-		private studService: StudService,
-		private readonly logger: CustomLogger
+		private studService: StudService
 	) { }
 
 	findAll(): Promise<Event[]> {
@@ -27,67 +25,41 @@ export class EventService {
 		});
 	}
 
-	async findOne(id: number): Promise<Event> {
-		let event = await this.eventRepository.findOneBy({ id: id });
-		if (!event) {
-			this.logger.warn(`No event found with id >${id}<`)
-			throw new NotFoundException()
-		}
-		return event
+	findOne(id: number): Promise<Event> {
+		return this.eventRepository.findOneBy({ id: id });
 	}
 
 	async update(id: number, eventData: EventDto): Promise<void> {
-		try {
-			await this.eventRepository.update(id, eventData);
-		} catch (error) {
-			this.logger.error(`Failed to update event >${id}<`)
-			throw new NotFoundException()
+		if (!(await this.findOne(id))) {
+			//ERROR: there is no event with id ${id}
 		}
+		await this.eventRepository.update(id, eventData);
 	}
 
 	async subscribe(id: number, login: string): Promise<void> {
-
 		let event = await this.findOne(id);
-		// if (!event) {
-		// 	this.logger.warn(`No event found with id >${id}<`)
-		// 	throw new NotFoundException()
-		// }
+		if (!event) {
+			//ERROR: there is no event with id ${id}
+		}
+		let stud = await this.studService.findOne(login);
+		if (!stud) {
+			//ERROR: there is no student ${login}
+		}
 		event.studs = await this.getStuds(id);
-		if (!event.studs) {
-			this.logger.warn(`No students found for event >${id}<`)
-			throw new NotFoundException()
-		}
-		try {
-			event.studs.push(await this.studService.findOne(login));
-		} catch (error) {
-			this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
-			throw new NotFoundException(error)
-		}
+		event.studs.push(stud);
 		console.log(event);
-		try {
-			await this.eventRepository.save(event);
-		} catch (error) {
-			this.logger.error(`Failed to subscribe student >${login}< to event >${id}<`)
-			throw new NotFoundException(error)
-		}
+		await this.eventRepository.save(event);
 	}
 
 	async create(eventDto: EventDto): Promise<void> {
-		try {
-			await this.eventRepository.save(eventDto);
-		} catch (error) {
-			this.logger.error(`Failed to create event >${eventDto.name}<`)
-			throw new NotFoundException(error)
-		}
+		await this.eventRepository.save(eventDto);
 	}
 
 	async removeOne(id: number): Promise<void> {
-		try {
-			await this.eventRepository.delete({ id: id });
-		} catch (error) {
-			this.logger.error(`Failed to delete event >${id}<`)
-			throw new NotFoundException(error)
+		if (!(await this.findOne(id))) {
+			//ERROR: there is no event with id ${id}
 		}
+		await this.eventRepository.delete({ id: id });
 	}
 
 	async removeAll(): Promise<void> {
@@ -95,6 +67,9 @@ export class EventService {
 	}
 
 	async getStuds(id: number): Promise<Stud[]> {
+		if (!(await this.findOne(id))) {
+			//ERROR: there is no event with id ${id}
+		}
 		return this.eventRepository.query("SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin\" FROM inscriptions insc WHERE \"eventId\" = '" + id + "' );");
 	}
 }
