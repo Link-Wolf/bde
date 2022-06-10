@@ -11,9 +11,9 @@ export class LoggerService {
 		private logRepertory: Repository<Log>
 	) { }
 
-	error(message: string) {
+	async error(message: string) {
 		Logger.error(message);
-		this.logRepertory.save({
+		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			message: message,
 			type: "error"
@@ -24,9 +24,9 @@ export class LoggerService {
 		// append file
 	}
 
-	warn(message: string) {
+	async warn(message: string) {
 		Logger.warn(message);
-		this.logRepertory.save({
+		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			message: message,
 			type: "warn"
@@ -36,9 +36,9 @@ export class LoggerService {
 		// append file
 	}
 
-	log(message: string) {
+	async log(message: string) {
 		Logger.log(message);
-		this.logRepertory.save({
+		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			message: message,
 			type: "log"
@@ -48,9 +48,9 @@ export class LoggerService {
 		// append file
 	}
 
-	verbose(message: string) {
+	async verbose(message: string) {
 		Logger.verbose(message);
-		this.logRepertory.save({
+		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			message: message,
 			type: "verbose"
