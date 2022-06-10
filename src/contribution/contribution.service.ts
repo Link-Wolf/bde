@@ -1,7 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
+import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
 import { ContributionDto } from './contribution.dto';
 
@@ -12,7 +13,7 @@ export class ContributionService {
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
 		private studService: StudService,
-		// private readonly logger = new Logger()//CustomLogger
+		private logger: LoggerService,
 	) { }
 
 	findAll(): Promise<Contribution[]> {
@@ -29,14 +30,14 @@ export class ContributionService {
 	async update(studLogin: string, contribution: any): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			//ERROR: ${studLogin} has no contribution
+			this.logger.error(`no contribution for that student`);
 		}
 		await this.contributionRepository.update(cont, contribution);
 	}
 
 	async create(contributionData: ContributionDto): Promise<void> {
 		if (!contributionData.stud) {
-			//ERROR: stud does not exist
+			this.logger.error(`student not founded`);
 		}
 		await this.contributionRepository.save(contributionData);
 		this.studService.update(contributionData.stud.login, { isPremium: true });
@@ -45,7 +46,7 @@ export class ContributionService {
 	async removeOne(studLogin: string): Promise<void> {
 		let cont = await this.findOne(studLogin)
 		if (!cont) {
-			//ERROR: ${studLogin} has no contribution
+			this.logger.error(`no contribution for that student`);
 		}
 		await this.contributionRepository.delete({ studLogin: studLogin });
 	}
