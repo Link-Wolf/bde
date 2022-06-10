@@ -21,7 +21,7 @@ export class ContributionService {
 			let contribs = this.contributionRepository.find();
 			await this.logger.log(`Got all contributions`);
 			return contribs
-		} catch(error) {
+		} catch (error) {
 			await this.logger.error(`Failed to get all contributions`);
 			throw new InternalServerErrorException(`Failed to get all contributions (${error})`);
 		}
@@ -29,7 +29,7 @@ export class ContributionService {
 
 	async findOne(studLogin: string): Promise<Contribution> {
 		try {
-			let cont = this.contributionRepository.findOne({
+			let cont = await this.contributionRepository.findOne({
 				where: { studLogin: studLogin },
 				order: { begin_date: "DESC" },
 			});
@@ -63,7 +63,7 @@ export class ContributionService {
 		try {
 			await this.contributionRepository.save(contributionData);
 
-		} catch(error) {
+		} catch (error) {
 
 		}
 		try {

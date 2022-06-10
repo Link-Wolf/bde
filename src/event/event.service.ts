@@ -60,7 +60,7 @@ export class EventService {
 			event.studs.push(await this.studService.findOne(login));
 		} catch (error) {
 			// this.logger.error(`stud exists pas lmao`)
-			throw new NotFoundError(error)
+			throw new NotFoundException(error)
 		}
 		try {
 			await this.eventRepository.save(event);
