@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, LoggerService, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -9,7 +9,7 @@ export class StudService {
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
-		// private readonly logger = new Logger()// CustomLogger
+		private readonly logger : LoggerService// CustomLogger
 	) { }
 
 	findAll(): Promise<Stud[]> {
@@ -19,7 +19,7 @@ export class StudService {
 	async findOne(login: string): Promise<Stud> {
 		let stud = await this.studRepository.findOneBy({ login: login });
 		if (!stud) {
-			Logger.warn(`No user found with login >${login}<`)
+			this.logger.warn(`No user found with login >${login}<`)
 			throw new NotFoundException()
 		}
 		return stud
@@ -29,7 +29,7 @@ export class StudService {
 		try {
 			await this.studRepository.update(login, studData);
 		} catch (error) {
-			Logger.error(`Failed to update user >${login}<`)
+			this.logger.error(`Failed to update user >${login}<`)
 			throw new NotFoundException(error)
 		}
 	}
@@ -39,7 +39,7 @@ export class StudService {
 		try {
 			await this.studRepository.save(studDto);
 		} catch (error) {
-			Logger.error(`Failed to create user >${studDto.login}<`)
+			this.logger.error(`Failed to create user >${studDto.login}<`)
 			throw new NotFoundException(error)
 		}
 	}
@@ -48,7 +48,7 @@ export class StudService {
 		try {
 			await this.studRepository.delete({ login: login });
 		} catch (error) {
-			Logger.error(`Failed to delete user >${login}<`)
+			this.logger.error(`Failed to delete user >${login}<`)
 			throw new NotFoundException(error)
 		}
 	}
