@@ -52,8 +52,17 @@ export class LoggerService {
 	}
 
 	async logfile(type: string, message: string) {
-		let today = new Date(Date.now())
-		let file = "logs/" + today.toLocaleDateString().replace('/', '-').replace('/', '-') + ".log"
+		const today = new Date(Date.now())
+		let day = today.getDay().toLocaleString()
+		let month = today.getMonth().toLocaleString()
+		let year = today.getFullYear().toLocaleString()
+		if (today.getDay() < 10)
+			day = '0' + day
+		if (today.getMonth() < 10)
+			month = '0' + month
+		if (today.getFullYear() < 10)
+			year = '0' + year
+		let file = "logs/" + month + '-' + day + '-' + year + ".log"
 		let hours = today.getHours().toLocaleString()
 		let minutes = today.getMinutes().toLocaleString()
 		let seconds = today.getSeconds().toLocaleString()
@@ -63,15 +72,10 @@ export class LoggerService {
 			minutes = '0' + minutes
 		if (today.getSeconds() < 10)
 			seconds = '0' + seconds
-		let time = hours + ':' + minutes + ':' + seconds
-		let style = ' [' + type.toUpperCase() + ']'
+		const time = hours + ':' + minutes + ':' + seconds
+		const style = ' [' + type.toUpperCase() + ']'
 		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) +  ' : ' + message + '\n', (err) => {
 		    if (err) throw err;
 		});
-
-
-
-
-
 	}
 }
