@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Injectable } from '@nestjs/common';
+=======
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+>>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -10,6 +14,10 @@ export class StudService {
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
+<<<<<<< HEAD
+=======
+		private readonly logger = new Logger()// CustomLogger
+>>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 	) { }
 
 	findAll(): Promise<Stud[]> {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Injectable } from '@nestjs/common';
+=======
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+>>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
@@ -12,7 +16,12 @@ export class EventService {
 	constructor(
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
+<<<<<<< HEAD
 		private studService: StudService
+=======
+		private studService: StudService,
+		private readonly logger = new Logger()// CustomLogger
+>>>>>>> 5e6dec6f3f493891a9431b03fb5a7b20ca1432e6
 	) { }
 
 	findAll(): Promise<Event[]> {
