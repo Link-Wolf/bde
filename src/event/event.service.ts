@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
@@ -14,7 +14,7 @@ export class EventService {
 		@InjectRepository(Event)
 		private eventRepository: Repository<Event>,
 		private studService: StudService,
-		private readonly logger: CustomLogger
+		private readonly logger = new Logger()// CustomLogger
 	) { }
 
 	findAll(): Promise<Event[]> {
