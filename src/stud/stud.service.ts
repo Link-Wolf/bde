@@ -1,7 +1,8 @@
-import { Injectable, Logger, LoggerService, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Stud } from '../entity/Stud';
+import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class StudService {
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
-		private readonly logger : LoggerService// CustomLogger
+		private readonly logger: LoggerService// CustomLogger
 	) { }
 
 	findAll(): Promise<Stud[]> {
