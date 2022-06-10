@@ -1,4 +1,4 @@
-import { ArgumentMetadata } from "@nestjs/common";
+import { ArgumentMetadata, LoggerService, NotFoundException } from "@nestjs/common";
 import { Injectable, PipeTransform } from "@nestjs/common";
 import { StudService } from "../stud/stud.service";
 import { ContributionDto } from "./contribution.dto";
@@ -6,14 +6,20 @@ import { ContributionDto } from "./contribution.dto";
 @Injectable()
 export class ContributionDtoPipe implements PipeTransform {
 	constructor(
+		private logger: LoggerService,
 		private studService: StudService
 	) { }
 	async transform(value: any, _metadata: ArgumentMetadata) {
 		let ret = new ContributionDto();
 		if ("cost" in value)
 			ret.cost = Number(value.cost)
-		if ("studLogin" in value)
+		if ("studLogin" in value) {
 			ret.stud = await this.studService.findOne(value.studLogin)
+			if (!ret.stud) {
+				await this.logger.error(`Failed to update contribution, student ${value.studLogin} does not exist`);
+				throw new NotFoundException(`Failed to update contribution, student ${value.studLogin} does not exist`);
+			}
+		}
 		if ("begin_date" in value)
 			ret.begin_date = new Date(value.begin_date)
 		else
