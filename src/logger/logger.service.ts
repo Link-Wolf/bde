@@ -28,7 +28,7 @@ export class LoggerService {
 			message: message,
 			type: "warn"
 		})
-		this.logfile("warn", message)
+		this.logfile("warning", message)
 	}
 
 	async log(message: string) {
@@ -52,20 +52,30 @@ export class LoggerService {
 	}
 
 	async logfile(type: string, message: string) {
-		let today = new Date(Date.now())
-		let file = "logs/" + today.toLocaleDateString().replace('/', '-').replace('/', '-') + ".log"
-		let time = today.getHours().toLocaleString() + ':' + today.getMinutes().toLocaleString() + ':' + today.getSeconds().toLocaleString()
-		console.log(today)
-		console.log(file)
-		console.log(time)
-		fs.appendFile(file, time + '[' + type.toUpperCase() + "] : " + message + '\n', (err) => {
+		const today = new Date(Date.now())
+		let day = today.getDay().toLocaleString()
+		let month = today.getMonth().toLocaleString()
+		let year = today.getFullYear().toLocaleString()
+		if (today.getDay() < 10)
+			day = '0' + day
+		if (today.getMonth() < 10)
+			month = '0' + month
+		if (today.getFullYear() < 10)
+			year = '0' + year
+		let file = "logs/" + month + '-' + day + '-' + year + ".log"
+		let hours = today.getHours().toLocaleString()
+		let minutes = today.getMinutes().toLocaleString()
+		let seconds = today.getSeconds().toLocaleString()
+		if (today.getHours() < 10)
+			hours = '0' + hours
+		if (today.getMinutes() < 10)
+			minutes = '0' + minutes
+		if (today.getSeconds() < 10)
+			seconds = '0' + seconds
+		const time = hours + ':' + minutes + ':' + seconds
+		const style = ' [' + type.toUpperCase() + ']'
+		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) +  ' : ' + message + '\n', (err) => {
 		    if (err) throw err;
-		    console.log('The logs were updated!');
 		});
-
-
-
-
-
 	}
 }
