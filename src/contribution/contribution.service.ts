@@ -21,7 +21,7 @@ export class ContributionService {
 			await this.logger.log(`Got all contributions`);
 			return contribs
 		} catch (error) {
-			await this.logger.error(`Failed to get all contributions`);
+			await this.logger.error(`Failed to get all contributions (${error})`);
 			throw new InternalServerErrorException(`Failed to get all contributions (${error})`);
 		}
 	}
@@ -54,11 +54,11 @@ export class ContributionService {
 			if (!cont)
 				this.logger.warn(`No contribution found for student ${studLogin}`)
 			else
-				this.logger.log(`Got contributions of student ${studLogin}`)
+				this.logger.log(`Got all contributions of student ${studLogin}`)
 			return cont
 		} catch (error) {
-			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
-			throw new InternalServerErrorException(`Failed to find contribution for student ${studLogin} on database (${error})`);
+			await this.logger.error(`Failed to get all contributions of student ${studLogin} on database`);
+			throw new InternalServerErrorException(`Failed to get all contributions for student ${studLogin} on database (${error})`);
 		}
 	}
 
@@ -80,10 +80,11 @@ export class ContributionService {
 	async create(contributionData: ContributionDto): Promise<void> {
 		try {
 			await this.contributionRepository.insert(contributionData);
+			this.logger.log(`Successfully created contribution for student ${contributionData.stud.login}`)
 		}
 		catch {
-			await this.logger.error(`Failed to update contribution of student ${contributionData.stud.login} on database`);
-			throw new UnprocessableEntityException(`Failed to update contribution of student ${contributionData.stud.login} on database`);
+			await this.logger.error(`Failed to create contribution for student ${contributionData.stud.login} on database`);
+			throw new UnprocessableEntityException(`Failed to create contribution for student ${contributionData.stud.login} on database`);
 		}
 	}
 
@@ -106,7 +107,7 @@ export class ContributionService {
 			await this.contributionRepository.delete({});
 			this.logger.log(`Successfully deleted all contributions`)
 		} catch (error) {
-			this.logger.error(`Failed to delete all contributions`)
+			this.logger.error(`Failed to delete all contributions on database (${error})`)
 			throw new UnprocessableEntityException(`Failed to delete all contributions on database (${error})`);
 		}
 	}
