@@ -1,10 +1,10 @@
 import { Stud } from "./Stud";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Contribution {
-	// @PrimaryGeneratedColumn()
-	// id: number
+	@PrimaryGeneratedColumn()
+	id: number
 
 	private static due(): Date {
 		let due = new Date(Date.now())
@@ -12,11 +12,10 @@ export class Contribution {
 		return due;
 	}
 
-	@PrimaryColumn({ type: "text" })
+	@Column({ type: "text" })
 	studLogin: string
 
-	@PrimaryColumn({ type: 'timestamptz', default: new Date(Date.now()) })
-	@CreateDateColumn()
+	@CreateDateColumn({ type: 'timestamptz', default: new Date(Date.now()) })
 	begin_date: Date
 
 	@Column({

@@ -12,7 +12,6 @@ export class ContributionService {
 	constructor(
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
-		private studService: StudService,
 		private logger: LoggerService,
 	) { }
 
@@ -27,13 +26,13 @@ export class ContributionService {
 		}
 	}
 
-	async findOne(studLogin: string): Promise<Contribution> {
+	async findLast(studLogin: string): Promise<Contribution> {
 		try {
 			let cont = await this.contributionRepository.findOne({
 				where: { studLogin: studLogin },
 				order: { begin_date: "DESC" },
 			});
-			
+
 			if (!cont)
 				this.logger.warn(`No contribution found for student ${studLogin}`)
 			else
@@ -45,14 +44,32 @@ export class ContributionService {
 		}
 	}
 
-	async update(studLogin: string, contribution: any): Promise<void> {
-		let cont = await this.findOne(studLogin)
-		if (!cont) {
-			await this.logger.error(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
-			throw new NotFoundException(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
-		}
+	async findForUser(studLogin: string): Promise<Contribution[]> {
 		try {
-			await this.contributionRepository.update(cont, contribution);
+			let cont = await this.contributionRepository.find({
+				where: { studLogin: studLogin },
+				order: { begin_date: "DESC" },
+			});
+
+			if (!cont)
+				this.logger.warn(`No contribution found for student ${studLogin}`)
+			else
+				this.logger.log(`Got contributions of student ${studLogin}`)
+			return cont
+		} catch (error) {
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
+			throw new InternalServerErrorException(`Failed to find contribution for student ${studLogin} on database (${error})`);
+		}
+	}
+
+	async update(studLogin: string, contribution: any): Promise<void> {
+		try {
+			let cont = await this.findLast(studLogin)
+			if (!cont) {
+				await this.logger.error(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
+				throw new NotFoundException(`Failed to update contribution, student ${studLogin} does not exist or does not have any contribution`);
+			}
+			await this.contributionRepository.update(cont.id, contribution);
 			this.logger.log(`Successfully updated current contribution of student ${studLogin}`)
 		} catch (error) {
 			await this.logger.error(`Failed to update contribution of student ${studLogin} on database`);
@@ -62,13 +79,7 @@ export class ContributionService {
 
 	async create(contributionData: ContributionDto): Promise<void> {
 		try {
-			await this.contributionRepository.save(contributionData);
-
-		} catch (error) {
-
-		}
-		try {
-			this.studService.update(contributionData.stud.login, { isPremium: true });
+			await this.contributionRepository.insert(contributionData);
 		}
 		catch {
 			await this.logger.error(`Failed to update contribution of student ${contributionData.stud.login} on database`);
@@ -77,7 +88,7 @@ export class ContributionService {
 	}
 
 	async removeOne(studLogin: string): Promise<void> {
-		let cont = await this.findOne(studLogin)
+		let cont = await this.findLast(studLogin)
 		if (!cont) {
 			await this.logger.warn(`Failed to delete contributions of student ${studLogin}, no contribution found`);
 		}
