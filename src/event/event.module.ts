@@ -9,6 +9,7 @@ import { LoggerModule } from '../logger/logger.module';
 @Module({
 	imports: [TypeOrmModule.forFeature([Event]), StudModule, LoggerModule],
 	providers: [EventService],
-	controllers: [EventController]
+	controllers: [EventController],
+	exports: [EventService]
 })
 export class EventModule { }
