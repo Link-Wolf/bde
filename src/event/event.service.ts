@@ -17,79 +17,117 @@ export class EventService {
 		private logger: LoggerService,
 	) { }
 
-	findAll(): Promise<Event[]> {
-		return this.eventRepository.find();
-		//try catch -> err InternalServerError
+	async findAll(): Promise<Event[]> {
+		try {
+			let events = await this.eventRepository.find();
+			if (events.length == 0)
+				this.logger.warn(`No events found `)
+			else
+				this.logger.log(`Find events`);
+			return events;
+		} catch (error) {
+			this.logger.error(`Could not find events: ${error}`);
+			throw new InternalServerErrorException(`Could not find events: ${error}`)
+		}
 	}
 
-	findCurrent(): Promise<Event[]> {
-		return this.eventRepository.findBy({
-			end_date: IsNull() || MoreThanOrEqual(new Date(Date.now()))
-		});
-		//try catch -> err InternalServerError / if null -> warn
+	async findCurrent(): Promise<Event[]> {
+		try {
+			let events = await this.eventRepository.findBy({
+				end_date: IsNull() || MoreThanOrEqual(new Date(Date.now()))
+			});
+			if (events.length == 0)
+				this.logger.warn(`No current events found `)
+			else
+				this.logger.log(`Find curent events`);
+			return events;
+		} catch (error) {
+			this.logger.error(`Could not find events: ${error}`);
+			throw new InternalServerErrorException(`Could not find events: ${error}`)
+		}
 	}
 
 	async findOne(id: number): Promise<Event> {
-		let event = await this.eventRepository.findOneBy({ id: id });
-		//try catch -> err InternalServerError
-		if (!event) {
-			// this.logger.warn(`No event found with id >${id}<`)
+		try {
+			let event = await this.eventRepository.findOneBy({ id: id });
+			if (!event)
+				this.logger.warn(`No event ${id} found `)
+			else
+				this.logger.log(`Find event ${id}`);
+			return event;
+		} catch (error) {
+			this.logger.error(`Could not find event ${id}: ${error}`);
+			throw new InternalServerErrorException(`Could not find event ${id}: ${error}`)
 		}
-		return event
 	}
 
 	async update(id: number, eventData: EventDto): Promise<void> {
 		// if no event id (find) -> err NotFoundException
 		try {
+			if (!await this.findOne(id)) {
+				this.logger.error(`No event ${id}`);
+				throw new NotFoundException(`No event ${id}`);
+			}
 			await this.eventRepository.update(id, eventData);
+			this.logger.log(`Update event ${id}`);
 		} catch (error) {
-			// this.logger.error(`Failed to update event >${id}<`)
-			throw new InternalServerErrorException()
+			this.logger.error(`Failed to update event ${id} : ${error}`)
+			throw new InternalServerErrorException(`Failed to update event ${id} : ${error}`)
 		}
 	}
 
 	async subscribe(id: number, login: string): Promise<void> {
-
-		let event = await this.findOne(id);
-		// if (!event) {
-		// 	this.logger.error(`No event found with id >${id}<`)
-		// throw NotFoundException
-		// }
-		event.studs = await this.getStuds(id);
 		try {
-			event.studs.push(await this.studService.findOne(login));
-		} catch (error) {
-			// this.logger.error(`stud exists pas lmao`)
-			throw new NotFoundException(error)
-		}
-		try {
+			let event = await this.findOne(id);
+			if (!event) {
+				this.logger.error(`No event found`)
+				throw new NotFoundException(`No event found`)
+			}
+			event.studs = await this.getStuds(id);
+			let stud = await this.studService.findOne(login);
+			if (!stud) {
+				this.logger.error(`No user found`)
+				throw new NotFoundException(`No user found`)
+			}
+			event.studs.push(stud);
 			await this.eventRepository.save(event);
+			this.logger.log(`Subscribe user ${login} to event ${id}`);
 		} catch (error) {
-			// this.logger.error(`db en pls`)
-			throw new InternalServerErrorException(error)
+			this.logger.error(`Could not subscribe stud ${login} to event ${id}: ${error}`)
+			throw new InternalServerErrorException(`Could not subscribe stud ${login} to event ${id}: ${error}`)
 		}
 	}
 
 	async create(eventDto: EventDto): Promise<void> {
 		try {
 			await this.eventRepository.save(eventDto);
+			this.logger.log(`Create new event`);
 		} catch (error) {
-			// this.logger.error(`Failed to create event >${eventDto.name}<`)
-			throw new InternalServerErrorException(error)
+			this.logger.error(`Failed to create event ${eventDto.name}: ${error}`)
+			throw new InternalServerErrorException(`Failed to create event ${eventDto.name}: ${error}`)
 		}
 	}
 
 	async removeOne(id: number): Promise<void> {
 		try {
-			await this.eventRepository.delete({ id: id });
+			if (await this.findOne(id)) {
+				await this.eventRepository.delete({ id: id });
+				this.logger.log(`Delete event ${id}`);
+			}
 		} catch (error) {
-			// this.logger.error(`Failed to delete event >${id}<`)
-			throw new NotFoundException(error)
+			this.logger.error(`Failed to delete event ${id}: ${error}`)
+			throw new InternalServerErrorException(`Failed to delete event ${id}: ${error}`)
 		}
 	}
 
 	async removeAll(): Promise<void> {
-		await this.eventRepository.delete({});
+		try {
+			await this.eventRepository.delete({});
+			this.logger.log(`Delete all events`);
+		} catch (error) {
+			this.logger.error(`Failed to delete events: ${error}`)
+			throw new InternalServerErrorException(`Failed to delete events: ${error}`)
+		}
 	}
 
 	async getStuds(id: number): Promise<Stud[]> {

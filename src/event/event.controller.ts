@@ -20,26 +20,26 @@ export class EventController {
 
 	@Post()
 	create(@Body(new EventDtoPipe()) event: EventDto) {
-		this.eventService.create(event);
+		return this.eventService.create(event);
 	}
 
 	@Patch(':id')
 	update(@Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
-		this.eventService.update(id, event);
+		return this.eventService.update(id, event);
 	}
 
 	@Patch(':id/inscription')
 	subscribe(@Param('id') id: number, @Body('login') login: string) {
-		this.eventService.subscribe(id, login);
+		return this.eventService.subscribe(id, login);
 	}
 
 	@Delete(':id')
 	removeOne(@Param('id', ParseIntPipe) id: number) {
-		this.eventService.removeOne(id);
+		return this.eventService.removeOne(id);
 	}
 
 	@Delete()
 	removeAll() {
-		this.eventService.removeAll();
+		return this.eventService.removeAll();
 	}
 }
