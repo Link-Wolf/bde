@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseFilters } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
-import { HttpExceptionFilter } from '../http-exception.filter';
 import { ContributionDto } from './contribution.dto';
 import { ContributionDtoPipe } from './contribution.pipe';
 import { ContributionService } from './contribution.service';
@@ -14,9 +13,14 @@ export class ContributionController {
 		return this.contributionService.findAll();
 	}
 
+	@Get(':login/last')
+	findLast(@Param('login') login: string): Promise<Contribution> {
+		return this.contributionService.findLast(login);
+	}
+
 	@Get(':login')
-	findOne(@Param('login') login: string): Promise<Contribution> {
-		return this.contributionService.findOne(login);
+	findForUser(@Param('login') login: string): Promise<Contribution[]> {
+		return this.contributionService.findForUser(login);
 	}
 
 	@Post()

@@ -20,21 +20,21 @@ export class StudController {
 
 	@Post()
 	create(@Body(new StudDtoPipe()) stud: StudDto) {
-		this.studService.create(stud);
+		return this.studService.create(stud);
 	}
 
 	@Patch(':login')
 	update(@Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
-		this.studService.update(login, stud);
+		return this.studService.update(login, stud);
 	}
 
 	@Delete(':login')
 	removeOne(@Param('login') login: string) {
-		this.studService.removeOne(login);
+		return this.studService.removeOne(login);
 	}
 
 	@Delete()
 	removeAll() {
-		this.studService.removeAll();
+		return this.studService.removeAll();
 	}
 }
