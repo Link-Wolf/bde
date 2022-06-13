@@ -53,15 +53,13 @@ export class LoggerService {
 
 	async logfile(type: string, message: string) {
 		const today = new Date(Date.now())
-		let day = today.getDay().toLocaleString()
-		let month = today.getMonth().toLocaleString()
-		let year = today.getFullYear().toLocaleString()
-		if (today.getDay() < 10)
+		let day = today.getDate().toLocaleString()
+		let month = (today.getMonth() + 1).toLocaleString()
+		let year = today.getFullYear().toString()
+		if (today.getDate() < 10)
 			day = '0' + day
-		if (today.getMonth() < 10)
+		if (today.getMonth() + 1 < 10)
 			month = '0' + month
-		if (today.getFullYear() < 10)
-			year = '0' + year
 		let file = "logs/" + month + '-' + day + '-' + year + ".log"
 		let hours = today.getHours().toLocaleString()
 		let minutes = today.getMinutes().toLocaleString()
