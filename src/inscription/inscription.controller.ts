@@ -16,13 +16,13 @@ export class InscriptionController {
 	}
 
 	@Get('stud/:login')
-	findByStud(@Param('login', ParseIntPipe) login: string) {
+	findByStud(@Param('login') login: string) {
 		return this.inscriptionService.findByStud(login);
 	}
 
 	@Post() //body id + login
 	async link(@Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
-		this.inscriptionService.link(id, login);
+		return this.inscriptionService.link(id, login);
 	}
 
 	@Delete('event/:id')
@@ -37,11 +37,11 @@ export class InscriptionController {
 
 	@Delete(':event/:login')
 	remove(@Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
-		this.inscriptionService.remove(event, login);
+		return this.inscriptionService.remove(event, login);
 	}
 
 	@Delete()
 	removeAll() {
-		this.inscriptionService.removeAll();
+		return this.inscriptionService.removeAll();
 	}
 }
