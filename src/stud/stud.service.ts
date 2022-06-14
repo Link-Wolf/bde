@@ -24,8 +24,8 @@ export class StudService {
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all students (${error})`)
-			throw new InternalServerErrorException(`Failed to get all students (${error})`);
+			this.logger.error(`Failed to get all students on database (${error})`)
+			throw new InternalServerErrorException(`Failed to get all students on database (${error})`);
 		}
 	}
 
@@ -33,15 +33,15 @@ export class StudService {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud) {
-				this.logger.warn(`No student found with login ${login}`)
+				this.logger.warn(`Failed to find student with login ${login} : student does not exist`)
 			}
 			else
 				this.logger.log(`Got student with login ${login}`);
 			return stud
 		}
 		catch (error) {
-			this.logger.error(`Failed to find student ${login} (${error})`)
-			throw new InternalServerErrorException(`Failed to find student ${login} (${error})`);
+			this.logger.error(`Failed to find student ${login} on database (${error})`)
+			throw new InternalServerErrorException(`Failed to find student ${login} on database (${error})`);
 		}
 	}
 
@@ -49,8 +49,8 @@ export class StudService {
 		try {
 			let user = await this.findOne(login);
 			if (!user) {
-				this.logger.error(`Failed to update student with login ${login}, student does not exist`);
-				throw new NotFoundException(`Failed to update student with login ${login}, student does not exist`)
+				this.logger.error(`Failed to update student with login ${login} : student does not exist`);
+				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
 			await this.studRepository.update(login, studData);
 			this.logger.log(`Successfully updated student ${login}`);
@@ -63,13 +63,13 @@ export class StudService {
 	async create(studDto: StudDto): Promise<void> {
 		try {
 			if (await this.findOne(studDto.login)) {
-				throw new ConflictException(`Failed to create student ${studDto.login}, student already exists`);
+				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
 			await this.studRepository.save(studDto);
 			this.logger.log(`Successfully created new student ${studDto.login}`);
 		} catch (error) {
-			this.logger.error(`Failed to create user ${studDto.login} (${error})`)
-			throw new NotFoundException(`Failed to create user ${studDto.login} (${error})`)
+			this.logger.error(`Failed to create user ${studDto.login} on database (${error})`)
+			throw new NotFoundException(`Failed to create user ${studDto.login} on database (${error})`)
 		}
 	}
 
@@ -92,8 +92,8 @@ export class StudService {
 			await this.studRepository.delete({});
 			this.logger.log(`Successfully deleted all students`);
 		} catch (error) {
-			this.logger.error(`Failed to delete all students (${error})`)
-			throw new NotFoundException(`Failed to delete all students (${error})`)
+			this.logger.error(`Failed to delete all students on database (${error})`)
+			throw new NotFoundException(`Failed to delete all students on database (${error})`)
 		}
 	}
 }

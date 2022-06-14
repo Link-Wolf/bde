@@ -26,8 +26,8 @@ export class EventService {
 			this.logger.log(`Got all events`);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all events (${error})`);
-			throw new InternalServerErrorException(`Could not find events: ${error}`)
+			this.logger.error(`Failed to get all events on database (${error})`);
+			throw new InternalServerErrorException(`Could not find events on database (${error})`)
 		}
 	}
 
@@ -42,8 +42,8 @@ export class EventService {
 			this.logger.log(`Got all current events`);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all current events (${error})`);
-			throw new InternalServerErrorException(`Failed to get all current events (${error})`)
+			this.logger.error(`Failed to get all current events on database (${error})`);
+			throw new InternalServerErrorException(`Failed to get all current events on database (${error})`)
 		}
 	}
 
@@ -51,7 +51,7 @@ export class EventService {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
 			if (!event)
-				this.logger.warn(`No event found for id ${id}`)
+				this.logger.warn(`Failed to find event with id ${id} : event does not exist`)
 			else
 				this.logger.log(`Got event with id ${id}`);
 			return event;
@@ -65,8 +65,8 @@ export class EventService {
 		// if no event id (find) -> err NotFoundException
 		try {
 			if (!await this.findOne(id)) {
-				this.logger.error(`Failed to update event with id ${id}, event does not exist`);
-				throw new NotFoundException(`Failed to update event with id ${id}, event does not exist`);
+				this.logger.error(`Failed to update event with id ${id} : event does not exist`);
+				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
 			await this.eventRepository.update(id, eventData);
 			this.logger.log(`Successfully updated event ${id}`);
@@ -103,8 +103,8 @@ export class EventService {
 			await this.eventRepository.save(eventDto);
 			this.logger.log(`Successfully created new event ${eventDto.name}`);
 		} catch (error) {
-			this.logger.error(`Failed to create event ${eventDto.name} (${error})`)
-			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} (${error})`)
+			this.logger.error(`Failed to create event ${eventDto.name} on database (${error})`)
+			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database (${error})`)
 		}
 	}
 

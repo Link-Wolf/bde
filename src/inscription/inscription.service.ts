@@ -16,10 +16,10 @@ export class InscriptionService {
 	removeAll() {
 		try {
 			this.manager.query(`DELETE FROM "inscriptions"`);
-			this.logger.log(`Remove all inscriptions`);
+			this.logger.log(`Successfully deleted all inscriptions`);
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to delete all inscriptions on database (${error})`);
+			throw new InternalServerErrorException(`Failed to delete all inscriptions on database (${error})`);
 		}
 	}
 
@@ -27,39 +27,52 @@ export class InscriptionService {
 		try {
 			if (this.studService.findOne(login)) {
 				this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
-				this.logger.log(`Remove all inscriptions of student ${login}`);
+				this.logger.log(`Successfully deleted all inscriptions of student ${login}`);
 			}
 			else {
-				throw new NotFoundException(`No student ${login}`);
+				this.logger.error(`Failed to remove all inscriptions of student ${login} : student does not exist`)
+				throw new NotFoundException(`Failed to remove all inscriptions of student ${login} : student does not exist`);
 			}
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to delete all inscriptions of student ${login} (${error})`);
+			throw new InternalServerErrorException(`Failed to delete all inscriptions of student ${login} (${error})`);
 		}
 	}
 
 	removeByEvent(id: number) {
 		try {
-			this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
-			this.logger.log(`Success`);
+			if (this.eventService.findOne(id)) {
+				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
+				this.logger.log(`Successfully deleted all inscriptions for event ${id}`);
+			}
+			else {
+				this.logger.error(`Failed to delete all inscriptions for event ${id} : event does not exist`)
+				throw new NotFoundException(`Failed to delete all inscriptions for event ${id} : event does not exist`);
+			}
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
+			this.logger.error(`Failed to delete all inscriptions for event ${id} on database (${error})`);
 		}
 	}
 
 	async link(id: number, login: string) {
 		try {
-			if ((await this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}' AND "eventId" = ${id}`)).length != 0)
-				throw new ConflictException(`Inscription of ${login} at event ${id} already exists`)
-			if (!await this.studService.findOne(login))
-				throw new NotFoundException(`User ${login} not found`)
-			if (!await this.eventService.findOne(id))
-				throw new NotFoundException(`Event ${id} not found`)
+			if ((await this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}' AND "eventId" = ${id}`)).length != 0) {
+				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`)
+				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`)
+			}
+			if (!await this.studService.findOne(login)) {
+				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : student does not exist`)
+				throw new NotFoundException(`Failed to save inscription for student ${login} to event ${id} : student does not exist`)
+			}
+			if (!await this.eventService.findOne(id)) {
+				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : event does not exist`)
+				throw new NotFoundException(`Failed to save inscription for student ${login} to event ${id} : event does not exist`)
+			}
 			this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
-			this.logger.log(`Success`);
+			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`);
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to save inscription for student ${login} to event ${id} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to save inscription for student ${login} to event ${id} on database (${error})`);
 		}
 	}
 
@@ -67,13 +80,13 @@ export class InscriptionService {
 		try {
 			let ret = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}'`);
 			if (ret.length == 0)
-				this.logger.warn(`No inscription found for student ${login}`);
+				this.logger.warn(`Fail to find all inscriptions for student ${login} : student does not have any inscription`);
 			else
-				this.logger.log(`Success`);
+				this.logger.log(`Got all inscriptions for student ${login}`);
 			return ret
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to get all inscriptions for student ${login} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to get all inscriptions for student ${login} on database (${error})`);
 		}
 	}
 
@@ -81,27 +94,27 @@ export class InscriptionService {
 		try {
 			let ret = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`);
 			if (ret.length == 0)
-				this.logger.warn(`No inscription with found for event ${id}`);
+				this.logger.warn(`Failed to find all inscriptions for event ${id} : event does not have any inscription`);
 			else
-				this.logger.log(`Success`);
+				this.logger.log(`Got all inscriptions for event ${id}`);
 			return ret
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to get all inscriptions for event ${id} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to get all inscriptions for event ${id} on database (${error})`);
 		}
 	}
 
 	async findAll() {
 		try {
 			let ret = await this.manager.query(`SELECT * FROM "inscriptions"`);
-			if (ret.length == 0)
-				this.logger.warn(`No inscription found`);
-			else
-				this.logger.log(`Success`);
+			// if (ret.length == 0)
+			// 	this.logger.warn(`No inscription found`);
+			// else
+			this.logger.log(`Got all inscriptions`);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to get all inscriptions on database (${error})`);
+			throw new InternalServerErrorException(`Failed to get all inscriptions on database (${error})`);
 		}
 	}
 
@@ -110,13 +123,13 @@ export class InscriptionService {
 			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			if (insc.length) {
 				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
-				this.logger.log(`Success`);
+				this.logger.log(`Successfully delete inscription for student ${login} and event ${id}`);
 			}
 			else
-				this.logger.warn(`No inscription of student ${login} for event ${id} to delete`)
+				this.logger.warn(`Failed to delete inscription for student ${login} and event ${id} : inscription does not exist`)
 		} catch (error) {
-			this.logger.error(`Error: ${error}`);
-			throw new InternalServerErrorException(`Error: ${error}`);
+			this.logger.error(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
 		}
 	}
 }
