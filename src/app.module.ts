@@ -12,6 +12,7 @@ import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
 import { Log } from './entity/Log';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
 	imports: [
@@ -24,6 +25,9 @@ import { AuthModule } from './auth/auth.module';
 			database: 'bde',
 			entities: [Stud, Contribution, Event, Log],
 			synchronize: true
+		}),
+		ConfigModule.forRoot({
+			isGlobal: true
 		}),
 		StudModule,
 		ContributionModule,
