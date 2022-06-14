@@ -11,6 +11,7 @@ import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
 import { Log } from './entity/Log';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -29,6 +30,7 @@ import { Log } from './entity/Log';
 		EventModule,
 		InscriptionModule,
 		LoggerModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
