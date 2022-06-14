@@ -20,8 +20,8 @@ import { ConfigModule } from '@nestjs/config';
 			type: 'postgres',
 			host: 'localhost',
 			port: 5432,
-			username: 'test',
-			password: 'test',
+			username: 'linkar',
+			password: 'xeno1et2',
 			database: 'bde',
 			entities: [Stud, Contribution, Event, Log],
 			synchronize: true
