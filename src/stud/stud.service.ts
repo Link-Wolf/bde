@@ -16,16 +16,16 @@ export class StudService {
 	async findAll(): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.find();
-			if (studs.length == 0) {
-				this.logger.warn(`No stud found`)
-			}
-			else
-				this.logger.log(`Find users`);
+			// if (studs.length == 0) {
+			// 	this.logger.warn(`No stud found`)
+			// }
+			// else
+			this.logger.log(`Got all students`);
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Could not find students : ${error}`)
-			throw new InternalServerErrorException(`Could not find students : ${error}`);
+			this.logger.error(`Failed to get all students (${error})`)
+			throw new InternalServerErrorException(`Failed to get all students (${error})`);
 		}
 	}
 
@@ -33,15 +33,15 @@ export class StudService {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud) {
-				this.logger.warn(`No stud found with login ${login}`)
+				this.logger.warn(`No student found with login ${login}`)
 			}
 			else
-				this.logger.log(`Find user ${login}`);
+				this.logger.log(`Got student with login ${login}`);
 			return stud
 		}
 		catch (error) {
-			this.logger.error(`Could not find student ${login} : ${error}`)
-			throw new InternalServerErrorException(`Could not find student ${login} : ${error}`);
+			this.logger.error(`Failed to find student ${login} (${error})`)
+			throw new InternalServerErrorException(`Failed to find student ${login} (${error})`);
 		}
 	}
 
@@ -49,26 +49,27 @@ export class StudService {
 		try {
 			let user = await this.findOne(login);
 			if (!user) {
-				throw new NotFoundException(`User does not exist`)
+				this.logger.error(`Failed to update student with login ${login}, student does not exist`);
+				throw new NotFoundException(`Failed to update student with login ${login}, student does not exist`)
 			}
 			await this.studRepository.update(login, studData);
-			this.logger.log(`Update stud ${login}`);
+			this.logger.log(`Successfully updated student ${login}`);
 		} catch (error) {
-			this.logger.error(`Failed to update user ${login} : ${error}`)
-			throw new NotFoundException(`Failed to update user ${login} : ${error}`)
+			this.logger.error(`Failed to update student ${login} on database (${error})`)
+			throw new NotFoundException(`Failed to update student ${login} on database (${error})`)
 		}
 	}
 
 	async create(studDto: StudDto): Promise<void> {
 		try {
 			if (await this.findOne(studDto.login)) {
-				throw new ConflictException(`User ${studDto.login} already exists`);
+				throw new ConflictException(`Failed to create student ${studDto.login}, student already exists`);
 			}
 			await this.studRepository.save(studDto);
-			this.logger.log(`Create student ${studDto.login}`);
+			this.logger.log(`Successfully created new student ${studDto.login}`);
 		} catch (error) {
-			this.logger.error(`Failed to create user ${studDto.login} : ${error}`)
-			throw new NotFoundException(`Failed to create user ${studDto.login} : ${error}`)
+			this.logger.error(`Failed to create user ${studDto.login} (${error})`)
+			throw new NotFoundException(`Failed to create user ${studDto.login} (${error})`)
 		}
 	}
 
@@ -76,23 +77,23 @@ export class StudService {
 		try {
 			let user = await this.findOne(login);
 			if (!user)
-				this.logger.warn(`Cannot delete user ${login}`);
+				this.logger.warn(`Failed to delete student ${login} : student does no exist`);
 			else
-				this.logger.log(`Delete user ${login}`);
+				this.logger.log(`Successfully delete student ${login}`);
 			await this.studRepository.delete({ login: login });
 		} catch (error) {
-			this.logger.error(`Failed to delete user ${login} : ${error}`)
-			throw new NotFoundException(`Failed to delete user ${login} : ${error}`)
+			this.logger.error(`Failed to delete student ${login} on database (${error})`)
+			throw new NotFoundException(`Failed to delete student ${login} on database (${error})`)
 		}
 	}
 
 	async removeAll(): Promise<void> {
 		try {
 			await this.studRepository.delete({});
-			this.logger.log(`Delete users`);
+			this.logger.log(`Successfully deleted all students`);
 		} catch (error) {
-			this.logger.error(`Failed to delete users : ${error}`)
-			throw new NotFoundException(`Failed to delete users : ${error}`)
+			this.logger.error(`Failed to delete all students (${error})`)
+			throw new NotFoundException(`Failed to delete all students (${error})`)
 		}
 	}
 }

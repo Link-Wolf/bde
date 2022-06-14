@@ -114,6 +114,8 @@ export class EventService {
 				await this.eventRepository.delete({ id: id });
 				this.logger.log(`Successfully deleted event ${id}`);
 			}
+			else
+				this.logger.warn(`Failed to delete event ${id} : event does no exist`);
 		} catch (error) {
 			this.logger.error(`Failed to delete event ${id} on database (${error})`)
 			throw new InternalServerErrorException(`Failed to delete event ${id} on database (${error})`)
