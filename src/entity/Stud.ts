@@ -27,13 +27,15 @@ export class Stud {
 
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
+		onUpdate: "CASCADE",
+		cascade : true
 	})
 	contributions: Contribution[];
 
 	@ManyToMany(() => Event, (inscription) => inscription.studs, {
 		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
+		onUpdate: "CASCADE",
+		cascade : true
 	})
 	inscriptions: Event[]
 
