@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
 import { LoggerService } from '../logger/logger.service';
-import { StudService } from '../stud/stud.service';
 import { ContributionDto } from './contribution.dto';
 
 @Injectable()
