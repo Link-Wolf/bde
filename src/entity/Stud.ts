@@ -5,7 +5,7 @@ import { Event } from "./Event";
 
 @Entity()
 export class Stud {
-	constructor(private contributionService: ContributionService) { }
+	// constructor(private contributionService: ContributionService) { }
 	@PrimaryColumn()
 	login: string
 
@@ -28,19 +28,19 @@ export class Stud {
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade : true
+		cascade: true
 	})
 	contributions: Contribution[];
 
 	@ManyToMany(() => Event, (inscription) => inscription.studs, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade : true
+		cascade: true
 	})
 	inscriptions: Event[]
 
-	async isPremium(): Promise<boolean> {
-		let last_cont = await this.contributionService.findLast(this.login);
-		return last_cont.end_date >= new Date(Date.now());
-	}
+	// async isPremium(): Promise<boolean> {
+	// 	let last_cont = await this.contributionService.findLast(this.login);
+	// 	return last_cont.end_date >= new Date(Date.now());
+	// }
 }

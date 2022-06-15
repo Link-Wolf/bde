@@ -32,7 +32,11 @@ export class Contribution {
 	})
 	end_date: Date
 
-	@ManyToOne(() => Stud, (stud) => stud.contributions)
+	@ManyToOne(() => Stud, (stud) => stud.contributions,
+		{
+			onDelete: 'CASCADE',
+			onUpdate: 'CASCADE'
+		})
 	@JoinColumn({ name: "studLogin" })
 	stud: Stud
 }
