@@ -1,5 +1,6 @@
 import { Stud } from "./Stud";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+const { contributionTime, contributionPrice } = require('../../config.json')
 
 @Entity()
 export class Contribution {
@@ -8,7 +9,7 @@ export class Contribution {
 
 	private static due(): Date {
 		let due = new Date(Date.now())
-		due.setMonth(due.getMonth() + 6)
+		due.setMonth(due.getMonth() + contributionTime)
 		return due;
 	}
 
@@ -21,7 +22,7 @@ export class Contribution {
 	@Column({
 		type: "double precision",
 		nullable: true,
-		default: 10
+		default: contributionPrice
 	})
 	cost: number
 

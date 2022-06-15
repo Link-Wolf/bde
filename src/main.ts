@@ -10,7 +10,7 @@ async function bootstrap() {
 		{
 			logger: ['debug']
 		});
-	app.use(helmet(), csurf(), cookieParser("hi this is the secret"))
+	app.use(helmet(), /*csurf(),*/ cookieParser("hi this is the secret"))
 	app.useGlobalFilters(new HttpExceptionFilter());
 	await app.listen(4242);
 }
