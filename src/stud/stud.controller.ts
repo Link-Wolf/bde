@@ -3,7 +3,6 @@ import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
-import { getGuard } from '../auth/get.guard';
 import { Public } from '../auth/public.decorator';
 import { Request, Response } from 'express';
 
@@ -11,7 +10,6 @@ import { Request, Response } from 'express';
 export class StudController {
 	constructor(private studService: StudService) { }
 
-	@UseGuards(getGuard)
 	@Get()
 	findAll(@Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
 		console.log(request.cookies)
@@ -26,7 +24,6 @@ export class StudController {
 		return this.studService.findOne(login);
 	}
 
-	@Public()
 	@Post()
 	create(@Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.create(stud);
