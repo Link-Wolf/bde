@@ -1,11 +1,12 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
 import { ContributionService } from "../contribution/contribution.service";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
+import { Role } from "./Role";
 
 @Entity()
 export class Stud {
-	// constructor(private contributionService: ContributionService) { }
+	constructor(private contributionService: ContributionService) { }
 	@PrimaryColumn()
 	login: string
 
@@ -39,8 +40,15 @@ export class Stud {
 	})
 	inscriptions: Event[]
 
-	// async isPremium(): Promise<boolean> {
-	// 	let last_cont = await this.contributionService.findLast(this.login);
-	// 	return last_cont.end_date >= new Date(Date.now());
-	// }
+	@ManyToMany(() => Role, (role) => role.studs, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
+	@JoinTable()
+	roles: Role[]
+
+	async isPremium(): Promise<boolean> {
+		let last_cont = await this.contributionService.findLast(this.login);
+		return last_cont.end_date >= new Date(Date.now());
+	}
 }
