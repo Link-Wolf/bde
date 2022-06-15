@@ -1,0 +1,7 @@
+{
+	"contributionTime": 6,
+	"contributionPrice": 10,
+	"uid": XXXXXXXXXXX,
+	"secret": XXXXXXXXXX,
+	"JWT_SECRETKEY": 'secretKey'
+}
