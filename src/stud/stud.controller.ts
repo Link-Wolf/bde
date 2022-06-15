@@ -3,6 +3,7 @@ import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
+import { Public } from '../auth/public.decorator';
 
 @Controller('stud')
 export class StudController {
