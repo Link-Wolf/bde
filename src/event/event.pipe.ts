@@ -3,7 +3,7 @@ import { Injectable, PipeTransform } from "@nestjs/common";
 
 @Injectable()
 export class EventDtoPipe implements PipeTransform {
-	transform(value: any, metadata: ArgumentMetadata) {
+	transform(value: any, _metadata: ArgumentMetadata) {
 		if ("cost" in value)
 			value.cost = Number(value.cost)
 		if ("premium_cost" in value)

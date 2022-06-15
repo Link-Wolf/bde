@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseFilters } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
 import { ContributionDto } from './contribution.dto';
 import { ContributionDtoPipe } from './contribution.pipe';
