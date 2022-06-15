@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
 import { getGuard } from '../auth/get.guard';
 import { Public } from '../auth/public.decorator';
+import { Request, Response } from 'express';
 
 @Controller('stud')
 export class StudController {
@@ -12,7 +13,11 @@ export class StudController {
 
 	@UseGuards(getGuard)
 	@Get()
-	findAll(): Promise<Stud[]> {
+	findAll(@Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
+		console.log(request.cookies)
+		console.log(request.signedCookies)
+		response.cookie('test find all', 's:yeet')
+		// response.cookie('test find all', 'yeet')
 		return this.studService.findAll();
 	}
 
