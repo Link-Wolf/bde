@@ -15,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/jwtAuth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { Role } from './entity/Role';
 
 @Module({
 	imports: [
@@ -25,7 +26,7 @@ import { APP_GUARD } from '@nestjs/core';
 			username: 'linkar',
 			password: 'xeno1et2',
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Log],
+			entities: [Stud, Contribution, Event, Log, Role],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({
