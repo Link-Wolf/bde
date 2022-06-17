@@ -15,7 +15,9 @@ class Stud extends React.Component {
       componentDidMount() {
           fetch(
   "http://localhost:4242/stud")
-              .then((res) => res.json())
+              .then((res) => {
+				  console.log(">" + res + "<")
+				  res.json()})
               .then((json) => {
                   this.setState({
                       items: json,

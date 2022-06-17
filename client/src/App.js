@@ -12,9 +12,7 @@ function App()
 			<header>
 				<Header />
 			</header>
-			<body>
 				<Routage />
-			</body>
 			<footer>
 				<Footer/>
 			</footer>
