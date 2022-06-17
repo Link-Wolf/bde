@@ -1,49 +1,34 @@
-import React from 'react';
+import React, {useState, useEffect} from "react";
 
-class Stud extends React.Component {
-	constructor(props) {
-          super(props);
+const Stud = () => {
+	const [users, setUsers] = useState([]);
 
-          this.state = {
-              items: [],
-              DataisLoaded: false
-          };
-      }
+	const getStud = () => {
+		fetch("http://localhost:4242/stud")
+			.then(response => {
+				return response.json();
+			})
 
-      // ComponentDidMount is used to
-      // execute the code
-      componentDidMount() {
-          fetch(
-  "http://localhost:4242/stud")
-              .then((res) => {
-				  console.log(">" + res + "<")
-				  res.json()})
-              .then((json) => {
-                  this.setState({
-                      items: json,
-                      DataisLoaded: true
-                  });
-              })
-      }
-      render() {
-          const { DataisLoaded, items } = this.state;
-          if (!DataisLoaded) return <div>
-              <h1> Pleses wait some time.... </h1> </div> ;
+			.then(data => {
+				setUsers(data);
+			});
+	};
 
-          return (
-          <div className = "App">
-              <h1> Fetch data from an api in react </h1>  {
-                  items.map((item) => (
-                  <ol key = { item.id } >
-                      User_Name: { item.username },
-                      Full_Name: { item.name },
-                      User_Email: { item.email }
-                      </ol>
-                  ))
-              }
-          </div>
-      );
-  }
-}
+	useEffect(() => {
+		getStud();
+	}, []);
+
+	return (
+		<div>
+			{users.length > 0 && (
+				<ul>
+					{users.map(user => (
+						<li key={user.login}>{user.login}</li>
+					))}
+				</ul>
+			)}
+		</div>
+	);
+};
 
 export default Stud;
