@@ -1,27 +1,25 @@
 // import logo from './logo.svg';
 // import './App.css';
 
-import Header from './Header'
-import Routage from './Routage'
-import Footer from './Footer'
+import Header from "./Header";
+import Routage from "./Routage";
+import Footer from "./Footer";
 
-function App()
-{
+function App() {
 	return (
 		<div className="App">
 			<header>
 				<Header />
 			</header>
-				<Routage />
+			<Routage />
 			<footer>
-				<Footer/>
+				<Footer />
 			</footer>
 		</div>
 	);
 }
 
 export default App;
-
 
 // import { Link } from "react-router-dom";
 // ...
