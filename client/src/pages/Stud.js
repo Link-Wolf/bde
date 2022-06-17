@@ -23,7 +23,19 @@ const Stud = () => {
 			{users.length > 0 && (
 				<ul>
 					{users.map(user => (
-						<li key={user.login}>{user.login}</li>
+						<li key={user.login}>{user.login}
+							<ul>
+								<li>
+									{user.firstname}
+								</li>
+								<li>
+									{user.lastname}
+								</li>
+								<li>
+									{user.isDirection ? "direction" : "pnj"}
+								</li>
+							</ul>
+						</li>
 					))}
 				</ul>
 			)}
