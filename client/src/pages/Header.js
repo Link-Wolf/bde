@@ -9,15 +9,18 @@ import {
 } from "react-bootstrap";
 
 import user_placeholder from "./images/user_placeholder.png";
+import bde_logo from "./images/bde_logo.webp";
 
 import "../style/Header.css";
 
 function Header() {
 	return (
 		<header>
-			<Navbar bg="light" expand="lg">
+			<Navbar bg="dark" variant="dark">
 				<Container>
-					<Navbar.Brand href="home">BDE</Navbar.Brand>
+					<Navbar.Brand href="home">
+						<img id="bde_logo" src={bde_logo} alt="logo bde" />
+					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="me-auto">
