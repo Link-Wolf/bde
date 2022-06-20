@@ -22,7 +22,12 @@ function Header() {
 							<Nav.Link href="event">Events</Nav.Link>
 							<Nav.Link href="shop">Shop</Nav.Link>
 							<NavDropdown
-								title={<img />}
+								title={
+									<img
+										src="images/user_placeholder.png"
+										alt="user pp placeholder"
+									/>
+								}
 								id="basic-nav-dropdown"
 							>
 								<NavDropdown.Item href="me">
