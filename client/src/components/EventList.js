@@ -7,7 +7,8 @@ const EventList = () => {
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/event/current`)
-			.then(response => console.log(response))
+			.then(response => response.json())
+			.then(actualData => console.log(actualData))
 			.catch(function(error) {
 				console.log(
 					"Il y a eu un problème avec l'opération fetch: " +
