@@ -7,8 +7,20 @@ const EventList = () => {
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/event/current`)
-			.then(response => response.json())
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
 			.then(actualData => console.log(actualData))
+			.then(data => {
+				data.forEach(item => {
+					return <div> {item}</div>;
+				});
+			})
 			.catch(function(error) {
 				console.log(
 					"Il y a eu un problème avec l'opération fetch: " +
