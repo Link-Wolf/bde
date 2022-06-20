@@ -17,8 +17,8 @@ const EventList = () => {
 			})
 			.then(actualData => {
 				console.log(actualData);
-				data.forEach(item => {
-					console.log(item);
+				return data.map(item => {
+					<li>{item.id}</li>;
 				});
 			})
 			.catch(function(error) {
