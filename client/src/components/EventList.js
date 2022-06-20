@@ -1,9 +1,7 @@
 import {useState, useEffect, React} from "react";
 
 const EventList = () => {
-	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
+	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/event/current`)
@@ -13,13 +11,11 @@ const EventList = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				response.json();
+				return response.json();
 			})
 			.then(actualData => {
 				console.log(actualData);
-				return data.map(item => {
-					<li>{item.id}</li>;
-				});
+				setData(actualData);
 			})
 			.catch(function(error) {
 				console.log(
@@ -29,7 +25,7 @@ const EventList = () => {
 			});
 	}, []);
 
-	// const headers = [];
+	// const headers = []
 	//
 	// //const events = [];
 	//
@@ -41,7 +37,18 @@ const EventList = () => {
 	//
 	// console.log(headers);
 	//
-	return <div>Pouet</div>;
+	return (
+		<ul>
+			{data.map(item => (
+				<li key={item.id}>
+					<h1>
+						{item.id} {item.name}
+					</h1>
+					<p> {item.desc} </p>
+				</li>
+			))}
+		</ul>
+	);
 };
 
 export default EventList;

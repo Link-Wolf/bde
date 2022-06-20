@@ -15,9 +15,7 @@ function Home() {
 			<div> [ Album custom all events dans le petit carroussel ]</div>
 			<div>
 				Events en cours et a venir
-				<ul>
-					<EventList />
-				</ul>
+				<EventList />
 			</div>
 		</div>
 	);
