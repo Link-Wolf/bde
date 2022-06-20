@@ -1,12 +1,12 @@
 .dropdown-toggle::after {
-  display: none !important;
+	display: none !important;
 }
 
 img {
 	height: 30px;
 }
 
-img#bde_logo{
+img#bde_logo {
 	width: 50px;
 	height: auto;
 }
