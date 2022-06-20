@@ -1,0 +1,25 @@
+import "../style/Footer.css";
+
+import twitter_logo from "./images/twitter_logo.png";
+import discord_logo from "./images/discord_logo.png";
+import instagram_logo from "./images/instagram_logo.png";
+
+function Footer() {
+	return (
+		<footer>
+			<div className="horizontal_div">
+				<img src={twitter_logo} alt="twitter logo" />
+				<img src={discord_logo} alt="discord logo" />
+				<img src={instagram_logo} alt="instagram logo" />
+			</div>
+			<div className="horizontal_div">
+				<div>CC COPYRIGHT TOUSSA</div>
+				<div> HOSTED BY US </div>
+				<div> CGU / CGV</div>
+				<div> Contact us grand fou</div>
+			</div>
+		</footer>
+	);
+}
+
+export default Footer;
