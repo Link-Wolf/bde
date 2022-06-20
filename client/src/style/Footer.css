@@ -1,28 +1,28 @@
-footer{
+footer {
 	bottom: sticky;
 	background-color: #212529;
 	color: #FFFFFE;
 	position: fixed;
-     left: 0;
-     bottom: 0;
-     width: 100%;
-     text-align: center;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
 }
 
-.horizontal_div{
+.horizontal_div {
 	display: flex;
 	text-align: center;
 	justify-content: center;
 }
 
-.horizontal_div div{
+.horizontal_div div {
 	margin: .5%;
 }
 
-.horizontal_div img{
+.horizontal_div img {
 	margin: 5px;
 	width: 25px;
 	padding: 0;
-    height: auto;
+	height: auto;
 	object-fit: contain;
 }
