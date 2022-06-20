@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route, BrowserRouter} from "react-router-dom";
+import {Redirect, Routes, Route, BrowserRouter} from "react-router-dom";
 
 // Nos pagis
 import Home from "./body/Home";
