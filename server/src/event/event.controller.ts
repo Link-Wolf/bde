@@ -18,6 +18,11 @@ export class EventController {
 		return this.eventService.findOne(id);
 	}
 
+	@Get('/current')
+	findCurrent(): Promise<Event[]> {
+		return this.eventService.findCurrent();
+	}
+
 	@Post()
 	create(@Body(new EventDtoPipe()) event: EventDto) {
 		return this.eventService.create(event);
