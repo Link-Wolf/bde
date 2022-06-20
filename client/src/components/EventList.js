@@ -11,19 +11,19 @@ const EventList = () => {
 		);
 	}, []);
 
-	const headers = [];
-
-	//const events = [];
-
-	const total = 3; //getCurrentsEvents().lenght;
-
-	for (let index = 0; index < total; index++) {
-		headers.push(<Header key={index} />);
-	}
-
-	console.log(headers);
-
-	return <div>{headers}</div>;
+	// const headers = [];
+	//
+	// //const events = [];
+	//
+	// const total = 3; //getCurrentsEvents().lenght;
+	//
+	// for (let index = 0; index < total; index++) {
+	// 	headers.push(<Header key={index} />);
+	// }
+	//
+	// console.log(headers);
+	//
+	// return <div>{headers}</div>;
 };
 
 export default EventList;
