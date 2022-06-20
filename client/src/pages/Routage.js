@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect, Routes, Route, BrowserRouter} from "react-router-dom";
+import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
 // Nos pagis
 import Home from "./body/Home";
@@ -12,7 +12,7 @@ const Routage = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="" element={<Redirect to="/home" />} />
+				<Route path="" element={<Navigate to="/home" />} />
 				<Route path="home" element={<Home />} />
 				<Route path="about" element={<About />} />
 				<Route path="cgu" element={<Cgu />} />
