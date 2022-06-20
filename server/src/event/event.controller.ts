@@ -4,7 +4,7 @@ import { Event } from '../entity/Event'
 import { EventDto } from './event.dto';
 import { EventDtoPipe } from './event.pipe';
 
-@Controller('event')
+@Controller('event/')
 export class EventController {
 	constructor(private eventService: EventService) { }
 
@@ -13,14 +13,19 @@ export class EventController {
 		return this.eventService.findAll();
 	}
 
+	@Get('current')
+	findCurrent(): Promise<any> {
+		return this.eventService.findCurrent();
+	}
+
+	@Get(':id/:id')
+	findurrent(): Promise<any> {
+		return this.eventService.findCurrent();
+	}
+
 	@Get(':id')
 	findOne(@Param('id', ParseIntPipe) id: number): Promise<Event> {
 		return this.eventService.findOne(id);
-	}
-
-	@Get('/current')
-	findCurrent(): Promise<Event[]> {
-		return this.eventService.findCurrent();
 	}
 
 	@Post()
