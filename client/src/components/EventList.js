@@ -13,12 +13,12 @@ const EventList = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
+				response.json();
 			})
-			.then(actualData => console.log(actualData))
-			.then(data => {
+			.then(actualData => {
+				console.log(actualData);
 				data.forEach(item => {
-					return <div> {item}</div>;
+					console.log(item);
 				});
 			})
 			.catch(function(error) {
