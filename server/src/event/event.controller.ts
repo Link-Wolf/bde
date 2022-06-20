@@ -4,7 +4,7 @@ import { Event } from '../entity/Event'
 import { EventDto } from './event.dto';
 import { EventDtoPipe } from './event.pipe';
 
-@Controller('event')
+@Controller('event/')
 export class EventController {
 	constructor(private eventService: EventService) { }
 
