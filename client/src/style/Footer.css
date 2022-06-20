@@ -1,0 +1,15 @@
+footer{
+	bottom: sticky;
+	background-color: #0E0E0E;
+	color: #FFFFEE
+}
+
+.horizontal_div{
+	display: flex;
+	text-align: center;
+	justify-content: center;
+}
+
+.horizontal_div div{
+	margin: .5%;
+}
