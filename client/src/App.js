@@ -1,20 +1,19 @@
 // import logo from './logo.svg';
-// import './App.css';
+// import "./App.css";
 
-import Header from "./Header";
-import Routage from "./Routage";
-import Footer from "./Footer";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style/App.css";
+
+import Header from "./pages/Header";
+import Routage from "./pages/Routage";
+import Footer from "./pages/Footer";
 
 function App() {
 	return (
 		<div className="App">
-			<header>
-				<Header />
-			</header>
+			<Header />
 			<Routage />
-			<footer>
-				<Footer />
-			</footer>
+			<Footer />
 		</div>
 	);
 }
