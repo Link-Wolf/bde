@@ -8,7 +8,12 @@ const EventList = () => {
 	useEffect(() => {
 		fetch(`http://localhost:4242/event/current`)
 			.then(response => console.log(response))
-			.catch(response => console.log(response));
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}, []);
 
 	// const headers = [];
