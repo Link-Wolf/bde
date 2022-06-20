@@ -8,6 +8,8 @@ import {
 	Button
 } from "react-bootstrap";
 
+import user_placeholder from "./images/user_placeholder.png";
+
 import "../style/Header.css";
 
 function Header() {
@@ -24,7 +26,7 @@ function Header() {
 							<NavDropdown
 								title={
 									<img
-										src="images/user_placeholder.png"
+										src={user_placeholder}
 										alt="user pp placeholder"
 									/>
 								}
