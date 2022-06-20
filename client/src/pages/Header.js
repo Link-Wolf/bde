@@ -26,6 +26,7 @@ function Header() {
 						<Nav className="me-auto">
 							<Nav.Link href="event">Events</Nav.Link>
 							<Nav.Link href="shop">Shop</Nav.Link>
+							<Nav.Link href="stud">Stud</Nav.Link>
 							<NavDropdown
 								title={
 									<img
