@@ -8,13 +8,15 @@ function Footer() {
 	return (
 		<footer>
 			<div className="horizontal_div">
-				<img src={twitter_logo} alt="twitter logo" />
-				<img src={discord_logo} alt="discord logo" />
-				<img src={instagram_logo} alt="instagram logo" />
+				<img contain src={twitter_logo} alt="twitter logo" />
+				<img contain src={discord_logo} alt="discord logo" />
+				<img contain src={instagram_logo} alt="instagram logo" />
 			</div>
 			<div className="horizontal_div">
 				<div>CC COPYRIGHT TOUSSA</div>
 				<div> HOSTED BY US </div>
+			</div>
+			<div className="horizontal_div">
 				<div> CGU / CGV</div>
 				<div> Contact us grand fou</div>
 			</div>
