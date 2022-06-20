@@ -6,9 +6,9 @@ const EventList = () => {
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/current`).then(response =>
-			console.log(response)
-		);
+		fetch(`http://localhost:4242/event/current`)
+			.then(response => console.log(response))
+			.catch(response => console.log(response));
 	}, []);
 
 	// const headers = [];
@@ -23,7 +23,7 @@ const EventList = () => {
 	//
 	// console.log(headers);
 	//
-	// return <div>{headers}</div>;
+	return <div>Pouet</div>;
 };
 
 export default EventList;
