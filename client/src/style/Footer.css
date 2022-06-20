@@ -1,7 +1,12 @@
 footer{
 	bottom: sticky;
-	background-color: #0E0E0E;
-	color: #FFFFEE
+	background-color: #212529;
+	color: #FFFFFE;
+	position: fixed;
+     left: 0;
+     bottom: 0;
+     width: 100%;
+     text-align: center;
 }
 
 .horizontal_div{
@@ -15,6 +20,9 @@ footer{
 }
 
 .horizontal_div img{
-	margin: .5%;
-	height: 25px;
+	margin: 5px;
+	width: 25px;
+	padding: 0;
+    height: auto;
+	object-fit: contain;
 }
