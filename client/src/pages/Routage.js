@@ -2,11 +2,11 @@ import React from "react";
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 
 // Nos pagis
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Cgu from "./pages/Cgu";
-import Stud from "./pages/Stud";
-import Event from "./pages/Event";
+import Home from "./body/Home";
+import About from "./body/About";
+import Cgu from "./body/Cgu";
+import Stud from "./body/Stud";
+import Event from "./body/Event";
 
 const Routage = () => {
 	return (
