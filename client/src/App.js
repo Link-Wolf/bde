@@ -1,7 +1,6 @@
 // import logo from './logo.svg';
 // import "./App.css";
 
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./style/App.css";
 
 import Header from "./pages/Header";
