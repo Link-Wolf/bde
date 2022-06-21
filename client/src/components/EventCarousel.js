@@ -8,6 +8,7 @@ import "../style/EventCarousel.css";
 const EventCarousel = () => {
 	return (
 		<div>
+			<p>Images du dernier event</p>
 			<Carousel fade>
 				<Carousel.Item>
 					<div className="image_div">
