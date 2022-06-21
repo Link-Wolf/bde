@@ -72,7 +72,6 @@ function Home() {
 			<div className="horizontal_div_home">
 				<EventCarousel />
 				<div>
-					Events en cours et a venir
 					<EventList />
 				</div>
 			</div>
