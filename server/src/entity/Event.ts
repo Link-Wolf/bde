@@ -19,6 +19,12 @@ export class Event {
 	cost: number
 
 	@Column({
+		nullable: false,
+		type: "text"
+	})
+	place: string
+
+	@Column({
 		type: "integer",
 		nullable: true,
 		default: 0
