@@ -1,7 +1,7 @@
 import Carousel from "react-bootstrap/Carousel";
 
 import placeholder from "../images/placeholder.jpg";
-import placeholder2 from "../images/user_placeholder.png";
+import placeholder2 from "../images/long_placeholder.jpg";
 
 import "../style/EventCarousel.css";
 

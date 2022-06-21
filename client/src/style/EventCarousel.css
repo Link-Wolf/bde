@@ -16,12 +16,16 @@
 	opacity: 1;
 }
 
+.carousel-item, .carousel, .carousel-inner, .slide {
+	height: 40vw;
+	width: 60vw;
+}
+
 /* End of fix */
 .image_div {
-	width: 900px;
-	height: auto;
+	height: 40vw;
+	width: 60vw;
 	background-color: #212529;
-	padding: 0;
 }
 
 .image_div img {
