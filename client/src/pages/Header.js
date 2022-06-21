@@ -8,8 +8,8 @@ import {
 	Button
 } from "react-bootstrap";
 
-import user_placeholder from "./images/user_placeholder.png";
-import bde_logo from "./images/bde_logo.webp";
+import user_placeholder from "../images/user_placeholder.png";
+import bde_logo from "../images/bde_logo.webp";
 
 import "../style/Header.css";
 

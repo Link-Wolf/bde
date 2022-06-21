@@ -1,0 +1,22 @@
+.horizontal_div_home {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+}
+
+.horizontal_div_home div {
+	margin: .5%;
+}
+
+.horizontal_div_home img {
+	margin: 5px;
+	width: 25px;
+	padding: 0;
+	height: auto;
+	object-fit: contain;
+}
+
+p {
+	text-align: center;
+	margin-bottom: 1px;
+}
