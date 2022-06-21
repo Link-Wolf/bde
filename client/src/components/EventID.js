@@ -3,9 +3,10 @@ import {useState, useEffect, useParams, React} from "react";
 const EventID = id => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
+	const {param} = useParams();
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/${useParams()}`)
+		fetch(`http://localhost:4242/event/${param}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -23,7 +24,7 @@ const EventID = id => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://localhost:4242/inscription/event/${useParams()}`)
+		fetch(`http://localhost:4242/inscription/event/${param}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
