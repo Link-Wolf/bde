@@ -6,7 +6,8 @@ import Home from "./body/Home";
 import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Stud from "./body/Stud";
-import Event from "./body/Event";
+import Events from "./body/Events";
+import EventID from "./body/EventID";
 
 const Routage = () => {
 	return (
@@ -17,7 +18,8 @@ const Routage = () => {
 				<Route path="about" element={<About />} />
 				<Route path="cgu" element={<Cgu />} />
 				<Route path="stud" element={<Stud />} />
-				<Route path="event" element={<Event />} />
+				<Route path="events" element={<Events />} />
+				<Route path="event/:id" element={<EventID />} />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -1,11 +1,11 @@
-import {useState, useEffect, React} from "react";
+import {useState, useEffect, useParams, React} from "react";
 
-const EventList = () => {
+const EventID = id => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/:id`)
+		fetch(`http://localhost:4242/event/${useParams()}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -23,7 +23,7 @@ const EventList = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://localhost:4242/inscription/event/:id`)
+		fetch(`http://localhost:4242/inscription/event/${useParams()}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -71,4 +71,4 @@ const EventList = () => {
 		</div>
 	);
 };
-export default EventList;
+export default EventID;
