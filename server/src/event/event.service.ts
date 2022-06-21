@@ -51,8 +51,8 @@ export class EventService {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
 			if (event)
-			// 	this.logger.warn(`Failed to find event with id ${id} : event does not exist`)
-			// else
+				// 	this.logger.warn(`Failed to find event with id ${id} : event does not exist`)
+				// else
 				this.logger.log(`Got event with id ${id}`);
 			return event;
 		} catch (error) {
