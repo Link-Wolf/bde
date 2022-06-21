@@ -7,7 +7,7 @@ import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Stud from "./body/Stud";
 import Events from "./body/Events";
-import EventID from "./body/EventID";
+import EventID from "../components/EventID";
 
 const Routage = () => {
 	return (

@@ -1,5 +1,7 @@
 import {useState, useEffect, React} from "react";
 
+import "../style/EventList.css";
+
 const EventList = () => {
 	const [data, setData] = useState([]);
 
@@ -25,7 +27,7 @@ const EventList = () => {
 			});
 	}, []);
 	return (
-		<ul>
+		<div className="scroll_container_40vw">
 			{data.map(item => (
 				<li key={item.id}>
 					<h1>
@@ -34,7 +36,7 @@ const EventList = () => {
 					<p> {item.desc} </p>
 				</li>
 			))}
-		</ul>
+		</div>
 	);
 };
 
