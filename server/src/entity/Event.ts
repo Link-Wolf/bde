@@ -45,6 +45,18 @@ export class Event {
 	desc: string
 
 	@Column({
+		type: "bool",
+		nullable: false,
+	})
+	isOutside: boolean
+
+	@Column({
+		type: "bool",
+		nullable: false,
+	})
+	consos: boolean
+
+	@Column({
 		type: 'timestamptz',
 		nullable: false
 	})
