@@ -1,6 +1,6 @@
 import React from "react";
 
-function Event() {
+const Event = () => {
 	return (
 		<div>
 			<div>
@@ -21,6 +21,6 @@ function Event() {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Event;
