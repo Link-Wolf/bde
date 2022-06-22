@@ -1,12 +1,15 @@
-import {useState, useEffect, useParams, React} from "react";
+import {useState, useEffect, React} from "react";
+import {useParams} from "react-router-dom";
+
+import style from "../style/EventID.module.css";
 
 const EventID = id => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
-	const {param} = useParams();
+	const param = useParams();
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/${param}`)
+		fetch(`http://localhost:4242/event/${param.id}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -24,7 +27,7 @@ const EventID = id => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://localhost:4242/inscription/event/${param}`)
+		fetch(`http://localhost:4242/inscription/event/${param.id}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -44,30 +47,53 @@ const EventID = id => {
 			});
 	}, []);
 	return (
-		<div>
+		<div
+			className={`
+				${style.box_light_copper}
+				${style.middlespace}
+				${"flex"}
+				`}
+		>
 			<div>
-				<div>
-					<h2>{dataEvent.name}</h2>
-					<h3>{dataEvent.begin_date}</h3>
+				<div className={`${style.title_conta} ${"flex"}`}>
+					<div className={`${style.box_dark_copper} ${style.name}`}>
+						{dataEvent.name}
+					</div>
+					<div className={`${style.box_dark_copper} ${style.date}`}>
+						{dataEvent.begin_date}
+					</div>
 				</div>
-				<p>{dataEvent.desc}</p>
+				<div>
+					<div className={style.box_med_copper}>{dataEvent.desc}</div>
+				</div>
 			</div>
-			<div>
-				<p>
-					{dataEvent.nb_places == -42
-						? `${dataInsc.length} / ${dataEvent.nb_places}`
-						: `${dataInsc.length} / ∞`}
-				</p>
-				<p>{dataEvent.place}</p>
-				<p>
-					{dataEvent.cost != 0
-						? dataEvent.premium_cost == dataEvent.cost
-							? `Prix : ${dataEvent.cost}€`
-							: `Prix publique : ${dataEvent.cost}€<br/>Prix premium : ${dataEvent.premium_cost}Prix : ${dataEvent.premium_cost}€`
-						: `Gratuit !`}
-				</p>
-				<p>{dataEvent.end_date - dataEvent.begin_date}</p>
-				<button> Subscribe / Unsubscribe (TODO) </button>
+			<div className={`${style.col_flex} ${style.middlespace} ${"flex"}`}>
+				<div>
+					<div className={style.box_dark_green}>
+						{dataEvent.nb_places !== -42
+							? `${dataInsc.length} / ${dataEvent.nb_places}`
+							: `${dataInsc.length} / ∞`}
+					</div>
+					<div className={style.box_dark_green}>
+						{dataEvent.place}
+					</div>
+					<div className={style.box_dark_green}>
+						{dataEvent.cost !== 0
+							? dataEvent.premium_cost === dataEvent.cost
+								? `Prix : ${dataEvent.cost}€`
+								: `Prix publique : ${dataEvent.cost}€<br/>Prix premium : ${dataEvent.premium_cost}Prix : ${dataEvent.premium_cost}€`
+							: `Gratuit !`}
+					</div>
+					<div className={style.box_dark_green}>
+						{dataEvent.end_date - dataEvent.begin_date}
+					</div>
+				</div>
+				<div>
+					<button className={style.button}>
+						{" "}
+						Subscribe / Unsubscribe (TODO){" "}
+					</button>
+				</div>
 			</div>
 		</div>
 	);

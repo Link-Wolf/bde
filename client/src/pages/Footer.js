@@ -1,4 +1,4 @@
-import "../style/Footer.css";
+import style from "../style/Footer.module.css";
 
 import twitter_logo from "../images/twitter_logo.png";
 import discord_logo from "../images/discord_logo.png";

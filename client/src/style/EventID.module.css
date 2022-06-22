@@ -1,0 +1,64 @@
+.flex {
+	justify-content: space-between;
+}
+
+.box_light_copper {
+	background-color: #E69E7F;
+	margin-left: 10vw;
+	margin-right: 10vw;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+}
+
+.box_dark_copper {
+	background-color: #A76237;
+	height: 4vh;
+	color: #fdf8ee;
+	text-align: center;
+}
+
+.box_med_copper {
+	background-color: #DD8343;
+	margin-top: 1vh;
+	height: 21vh;
+	width: 58vw;
+}
+
+.title_container {
+	width: 58vw;
+}
+
+.box_dark_green {
+	background-color: #398174;
+	width: 15vw;
+	color: #fdf8ee;
+	height: 2vh;
+	margin-bottom: 1vh;
+	margin-top: 1vh;
+}
+
+.middlespace {
+	justify-content: space-between;
+}
+
+.col_flex {
+	flex-direction: column;
+}
+
+.date {
+	width: 15vw;
+}
+
+.name {
+	width: 42vw;
+	margin-right: 1vw;
+}
+
+.button {
+	bottom: 0;
+	width: 15vw;
+}
