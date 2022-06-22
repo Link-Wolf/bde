@@ -11,9 +11,15 @@ export class EventDtoPipe implements PipeTransform {
 		if ("place" in value)
 			value.place = String(value.place)
 		if ("consos" in value)
-			value.consos = Boolean(value.consos)
+			if (value.consos == '1')
+				value.consos = true
+			else
+				value.consos = false
 		if ("isOutside" in value)
-			value.isOutside = Boolean(value.isOutside)
+			if (value.isOutside == '1')
+				value.isOutside = true
+			else
+				value.isOutside = false
 		if ("nb_places" in value)
 			value.nb_places = Number(value.nb_places)
 		if ("begin_date" in value)
