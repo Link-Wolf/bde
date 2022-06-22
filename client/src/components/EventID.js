@@ -1,5 +1,6 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
+import NoPage from "../pages/body/NoPage";
 
 import style from "../style/EventID.module.css";
 
@@ -19,7 +20,6 @@ const EventID = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setDataEvent(actualData);
 			})
 			.catch(function(error) {
@@ -37,7 +37,6 @@ const EventID = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setDataInsc(actualData);
 			})
 			.catch(function(error) {
@@ -46,7 +45,7 @@ const EventID = () => {
 				);
 			});
 	}, []);
-	return (
+	return dataEvent.name ? (
 		<div
 			className={`
 				${style.box_light_copper}
@@ -96,6 +95,8 @@ const EventID = () => {
 				</div>
 			</div>
 		</div>
+	) : (
+		<NoPage />
 	);
 };
 export default EventID;
