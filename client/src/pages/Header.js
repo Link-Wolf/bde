@@ -15,11 +15,16 @@ import style from "../style/Header.module.css";
 
 function Header() {
 	return (
-		<header>
+		<header className={style.header}>
 			<Navbar bg="dark" variant="dark">
 				<Container>
 					<Navbar.Brand href="/home">
-						<img id="bde_logo" src={bde_logo} alt="logo bde" />
+						<img
+							className={style.img}
+							id={style.bde_logo}
+							src={bde_logo}
+							alt="logo bde"
+						/>
 					</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
@@ -30,6 +35,7 @@ function Header() {
 							<NavDropdown
 								title={
 									<img
+										className={style.img}
 										src={user_placeholder}
 										alt="user pp placeholder"
 									/>
