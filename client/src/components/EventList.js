@@ -1,4 +1,5 @@
 import {useState, useEffect, React} from "react";
+import NoPage from "../pages/body/NoPage";
 
 import style from "../style/EventList.module.css";
 
@@ -26,7 +27,7 @@ const EventList = () => {
 				);
 			});
 	}, []);
-	return (
+	return data ? (
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
 				<li key={item.id}>
@@ -40,6 +41,8 @@ const EventList = () => {
 				</li>
 			))}
 		</div>
+	) : (
+		<NoPage />
 	);
 };
 
