@@ -4,7 +4,7 @@ import EventCarousel from "../../components/EventCarousel";
 
 import style from "../../style/Home.module.css";
 
-function Home() {
+const Home = () => {
 	return (
 		<div>
 			<p className={style.p}>
@@ -131,6 +131,6 @@ function Home() {
 			</p>
 		</div>
 	);
-}
+};
 
 export default Home;
