@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 
 import style from "../style/EventID.module.css";
 
-const EventID = id => {
+const EventID = () => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
 	const param = useParams();
