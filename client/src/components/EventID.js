@@ -76,11 +76,11 @@ const EventID = () => {
 					<div className={style.box_dark_green}>
 						{dataEvent.place}
 					</div>
-					<div className={style.box_dark_green}>
+					<div className={`${style.box_dark_green} ${style.price}`}>
 						{dataEvent.cost !== 0
 							? dataEvent.premium_cost === dataEvent.cost
 								? `Prix : ${dataEvent.cost}€`
-								: `Prix publique : ${dataEvent.cost}€<br/>Prix premium : ${dataEvent.premium_cost}Prix : ${dataEvent.premium_cost}€`
+								: `Prix publique : ${dataEvent.cost}€\nPrix premium : ${dataEvent.premium_cost}€`
 							: `Gratuit !`}
 					</div>
 					<div className={style.box_dark_green}>

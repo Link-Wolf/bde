@@ -37,8 +37,11 @@
 	width: 15vw;
 	color: #fdf8ee;
 	height: 2vh;
-	margin-bottom: 1vh;
-	margin-top: 1vh;
+	margin-bottom: 2vh;
+}
+
+.price {
+	height: 4vh;
 }
 
 .middlespace {

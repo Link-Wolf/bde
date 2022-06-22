@@ -7,7 +7,8 @@ import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Stud from "./body/Stud";
 import Events from "./body/Events";
-import EventID from "./body/EventID";
+import Event from "./body/Event";
+import NoPage from "./body/NoPage";
 
 const Routage = () => {
 	return (
@@ -19,7 +20,7 @@ const Routage = () => {
 				<Route path="cgu" element={<Cgu />} />
 				<Route path="stud" element={<Stud />} />
 				<Route path="events" element={<Events />} />
-				<Route path="event/:id" element={<EventID />} />
+				<Route path="event/:id" element={<Event />} />
 				<Route path="*" element={<NoPage />} />
 			</Routes>
 		</BrowserRouter>
