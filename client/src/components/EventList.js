@@ -1,6 +1,6 @@
 import {useState, useEffect, React} from "react";
 
-import "../style/EventList.css";
+import style from "../style/EventList.module.css";
 
 const EventList = () => {
 	const [data, setData] = useState([]);
@@ -27,11 +27,14 @@ const EventList = () => {
 			});
 	}, []);
 	return (
-		<div className="scroll_container_40vw">
+		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
 				<li key={item.id}>
 					<h1>
-						{item.id} {item.name}
+						<a href={`/event/${item.id}`}>
+							{" "}
+							{item.id} {item.name}{" "}
+						</a>
 					</h1>
 					<p> {item.desc} </p>
 				</li>

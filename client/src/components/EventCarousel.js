@@ -3,14 +3,14 @@ import Carousel from "react-bootstrap/Carousel";
 import placeholder from "../images/high_placeholder.jpg";
 import placeholder2 from "../images/long_placeholder.jpg";
 
-import "../style/EventCarousel.css";
+import style from "../style/EventCarousel.module.css";
 
 const EventCarousel = () => {
 	return (
 		<div>
 			<Carousel fade>
 				<Carousel.Item>
-					<div className="image_div">
+					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
 							src={placeholder}
@@ -26,7 +26,7 @@ const EventCarousel = () => {
 					</Carousel.Caption>
 				</Carousel.Item>
 				<Carousel.Item>
-					<div className="image_div">
+					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
 							src={placeholder2}
@@ -42,7 +42,7 @@ const EventCarousel = () => {
 					</Carousel.Caption>
 				</Carousel.Item>
 				<Carousel.Item>
-					<div className="image_div">
+					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
 							src={placeholder}

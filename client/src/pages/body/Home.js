@@ -2,12 +2,12 @@ import React from "react";
 import EventList from "../../components/EventList";
 import EventCarousel from "../../components/EventCarousel";
 
-import "../../style/Home.css";
+import style from "../../style/Home.module.css";
 
 function Home() {
 	return (
 		<div>
-			<p>
+			<p className={style.p}>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
 				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
@@ -63,19 +63,17 @@ function Home() {
 				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
 				pulvinar et, accumsan eu lectus. Sed porttitor.
 			</p>
-			<div className="poem">
-				<p>Ouais salut c'est le BDE</p>
-				<p>Ici on est pas la pour faire des oeufs</p>
-				<p>Alors accroche toi bien a ton iMac</p>
-				<p>Parce qu'on va casser la baraque</p>
-			</div>
-			<div className="horizontal_div_home">
+			<p className={style.p}>Ouais salut c'est le BDE</p>
+			<p className={style.p}>Ici on est pas la pour faire des oeufs</p>
+			<p className={style.p}>Alors accroche toi bien a ton iMac</p>
+			<p className={style.p}>Parce qu'on va casser la baraque</p>
+			<div class={style.event_show}>
 				<EventCarousel />
-				<div>
+				<div className={style.margin5}>
 					<EventList />
 				</div>
 			</div>
-			<p>
+			<p className={style.p}>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
 				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
