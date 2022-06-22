@@ -29,8 +29,7 @@
 	display: none !important;
 }
 
-.nav-link {
-	line-height: 0;
-}
-
 /* End of fix */
+.nav-link {
+	line-height: 50px;
+}

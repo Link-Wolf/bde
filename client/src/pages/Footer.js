@@ -18,7 +18,7 @@ function Footer() {
 			</div>
 			<div className={style.horizontal_div_footer}>
 				<div> CGU / CGV</div>
-				<div> Contact us grand fou</div>
+				<a href="/contact"> Contact us grand fou</a>
 			</div>
 		</footer>
 	);
