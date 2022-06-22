@@ -54,7 +54,7 @@ const EventID = id => {
 			</div>
 			<div>
 				<p>
-					{dataEvent.nb_places == -42
+					{dataEvent.nb_places != -42
 						? `${dataInsc.length} / ${dataEvent.nb_places}`
 						: `${dataInsc.length} / ∞`}
 				</p>
@@ -63,7 +63,7 @@ const EventID = id => {
 					{dataEvent.cost != 0
 						? dataEvent.premium_cost == dataEvent.cost
 							? `Prix : ${dataEvent.cost}€`
-							: `Prix publique : ${dataEvent.cost}€<br/>Prix premium : ${dataEvent.premium_cost}Prix : ${dataEvent.premium_cost}€`
+							: `Prix publique : ${dataEvent.cost}€\nPrix premium : Prix : ${dataEvent.premium_cost}€`
 						: `Gratuit !`}
 				</p>
 				<p>{dataEvent.end_date - dataEvent.begin_date}</p>
