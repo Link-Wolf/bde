@@ -27,7 +27,7 @@ const EventList = () => {
 				);
 			});
 	}, []);
-	return data ? (
+	return data.length ? (
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
 				<li key={item.id}>
@@ -42,7 +42,7 @@ const EventList = () => {
 			))}
 		</div>
 	) : (
-		<NoPage />
+		<div>No event for the moment ma boi</div>
 	);
 };
 
