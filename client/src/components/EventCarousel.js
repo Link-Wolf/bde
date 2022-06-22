@@ -1,7 +1,9 @@
 import Carousel from "react-bootstrap/Carousel";
 
-import placeholder from "../images/high_placeholder.jpg";
-import placeholder2 from "../images/long_placeholder.jpg";
+import abel from "../images/abel.png";
+import yoyo from "../images/yohan.png";
+import caro from "../images/caroline.png";
+import iman from "../images/imane.png";
 
 import style from "../style/EventCarousel.module.css";
 
@@ -13,31 +15,40 @@ const EventCarousel = () => {
 					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
-							src={placeholder}
+							src={abel}
 							alt="First slide"
 						/>
 					</div>
 					<Carousel.Caption>
-						<h3>First slide label</h3>
-						<p>
-							Nulla vitae elit libero, a pharetra augue mollis
-							interdum.
-						</p>
+						<h3>Abel</h3>
+						<p>Le techboi tro coul</p>
 					</Carousel.Caption>
 				</Carousel.Item>
 				<Carousel.Item>
 					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
-							src={placeholder2}
+							src={yoyo}
 							alt="Second slide"
 						/>
 					</div>
 					<Carousel.Caption>
-						<h3>Second slide label</h3>
+						<h3>Yohan</h3>
+						<p>attention il tig a vue</p>
+					</Carousel.Caption>
+				</Carousel.Item>
+				<Carousel.Item>
+					<div className={style.image_div}>
+						<img
+							className="d-block w-100"
+							src={caro}
+							alt="Third slide"
+						/>
+					</div>
+					<Carousel.Caption>
+						<h3>Caroline</h3>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit.
+							<s>Maman</s> Amirale
 						</p>
 					</Carousel.Caption>
 				</Carousel.Item>
@@ -45,16 +56,13 @@ const EventCarousel = () => {
 					<div className={style.image_div}>
 						<img
 							className="d-block w-100"
-							src={placeholder}
+							src={iman}
 							alt="Third slide"
 						/>
 					</div>
 					<Carousel.Caption>
-						<h3>Third slide label</h3>
-						<p>
-							Praesent commodo cursus magna, vel scelerisque nisl
-							consectetur.
-						</p>
+						<h3>Imane</h3>
+						<p>Elle nous trouve des thunes</p>
 					</Carousel.Caption>
 				</Carousel.Item>
 			</Carousel>
