@@ -1,11 +1,11 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
+import { Raw, IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
-import { EventDto } from './event.dto';
+import { EventDto, EventFilterDto } from './event.dto';
 
 @Injectable()
 export class EventService {
@@ -17,17 +17,32 @@ export class EventService {
 		private logger: LoggerService,
 	) { }
 
-	async findAll(): Promise<Event[]> {
+	async findAll(filterDto: EventFilterDto): Promise<Event[]> {
 		try {
-			let events = await this.eventRepository.find();
-			// if (events.length == 0)
-			// 	this.logger.warn(`No events found `)
+			let match = `SELECT * FROM events WHERE '1' == '1'`;
+			if (filterDto.current)
+				match += ` AND event.end_date > NOW()`
+			if (filterDto.free)
+				match += ` AND event.cost = 0`
+			if (filterDto.available)
+				match += ` AND event.nb_places > (SELECT COUNT(*) FROM inscriptions WHERE "eventId" = 'event.id')`
+			if (filterDto.food)
+				match += ` AND event.consos = 1`
+			if (filterDto.unlimited)
+				match += ` AND event.nb_places = -42`
+			if (filterDto.outside)
+				match += ` AND event.isOutside = 1`
+			if (filterDto.sponsorised)
+				match += ` AND event.sponsorised = 1`
+			match += `;`
+			let events = await this.eventRepository.query(match);
+			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
-			this.logger.log(`Got all events`);
+			this.logger.log(`Got all filtered events`);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all events on database (${error})`);
-			throw new InternalServerErrorException(`Could not find events on database (${error})`)
+			this.logger.error(`Failed to get all filtered events on database(${error})`);
+			throw new InternalServerErrorException(`Could not find filtered events on database(${error})`)
 		}
 	}
 
@@ -42,8 +57,8 @@ export class EventService {
 			this.logger.log(`Got all current events`);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all current events on database (${error})`);
-			throw new InternalServerErrorException(`Failed to get all current events on database (${error})`)
+			this.logger.error(`Failed to get all current events on database(${error})`);
+			throw new InternalServerErrorException(`Failed to get all current events on database(${error})`)
 		}
 	}
 
@@ -51,13 +66,13 @@ export class EventService {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
 			if (event)
-				// 	this.logger.warn(`Failed to find event with id ${id} : event does not exist`)
+				// 	this.logger.warn(`Failed to find event with id ${ id } : event does not exist`)
 				// else
-				this.logger.log(`Got event with id ${id}`);
+				this.logger.log(`Got event with id ${id} `);
 			return event;
 		} catch (error) {
-			this.logger.error(`Failed to find event ${id} on database (${error})`);
-			throw new InternalServerErrorException(`Failed to find event ${id} on database (${error})`)
+			this.logger.error(`Failed to find event ${id} on database(${error})`);
+			throw new InternalServerErrorException(`Failed to find event ${id} on database(${error})`)
 		}
 	}
 
@@ -69,10 +84,10 @@ export class EventService {
 				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
 			await this.eventRepository.update(id, eventData);
-			this.logger.log(`Successfully updated event ${id}`);
+			this.logger.log(`Successfully updated event ${id} `);
 		} catch (error) {
-			this.logger.error(`Failed to update event ${id} on database (${error})`)
-			throw new InternalServerErrorException(`Failed to update event ${id} on database (${error})`)
+			this.logger.error(`Failed to update event ${id} on database(${error})`)
+			throw new InternalServerErrorException(`Failed to update event ${id} on database(${error})`)
 		}
 	}
 
@@ -91,20 +106,20 @@ export class EventService {
 			}
 			event.studs.push(stud);
 			await this.eventRepository.save(event);
-			this.logger.log(`Successfully subscribe student ${login} to event ${id}`);
+			this.logger.log(`Successfully subscribe student ${login} to event ${id} `);
 		} catch (error) {
-			this.logger.error(`Failed to subscribe student ${login} to event ${id} on database (${error})`)
-			throw new InternalServerErrorException(`Failed to subscribe student ${login} to event ${id} on database (${error})`)
+			this.logger.error(`Failed to subscribe student ${login} to event ${id} on database(${error})`)
+			throw new InternalServerErrorException(`Failed to subscribe student ${login} to event ${id} on database(${error})`)
 		}
 	}
 
 	async create(eventDto: EventDto): Promise<void> {
 		try {
 			await this.eventRepository.save(eventDto);
-			this.logger.log(`Successfully created new event ${eventDto.name}`);
+			this.logger.log(`Successfully created new event ${eventDto.name} `);
 		} catch (error) {
-			this.logger.error(`Failed to create event ${eventDto.name} on database (${error})`)
-			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database (${error})`)
+			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`)
+			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database(${error})`)
 		}
 	}
 
@@ -112,13 +127,13 @@ export class EventService {
 		try {
 			if (await this.findOne(id)) {
 				await this.eventRepository.delete({ id: id });
-				this.logger.log(`Successfully deleted event ${id}`);
+				this.logger.log(`Successfully deleted event ${id} `);
 			}
 			else
 				this.logger.warn(`Failed to delete event ${id} : event does no exist`);
 		} catch (error) {
-			this.logger.error(`Failed to delete event ${id} on database (${error})`)
-			throw new InternalServerErrorException(`Failed to delete event ${id} on database (${error})`)
+			this.logger.error(`Failed to delete event ${id} on database(${error})`)
+			throw new InternalServerErrorException(`Failed to delete event ${id} on database(${error})`)
 		}
 	}
 
@@ -127,8 +142,8 @@ export class EventService {
 			await this.eventRepository.delete({});
 			this.logger.log(`Successfully deleted all events`);
 		} catch (error) {
-			this.logger.error(`Failed to delete all events on database (${error})`)
-			throw new InternalServerErrorException(`Failed to delete all events on database (${error})`)
+			this.logger.error(`Failed to delete all events on database(${error})`)
+			throw new InternalServerErrorException(`Failed to delete all events on database(${error})`)
 		}
 	}
 
