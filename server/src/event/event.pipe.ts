@@ -29,3 +29,59 @@ export class EventDtoPipe implements PipeTransform {
 		return value;
 	}
 }
+
+@Injectable()
+export class EventFilterDtoPipe implements PipeTransform {
+	transform(value: any, _metadata: ArgumentMetadata) {
+		if ("current" in value && value.current == '1')
+			value.current = true
+		else
+			value.current = false
+		if ("free" in value && value.free == '1')
+			value.free = true
+		else
+			value.free = false
+		if ("available" in value && value.available == '1')
+			value.available = true
+		else
+			value.available = false
+		// if ("subed" in value && value.subed == '1')
+		// 	value.subed = true
+		// else
+		// 	value.subed = false
+		if ("food" in value && value.food == '1')
+			value.food = true
+		else
+			value.food = false
+		if ("unlimited" in value && value.unlimited == '1')
+			value.unlimited = true
+		else
+			value.unlimited = false
+		if ("outside" in value && value.outside == '1')
+			value.outside = true
+		else
+			value.outside = false
+		if ("sponsorised" in value && value.sponsorised == '1')
+			value.sponsorised = true
+		else
+			value.sponsorised = false
+		if ("asc" in value && value.asc == '1')
+			value.asc = true
+		else
+			value.asc = false
+		if (!("sort" in value))
+			value.sort = "date"
+		return value;
+	}
+}
+
+/* 	current: boolean; //fin de levent dans le futur
+	free: boolean; //gratuit
+	available: boolean; //encore des places
+	// subed: boolean; //billy est inscrit
+	food: boolean; //ya du miam miam ou du glou glou
+	unlimited: boolean;//pouvoir illimité
+	outside: boolean;// pas a 42
+	sponsorised: boolean;// thunas
+	asc: boolean;// tri order (default desc)
+	sort: string;//tri selon (default date) */
