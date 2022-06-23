@@ -1,5 +1,4 @@
 import {useState, useEffect, React} from "react";
-import NoPage from "../pages/body/NoPage";
 
 import style from "../style/EventList.module.css";
 

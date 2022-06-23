@@ -21,6 +21,7 @@ const Contact = () => {
 				<Form.Label>Message</Form.Label>
 				<Form.Control as="textarea" />
 			</Form.Group>
+			//!connecte ?
 			<Form.Group>
 				<Form.Group>
 					<Form.Label>Nom</Form.Label>
@@ -37,7 +38,7 @@ const Contact = () => {
 					</Form.Text>
 				</Form.Group>
 			</Form.Group>
-			//Futur captcha
+			//: null //Futur captcha
 			<Button variant="outline-primary" type="submit">
 				Envoyer
 			</Button>
