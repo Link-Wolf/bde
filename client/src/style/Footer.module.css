@@ -1,4 +1,4 @@
-footer {
+.footer {
 	bottom: sticky;
 	background-color: #212529;
 	color: #FFFFFE;
@@ -17,7 +17,7 @@ footer {
 	justify-content: center;
 }
 
-.horizontal_div_footer div {
+.horizontal_div_footer div, .horizontal_div_footer a {
 	margin: .5%;
 }
 
