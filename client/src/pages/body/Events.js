@@ -19,50 +19,24 @@ const Event = () => {
 							set={[
 								{name: "Current", value: "current"},
 								{name: "Free", value: "free"},
-								{name: "Available", value: "available"}
+								{name: "Available", value: "available"},
+								{name: "Miammiam glouglou", value: "food"},
+								{name: "Dehors", value: "outside"},
+								{name: "Sponsorisé", value: "sponsorised"}
 							]}
 							onChange={null}
 							type="checkbox"
 						/>
 					</Dropdown.Menu>
 				</Dropdown>
-				<Dropdown>
-					<Dropdown.Toggle variant="success" id="dropdown-basic">
-						Tri
-					</Dropdown.Toggle>
-					<Dropdown.Menu>
-						<CheckSet
-							set={[
-								{
-									name: "Begin Date",
-									value: "begin_date",
-									defaultChecked: true
-								},
-								{name: "End Date", value: "end_date"},
-								{name: "ID", value: "id"},
-								{name: "Nombre de place", value: "nb_places"},
-								{name: "Nom", value: "name"},
-								{name: "Lieu", value: "place"},
-								{name: "Prix", value: "cost"}
-							]}
-							onChange={null}
-							type="radio"
-						/>
-						<hr />
-						<CheckSet
-							set={[
-								{
-									name: "Desc",
-									value: "desc",
-									defaultChecked: true
-								},
-								{name: "Asc", value: "asc"}
-							]}
-							onChange={null}
-							type="radio"
-						/>
-					</Dropdown.Menu>
-				</Dropdown>
+				<p> Trier par : </p>
+				<select>
+					<option value="begin_date">Date</option>
+					<option value="name">Nom</option>
+					<option value="cost">Prix</option>
+					<option value="place">Lieu</option>
+				</select>
+				<button>⇃↾</button>
 				<EventList filter={filter} />
 			</div>
 			<div>
