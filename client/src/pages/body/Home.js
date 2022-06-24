@@ -70,7 +70,7 @@ const Home = () => {
 			<div class={style.event_show}>
 				<EventCarousel />
 				<div className={style.margin5}>
-					<EventList />
+					<EventList filter={{current: 1}} />
 				</div>
 			</div>
 			<p className={style.p}>

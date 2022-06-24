@@ -2,14 +2,14 @@ import {useState, useEffect, React} from "react";
 
 import style from "../style/EventList.module.css";
 
-const EventList = filter => {
+const EventList = param => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
 		const requestOptions = {
 			method: "post",
 			headers: {"Content-Type": "application/json"}, //add security token here i guess
-			body: JSON.stringify({current: 1})
+			body: JSON.stringify(param.filter)
 		};
 		fetch(`http://localhost:4242/event/get`, requestOptions)
 			.then(response => {
