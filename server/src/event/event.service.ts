@@ -21,7 +21,7 @@ export class EventService {
 		try {
 			let match = `SELECT * FROM "event" WHERE '1' = '1'`;
 			if (filterDto.current)
-				match += ` AND ("end_date" = 'null' OR "end_date" > 'NOW()')`
+				match += ` AND ("end_date" IS NULL OR "end_date" > 'NOW()')`
 			if (filterDto.free)
 				match += ` AND "cost" = 0`
 			if (filterDto.available)
