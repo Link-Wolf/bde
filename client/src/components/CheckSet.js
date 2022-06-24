@@ -6,7 +6,7 @@ const CheckSet = param => {
 					<div>
 						<input
 							type={param.type}
-							name="filter"
+							name={param.setName}
 							defaultChecked={item.defaultChecked}
 							value={item.value}
 							onChange={param.onChange}
