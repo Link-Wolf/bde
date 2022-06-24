@@ -11,7 +11,7 @@ const Event = () => {
 			<div>
 				<Dropdown>
 					<Dropdown.Toggle variant="success" id="dropdown-basic">
-						Filtre
+						Filtrer
 					</Dropdown.Toggle>
 
 					<Dropdown.Menu>

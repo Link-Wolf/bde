@@ -8,6 +8,11 @@ import { EventDtoPipe, EventFilterDtoPipe } from './event.pipe';
 export class EventController {
 	constructor(private eventService: EventService) { }
 
+	@Get('')
+	findAll(): Promise<Event[]> {
+		return this.eventService.findAll(null);
+	}
+
 	@Get('current')
 	findCurrent(): Promise<Event[]> {
 		return this.eventService.findCurrent();
@@ -24,7 +29,7 @@ export class EventController {
 	}
 
 	@Post('get')
-	findAll(@Body(new EventFilterDtoPipe()) filters: EventFilterDto): Promise<Event[]> {
+	findAllButFilter(@Body(new EventFilterDtoPipe()) filters: EventFilterDto): Promise<Event[]> {
 		return this.eventService.findAll(filters);
 	}
 
