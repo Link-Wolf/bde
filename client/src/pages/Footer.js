@@ -6,7 +6,7 @@ import instagram_logo from "../images/instagram_logo.png";
 
 function Footer() {
 	return (
-		<footer>
+		<footer className={style.footer}>
 			<div className={style.horizontal_div_footer}>
 				<img contain src={twitter_logo} alt="twitter logo" />
 				<img contain src={discord_logo} alt="discord logo" />
