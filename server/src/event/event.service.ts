@@ -19,26 +19,28 @@ export class EventService {
 
 	async findAll(filterDto: EventFilterDto): Promise<Event[]> {
 		try {
-			let match = `SELECT * FROM events WHERE '1' == '1'`;
+			let match = `SELECT * FROM "event" WHERE '1' = '1'`;
 			if (filterDto.current)
-				match += ` AND event.end_date > NOW()`
+				match += ` AND ("end_date" = 'null' OR "end_date" > 'NOW()')`
 			if (filterDto.free)
-				match += ` AND event.cost = 0`
+				match += ` AND "cost" = 0`
 			if (filterDto.available)
-				match += ` AND event.nb_places > (SELECT COUNT(*) FROM inscriptions WHERE "eventId" = 'event.id')`
+				match += ` AND ("nb_places" > (SELECT COUNT(*) FROM "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
 			if (filterDto.food)
-				match += ` AND event.consos = 1`
+				match += ` AND "consos" = 't'`
 			if (filterDto.unlimited)
-				match += ` AND event.nb_places = -42`
+				match += ` AND "nb_places" = -42`
 			if (filterDto.outside)
-				match += ` AND event.isOutside = 1`
+				match += ` AND "isOutside" = 't'`
 			if (filterDto.sponsorised)
-				match += ` AND event.sponsorised = 1`
+				match += ` AND "sponsorised" = 't'`
+			match += ` ORDER BY ${filterDto.sort} ${filterDto.asc ? "ASC" : "DESC"}`
 			match += `;`
+			console.log(match);
 			let events = await this.eventRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
-			this.logger.log(`Got all filtered events`);
+			this.logger.log(`Got all filtered events : ${match}`);
 			return events;
 		} catch (error) {
 			this.logger.error(`Failed to get all filtered events on database(${error})`);
