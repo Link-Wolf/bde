@@ -37,8 +37,7 @@ const EventList = param => {
 				<li key={item.id}>
 					<h1>
 						<a href={`/event/${item.id}`}>
-							{" "}
-							{item.id} {item.name}{" "}
+							{item.id} {item.name}
 						</a>
 					</h1>
 					<p> {item.desc} </p>

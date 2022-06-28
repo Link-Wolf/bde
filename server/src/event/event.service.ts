@@ -115,6 +115,28 @@ export class EventService {
 		}
 	}
 
+	async forceSubscribe(id: number, login: string): Promise<void> {
+		try {
+			let event = await this.findOne(id);
+			if (!event) {
+				this.logger.error(`Failed to force subscribe student ${login} to event ${id} : event does not exist`)
+				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : event does not exist`)
+			}
+			event.studs = await this.getStuds(id);
+			let stud = await this.studService.findOne(login);
+			if (!stud) {
+				this.logger.error(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
+				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
+			}
+			event.studs.push(stud);
+			await this.eventRepository.save(event);
+			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `);
+		} catch (error) {
+			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
+			throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
+		}
+	}
+
 	async create(eventDto: EventDto): Promise<void> {
 		try {
 			await this.eventRepository.save(eventDto);

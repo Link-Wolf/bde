@@ -40,6 +40,11 @@ export class InscriptionController {
 		return this.inscriptionService.remove(event, login);
 	}
 
+	@Delete('/admin/:event/:login')
+	forceRemove(@Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
+		return this.inscriptionService.forceRemove(event, login);
+	}
+
 	@Delete()
 	removeAll() {
 		return this.inscriptionService.removeAll();

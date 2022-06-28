@@ -1,12 +1,4 @@
-import {
-	Nav,
-	Navbar,
-	Container,
-	NavDropdown,
-	Form,
-	FormControl,
-	Button
-} from "react-bootstrap";
+import {Nav, Navbar, Container, NavDropdown} from "react-bootstrap";
 
 import user_placeholder from "../images/user_placeholder.png";
 import bde_logo from "../images/bde_logo.webp";
