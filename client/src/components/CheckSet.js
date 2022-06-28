@@ -6,12 +6,12 @@ const CheckSet = param => {
 					<div>
 						<input
 							type={param.type}
-							name={param.setName}
-							defaultChecked={item.defaultChecked}
+							name={item.name}
 							value={item.value}
 							onChange={param.onChange}
+							checked={item.checked}
 						/>
-						<label>{item.name}</label>
+						<label>{item.label}</label>
 					</div>
 				);
 			})}

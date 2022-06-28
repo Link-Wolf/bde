@@ -30,7 +30,7 @@ const EventList = param => {
 						error.message
 				);
 			});
-	}, []);
+	}, [param.filter]);
 	return data.length ? (
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (

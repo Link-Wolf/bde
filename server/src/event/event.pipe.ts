@@ -69,7 +69,8 @@ export class EventFilterDtoPipe implements PipeTransform {
 			value.asc = true
 		else
 			value.asc = false
-		if (!("sort" in value && ["begin_date", "name", "place", "cost"].includes(value.sort)))
+		if (!("sort" in value && ["begin_date", "name", "place", "cost"]
+			.includes(value.sort)))
 			value.sort = "begin_date"
 		return value;
 	}
