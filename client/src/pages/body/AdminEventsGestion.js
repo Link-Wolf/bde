@@ -35,14 +35,14 @@ const AdminEventsGestion = () => {
 		<div>
 			<AdminNavbar />
 			{data.length ? (
-				<div className={style.scroll_container_40vw}>
+				<div>
 					{data.map(item => (
 						<li key={item.id}>
 							<h2>{item.name}</h2>
 							<ul>
-								{item.cost ? <li>item.cost</li> : null}
+								{item.cost ? <li>{item.cost}</li> : null}
 								{item.premium_cost !== item.cost ? (
-									<li>item.premium_cost</li>
+									<li>{item.premium_cost}</li>
 								) : null}
 								<li>{item.place}</li>
 
