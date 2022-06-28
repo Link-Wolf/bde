@@ -1,3 +1,5 @@
+import Dropdown from "../components/Dropdown";
+
 const AdminNavbar = () => {
 	return (
 		<div>
