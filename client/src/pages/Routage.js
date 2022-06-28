@@ -41,10 +41,7 @@ const Routage = () => {
 					element={<AdminContributions />}
 				/>
 				<Route path="admin/logs" element={<AdminLogs />} />
-				<Route
-					path="admin/students"
-					element={<Navigate to="/admin/students" />}
-				/>
+				<Route path="admin/students" element={<AdminStudents />} />
 				<Route
 					path="admin/"
 					element={<Navigate to="/admin/students" />}
