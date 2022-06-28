@@ -2,10 +2,18 @@ const AdminNavbar = () => {
 	return (
 		<div>
 			<ul>
-				<li href="/admin/students">Students</li>
-				<li href="/admin/events">Events</li>
-				<li href="/admin/contributions">Contributions</li>
-				<li href="/admin/logs">Logs</li>
+				<a href="/admin/students">
+					<button>Students</button>
+				</a>
+				<a href="/admin/events">
+					<button>Events</button>
+				</a>
+				<a href="/admin/contributions">
+					<button>Contributions</button>
+				</a>
+				<a href="/admin/logs">
+					<button>Logs</button>
+				</a>
 			</ul>
 		</div>
 	);
