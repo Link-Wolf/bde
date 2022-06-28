@@ -29,3 +29,8 @@
 	height: 100%;
 	transition: .5s;
 }
+
+#loginButton {
+	background-image: url("../images/user_placeholder.png");
+	background-size: contain;
+}

@@ -67,7 +67,7 @@ const Home = () => {
 			<p className={style.p}>Ici on est pas la pour faire des oeufs</p>
 			<p className={style.p}>Alors accroche toi bien a ton iMac</p>
 			<p className={style.p}>Parce qu'on va casser la baraque</p>
-			<div class={style.event_show}>
+			<div className={style.event_show}>
 				<EventCarousel />
 				<div className={style.margin5}>
 					<EventList filter={{current: 1}} />

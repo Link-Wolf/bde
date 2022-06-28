@@ -8,9 +8,9 @@ function Footer() {
 	return (
 		<footer className={style.footer}>
 			<div className={style.horizontal_div_footer}>
-				<img contain src={twitter_logo} alt="twitter logo" />
-				<img contain src={discord_logo} alt="discord logo" />
-				<img contain src={instagram_logo} alt="instagram logo" />
+				<img src={twitter_logo} alt="twitter logo" />
+				<img src={discord_logo} alt="discord logo" />
+				<img src={instagram_logo} alt="instagram logo" />
 			</div>
 			<div className={style.horizontal_div_footer}>
 				<div>CC COPYRIGHT TOUSSA</div>

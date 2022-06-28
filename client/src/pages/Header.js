@@ -1,6 +1,5 @@
 import Dropdown from "../components/Dropdown";
 
-import user_placeholder from "../images/user_placeholder.png";
 import bde_logo from "../images/bde_logo.webp";
 
 import style from "../style/Header.module.css";
@@ -26,13 +25,20 @@ function Header() {
 			<a href="/home">
 				<img id={style.bde_logo} src={bde_logo} />
 			</a>
-			<button href="/events"> Events </button>
-			<button href="/shop"> Shop </button>
-			<Dropdown bg={user_placeholder} title>
+			<a href="/events">
+				<button> Events </button>
+			</a>
+			<a href="/shop">
+				<button> Shop </button>
+			</a>
+			<Dropdown title="User" id={style.loginButton}>
 				<a href="/me"> Profile </a>
 				<a href="/settings"> Settings </a>
 				<a href="/log"> Login/Logout </a>
 			</Dropdown>
+			<a href="/admin">
+				<button> Admin </button>
+			</a>
 		</header>
 	);
 }
