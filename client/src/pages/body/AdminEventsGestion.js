@@ -1,7 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminStudents = () => {
+const AdminEventsGestion = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -69,4 +69,4 @@ const AdminStudents = () => {
 	);
 };
 
-export default AdminStudents;
+export default AdminEventsGestion;
