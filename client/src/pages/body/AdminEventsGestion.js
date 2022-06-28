@@ -1,7 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminEventsGestion = () => {
+const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ const AdminEventsGestion = () => {
 		<div>
 			<AdminNavbar />
 			{data.length ? (
-				<div className={style.scroll_container_40vw}>
+				<div>
 					{data.map(item => (
 						<li key={item.id}>
 							<h2>{item.name}</h2>
