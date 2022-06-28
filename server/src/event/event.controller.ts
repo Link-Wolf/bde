@@ -43,6 +43,11 @@ export class EventController {
 		return this.eventService.subscribe(id, login);
 	}
 
+	@Patch('admin/:id/inscription')
+	forceSubscribe(@Param('id') id: number, @Body('login') login: string) {
+		return this.eventService.forceSubscribe(id, login);
+	}
+
 	@Delete(':id')
 	removeOne(@Param('id', ParseIntPipe) id: number) {
 		return this.eventService.removeOne(id);
