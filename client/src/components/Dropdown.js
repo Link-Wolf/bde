@@ -12,7 +12,9 @@ const Dropdown = param => {
 
 	return (
 		<>
-			<button onClick={handleButton}>{param.title}</button>
+			<button id={param.id} onClick={handleButton}>
+				{param.title}
+			</button>
 			{content}
 		</>
 	);
