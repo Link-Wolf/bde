@@ -31,14 +31,14 @@ function Header() {
 			<a href="/shop">
 				<button> Shop </button>
 			</a>
+			<a href="/admin">
+				<button> Admin </button>
+			</a>
 			<Dropdown title="User" id={style.loginButton}>
 				<a href="/me"> Profile </a>
 				<a href="/settings"> Settings </a>
 				<a href="/log"> Login/Logout </a>
 			</Dropdown>
-			<a href="/admin">
-				<button> Admin </button>
-			</a>
 		</header>
 	);
 }
