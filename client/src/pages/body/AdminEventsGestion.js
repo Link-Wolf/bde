@@ -1,7 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminStudents = param => {
+const AdminStudents = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -35,24 +35,29 @@ const AdminStudents = param => {
 		<div>
 			<AdminNavbar />
 			{data.length ? (
-				<div>
+				<div className={style.scroll_container_40vw}>
 					{data.map(item => (
 						<li key={item.id}>
 							<h2>{item.name}</h2>
 							<ul>
-								<li>{item.cost ? item.cost : null}</li>
-								<li>
-									{item.premium_cost !== item.cost
-										? item.premium_cost
-										: null}
-								</li>
+								{item.cost ? <li>item.cost</li> : null}
+								{item.premium_cost !== item.cost ? (
+									<li>item.premium_cost</li>
+								) : null}
 								<li>{item.place}</li>
+
 								<li>{item.nb_places}</li>
-								<li>{item.consos}</li>
-								<li>{item.isOutside}</li>
+								<li>{item.consos ? "Consos" : "Pas consos"}</li>
+								<li>
+									{item.isOutside ? "Dehors" : "Pas dehors"}
+								</li>
 								<li>{item.desc}</li>
 								<li>{item.begin_date}</li>
-								<li>{item.end_date}</li>
+								<li>
+									{item.end_date
+										? item.end_date
+										: "Permanent"}
+								</li>
 							</ul>
 						</li>
 					))}
