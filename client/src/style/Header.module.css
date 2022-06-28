@@ -13,16 +13,18 @@
 }
 
 .header button {
-	height: calc(var(--header_height) * .6);
+	height: calc(var(--header_height) * .2);
 	width: calc(var(--header_height) * .6);
 	padding: 0;
-	margin: 0;
 	transition: .5s;
+	border: none;
+	margin: 0 calc(var(--header_height) * .1);
+	border-radius: 25%;
 }
 
 .header img {
 	height: 100%;
-	transition: .5s;
+	transition: 5s;
 }
 
 .header img#bde_logo {
@@ -31,6 +33,10 @@
 }
 
 #loginButton {
+	height: calc(var(--header_height) * .6);
 	background-image: url("../images/user_placeholder.png");
 	background-size: contain;
+	float: right;
+	margin: calc(var(--header_height) * .2) calc(var(--header_height) * .2) 0 0;
+	transition: .5s;
 }
