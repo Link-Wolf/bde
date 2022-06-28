@@ -5,11 +5,16 @@ import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 import Home from "./body/Home";
 import About from "./body/About";
 import Cgu from "./body/Cgu";
-import Studs from "./body/Stud";
+import Stud from "./body/Studs";
 import Events from "./body/Events";
 import Event from "./body/Event";
 import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
+import AdminEventsGestion from "./body/AdminEventsGestion";
+import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
+import AdminContributions from "./body/AdminContributions";
+import AdminLogs from "./body/AdminLogs";
+import AdminStudents from "./body/AdminStudents";
 
 const Routage = () => {
 	return (
@@ -19,7 +24,7 @@ const Routage = () => {
 				<Route path="home" element={<Home />} />
 				<Route path="about" element={<About />} />
 				<Route path="cgu" element={<Cgu />} />
-				<Route path="stud" element={<Studs />} />
+				<Route path="stud" element={<Stud />} />
 				<Route path="events" element={<Events />} />
 				<Route path="event/:id" element={<Event />} />
 				<Route path="contact" element={<Contact />} />
@@ -36,7 +41,7 @@ const Routage = () => {
 					element={<AdminContributions />}
 				/>
 				<Route path="admin/logs" element={<AdminLogs />} />
-				<Route path="admin/" element={<AdminStudents />} />
+				<Route path="admin/*" element={<AdminStudents />} />
 				<Route path="*" element={<NoPage />} />
 			</Routes>
 		</BrowserRouter>

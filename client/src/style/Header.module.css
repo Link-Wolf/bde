@@ -1,14 +1,31 @@
+:root {
+	--header_height: 10vw;
+}
+
 .header {
 	top: 0;
 	position: sticky;
 	z-index: 10;
+	background: black;
+	text-align: center;
+	transition: .5s;
+	height: var(--header_height);
 }
 
-.img {
-	height: 30px;
+.header button {
+	height: calc(var(--header_height) * .6);
+	width: calc(var(--header_height) * .6);
+	padding: 0;
+	margin: 0;
+	transition: .5s;
 }
 
-.img#bde_logo {
-	width: 50px;
-	height: auto;
+.header img {
+	height: 100%;
+	transition: .5s;
+}
+
+.header img#bde_logo {
+	height: 100%;
+	transition: .5s;
 }

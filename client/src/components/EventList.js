@@ -31,6 +31,7 @@ const EventList = param => {
 				);
 			});
 	}, [param.filter]);
+
 	return data.length ? (
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
