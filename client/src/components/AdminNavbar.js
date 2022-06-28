@@ -5,9 +5,10 @@ const AdminNavbar = () => {
 				<a href="/admin/students">
 					<button>Students</button>
 				</a>
-				<a href="/admin/events">
-					<button>Events</button>
-				</a>
+				<Dropdown title="Events">
+					<a href="/admin/events/gestion"> Gestion </a>
+					<a href="/admin/events/subscribtions"> Inscriptions </a>
+				</Dropdown>
 				<a href="/admin/contributions">
 					<button>Contributions</button>
 				</a>
