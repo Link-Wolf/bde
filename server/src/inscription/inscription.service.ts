@@ -132,4 +132,19 @@ export class InscriptionService {
 			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
 		}
 	}
+
+	async forceRemove(id: number, login: string) {
+		try {
+			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+			if (insc.length) {
+				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+				this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`);
+			}
+			else
+				this.logger.warn(`Failed to force delete inscription for student ${login} and event ${id} : inscription does not exist`)
+		} catch (error) {
+			this.logger.error(`Failed to force delete inscription for student ${login} and event ${id} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
+		}
+	}
 }
