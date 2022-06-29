@@ -125,10 +125,8 @@ export class EventService {
 			event.studs = await this.getStuds(id);
 			let stud = await this.studService.findOne(login);
 			if (!stud) {
-				let caca = 42 / 0
-				caca /= caca
 				// this.logger.error(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
-				// throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
+				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			event.studs.push(stud);
 			await this.eventRepository.save(event);
@@ -136,6 +134,7 @@ export class EventService {
 		} catch (error) {
 			// this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
 			// throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
+			throw error;
 		}
 	}
 
