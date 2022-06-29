@@ -109,8 +109,14 @@ const AdminStudents = () => {
 	};
 
 	const handleRemoveButton = event => {
-		removeStud(selectedEvent, event.target.value);
-		setUpdate(true);
+		if (
+			window.confirm(
+				`Tu es certain de vouloir désinscrire ${event.target.value} de force ?`
+			)
+		) {
+			removeStud(selectedEvent, event.target.value);
+			setUpdate(true);
+		}
 	};
 
 	const handleSubButton = () => {
