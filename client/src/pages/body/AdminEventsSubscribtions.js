@@ -118,7 +118,6 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
-		setValidationClass(style.neutral);
 		setUpdate(false);
 		if (!eventPreload) {
 			getAllEvent();
