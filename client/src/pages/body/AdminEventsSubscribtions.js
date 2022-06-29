@@ -120,7 +120,10 @@ const AdminStudents = () => {
 			)
 		) {
 			if (toSub === "") setValidationClass(style.ko);
-			else checkStud(selectedEvent, toSub);
+			else {
+				checkStud(selectedEvent, toSub);
+				setToSub("");
+			}
 			setUpdate(true);
 		}
 	};
