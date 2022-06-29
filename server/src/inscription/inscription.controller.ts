@@ -20,6 +20,11 @@ export class InscriptionController {
 		return this.inscriptionService.findByStud(login);
 	}
 
+	@Get(':eventId/stud')
+	getStudByEvent(@Param('eventId', ParseIntPipe) id: number) {
+		return this.inscriptionService.getStudByEvent(id);
+	}
+
 	@Post() //body id + login
 	async link(@Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
 		return this.inscriptionService.link(id, login);

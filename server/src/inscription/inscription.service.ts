@@ -147,4 +147,16 @@ export class InscriptionService {
 			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
 		}
 	}
+
+	async getStudByEvent(id: number) {
+		try {
+			let insc = await this.manager.query(`SELECT * FROM "stud" WHERE "login" IN (SELECT "studLogin" FROM "inscriptions" WHERE "eventId" = '${id}')`);
+			if (insc.length)
+				this.logger.log(`Successfully get all students who are subscribed to event ${id}`);
+			return insc;
+		} catch (error) {
+			this.logger.error(`Failed to get all students who are subscribed to event ${id} on database (${error})`);
+			throw new InternalServerErrorException(`Failed to get all students who are subscribed to event ${id} on database (${error})`);
+		}
+	}
 }

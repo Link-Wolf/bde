@@ -1,83 +1,90 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminStudents = () => {
-	const [dataEvent, setDataEvent] = useState([]);
-	const [stud, setStud] = useState([]);
+import style from "../../style/AdminEventsSubscribtions.module.css";
 
-	getStud(() => {
-		fetch(`http://localhost:4242/inscription/event/${id}`)
+const AdminStudents = () => {
+	const [stud, setStud] = useState([]);
+	const [allEvent, setAllEvent] = useState([]);
+	const [eventPreload, setEventPreload] = useState(false);
+	const [selectedEvent, setSelectedEvent] = useState("");
+	const [update, setUpdate] = useState(false);
+	const [subForm, setSubForm] = useState(<></>);
+	const [toSub, setToSub] = useState("");
+	const [validationClass, setValidationClass] = useState(style.neutral);
+
+	const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+	const getStud = id => {
+		fetch(`http://localhost:4242/inscription/${id}/stud`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
+				if (response) return response.json();
 			})
 			.then(actualData => {
 				setStud(actualData);
 			})
 			.catch(function(error) {
+				setStud([]);
 				console.log(
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	});
+	};
 
-	removeStud(() => {
-		fetch(`http://localhost:4242/stud/${login}`)
+	const removeStud = (eventId, login) => {
+		const requestOptions = {
+			method: "DELETE",
+			headers: {"Content-Type": "application/json"}
+		};
+		fetch(
+			`http://localhost:4242/inscription/admin/${eventId}/${login}`,
+			requestOptions
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
-			})
-			.then(actualData => {
-				fetch(`http://localhost:4242/stud/${actualData}`) //delete
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error: The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							`This is a fetch error: The error is ${error.message}`
-						);
-					});
 			})
 			.catch(function(error) {
 				console.log(
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	});
+	};
 
-	checkStud(() => {
-		fetch(`http://localhost:4242/inscription/event/${id}`)
+	const checkStud = (eventId, login) => {
+		const requestOptions = {
+			method: "PATCH",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({login: login})
+		};
+		fetch(
+			`http://localhost:4242/event/admin/${eventId}/inscription`,
+			requestOptions
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
+				setUpdate(true);
+				setValidationClass(style.ok);
 			})
-			.then(actualData => {
-				setDataStud(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+			.catch(function() {
+				setUpdate(true);
+				setValidationClass(style.ko);
 			});
-	});
+	};
 
-	getAllEvent(() => {
+	const getAllEvent = () => {
 		fetch(`http://localhost:4242/event/current`)
 			.then(response => {
 				if (!response.ok) {
@@ -88,21 +95,57 @@ const AdminStudents = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				setDataStud(actualData);
+				setAllEvent(actualData);
 			})
 			.catch(function(error) {
 				console.log(
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	});
+	};
+
+	const updateSelectedEvent = event => {
+		setSelectedEvent(event.target.value);
+	};
+
+	const handleRemoveButton = event => {
+		removeStud(selectedEvent, event.target.value);
+		setUpdate(true);
+	};
+
+	const handleSubButton = () => {
+		checkStud(selectedEvent, toSub);
+	};
 
 	useEffect(() => {
+		setValidationClass(style.neutral);
+		setUpdate(false);
 		if (!eventPreload) {
 			getAllEvent();
 			setEventPreload(true);
 		}
-	}, []);
+		if (selectedEvent !== "") {
+			getStud(selectedEvent);
+			setSubForm(
+				<>
+					<label>
+						Entrez le login du stud a inscrire de force (doit s'etre
+						connecte au moins une fois)
+					</label>
+					<input
+						type="text"
+						placeholder="yoyostud"
+						onChange={e => setToSub(e.target.value)}
+						value={toSub}
+						className={`${validationClass}`}
+					/>
+					<button value="button" onClick={handleSubButton}>
+						Inscrire
+					</button>
+				</>
+			);
+		}
+	}, [selectedEvent, update, toSub]);
 
 	return (
 		<div>
@@ -111,15 +154,29 @@ const AdminStudents = () => {
 				<h1> AdminPannel </h1>
 				<div>
 					<form>
-						<select>
+						Event :
+						<select
+							onChange={updateSelectedEvent}
+							value={selectedEvent}
+						>
+							<option value="" disabled hidden>
+								Choose here
+							</option>
 							{allEvent.map(event => {
-								return <option>{event.name}</option>;
+								return (
+									<option key={event.id} value={event.id}>
+										{`${event.name} (${event.begin_date})`}
+									</option>
+								);
 							})}
-						</select>
+						</select>{" "}
 					</form>
-					{data.length > 0 && (
+
+					{subForm}
+
+					{stud.length > 0 && (
 						<ul>
-							{dataStud.map(user => (
+							{stud.map(user => (
 								<li key={user.login}>
 									{user.login}
 									<ul>
@@ -130,7 +187,12 @@ const AdminStudents = () => {
 												? "direction"
 												: "pnj"}
 										</li>
-										<li> ❌ </li>
+										<button
+											value={user.login}
+											onClick={handleRemoveButton}
+										>
+											❌
+										</button>
 									</ul>
 								</li>
 							))}
