@@ -51,6 +51,7 @@ const AdminStudents = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
+				setUpdate(true);
 			})
 			.catch(function(error) {
 				console.log(
