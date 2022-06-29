@@ -114,7 +114,9 @@ const AdminStudents = () => {
 	};
 
 	const handleSubButton = () => {
-		checkStud(selectedEvent, toSub);
+		if (toSub === "") setValidationClass(style.ko);
+		else checkStud(selectedEvent, toSub);
+		setUpdate(true);
 	};
 
 	useEffect(() => {
