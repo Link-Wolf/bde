@@ -31,6 +31,8 @@ const AdminEventsGestion = param => {
 			});
 	}, [param.filter]);
 
+	const editEvent = () => {};
+
 	return (
 		<div>
 			<AdminNavbar />
@@ -57,6 +59,11 @@ const AdminEventsGestion = param => {
 									{item.end_date
 										? item.end_date
 										: "Permanent"}
+								</li>
+								<li>
+									<button onClick={editEvent}>
+										Edit button here
+									</button>
 								</li>
 							</ul>
 						</li>
