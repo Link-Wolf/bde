@@ -119,7 +119,9 @@ const AdminStudents = () => {
 				`Tu es certain de vouloir inscrire ${toSub} de force ?`
 			)
 		) {
-			checkStud(selectedEvent, toSub);
+			if (toSub === "") setValidationClass(style.ko);
+			else checkStud(selectedEvent, toSub);
+			setUpdate(true);
 		}
 	};
 
