@@ -114,7 +114,13 @@ const AdminStudents = () => {
 	};
 
 	const handleSubButton = () => {
-		checkStud(selectedEvent, toSub);
+		if (
+			window.confirm(
+				`Tu es certain de vouloir inscrire ${toSub} de force ?`
+			)
+		) {
+			checkStud(selectedEvent, toSub);
+		}
 	};
 
 	useEffect(() => {
