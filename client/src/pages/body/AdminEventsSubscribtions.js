@@ -13,8 +13,6 @@ const AdminStudents = () => {
 	const [toSub, setToSub] = useState("");
 	const [validationClass, setValidationClass] = useState(style.neutral);
 
-	const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 	const getStud = id => {
 		fetch(`http://localhost:4242/inscription/${id}/stud`)
 			.then(response => {
