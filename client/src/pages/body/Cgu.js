@@ -24,8 +24,8 @@ const Cgu = () => {
 					l'accès aux évènements organisés par ce dernier et le
 					paiement des cotisations pour les étudiants connectés. Pour
 					l'Utilisateur non connecté, l'accès se résume principalement
-					à une vitrine du BDE et de ses évènements, ainsi qu'à prise
-					de contact avec ce dernier.
+					à une vitrine du BDE et de ses évènements, ainsi qu'à la
+					prise de contact avec ce dernier.
 				</p>
 				<ul>
 					<li>
@@ -73,9 +73,44 @@ const Cgu = () => {
 			<p>
 				<h2>Propriété intelectuelle</h2>
 				<p>
-					Wallah ca commence a me gonfler les CGU et encore j'ai pas
-					encore commencé les CGV
+					La présentation et le contenu du Site constituent, ensemble,
+					une œuvre protégée par les lois en vigueur sur la propriété
+					intellectuelle. Aucune exploitation commerciale,
+					reproduction, représentation, utilisation, adaptation,
+					modification, incorporation, traduction, partielle ou
+					intégrale des éléments de ce site ne pourra en être faite
+					sans l'accord préalable et écrit du BDE 42 Mulhouse, à
+					l'exception de l'utilisation pour un usage privé sous
+					réserve des dispositions différentes voire plus restrictives
+					du Code de la propriété intellectuelle. Tout le contenu du
+					Site, incluant, de façon non limitative, les graphismes,
+					images, textes, vidéos, animations, sons, logos, gifs et
+					icônes ainsi que leur mise en forme sont la propriété
+					exclusive du BDE 42 Mulhouse à l'exception des marques,
+					logos ou contenus appartenant à d'autres sociétés
+					partenaires ou auteurs. BDE 42 Mulhouse est identiquement
+					propriétaire des "droits des producteurs de bases de
+					données" visés au Livre III, Titre IV, du Code de la
+					Propriété Intellectuelle (loi n° 98-536 du 1er juillet 1998)
+					relative aux droits d'auteur et aux bases de données.
 				</p>
+			</p>
+			<p>
+				<h2>Cookies</h2>
+				<p>
+					Le Site utilise un cookie de session pour assurer son bon
+					fonctionnement. Aucune information concernant l'Utilisateur
+					du Site n'est récupérée. (Un cookie est un petit fichier
+					texte enregistré, lu par le navigateur de l'Utilisateur et
+					déposé par les sites internet qu'il visite. Quasiment tous
+					les sites utilisent des cookies pour bien fonctionner et
+					optimiser leur ergonomie et leurs fonctionnalités.
+				</p>
+			</p>
+			<p>
+				Il n’y a aucune exploitation commerciale, même partielle, des
+				données présentes sur le Site et elles ne pourront l’être sans
+				l’accord préalable et écrit de l’Association 42Mulhouse.
 			</p>
 			<p>
 				<h2>Nous contacter</h2>
