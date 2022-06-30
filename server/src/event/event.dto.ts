@@ -7,6 +7,7 @@ export class EventDto {
 	desc: string;
 	consos: boolean;
 	isOutside: boolean;
+	sponso: boolean;
 	begin_date: Date;
 	end_date: Date;
 }
