@@ -13,7 +13,7 @@ async function bootstrap() {
 	app.use(helmet(), /*csurf(),*/ cookieParser("hi this is the secret"))
 	app.useGlobalFilters(new HttpExceptionFilter());
 	app.enableCors({
-		"origin": "http://localhost:3000",
+		"origin": "http://k1r2p10.42mulhouse.fr:3000",
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204

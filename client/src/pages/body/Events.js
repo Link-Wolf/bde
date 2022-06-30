@@ -23,7 +23,6 @@ const Event = () => {
 			target.type === "checkbox" ? target.checked : target.value;
 		const name = target.name;
 		tempFilter[name] = value;
-		console.log(tempFilter);
 		setFilter(tempFilter);
 	};
 

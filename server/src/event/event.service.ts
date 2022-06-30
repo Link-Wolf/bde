@@ -36,7 +36,6 @@ export class EventService {
 				match += ` AND "sponsorised" = 't'`
 			match += ` ORDER BY ${filterDto.sort} ${filterDto.asc ? "ASC" : "DESC"}`
 			match += `;`
-			console.log(match);
 			let events = await this.eventRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else

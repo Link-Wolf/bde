@@ -2,6 +2,8 @@ import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import AdminEventToken from "../../components/AdminEventToken";
 
+import {Accordion, Button} from "react-bootstrap";
+
 const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
 	const [openEventId, setOpenEventId] = useState(-1);
@@ -14,7 +16,7 @@ const AdminEventsGestion = param => {
 			headers: {"Content-Type": "application/json"}, //add security token here i guess
 			body: JSON.stringify(param.filter)
 		};
-		fetch(`http://localhost:4242/event/get`, requestOptions)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/get`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -36,7 +38,7 @@ const AdminEventsGestion = param => {
 	}, [param.filter, openEventId, update]);
 
 	const createNewEvent = () => {
-		fetch("http://localhost:4242/event", {
+		fetch("http://k1r2p10.42mulhouse.fr:4242/event", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
@@ -47,33 +49,36 @@ const AdminEventsGestion = param => {
 				isOutside: false,
 				consos: false,
 				place: "[lieu]",
-				desc: "[description]"
+				desc: "[description]",
+				sponso: false
 			})
 		});
 		setUpdate(true);
 	};
 
 	return (
-		<div>
+		<>
 			<AdminNavbar />
 			{data.length ? (
-				<div>
+				<Accordion>
 					{data.map((item, i) => (
-						<AdminEventToken
-							data={item}
-							index={i}
-							key={i}
-							open={openEventId}
-							onClickRetract={() => setOpenEventId(-1)}
-							onClickDeploy={() => setOpenEventId(i)}
-						/>
+						<Accordion.Item eventKey={i}>
+							<AdminEventToken
+								data={item}
+								index={i}
+								key={i}
+								open={openEventId}
+								onClickRetract={() => setOpenEventId(-1)}
+								onClickDeploy={() => setOpenEventId(i)}
+							/>
+						</Accordion.Item>
 					))}
-				</div>
+				</Accordion>
 			) : (
 				<div>No event created</div>
 			)}
-			<button onClick={createNewEvent}>New</button>
-		</div>
+			<Button onClick={createNewEvent}>New</Button>
+		</>
 	);
 };
 

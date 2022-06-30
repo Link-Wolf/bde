@@ -10,7 +10,7 @@ const EventID = () => {
 	const param = useParams();
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/${param.id}`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.id}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -27,7 +27,7 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://localhost:4242/inscription/event/${param.id}`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/event/${param.id}`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
