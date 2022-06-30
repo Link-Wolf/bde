@@ -53,7 +53,7 @@ export class StudService {
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
 			await this.studRepository.update(login, studData);
-			this.logger.log(`Successfully updated student ${login}`);
+			this.logger.warn(`Successfully updated student ${login}`);
 		} catch (error) {
 			this.logger.error(`Failed to update student ${login} on database (${error})`)
 			throw new NotFoundException(`Failed to update student ${login} on database (${error})`)
@@ -79,7 +79,7 @@ export class StudService {
 			if (!user)
 				this.logger.warn(`Failed to delete student ${login} : student does no exist`);
 			else
-				this.logger.log(`Successfully delete student ${login}`);
+				this.logger.warn(`Successfully delete student ${login}`);
 			await this.studRepository.delete({ login: login });
 		} catch (error) {
 			this.logger.error(`Failed to delete student ${login} on database (${error})`)
@@ -90,7 +90,7 @@ export class StudService {
 	async removeAll(): Promise<void> {
 		try {
 			await this.studRepository.delete({});
-			this.logger.log(`Successfully deleted all students`);
+			this.logger.warn(`Successfully deleted all students`);
 		} catch (error) {
 			this.logger.error(`Failed to delete all students on database (${error})`)
 			throw new NotFoundException(`Failed to delete all students on database (${error})`)
