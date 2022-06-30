@@ -3,6 +3,14 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 import style from "../../style/AdminEventsSubscribtions.module.css";
 
+import {
+	Form,
+	Button,
+	FormGroup,
+	ControlLabel,
+	FormControl
+} from "react-bootstrap";
+
 const AdminStudents = () => {
 	const [stud, setStud] = useState([]);
 	const [allEvent, setAllEvent] = useState([]);
@@ -10,11 +18,10 @@ const AdminStudents = () => {
 	const [selectedEvent, setSelectedEvent] = useState("");
 	const [update, setUpdate] = useState(false);
 	const [subForm, setSubForm] = useState(<></>);
-	const [toSub, setToSub] = useState("");
 	const [validationClass, setValidationClass] = useState(style.neutral);
 
 	const getStud = id => {
-		fetch(`http://localhost:4242/inscription/${id}/stud`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/${id}/stud`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -40,7 +47,7 @@ const AdminStudents = () => {
 			headers: {"Content-Type": "application/json"}
 		};
 		fetch(
-			`http://localhost:4242/inscription/admin/${eventId}/${login}`,
+			`http://k1r2p10.42mulhouse.fr:4242/inscription/admin/${eventId}/${login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -65,7 +72,7 @@ const AdminStudents = () => {
 			body: JSON.stringify({login: login})
 		};
 		fetch(
-			`http://localhost:4242/event/admin/${eventId}/inscription`,
+			`http://k1r2p10.42mulhouse.fr:4242/event/admin/${eventId}/inscription`,
 			requestOptions
 		)
 			.then(response => {
@@ -84,7 +91,7 @@ const AdminStudents = () => {
 	};
 
 	const getAllEvent = () => {
-		fetch(`http://localhost:4242/event/current`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/current`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -119,6 +126,7 @@ const AdminStudents = () => {
 	};
 
 	const handleSubButton = () => {
+		let toSub = document.getElementById("studToAdd").value;
 		if (
 			window.confirm(
 				`Tu es certain de vouloir inscrire ${toSub} de force ?`
@@ -127,7 +135,7 @@ const AdminStudents = () => {
 			if (toSub === "") setValidationClass(style.ko);
 			else {
 				checkStud(selectedEvent, toSub);
-				setToSub("");
+				toSub = 0;
 			}
 			setUpdate(true);
 		}
@@ -142,25 +150,23 @@ const AdminStudents = () => {
 		if (selectedEvent !== "") {
 			getStud(selectedEvent);
 			setSubForm(
-				<>
-					<label>
+				<FormGroup>
+					<Form.Label>
 						Entrez le login du stud a inscrire de force (doit s'etre
 						connecte au moins une fois)
-					</label>
-					<input
+					</Form.Label>
+					<Form.Control
 						type="text"
+						id="studToAdd"
 						placeholder="yoyostud"
-						onChange={e => setToSub(e.target.value)}
-						value={toSub}
-						className={`${validationClass}`}
 					/>
-					<button value="button" onClick={handleSubButton}>
+					<Button value="button" onClick={handleSubButton}>
 						Inscrire
-					</button>
-				</>
+					</Button>
+				</FormGroup>
 			);
 		}
-	}, [selectedEvent, update, toSub]);
+	}, [selectedEvent, update]);
 
 	return (
 		<div>
@@ -168,9 +174,9 @@ const AdminStudents = () => {
 			<div>
 				<h1> AdminPannel </h1>
 				<div>
-					<form>
+					<Form>
 						Event :
-						<select
+						<Form.Select
 							onChange={updateSelectedEvent}
 							value={selectedEvent}
 						>
@@ -184,8 +190,8 @@ const AdminStudents = () => {
 									</option>
 								);
 							})}
-						</select>{" "}
-					</form>
+						</Form.Select>
+					</Form>
 
 					{subForm}
 
@@ -202,12 +208,12 @@ const AdminStudents = () => {
 												? "direction"
 												: "pnj"}
 										</li>
-										<button
+										<Button
 											value={user.login}
 											onClick={handleRemoveButton}
 										>
 											❌
-										</button>
+										</Button>
 									</ul>
 								</li>
 							))}
