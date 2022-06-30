@@ -10,7 +10,8 @@ import { StudModule } from './stud/stud.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
-import { Log } from './entity/Log';
+import { LogsModule } from './logs/logs.module';
+import { Logs } from './entity/Logs';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthGuard } from './auth/jwtAuth.guard';
@@ -26,7 +27,7 @@ import { Role } from './entity/Role';
 			username: 'linkar',
 			password: 'xeno1et2',
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Log, Role],
+			entities: [Stud, Contribution, Event, Logs, Role],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({
@@ -36,6 +37,7 @@ import { Role } from './entity/Role';
 		ContributionModule,
 		EventModule,
 		InscriptionModule,
+		LogsModule,
 		LoggerModule,
 		AuthModule,
 	],
