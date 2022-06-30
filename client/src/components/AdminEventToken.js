@@ -17,7 +17,7 @@ const AdminEventToken = param => {
 	const saveEvent = () => {
 		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
 		{
-			fetch("http://k1r2p10.42mulhouse.fr:4242/event", {
+			fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
 				header: {"Content-Type": "application/json"},
 				body: {
 					name: document.getElementById("formName").value,
@@ -145,7 +145,7 @@ const AdminEventToken = param => {
 					<Form.Control
 						disabled={locked}
 						type="number"
-						form="formNbPlaces"
+						id="formNbPlaces"
 						min="1"
 						defaultValue={formState.nb_places}
 					/>
