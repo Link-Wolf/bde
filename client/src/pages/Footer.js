@@ -17,7 +17,8 @@ function Footer() {
 				<div> HOSTED BY US </div>
 			</div>
 			<div className={style.horizontal_div_footer}>
-				<a href="/legalthings"> CGU / CGV</a>
+				<a href="/legalthings"> CGU </a>
+				<a href="/dollarthings"> CGV </a>
 				<a href="/contact"> Contact us grand fou</a>
 			</div>
 		</footer>

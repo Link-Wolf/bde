@@ -28,6 +28,7 @@ const Routage = () => {
 				<Route path="events" element={<Events />} />
 				<Route path="event/:id" element={<Event />} />
 				<Route path="contact" element={<Contact />} />
+				<Route path="dollarthings" element={<Cgv />} />
 				<Route path="legalthings" element={<Cgu />} />
 				<Route
 					path="admin/events/gestion"
