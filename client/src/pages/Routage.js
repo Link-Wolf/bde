@@ -5,6 +5,7 @@ import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 import Home from "./body/Home";
 import About from "./body/About";
 import Cgu from "./body/Cgu";
+import Cgv from "./body/Cgv";
 import Stud from "./body/Studs";
 import Events from "./body/Events";
 import Event from "./body/Event";
