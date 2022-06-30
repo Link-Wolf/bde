@@ -1,10 +1,14 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import AdminEventToken from "../../components/AdminEventToken";
 
 const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
+	const [openEventId, setOpenEventId] = useState(-1);
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
+		setUpdate(false);
 		const requestOptions = {
 			method: "post",
 			headers: {"Content-Type": "application/json"}, //add security token here i guess
@@ -29,49 +33,46 @@ const AdminEventsGestion = param => {
 						error.message
 				);
 			});
-	}, [param.filter]);
+	}, [param.filter, openEventId, update]);
 
-	const editEvent = () => {};
+	const createNewEvent = () => {
+		fetch("http://localhost:4242/event", {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({
+				name: "[nom]",
+				cost: 0,
+				nb_places: -42,
+				begin_date: new Date(Date.now()),
+				isOutside: false,
+				consos: false,
+				place: "[lieu]",
+				desc: "[description]"
+			})
+		});
+		setUpdate(true);
+	};
 
 	return (
 		<div>
 			<AdminNavbar />
 			{data.length ? (
 				<div>
-					{data.map(item => (
-						<li key={item.id}>
-							<h2>{item.name}</h2>
-							<ul>
-								{item.cost ? <li>{item.cost}</li> : null}
-								{item.premium_cost !== item.cost ? (
-									<li>{item.premium_cost}</li>
-								) : null}
-								<li>{item.place}</li>
-
-								<li>{item.nb_places}</li>
-								<li>{item.consos ? "Consos" : "Pas consos"}</li>
-								<li>
-									{item.isOutside ? "Dehors" : "Pas dehors"}
-								</li>
-								<li>{item.desc}</li>
-								<li>{item.begin_date}</li>
-								<li>
-									{item.end_date
-										? item.end_date
-										: "Permanent"}
-								</li>
-								<li>
-									<button onClick={editEvent}>
-										Edit button here
-									</button>
-								</li>
-							</ul>
-						</li>
+					{data.map((item, i) => (
+						<AdminEventToken
+							data={item}
+							index={i}
+							key={i}
+							open={openEventId}
+							onClickRetract={() => setOpenEventId(-1)}
+							onClickDeploy={() => setOpenEventId(i)}
+						/>
 					))}
 				</div>
 			) : (
 				<div>No event created</div>
 			)}
+			<button onClick={createNewEvent}>New</button>
 		</div>
 	);
 };
