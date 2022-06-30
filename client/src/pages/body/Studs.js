@@ -4,7 +4,7 @@ const Stud = () => {
 	const [users, setUsers] = useState([]);
 
 	const getStud = () => {
-		fetch("http://localhost:4242/stud")
+		fetch("http://k1r2p10.42mulhouse.fr:4242/stud")
 			.then(response => {
 				return response.json();
 			})

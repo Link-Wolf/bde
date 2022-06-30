@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Log } from '../entity/Log';
+import { Logs } from '../entity/Logs';
 import * as fs from 'fs';
 
 @Injectable()
 export class LoggerService {
 	constructor(
-		@InjectRepository(Log)
-		private logRepertory: Repository<Log>
+		@InjectRepository(Logs)
+		private logRepertory: Repository<Logs>
 	) { }
 
 	async error(message: string) {
@@ -72,8 +72,8 @@ export class LoggerService {
 			seconds = '0' + seconds
 		const time = hours + ':' + minutes + ':' + seconds
 		const style = ' [' + type.toUpperCase() + ']'
-		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) +  ' : ' + message + '\n', (err) => {
-		    if (err) throw err;
+		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) + ' : ' + message + '\n', (err) => {
+			if (err) throw err;
 		});
 	}
 }
