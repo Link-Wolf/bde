@@ -38,7 +38,7 @@ const AdminLogs = () => {
 									<ul>
 										<li>{log.type}</li>
 										<li>{log.message}</li>
-										<li>{log.type}</li>
+										<li>{log.date}</li>
 									</ul>
 								</li>
 							))}
