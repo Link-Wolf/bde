@@ -57,6 +57,12 @@ export class Event {
 	consos: boolean
 
 	@Column({
+		type: "bool",
+		nullable: false,
+	})
+	sponso: boolean
+
+	@Column({
 		type: 'timestamptz',
 		nullable: false
 	})
