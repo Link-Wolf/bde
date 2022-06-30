@@ -1,11 +1,11 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminStudents = () => {
+const AdminLogs = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/stud`)
+		fetch(`http://localhost:4242/admin/logs`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -32,17 +32,13 @@ const AdminStudents = () => {
 				<div>
 					{data.length > 0 && (
 						<ul>
-							{data.map(user => (
-								<li key={user.login}>
-									{user.login}
+							{data.map(log => (
+								<li key={log.id}>
+									{log.id}
 									<ul>
-										<li>{user.firstname}</li>
-										<li>{user.lastname}</li>
-										<li>
-											{user.isDirection
-												? "direction"
-												: "pnj"}
-										</li>
+										<li>{log.type}</li>
+										<li>{log.message}</li>
+										<li>{log.type}</li>
 									</ul>
 								</li>
 							))}
@@ -54,4 +50,4 @@ const AdminStudents = () => {
 	);
 };
 
-export default AdminStudents;
+export default AdminLogs;
