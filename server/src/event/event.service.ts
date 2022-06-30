@@ -85,7 +85,7 @@ export class EventService {
 				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
 			await this.eventRepository.update(id, eventData);
-			this.logger.log(`Successfully updated event ${id} `);
+			this.logger.warn(`Successfully updated event ${id} `);
 		} catch (error) {
 			this.logger.error(`Failed to update event ${id} on database(${error})`)
 			throw new InternalServerErrorException(`Failed to update event ${id} on database(${error})`)
@@ -140,7 +140,7 @@ export class EventService {
 	async create(eventDto: EventDto): Promise<void> {
 		try {
 			await this.eventRepository.save(eventDto);
-			this.logger.log(`Successfully created new event ${eventDto.name} `);
+			this.logger.warn(`Successfully created new event ${eventDto.name} `);
 		} catch (error) {
 			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`)
 			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database(${error})`)
@@ -151,7 +151,7 @@ export class EventService {
 		try {
 			if (await this.findOne(id)) {
 				await this.eventRepository.delete({ id: id });
-				this.logger.log(`Successfully deleted event ${id} `);
+				this.logger.warn(`Successfully deleted event ${id} `);
 			}
 			else
 				this.logger.warn(`Failed to delete event ${id} : event does no exist`);
@@ -164,7 +164,7 @@ export class EventService {
 	async removeAll(): Promise<void> {
 		try {
 			await this.eventRepository.delete({});
-			this.logger.log(`Successfully deleted all events`);
+			this.logger.warn(`Successfully deleted all events`);
 		} catch (error) {
 			this.logger.error(`Failed to delete all events on database(${error})`)
 			throw new InternalServerErrorException(`Failed to delete all events on database(${error})`)

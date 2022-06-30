@@ -16,7 +16,7 @@ export class InscriptionService {
 	removeAll() {
 		try {
 			this.manager.query(`DELETE FROM "inscriptions"`);
-			this.logger.log(`Successfully deleted all inscriptions`);
+			this.logger.warn(`Successfully deleted all inscriptions`);
 		} catch (error) {
 			this.logger.error(`Failed to delete all inscriptions on database (${error})`);
 			throw new InternalServerErrorException(`Failed to delete all inscriptions on database (${error})`);
@@ -27,7 +27,7 @@ export class InscriptionService {
 		try {
 			if (this.studService.findOne(login)) {
 				this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
-				this.logger.log(`Successfully deleted all inscriptions of student ${login}`);
+				this.logger.warn(`Successfully deleted all inscriptions of student ${login}`);
 			}
 			else {
 				this.logger.error(`Failed to remove all inscriptions of student ${login} : student does not exist`)
@@ -43,7 +43,7 @@ export class InscriptionService {
 		try {
 			if (this.eventService.findOne(id)) {
 				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
-				this.logger.log(`Successfully deleted all inscriptions for event ${id}`);
+				this.logger.warn(`Successfully deleted all inscriptions for event ${id}`);
 			}
 			else {
 				this.logger.error(`Failed to delete all inscriptions for event ${id} : event does not exist`)
