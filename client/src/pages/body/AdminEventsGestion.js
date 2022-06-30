@@ -49,7 +49,8 @@ const AdminEventsGestion = param => {
 				isOutside: false,
 				consos: false,
 				place: "[lieu]",
-				desc: "[description]"
+				desc: "[description]",
+				sponso: false
 			})
 		});
 		setUpdate(true);
