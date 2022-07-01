@@ -4,61 +4,64 @@ import {Accordion, Button, Form} from "react-bootstrap";
 
 const AdminEventToken = param => {
 	const [formState, setFormState] = useState({});
-	const [initForm, setInitForm] = useState(true);
-	const [locked, setLocked] = useState(true);
+	const [locked, setLocked] = useState(false);
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
+	const [isCheckedDate, setIsCheckedDate] = useState(true); //FIX
 
 	const switchLock = () => {
 		setLocked(false);
 		setUpdate(true);
 	};
 
+	const handleCheckDate = () => {
+		const invertedCheck = !isCheckedDate;
+		setIsCheckedDate(invertedCheck);
+	};
+
 	const saveEvent = () => {
 		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
 		{
-			fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
-				header: {"Content-Type": "application/json"},
-				body: {
-					name: document.getElementById("formName").value,
-					cost: document.getElementById("formCost").value,
-					place: document.getElementById("formPlace").value,
-					premium_cost: document.getElementById("formPremiumCost")
-						.value,
-					nb_places: document.getElementById("formNbPlaces").value,
-					desc: document.getElementById("formDesc").value,
-					isOutside: document.getElementById("formIsOutside").value,
-					consos:
-						document.getElementById("formConsos").value === "on"
-							? 1
-							: 0,
-					begin_date:
-						document.getElementById("formBeginDate").value === "on"
-							? 1
-							: 0,
-					end_date: document.getElementById("hasEndDate").value
+			console.log(document.getElementById("formBeginDate").value);
+			let body = JSON.stringify({
+				name: document.getElementById("formName").value,
+				cost: document.getElementById("formCost").value,
+				place: document.getElementById("formPlace").value,
+				premium_cost: document.getElementById("formPremiumCost").value,
+				nb_places: document.getElementById("formNbPlaces").value,
+				desc: document.getElementById("formDesc").value,
+				isOutside: document.getElementById("formIsOutside").value,
+				consos:
+					document.getElementById("formConsos").value === "on"
+						? 1
+						: 0,
+				begin_date: document.getElementById("formBeginDate").value,
+				end_date:
+					document.getElementById("hasEndDate").value === "on"
 						? document.getElementById("formEndDate").value
 						: null,
-					sponso:
-						document.getElementById("formSponso").value === "on"
-							? 1
-							: 0
-				},
-				method: "PATCH"
+				sponso:
+					document.getElementById("formSponso").value === "on" ? 1 : 0
 			});
+			console.log(body);
+			// fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
+			// 	header: {"Content-Type": "application/json"},
+			// 	body: body,
+			// 	method: "PATCH"
+			// });
 			setLocked(true);
 			setUpdate(true);
 		}
 	};
 
 	useEffect(() => {
-		if (initForm) {
-			setInitForm(false);
-			let tmp = {...param.data};
-			tmp.isEndDate = tmp.end_date != null;
-			tmp.end_date = tmp.end_date ? tmp.end_date : "";
-			setFormState(tmp);
-		}
+		let tmp = {...param.data};
+		tmp.hasEndDate = param.data.end_date !== null;
+		console.log(tmp);
+		setFormState(tmp);
+	}, []);
+
+	useEffect(() => {
 		setUpdate(false);
 		if (locked)
 			setButton(
@@ -80,7 +83,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param, update, isCheckedDate]);
 
 	return (
 		<>
@@ -102,20 +105,24 @@ const AdminEventToken = param => {
 					<Form.Control
 						id="formBeginDate"
 						disabled={locked}
-						type="date"
+						type="datetime-local"
 						defaultValue={formState.begin_date}
 					/>
 					{" - "}
 					<Form.Control
 						id="formEndDate"
-						disabled={
-							locked ||
-							!document.getElementById("hasEndDate").value
-						}
+						disabled={locked}
 						defaultValue={formState.end_date}
-						type="date"
+						type="datetime-local"
 					/>
-					<Form.Check disabled={locked} id="hasEndDate" />
+					<Form.Switch
+						disabled={locked}
+						id="hasEndDate"
+						checked={isCheckedDate}
+						onChange={() => {
+							handleCheckDate();
+						}}
+					/>
 					<Form.Label>Description : </Form.Label>
 					<Form.Control
 						defaultValue={formState.desc}
@@ -156,12 +163,21 @@ const AdminEventToken = param => {
 						id="formPlace"
 						defaultValue={formState.place}
 					/>
-					<Form.Label> Outside </Form.Label>
-					<Form.Check disabled={locked} id="formIsOutside" />
-					<Form.Label> Sponsorised </Form.Label>
-					<Form.Check disabled={locked} id="formSponso" />
-					<Form.Label> Consommation </Form.Label>
-					<Form.Check disabled={locked} id="formConsos" />
+					<Form.Switch
+						disabled={locked}
+						id="formIsOutside"
+						label="Outside"
+					/>
+					<Form.Switch
+						disabled={locked}
+						id="formSponso"
+						label="Sponsorised"
+					/>
+					<Form.Switch
+						disabled={locked}
+						id="formConsos"
+						label="Consommation"
+					/>
 					{button}
 					<Button type="reset" disabled={locked}>
 						Reset
