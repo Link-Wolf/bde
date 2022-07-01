@@ -20,6 +20,11 @@ export class EventDtoPipe implements PipeTransform {
 				value.isOutside = true
 			else
 				value.isOutside = false
+		if ("sponso" in value)
+			if (value.sponso == '1')
+				value.sponso = true
+			else
+				value.sponso = false
 		if ("nb_places" in value)
 			value.nb_places = Number(value.nb_places)
 		if ("begin_date" in value)
