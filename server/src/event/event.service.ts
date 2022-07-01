@@ -39,7 +39,7 @@ export class EventService {
 			let events = await this.eventRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
-			this.logger.log(`Got all filtered events : ${match}`);
+			this.logger.log(`Got all filtered events`);
 			return events;
 		} catch (error) {
 			this.logger.error(`Failed to get all filtered events on database(${error})`);
