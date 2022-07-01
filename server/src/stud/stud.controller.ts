@@ -12,12 +12,12 @@ export class StudController {
 
 	@Get()
 	findAll(@Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
-		console.log(request.cookies)
-		console.log(request.signedCookies)
+		console.log("cookie :" + request.cookies)
+		console.log("signed cookie :" + request.signedCookies)
 		response.cookie('test', 's:yeet')
 		response.cookie('test', 'yeet')
-		console.log(request.cookies)
-		console.log(request.signedCookies)
+		console.log("cookie 2 :" + request.cookies)
+		console.log("signed cookie 2:" + request.signedCookies)
 		return this.studService.findAll();
 	}
 
