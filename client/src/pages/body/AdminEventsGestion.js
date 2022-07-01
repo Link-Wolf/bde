@@ -26,7 +26,6 @@ const AdminEventsGestion = param => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setData(actualData);
 			})
 			.catch(function(error) {
@@ -62,7 +61,7 @@ const AdminEventsGestion = param => {
 			{data.length ? (
 				<Accordion>
 					{data.map((item, i) => (
-						<Accordion.Item eventKey={i}>
+						<Accordion.Item eventKey={i} key={i}>
 							<AdminEventToken
 								data={item}
 								index={i}
