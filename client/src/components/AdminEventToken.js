@@ -30,7 +30,7 @@ const AdminEventToken = param => {
 		conso: false,
 		isOutside: false
 	});
-	const [locked, setLocked] = useState(false);
+	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
 
@@ -65,26 +65,69 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getDate());
 		// console.log(tmpBody.begin_date);
 		// console.log(tmpBody.end_date);
+		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
 
 	const saveEvent = () => {
 		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
 		{
-			let body = JSON.stringify(formState);
-			console.log(body);
-			fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
-				header: {"Content-Type": "application/json"},
-				body: body,
-				method: "PATCH"
-			})
+			// let body = JSON.stringify(formState);
+			// console.log(body);
+			// fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
+			// 	header: {"Content-Type": "application/json"},
+			// 	body: body,
+			// 	method: "PATCH"
+			// })
+			// 	.then(response => {
+			// 		if (!response.ok) {
+			// 			throw new Error(
+			// 				`This is an HTTP error: The status is ${response.status}`
+			// 			);
+			// 		}
+			// 		return response.json();
+			// 	})
+			// 	.catch(function(error) {
+			// 		console.log(
+			// 			"Il y a eu un problème avec l'opération fetch: " +
+			// 				error.message
+			// 		);
+			// 	});
+
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+
+			var raw = JSON.stringify({
+				name: bodyState.name,
+				cost: bodyState.cost,
+				place: bodyState.place,
+				premium_cost: bodyState.premium_cost,
+				nb_places: bodyState.nb_places,
+				desc: bodyState.desc,
+				isOutside: bodyState.isOutside,
+				consos: bodyState.consos,
+				sponso: bodyState.sponso,
+				begin_date: bodyState.begin_date,
+				end_date: bodyState.end_date
+			});
+
+			var requestOptions = {
+				method: "PATCH",
+				headers: myHeaders,
+				body: raw,
+				redirect: "follow"
+			};
+
+			fetch(
+				`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`,
+				requestOptions
+			)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
 							`This is an HTTP error: The status is ${response.status}`
 						);
 					}
-					return response.json();
 				})
 				.catch(function(error) {
 					console.log(
@@ -172,6 +215,7 @@ const AdminEventToken = param => {
 						autoFocus="autofocus"
 						values={formState.name}
 						onChange={handleFormChange}
+						required
 					/>
 					<Form.Label> Dates : </Form.Label>
 					<Form.Control
@@ -181,6 +225,7 @@ const AdminEventToken = param => {
 						name="begin_date"
 						value={formState.begin_date}
 						onChange={handleFormChange}
+						required
 					/>
 					{" - "}
 					<Form.Control
@@ -216,6 +261,7 @@ const AdminEventToken = param => {
 						value={formState.cost}
 						name="cost"
 						onChange={handleFormChange}
+						required
 					/>{" "}
 					€ (
 					<Form.Control
@@ -247,6 +293,7 @@ const AdminEventToken = param => {
 						name="place"
 						onChange={handleFormChange}
 						value={formState.place}
+						required
 					/>
 					<Form.Switch
 						disabled={locked}
