@@ -33,3 +33,7 @@
 .nav-link {
 	line-height: 50px;
 }
+
+input:invalid {
+	background-color: LightCoral;
+}
