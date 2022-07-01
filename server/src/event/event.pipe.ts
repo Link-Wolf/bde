@@ -4,6 +4,7 @@ import { Injectable, PipeTransform } from "@nestjs/common";
 @Injectable()
 export class EventDtoPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
+		console.log(value);
 		if ("cost" in value)
 			value.cost = Number(value.cost)
 		if ("premium_cost" in value)
@@ -31,6 +32,7 @@ export class EventDtoPipe implements PipeTransform {
 			value.begin_date = new Date(value.begin_date)
 		if ("end_date" in value)
 			value.end_date = new Date(value.end_date)
+		console.log(value)
 		return value;
 	}
 }
