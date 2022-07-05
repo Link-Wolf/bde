@@ -1,9 +1,11 @@
 import {useSearchParams} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
+import jwt_decode from "jwt-decode";
 
-const Log = () => {
+import UserContext from "../../contexts/user.context";
+
+const Log = data => {
 	const [searchParams] = useSearchParams();
-	const [data, setData] = useState({});
 
 	useEffect(() => {
 		const code = searchParams.get("code");
@@ -24,8 +26,9 @@ const Log = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
-				setData(actualData);
+				// console.log(actualData.token);
+				data.context.setUser(jwt_decode(actualData.token));
+				data.context.setToken(actualData.token);
 			})
 			.catch(function(error) {
 				console.log(
@@ -33,8 +36,11 @@ const Log = () => {
 						error.message
 				);
 			});
-		console.log(data);
 	}, []);
+
+	useEffect(() => {
+		console.log(data.context.token, " : ", data.context.user);
+	}, [data]);
 };
 
 export default Log;

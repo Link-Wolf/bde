@@ -1,7 +1,10 @@
-import {Navbar, Nav, NavDropdown, Container} from "react-bootstrap";
+import {Navbar, Nav, Container} from "react-bootstrap";
+
+import UserDropDown from "../components/UserDropDown";
+
+import UserContext from "../contexts/user.context";
 
 import bde_logo from "../images/bde_logo.webp";
-import user_picture from "../images/user_placeholder.png";
 
 function Header() {
 	return (
@@ -22,19 +25,9 @@ function Header() {
 				</Nav>
 				<Nav>
 					<Nav.Link href="/admin">Admin</Nav.Link>
-					<NavDropdown
-						title={
-							<img width="30" height="30" src={user_picture} />
-						}
-					>
-						<NavDropdown.Item href="/me">Profile</NavDropdown.Item>
-						<NavDropdown.Item href="/settings">
-							Settings
-						</NavDropdown.Item>
-						<NavDropdown.Item href={global.config.intra.redirect}>
-							Login
-						</NavDropdown.Item>
-					</NavDropdown>
+					<UserContext.Consumer>
+						{context => <UserDropDown context={context} />}
+					</UserContext.Consumer>
 				</Nav>
 			</Container>
 		</Navbar>
