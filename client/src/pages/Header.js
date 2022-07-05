@@ -3,8 +3,6 @@ import {Navbar, Nav, NavDropdown, Container} from "react-bootstrap";
 import bde_logo from "../images/bde_logo.webp";
 import user_picture from "../images/user_placeholder.png";
 
-import secret from "../secret.json";
-
 function Header() {
 	return (
 		<Navbar sticky="top" collapseOnSelect bg="dark" variant="dark">
@@ -33,7 +31,7 @@ function Header() {
 						<NavDropdown.Item href="/settings">
 							Settings
 						</NavDropdown.Item>
-						<NavDropdown.Item href={secret.intra_url}>
+						<NavDropdown.Item href={global.config.intra.redirect}>
 							Login
 						</NavDropdown.Item>
 					</NavDropdown>
