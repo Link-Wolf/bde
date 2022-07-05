@@ -26,7 +26,7 @@ function Header() {
 				<Nav>
 					<Nav.Link href="/admin">Admin</Nav.Link>
 					<UserContext.Consumer>
-						{context => <UserDropDown context={context} />}
+						{({user}) => <UserDropDown user={user} />}
 					</UserContext.Consumer>
 				</Nav>
 			</Container>
