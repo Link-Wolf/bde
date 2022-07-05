@@ -10,6 +10,6 @@ export class AuthController {
 	@Post()
 	async loginIntra(@Body('code') code: string) {
 		let ret = this.authService.loginIntra(code)
-		return await ret
+		return { token: await ret }
 	}
 }
