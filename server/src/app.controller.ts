@@ -1,14 +1,10 @@
 import { Controller, Get, Post, Res, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthService } from './auth/auth.service';
-import { LocalAuthGuard } from './auth/localAuth.guard';
-import { Public } from './auth/public.decorator';
 
 @Controller()
 export class AppController {
 	constructor(
-		private readonly appService: AppService,
-		private readonly authService: AuthService) { }
+		private readonly appService: AppService, ) { }
 
 	@Get()
 	getHello(@Res() response: any, @Req() req: any) {
@@ -18,12 +14,5 @@ export class AppController {
 		response.cookie('test2', 'yeet')
 		console.log('Cookies: ', response.cookies)
 		console.log('Signed Cookies: ', response.signedCookies)
-	}
-
-	@Public()
-	@UseGuards(LocalAuthGuard)
-	@Post('auth/login')
-	async login(@Req() req: any) {
-		return this.authService.login(req.user);
 	}
 }

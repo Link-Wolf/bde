@@ -16,6 +16,7 @@ import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
 import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
 import AdminStudents from "./body/AdminStudents";
+import Log from "./body/Log";
 
 const Routage = () => {
 	return (
@@ -29,6 +30,7 @@ const Routage = () => {
 				<Route path="events" element={<Events />} />
 				<Route path="event/:id" element={<Event />} />
 				<Route path="contact" element={<Contact />} />
+				<Route path="log" element={<Log />} />
 				<Route path="dollarthings" element={<Cgv />} />
 				<Route path="legalthings" element={<Cgu />} />
 				<Route

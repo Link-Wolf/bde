@@ -4,7 +4,6 @@ import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
 import { Request, Response } from 'express';
-import { Public } from '../auth/public.decorator';
 
 @Controller('stud')
 export class StudController {
