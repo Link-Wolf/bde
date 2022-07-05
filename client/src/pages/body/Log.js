@@ -20,7 +20,7 @@ const Log = () => {
 					`This is an HTTP error: The status is ${response.status}`
 				);
 			}
-			return response.json();
+			console.log(response);
 		})
 		.catch(function(error) {
 			console.log(

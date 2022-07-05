@@ -26,8 +26,9 @@ export class AuthService {
 	}
 
 	async loginIntra(code: string) {
+		let sessionToken: string
 		try {
-			let resp = this.http.post('https://api.intra.42.fr/oauth/token', {
+			return this.http.post('https://api.intra.42.fr/oauth/token', {
 				redirect_uri: "http://k1r2p10.42mulhouse.fr:3000/log",
 				code: code,
 				grant_type: "authorization_code",
@@ -39,7 +40,7 @@ export class AuthService {
 					const header = {
 						'Authorization': `Bearer ${token}`
 					}
-					this.http.get(
+					return this.http.get(
 						"https://api.intra.42.fr/v2/me",
 						{ headers: header })
 						.toPromise()
@@ -51,12 +52,20 @@ export class AuthService {
 								isDirection: false,
 								isPremium: false
 							}
-							return this.jwtService.sign(await this.studService.logUser(stud));
+							const retStud = await this.studService.logUser(stud);
+							const jwt = this.jwtService.sign({
+								user: {
+									login: retStud.login,
+									firstname: retStud.firstname,
+									lastname: retStud.lastname,
+									image_url: response.data.image_url
+								}
+							});
+							return jwt
 						})
-						.catch(error => console.log("Non"))
+						.catch(error => { return error })
 				})
-				.catch(error => console.log(error.response.data))
-			return resp
-		} catch (error) { console.log(error) }
+				.catch(error => { return error })
+		} catch (error) { return error }
 	}
 }
