@@ -30,6 +30,7 @@ const Routage = () => {
 				<Route path="events" element={<Events />} />
 				<Route path="event/:id" element={<Event />} />
 				<Route path="contact" element={<Contact />} />
+				<Route path="log/redirect" element={<Log />} />
 				<Route path="log" element={<Log />} />
 				<Route path="dollarthings" element={<Cgv />} />
 				<Route path="legalthings" element={<Cgu />} />

@@ -9,5 +9,4 @@ temp/
 *.constant.*
 coverage/
 .DS_Store
-secret.json
-config.json
+config.*
