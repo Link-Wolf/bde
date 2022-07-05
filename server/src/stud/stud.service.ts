@@ -60,13 +60,13 @@ export class StudService {
 		}
 	}
 
-	async create(studDto: StudDto): Promise<void> {
+	async create(studDto: StudDto): Promise<any> {
 		try {
 			if (await this.findOne(studDto.login)) {
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
-			await this.studRepository.save(studDto);
 			this.logger.log(`Successfully created new student ${studDto.login}`);
+			return this.studRepository.save(studDto);
 		} catch (error) {
 			this.logger.error(`Failed to create user ${studDto.login} on database (${error})`)
 			throw new NotFoundException(`Failed to create user ${studDto.login} on database (${error})`)
@@ -94,6 +94,19 @@ export class StudService {
 		} catch (error) {
 			this.logger.error(`Failed to delete all students on database (${error})`)
 			throw new NotFoundException(`Failed to delete all students on database (${error})`)
+		}
+	}
+
+	async logUser(stud: StudDto) {
+		try {
+			let user = this.findOne(stud.login);
+			if (!user)
+				user = await this.create(stud)
+			this.logger.log(`Successfully logged student`);
+			return user
+		} catch (error) {
+			this.logger.error(`Failed to log student on database (${error})`)
+			throw new NotFoundException(`log student on database (${error})`)
 		}
 	}
 }
