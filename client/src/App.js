@@ -12,18 +12,24 @@ import UserContext from "./contexts/user.context";
 
 function App() {
 	const [token, setToken] = useState("");
-	const [user, setUser] = useState({});
+	const [user, setUser] = useState(null);
+
+	const updateUser = value => {
+		setUser(value);
+	};
+	const updateToken = value => {
+		setToken(value);
+	};
+	const context = {
+		user: user,
+		setUser: updateUser,
+		token: token,
+		setToken: updateToken
+	};
 
 	return (
 		<div className="App">
-			<UserContext.Provider
-				value={{
-					user: user,
-					setUser: setUser,
-					token: token,
-					setToken: setToken
-				}}
-			>
+			<UserContext.Provider value={context}>
 				<Header />
 				<Routage />
 				<Footer />

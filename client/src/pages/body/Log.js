@@ -27,8 +27,8 @@ const Log = data => {
 			})
 			.then(actualData => {
 				// console.log(actualData.token);
-				data.context.setUser(jwt_decode(actualData.token));
-				data.context.setToken(actualData.token);
+				data.setUser(jwt_decode(actualData.token));
+				data.setToken(actualData.token);
 			})
 			.catch(function(error) {
 				console.log(
@@ -39,7 +39,7 @@ const Log = data => {
 	}, []);
 
 	useEffect(() => {
-		console.log(data.context.token, " : ", data.context.user);
+		console.log(data.token, " : ", data.user);
 	}, [data]);
 };
 

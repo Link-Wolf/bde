@@ -36,7 +36,14 @@ const Routage = () => {
 					path="log"
 					element={
 						<UserContext.Consumer>
-							{context => <Log context={context} />}
+							{({user, setUser, token, setToken}) => (
+								<Log
+									user={user}
+									setUser={setUser}
+									token={token}
+									setToken={setToken}
+								/>
+							)}
 						</UserContext.Consumer>
 					}
 				/>
