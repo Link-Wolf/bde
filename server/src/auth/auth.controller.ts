@@ -8,7 +8,8 @@ export class AuthController {
 
 	@Public()
 	@Post()
-	loginIntra(@Body('code') code: string) {
-		return this.authService.loginIntra(code)
+	async loginIntra(@Body('code') code: string) {
+		let ret = this.authService.loginIntra(code)
+		return await ret
 	}
 }
