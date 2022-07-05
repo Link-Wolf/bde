@@ -12,9 +12,11 @@ import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
 import { LogsModule } from './logs/logs.module';
 import { Logs } from './entity/Logs';
-import { ConfigModule } from '@nestjs/config';
-import { Role } from './entity/Role';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { JwtAuthGuard } from './auth/jwtAuth.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { Role } from './entity/Role';
 
 @Module({
 	imports: [
