@@ -1,26 +1,10 @@
 import {Navbar, Nav, Container} from "react-bootstrap";
-import {useEffect} from "react";
 
 import DropdownUser from "../components/DropdownUser";
 
 import bde_logo from "../images/bde_logo.webp";
-import user_picture from "../images/user_placeholder.png";
 
 function Header() {
-	const [img, setImg] = useState(user_picture);
-
-	useEffect(() => {
-		try {
-			const localimg = ReactSession.get("image_url");
-			if (localimg === "") setImg(user_picture);
-			else setImg(localimg);
-		} catch {
-			setImg(user_picture);
-		}
-	}, []);
-
-	useEffect(() => {}, [img]);
-
 	return (
 		<Navbar sticky="top" collapseOnSelect bg="dark" variant="dark">
 			<Container>
