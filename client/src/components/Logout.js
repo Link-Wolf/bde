@@ -11,7 +11,7 @@ const Logout = () => {
 		ReactSession.set("lastname", "");
 		ReactSession.set("image_url", "");
 		ReactSession.set("token", "");
-		setRet(<Navigate to="/home" />);
+		setRet(<Navigate to={-1} replace={true} />);
 	}, []);
 
 	return ret;
