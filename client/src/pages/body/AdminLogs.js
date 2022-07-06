@@ -1,11 +1,26 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import {ReactSession} from "react-client-session";
 
 const AdminLogs = () => {
 	const [data, setData] = useState([]);
+	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/admin/logs`)
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
+
+	useEffect(() => {
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/admin/logs`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			}
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -22,7 +37,7 @@ const AdminLogs = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, []);
+	}, [token]);
 
 	return (
 		<div>
