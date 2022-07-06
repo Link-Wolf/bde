@@ -1,16 +1,19 @@
 import {ReactSession} from "react-client-session";
 import {Navigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const Logout = () => {
+	const [ret, setRet] = useState(<></>);
+
 	useEffect(() => {
 		ReactSession.set("login", "");
 		ReactSession.set("firstname", "");
 		ReactSession.set("lastname", "");
 		ReactSession.set("image_url", "");
 		ReactSession.set("token", "");
+		setRet(<Navigate to="/home" />);
 	}, []);
 
-	// return <Navigate to="/home" />;
+	return ret;
 };
 export default Logout;
