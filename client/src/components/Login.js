@@ -58,7 +58,8 @@ const Login = () => {
 	}, [token]);
 
 	useEffect(() => {
-		if (dataCheck && tokenCheck) setRet(<Navigate to="/home" />);
+		if (dataCheck && tokenCheck)
+			setRet(<Navigate to={-1} replace={true} />);
 	}, [dataCheck, tokenCheck]);
 
 	return ret;
