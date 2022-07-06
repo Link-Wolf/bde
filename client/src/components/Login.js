@@ -7,6 +7,9 @@ const Login = () => {
 	const [searchParams] = useSearchParams();
 	const [data, setData] = useState({});
 	const [token, setToken] = useState("");
+	const [dataCheck, setDataCheck] = useState(false);
+	const [tokenCheck, setTokenCheck] = useState(false);
+	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		const code = searchParams.get("code");
@@ -45,13 +48,20 @@ const Login = () => {
 			ReactSession.set("firstname", data.user.firstname);
 			ReactSession.set("lastname", data.user.lastname);
 			ReactSession.set("image_url", data.user.image_url);
+			setDataCheck(true);
 		}
 	}, [data]);
 
 	useEffect(() => {
 		ReactSession.set("token", token);
+		setTokenCheck(true);
 	}, [token]);
-	// return <Navigate to="/home" />;
+
+	useEffect(() => {
+		if (dataCheck && tokenCheck) setRet(<Navigate to="/home" />);
+	}, [dataCheck, tokenCheck]);
+
+	return ret;
 };
 
 export default Login;
