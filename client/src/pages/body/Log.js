@@ -1,46 +1,25 @@
-import {useSearchParams} from "react-router-dom";
-import {useEffect} from "react";
-import jwt_decode from "jwt-decode";
+import {useState, useEffect} from "react";
+import Login from "../../components/Login";
+import Logout from "../../components/Logout";
+import {ReactSession} from "react-client-session";
 
-import UserContext from "../../contexts/user.context";
-
-const Log = data => {
-	const [searchParams] = useSearchParams();
+const Log = () => {
+	const [ret, setRet] = useState(<></>);
+	const [login, setLogin] = useState("42");
 
 	useEffect(() => {
-		const code = searchParams.get("code");
-		const requestOptions = {
-			method: "post",
-			headers: {"Content-Type": "application/json"}, //add security token here i guess
-			body: JSON.stringify({
-				code: code
-			})
-		};
-		fetch("http://k1r2p10.42mulhouse.fr:4242/auth", requestOptions)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(actualData => {
-				// console.log(actualData.token);
-				data.setUser(jwt_decode(actualData.token));
-				data.setToken(actualData.token);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+		try {
+			setLogin(ReactSession.get("token"));
+		} catch {
+			setLogin("");
+		}
 	}, []);
-
 	useEffect(() => {
-		console.log(data.token, " : ", data.user);
-	}, [data]);
+		if (login === "") setRet(<Login />);
+		else if (login !== "42") setRet(<Logout />);
+	}, [login]);
+
+	return ret;
 };
 
 export default Log;

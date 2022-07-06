@@ -1,5 +1,6 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import {ReactSession} from "react-client-session";
 
 import style from "../../style/AdminEventsSubscribtions.module.css";
 
@@ -19,9 +20,20 @@ const AdminStudents = () => {
 	const [update, setUpdate] = useState(false);
 	const [subForm, setSubForm] = useState(<></>);
 	const [validationClass, setValidationClass] = useState(style.neutral);
+	const [token, setToken] = useState("");
+
+	useEffect(() => {
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
 
 	const getStud = id => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/${id}/stud`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/${id}/stud`, {
+			headers: {Authorization: `Bearer ${token}`}
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -44,7 +56,10 @@ const AdminStudents = () => {
 	const removeStud = (eventId, login) => {
 		const requestOptions = {
 			method: "DELETE",
-			headers: {"Content-Type": "application/json"}
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json"
+			}
 		};
 		fetch(
 			`http://k1r2p10.42mulhouse.fr:4242/inscription/admin/${eventId}/${login}`,
@@ -68,7 +83,10 @@ const AdminStudents = () => {
 	const checkStud = (eventId, login) => {
 		const requestOptions = {
 			method: "PATCH",
-			headers: {"Content-Type": "application/json"},
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json"
+			},
 			body: JSON.stringify({login: login})
 		};
 		fetch(
@@ -91,7 +109,9 @@ const AdminStudents = () => {
 	};
 
 	const getAllEvent = () => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/current`)
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/current`, {
+			headers: {Authorization: `Bearer ${token}`}
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -140,13 +160,13 @@ const AdminStudents = () => {
 			setUpdate(true);
 		}
 	};
+	useEffect(() => {
+		getAllEvent();
+	}, [token]);
 
 	useEffect(() => {
 		setUpdate(false);
-		if (!eventPreload) {
-			getAllEvent();
-			setEventPreload(true);
-		}
+
 		if (selectedEvent !== "") {
 			getStud(selectedEvent);
 			setSubForm(
@@ -166,7 +186,7 @@ const AdminStudents = () => {
 				</FormGroup>
 			);
 		}
-	}, [selectedEvent, update]);
+	}, [selectedEvent, update, token]);
 
 	return (
 		<div>

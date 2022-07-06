@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Accordion, Button, Form} from "react-bootstrap";
+import {ReactSession} from "react-client-session";
 
 const AdminEventToken = param => {
 	const [formState, setFormState] = useState({
@@ -39,6 +40,16 @@ const AdminEventToken = param => {
 		setUpdate(true);
 	};
 
+	const [token, setToken] = useState("");
+
+	useEffect(() => {
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
+
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -72,30 +83,9 @@ const AdminEventToken = param => {
 	const saveEvent = () => {
 		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
 		{
-			// let body = JSON.stringify(formState);
-			// console.log(body);
-			// fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`, {
-			// 	header: {"Content-Type": "application/json"},
-			// 	body: body,
-			// 	method: "PATCH"
-			// })
-			// 	.then(response => {
-			// 		if (!response.ok) {
-			// 			throw new Error(
-			// 				`This is an HTTP error: The status is ${response.status}`
-			// 			);
-			// 		}
-			// 		return response.json();
-			// 	})
-			// 	.catch(function(error) {
-			// 		console.log(
-			// 			"Il y a eu un problème avec l'opération fetch: " +
-			// 				error.message
-			// 		);
-			// 	});
-
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
+			myHeaders.append("Authorization", `Bearer ${token}`);
 
 			var raw = JSON.stringify({
 				name: bodyState.name,
@@ -172,7 +162,7 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
-	}, []);
+	}, [token]);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -196,7 +186,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param, update, formState, token]);
 
 	return (
 		<>
