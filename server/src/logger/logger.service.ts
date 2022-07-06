@@ -11,44 +11,44 @@ export class LoggerService {
 		private logRepertory: Repository<Logs>
 	) { }
 
-	async error(message: string) {
-		Logger.error(message);
+	async error(message: string, requestMaker: string) {
+		Logger.error(`${requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
-			message: message,
+			message: `${requestMaker} : ${message}`,
 			type: "error"
 		})
-		this.logfile("error", message)
+		this.logfile("error", `${requestMaker} : ${message}`)
 	}
 
-	async warn(message: string) {
-		Logger.warn(message);
+	async warn(message: string, requestMaker: string) {
+		Logger.warn(`${requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
-			message: message,
+			message: `${requestMaker} : ${message}`,
 			type: "warn"
 		})
-		this.logfile("warning", message)
+		this.logfile("warning", `${requestMaker} : ${message}`)
 	}
 
-	async log(message: string) {
-		Logger.log(message);
+	async log(message: string, requestMaker: string) {
+		Logger.log(`${requestMaker} : ${message}`);
 		// await this.logRepertory.save({
 		// 	date: new Date(Date.now()),
 		// 	message: message,
 		// 	type: "log"
 		// })
-		this.logfile("log", message)
+		this.logfile("log", `${requestMaker} : ${message}`)
 	}
 
-	async verbose(message: string) {
-		Logger.verbose(message);
+	async verbose(message: string, requestMaker: string) {
+		Logger.verbose(`${requestMaker} : ${message}`);
 		// await this.logRepertory.save({
 		// 	date: new Date(Date.now()),
 		// 	message: message,
 		// 	type: "verbose"
 		// })
-		this.logfile("verbose", message)
+		this.logfile("verbose", `${requestMaker} : ${message}`)
 	}
 
 	async logfile(type: string, message: string) {

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
 import { LogsService } from './logs.service';
 import { Logs } from '../entity/Logs'
 import { LogsDto, LogsFilterDto } from './logs.dto';
@@ -9,8 +9,8 @@ export class LogsController {
 	constructor(private logsService: LogsService) { }
 
 	@Get('')
-	findAll(): Promise<Logs[]> {
-		return this.logsService.findAll();
+	findAll(@Req() req: any): Promise<Logs[]> {
+		return this.logsService.findAll(req.user.login);
 	}
 
 	// @Get('current')

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
 import { ContributionDto } from './contribution.dto';
 import { ContributionDtoPipe } from './contribution.pipe';
@@ -9,37 +9,37 @@ export class ContributionController {
 	constructor(private contributionService: ContributionService) { }
 
 	@Get()
-	findAll(): Promise<Contribution[]> {
-		return this.contributionService.findAll();
+	findAll(@Req() req: any): Promise<Contribution[]> {
+		return this.contributionService.findAll(req.user.login);
 	}
 
 	@Get(':login/last')
-	findLast(@Param('login') login: string): Promise<Contribution> {
-		return this.contributionService.findLast(login);
+	findLast(@Req() req: any, @Param('login') login: string): Promise<Contribution> {
+		return this.contributionService.findLast(login, req.user.login);
 	}
 
 	@Get(':login')
-	findForUser(@Param('login') login: string): Promise<Contribution[]> {
-		return this.contributionService.findForUser(login);
+	findForUser(@Req() req: any, @Param('login') login: string): Promise<Contribution[]> {
+		return this.contributionService.findForUser(login, req.user.login);
 	}
 
 	@Post()
-	create(@Body(ContributionDtoPipe) contribution: ContributionDto) {
-		return this.contributionService.create(contribution);
+	create(@Req() req: any, @Body(ContributionDtoPipe) contribution: ContributionDto) {
+		return this.contributionService.create(contribution, req.user.login);
 	}
 
 	@Patch(':login')
-	update(@Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
-		return this.contributionService.update(login, contribution);
+	update(@Req() req: any, @Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
+		return this.contributionService.update(login, contribution, req.user.login);
 	}
 
 	@Delete(':login')
-	remove(@Param('login', ParseIntPipe) login: string) {
-		return this.contributionService.removeOne(login);
+	remove(@Req() req: any, @Param('login', ParseIntPipe) login: string) {
+		return this.contributionService.removeOne(login, req.user.login);
 	}
 
 	@Delete()
-	removeAll() {
-		return this.contributionService.removeAll();
+	removeAll(@Req() req: any) {
+		return this.contributionService.removeAll(req.user.login);
 	}
 }
