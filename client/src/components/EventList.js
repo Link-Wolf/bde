@@ -1,14 +1,27 @@
 import {useState, useEffect, React} from "react";
+import {ReactSession} from "react-client-session";
 
 import style from "../style/EventList.module.css";
 
 const EventList = param => {
 	const [data, setData] = useState([]);
+	const [token, setToken] = useState("");
+
+	useEffect(() => {
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
 
 	useEffect(() => {
 		const requestOptions = {
 			method: "post",
-			headers: {"Content-Type": "application/json"}, //add security token here i guess
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			}, //add security token here i guess
 			body: JSON.stringify(param.filter)
 		};
 		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/get`, requestOptions)
@@ -21,7 +34,6 @@ const EventList = param => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setData(actualData);
 			})
 			.catch(function(error) {
@@ -30,7 +42,7 @@ const EventList = param => {
 						error.message
 				);
 			});
-	}, [param.filter]);
+	}, [param.filter, token]);
 
 	return data.length ? (
 		<div className={style.scroll_container_40vw}>

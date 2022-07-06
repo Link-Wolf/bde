@@ -17,7 +17,6 @@ import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
 import AdminStudents from "./body/AdminStudents";
 import Log from "./body/Log";
-import UserContext from "../contexts/user.context";
 
 const Routage = () => {
 	return (
@@ -32,21 +31,7 @@ const Routage = () => {
 				<Route path="event/:id" element={<Event />} />
 				<Route path="contact" element={<Contact />} />
 				<Route path="log/redirect" element={<Log />} />
-				<Route
-					path="log"
-					element={
-						<UserContext.Consumer>
-							{({user, setUser, token, setToken}) => (
-								<Log
-									user={user}
-									setUser={setUser}
-									token={token}
-									setToken={setToken}
-								/>
-							)}
-						</UserContext.Consumer>
-					}
-				/>
+				<Route path="log" element={<Log />} />
 				<Route path="dollarthings" element={<Cgv />} />
 				<Route path="legalthings" element={<Cgu />} />
 				<Route
