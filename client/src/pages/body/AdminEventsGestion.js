@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import AdminEventToken from "../../components/AdminEventToken";
+import {ReactSession} from "react-client-session";
 
 import {Accordion, Button} from "react-bootstrap";
 
@@ -8,12 +9,24 @@ const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
 	const [openEventId, setOpenEventId] = useState(-1);
 	const [update, setUpdate] = useState(false);
+	const [token, setToken] = useState("");
+
+	useEffect(() => {
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
 
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
 			method: "post",
-			headers: {"Content-Type": "application/json"}, //add security token here i guess
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			}, //add security token here i guess
 			body: JSON.stringify(param.filter)
 		};
 		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/get`, requestOptions)
@@ -34,12 +47,15 @@ const AdminEventsGestion = param => {
 						error.message
 				);
 			});
-	}, [param.filter, openEventId, update]);
+	}, [param.filter, openEventId, update, token]);
 
 	const createNewEvent = () => {
 		fetch("http://k1r2p10.42mulhouse.fr:4242/event", {
 			method: "POST",
-			headers: {"Content-Type": "application/json"},
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`
+			},
 			body: JSON.stringify({
 				name: "[nom]",
 				cost: 0,

@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
 import NoPage from "../pages/body/NoPage";
+import {ReactSession} from "react-client-session";
 
 import style from "../style/EventID.module.css";
 
@@ -8,9 +9,20 @@ const EventID = () => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
 	const param = useParams();
+	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.id}`)
+		try {
+			setToken(ReactSession.get("token"));
+		} catch {
+			setToken("");
+		}
+	}, []);
+
+	useEffect(() => {
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.id}`, {
+			headers: {Authorization: `Bearer ${token}`}
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -27,7 +39,10 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/event/${param.id}`)
+		fetch(
+			`http://k1r2p10.42mulhouse.fr:4242/inscription/event/${param.id}`,
+			{headers: {Authorization: `Bearer ${token}`}}
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -44,7 +59,7 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, []);
+	}, [token]);
 	return dataEvent.name ? (
 		<div
 			className={`
