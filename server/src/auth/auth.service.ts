@@ -12,7 +12,7 @@ export class AuthService {
 	) { }
 
 	async validateUser(login: string, password: string): Promise<any> {
-		const stud = await this.studService.findOne(login);
+		const stud = await this.studService.findOne(login, "42");
 		if (stud && password === "pass")
 			return stud;
 		return null;
@@ -52,7 +52,7 @@ export class AuthService {
 								isDirection: false,
 								isPremium: false
 							}
-							const retStud = await this.studService.logUser(stud);
+							const retStud = await this.studService.logUser(stud, "42");
 							const jwt = this.jwtService.sign({
 								user: {
 									login: retStud.login,

@@ -14,18 +14,18 @@ export class ContributionService {
 		private logger: LoggerService,
 	) { }
 
-	async findAll(): Promise<Contribution[]> {
+	async findAll(requestMaker: string): Promise<Contribution[]> {
 		try {
 			let contribs = this.contributionRepository.find();
-			await this.logger.log(`Got all contributions`);
+			await this.logger.log(`Got all contributions`, requestMaker);
 			return contribs
 		} catch (error) {
-			await this.logger.error(`Failed to get all contributions on database (${error})`);
-			throw new InternalServerErrorException(`Failed to get all contributions on database (${error})`);
+			await this.logger.error(`Failed to get all contributions on database (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to get all contributions on database (${error})`, requestMaker);
 		}
 	}
 
-	async findLast(studLogin: string): Promise<Contribution> {
+	async findLast(studLogin: string, requestMaker: string): Promise<Contribution> {
 		try {
 			let cont = await this.contributionRepository.findOne({
 				where: { studLogin: studLogin },
@@ -33,17 +33,17 @@ export class ContributionService {
 			});
 
 			if (!cont)
-				this.logger.warn(`Failed to find contribution for student ${studLogin} : contribution does not exist`)
+				this.logger.warn(`Failed to find contribution for student ${studLogin} : contribution does not exist`, requestMaker)
 			else
-				this.logger.log(`Got last contribution of student ${studLogin}`)
+				this.logger.log(`Got last contribution of student ${studLogin}`, requestMaker)
 			return cont
 		} catch (error) {
-			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`);
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to find contribution for student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async findForUser(studLogin: string): Promise<Contribution[]> {
+	async findForUser(studLogin: string, requestMaker: string): Promise<Contribution[]> {
 		try {
 			let cont = await this.contributionRepository.find({
 				where: { studLogin: studLogin },
@@ -51,62 +51,62 @@ export class ContributionService {
 			});
 
 			if (!cont)
-				this.logger.warn(`Failed to find all contributions for student ${studLogin} : student does not have any contribution`)
+				this.logger.warn(`Failed to find all contributions for student ${studLogin} : student does not have any contribution`, requestMaker)
 			else
-				this.logger.log(`Got all contributions of student ${studLogin}`)
+				this.logger.log(`Got all contributions of student ${studLogin}`, requestMaker)
 			return cont
 		} catch (error) {
-			await this.logger.error(`Failed to get all contributions of student ${studLogin} on database (${error})`);
+			await this.logger.error(`Failed to get all contributions of student ${studLogin} on database (${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to get all contributions for student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async update(studLogin: string, contribution: any): Promise<void> {
+	async update(studLogin: string, contribution: any, requestMaker: string): Promise<void> {
 		try {
-			let cont = await this.findLast(studLogin)
+			let cont = await this.findLast(studLogin, requestMaker)
 			if (!cont) {
-				await this.logger.error(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`);
+				await this.logger.error(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`, requestMaker);
 				throw new NotFoundException(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`);
 			}
 			await this.contributionRepository.update(cont.id, contribution);
-			this.logger.log(`Successfully updated current contribution of student ${studLogin}`)
+			this.logger.log(`Successfully updated current contribution of student ${studLogin}`, requestMaker)
 		} catch (error) {
-			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`);
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker);
 			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async create(contributionData: ContributionDto): Promise<void> {
+	async create(contributionData: ContributionDto, requestMaker: string): Promise<void> {
 		try {
 			await this.contributionRepository.insert(contributionData);
-			this.logger.log(`Successfully created contribution for student ${contributionData.stud.login}`)
+			this.logger.log(`Successfully created contribution for student ${contributionData.stud.login}`, requestMaker)
 		}
 		catch (error) {
-			await this.logger.error(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`);
+			await this.logger.error(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`, requestMaker);
 			throw new UnprocessableEntityException(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`);
 		}
 	}
 
-	async removeOne(studLogin: string): Promise<void> {
-		let cont = await this.findLast(studLogin)
+	async removeOne(studLogin: string, requestMaker: string): Promise<void> {
+		let cont = await this.findLast(studLogin, requestMaker)
 		if (!cont) {
-			await this.logger.warn(`Failed to delete contributions of student ${studLogin} : contribution does not exist`);
+			await this.logger.warn(`Failed to delete contributions of student ${studLogin} : contribution does not exist`, requestMaker);
 		}
 		try {
 			await this.contributionRepository.delete({ studLogin: studLogin });
-			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`)
+			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`, requestMaker)
 		} catch (error) {
-			this.logger.error(`Failed to delete all contributions of student ${studLogin} on database (${error})`)
+			this.logger.error(`Failed to delete all contributions of student ${studLogin} on database (${error})`, requestMaker)
 			throw new UnprocessableEntityException(`Failed to delete contributions of student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async removeAll(): Promise<void> {
+	async removeAll(requestMaker: string): Promise<void> {
 		try {
 			await this.contributionRepository.delete({});
-			this.logger.log(`Successfully deleted all contributions`)
+			this.logger.log(`Successfully deleted all contributions`, requestMaker)
 		} catch (error) {
-			this.logger.error(`Failed to delete all contributions on database (${error})`)
+			this.logger.error(`Failed to delete all contributions on database (${error})`, requestMaker)
 			throw new UnprocessableEntityException(`Failed to delete all contributions on database (${error})`);
 		}
 	}

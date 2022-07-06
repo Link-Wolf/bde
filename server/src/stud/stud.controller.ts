@@ -11,7 +11,7 @@ export class StudController {
 	constructor(private studService: StudService) { }
 
 	@Get()
-	findAll(@Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
+	findAll(@Req() req: any, @Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
 		console.log("cookie : ");
 		console.log(request.cookies);
 		console.log(" : end cookie")
@@ -22,31 +22,31 @@ export class StudController {
 		console.log(request.cookies);
 		console.log(" : end cookie 2")
 		//console.log("signed cookie 2:" + request.signedCookies)
-		return this.studService.findAll();
+		return this.studService.findAll(req.user.login);
 	}
 
 	@Get(':login')
-	findOne(@Param('login') login: string): Promise<Stud> {
-		return this.studService.findOne(login);
+	findOne(@Req() req: any, @Param('login') login: string): Promise<Stud> {
+		return this.studService.findOne(login, req.user.login);
 	}
 
 	@Post()
-	create(@Body(new StudDtoPipe()) stud: StudDto) {
-		return this.studService.create(stud);
+	create(@Req() req: any, @Body(new StudDtoPipe()) stud: StudDto) {
+		return this.studService.create(stud, req.user.login);
 	}
 
 	@Patch(':login')
-	update(@Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
-		return this.studService.update(login, stud);
+	update(@Req() req: any, @Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
+		return this.studService.update(login, stud, req.user.login);
 	}
 
 	@Delete(':login')
-	removeOne(@Param('login') login: string) {
-		return this.studService.removeOne(login);
+	removeOne(@Req() req: any, @Param('login') login: string) {
+		return this.studService.removeOne(login, req.user.login);
 	}
 
 	@Delete()
-	removeAll() {
-		return this.studService.removeAll();
+	removeAll(@Req() req: any, ) {
+		return this.studService.removeAll(req.user.login);
 	}
 }

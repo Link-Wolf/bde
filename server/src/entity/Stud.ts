@@ -48,7 +48,7 @@ export class Stud {
 	roles: Role[]
 
 	async isPremium(): Promise<boolean> {
-		let last_cont = await this.contributionService.findLast(this.login);
+		let last_cont = await this.contributionService.findLast(this.login, "42");
 		return last_cont.end_date >= new Date(Date.now());
 	}
 }

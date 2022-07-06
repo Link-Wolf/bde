@@ -16,13 +16,13 @@ export class LogsService {
 		private logger: LoggerService,
 	) { }
 
-	async findAll(): Promise<Logs[]> {
+	async findAll(requestMaker: string): Promise<Logs[]> {
 		try {
 			let logs = await this.logsRepository.find();
-			this.logger.log(`Got all logs`);
+			this.logger.log(`Got all logs`, requestMaker);
 			return logs;
 		} catch (error) {
-			this.logger.error(`Failed to get all logs on database(${error})`);
+			this.logger.error(`Failed to get all logs on database(${error})`, requestMaker);
 			throw new InternalServerErrorException(`Could not find logs on database(${error})`)
 		}
 	}
