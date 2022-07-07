@@ -48,6 +48,7 @@ const Login = () => {
 			ReactSession.set("firstname", data.user.firstname);
 			ReactSession.set("lastname", data.user.lastname);
 			ReactSession.set("image_url", data.user.image_url);
+			ReactSession.set("accreditation", data.user.accreditation);
 			setDataCheck(true);
 		}
 	}, [data]);
