@@ -1,12 +1,15 @@
 import React from "react";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
+import RedirectInvite from "../components/RedirectInvite";
+
 // Nos pagis
 import Home from "./body/Home";
 import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Cgv from "./body/Cgv";
 import Stud from "./body/Studs";
+import Shop from "./body/Shop";
 import Events from "./body/Events";
 import Event from "./body/Event";
 import NoPage from "./body/NoPage";
@@ -26,32 +29,95 @@ const Routage = () => {
 				<Route path="home" element={<Home />} />
 				<Route path="about" element={<About />} />
 				<Route path="cgu" element={<Cgu />} />
-				<Route path="stud" element={<Stud />} />
-				<Route path="events" element={<Events />} />
-				<Route path="event/:id" element={<Event />} />
-				<Route path="contact" element={<Contact />} />
-				<Route path="log/redirect" element={<Log />} />
-				<Route path="log" element={<Log />} />
 				<Route path="dollarthings" element={<Cgv />} />
 				<Route path="legalthings" element={<Cgu />} />
+				<Route path="contact" element={<Contact />} />
+				<Route path="log" element={<Log />} />
+				<Route
+					path="stud"
+					element={
+						<RedirectInvite>
+							<Stud />
+						</RedirectInvite>
+					}
+				/>
+				<Route
+					path="events"
+					element={
+						<RedirectInvite>
+							<Events />
+						</RedirectInvite>
+					}
+				/>
+				<Route
+					path="shop"
+					element={
+						<RedirectInvite>
+							<Shop />
+						</RedirectInvite>
+					}
+				/>
+				<Route
+					path="event/:id"
+					element={
+						<RedirectInvite>
+							<Event />
+						</RedirectInvite>
+					}
+				/>
+				<Route
+					path="log/redirect"
+					element={
+						<RedirectInvite>
+							<Log />
+						</RedirectInvite>
+					}
+				/>
 				<Route
 					path="admin/events/gestion"
-					element={<AdminEventsGestion />}
+					element={
+						<RedirectInvite>
+							<AdminEventsGestion />
+						</RedirectInvite>
+					}
 				/>
 				<Route
 					path="admin/events/subscribtions"
-					element={<AdminEventsSubscribtions />}
+					element={
+						<RedirectInvite>
+							<AdminEventsSubscribtions />
+						</RedirectInvite>
+					}
 				/>
 				<Route
 					path="admin/contributions"
-					element={<AdminContributions />}
+					element={
+						<RedirectInvite>
+							<AdminContributions />
+						</RedirectInvite>
+					}
 				/>
-				<Route path="admin/logs" element={<AdminLogs />} />
-				<Route path="admin/students" element={<AdminStudents />} />
+				<Route
+					path="admin/logs"
+					element={
+						<RedirectInvite>
+							<AdminLogs />
+						</RedirectInvite>
+					}
+				/>
+				<Route
+					path="admin/students"
+					element={
+						<RedirectInvite>
+							<AdminStudents />
+						</RedirectInvite>
+					}
+				/>
 				<Route
 					path="admin/"
 					element={<Navigate to="/admin/students" />}
 				/>
+
 				<Route path="*" element={<NoPage />} />
 			</Routes>
 		</BrowserRouter>
