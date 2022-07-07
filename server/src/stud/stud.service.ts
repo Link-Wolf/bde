@@ -66,7 +66,7 @@ export class StudService {
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
 			this.logger.log(`Successfully created new student ${studDto.login}`, requestMaker);
-			return this.studRepository.save(studDto);
+			let ret = this.studRepository.save(studDto);
 		} catch (error) {
 			this.logger.error(`Failed to create user ${studDto.login} on database (${error})`, requestMaker)
 			throw new NotFoundException(`Failed to create user ${studDto.login} on database (${error})`)
@@ -99,7 +99,7 @@ export class StudService {
 
 	async logUser(stud: StudDto, requestMaker) {
 		try {
-			let user = this.findOne(stud.login, requestMaker);
+			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)
 				user = await this.create(stud, requestMaker)
 			this.logger.log(`Successfully logged student`, requestMaker);
