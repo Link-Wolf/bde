@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, Session } from '@nestjs/common';
 import { Contribution } from '../entity/Contribution';
 import { ContributionDto } from './contribution.dto';
 import { ContributionDtoPipe } from './contribution.pipe';
@@ -9,37 +9,37 @@ export class ContributionController {
 	constructor(private contributionService: ContributionService) { }
 
 	@Get()
-	findAll(@Req() req: any): Promise<Contribution[]> {
-		return this.contributionService.findAll(req.user.login);
+	findAll(@Session() session: Record<string, any>): Promise<Contribution[]> {
+		return this.contributionService.findAll(session.login);
 	}
 
 	@Get(':login/last')
-	findLast(@Req() req: any, @Param('login') login: string): Promise<Contribution> {
-		return this.contributionService.findLast(login, req.user.login);
+	findLast(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Contribution> {
+		return this.contributionService.findLast(login, session.login);
 	}
 
 	@Get(':login')
-	findForUser(@Req() req: any, @Param('login') login: string): Promise<Contribution[]> {
-		return this.contributionService.findForUser(login, req.user.login);
+	findForUser(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Contribution[]> {
+		return this.contributionService.findForUser(login, session.login);
 	}
 
 	@Post()
-	create(@Req() req: any, @Body(ContributionDtoPipe) contribution: ContributionDto) {
-		return this.contributionService.create(contribution, req.user.login);
+	create(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
+		return this.contributionService.create(contribution, session.login);
 	}
 
 	@Patch(':login')
-	update(@Req() req: any, @Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
-		return this.contributionService.update(login, contribution, req.user.login);
+	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
+		return this.contributionService.update(login, contribution, session.login);
 	}
 
 	@Delete(':login')
-	remove(@Req() req: any, @Param('login', ParseIntPipe) login: string) {
-		return this.contributionService.removeOne(login, req.user.login);
+	remove(@Session() session: Record<string, any>, @Param('login', ParseIntPipe) login: string) {
+		return this.contributionService.removeOne(login, session.login);
 	}
 
 	@Delete()
-	removeAll(@Req() req: any) {
-		return this.contributionService.removeAll(req.user.login);
+	removeAll(@Session() session: Record<string, any>) {
+		return this.contributionService.removeAll(session.login);
 	}
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, Session } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
@@ -9,52 +9,52 @@ export class EventController {
 	constructor(private eventService: EventService) { }
 
 	@Get('')
-	findAll(@Req() req: any): Promise<Event[]> {
-		return this.eventService.findAll(null, req.user.login);
+	findAll(@Session() session: Record<string, any>): Promise<Event[]> {
+		return this.eventService.findAll(null, session.login);
 	}
 
 	@Get('current')
-	findCurrent(@Req() req: any): Promise<Event[]> {
-		return this.eventService.findCurrent(req.user.login);
+	findCurrent(@Session() session: Record<string, any>): Promise<Event[]> {
+		return this.eventService.findCurrent(session.login);
 	}
 
 	@Get(':id')
-	findOne(@Req() req: any, @Param('id', ParseIntPipe) id: number): Promise<Event> {
-		return this.eventService.findOne(id, req.user.login);
+	findOne(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number): Promise<Event> {
+		return this.eventService.findOne(id, session.login);
 	}
 
 	@Post('')
-	create(@Req() req: any, @Body(new EventDtoPipe()) event: EventDto) {
-		return this.eventService.create(event, req.user.login);
+	create(@Session() session: Record<string, any>, @Body(new EventDtoPipe()) event: EventDto) {
+		return this.eventService.create(event, session.login);
 	}
 
 	@Post('get')
-	findAllButFilter(@Body(new EventFilterDtoPipe()) filters: EventFilterDto, @Req() req: any): Promise<Event[]> {
-		return this.eventService.findAll(filters, req.user.login);
+	findAllButFilter(@Body(new EventFilterDtoPipe()) filters: EventFilterDto, @Session() session: Record<string, any>): Promise<Event[]> {
+		return this.eventService.findAll(filters, session.login);
 	}
 
 	@Patch(':id')
-	update(@Req() req: any, @Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
-		return this.eventService.update(id, event, req.user.login);
+	update(@Session() session: Record<string, any>, @Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
+		return this.eventService.update(id, event, session.login);
 	}
 
 	@Patch(':id/inscription')
-	subscribe(@Req() req: any, @Param('id') id: number, @Body('login') login: string) {
-		return this.eventService.subscribe(id, login, req.user.login);
+	subscribe(@Session() session: Record<string, any>, @Param('id') id: number, @Body('login') login: string) {
+		return this.eventService.subscribe(id, login, session.login);
 	}
 
 	@Patch('admin/:id/inscription')
-	forceSubscribe(@Req() req: any, @Param('id') id: number, @Body('login') login: string) {
-		return this.eventService.forceSubscribe(id, login, req.user.login);
+	forceSubscribe(@Session() session: Record<string, any>, @Param('id') id: number, @Body('login') login: string) {
+		return this.eventService.forceSubscribe(id, login, session.login);
 	}
 
 	@Delete(':id')
-	removeOne(@Req() req: any, @Param('id', ParseIntPipe) id: number) {
-		return this.eventService.removeOne(id, req.user.login);
+	removeOne(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
+		return this.eventService.removeOne(id, session.login);
 	}
 
 	@Delete('')
-	removeAll(@Req() req: any) {
-		return this.eventService.removeAll(req.user.login);
+	removeAll(@Session() session: Record<string, any>) {
+		return this.eventService.removeAll(session.login);
 	}
 }

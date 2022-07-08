@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req, Session } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
 
 @Controller('inscription')
@@ -6,52 +6,52 @@ export class InscriptionController {
 	constructor(private inscriptionService: InscriptionService) { }
 
 	@Get()
-	findAll(@Req() req: any) {
-		return this.inscriptionService.findAll(req.user.login);
+	findAll(@Session() session: Record<string, any>) {
+		return this.inscriptionService.findAll(session.login);
 	}
 
 	@Get('event/:id')
-	findByEvent(@Req() req: any, @Param('id', ParseIntPipe) id: number) {
-		return this.inscriptionService.findByEvent(id, req.user.login);
+	findByEvent(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
+		return this.inscriptionService.findByEvent(id, session.login);
 	}
 
 	@Get('stud/:login')
-	findByStud(@Req() req: any, @Param('login') login: string) {
-		return this.inscriptionService.findByStud(login, req.user.login);
+	findByStud(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.inscriptionService.findByStud(login, session.login);
 	}
 
 	@Get(':eventId/stud')
-	getStudByEvent(@Req() req: any, @Param('eventId', ParseIntPipe) id: number) {
-		return this.inscriptionService.getStudByEvent(id, req.user.login);
+	getStudByEvent(@Session() session: Record<string, any>, @Param('eventId', ParseIntPipe) id: number) {
+		return this.inscriptionService.getStudByEvent(id, session.login);
 	}
 
 	@Post() //body id + login
-	async link(@Req() req: any, @Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
-		return this.inscriptionService.link(id, login, req.user.login);
+	async link(@Session() session: Record<string, any>, @Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
+		return this.inscriptionService.link(id, login, session.login);
 	}
 
 	@Delete('event/:id')
-	removeByEvent(@Req() req: any, @Param('id', ParseIntPipe) id: number) {
-		return this.inscriptionService.removeByEvent(id, req.user.login);
+	removeByEvent(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
+		return this.inscriptionService.removeByEvent(id, session.login);
 	}
 
 	@Delete('stud/:login')
-	removeByStud(@Req() req: any, @Param('login') login: string) {
-		return this.inscriptionService.removeByStud(login, req.user.login);
+	removeByStud(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.inscriptionService.removeByStud(login, session.login);
 	}
 
 	@Delete(':event/:login')
-	remove(@Req() req: any, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
-		return this.inscriptionService.remove(event, login, req.user.login);
+	remove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
+		return this.inscriptionService.remove(event, login, session.login);
 	}
 
 	@Delete('/admin/:event/:login')
-	forceRemove(@Req() req: any, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
-		return this.inscriptionService.forceRemove(event, login, req.user.login);
+	forceRemove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
+		return this.inscriptionService.forceRemove(event, login, session.login);
 	}
 
 	@Delete()
-	removeAll(@Req() req: any) {
-		return this.inscriptionService.removeAll(req.user.login);
+	removeAll(@Session() session: Record<string, any>) {
+		return this.inscriptionService.removeAll(session.login);
 	}
 }
