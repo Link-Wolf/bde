@@ -1,5 +1,4 @@
 import {NavDropdown} from "react-bootstrap";
-import {ReactSession} from "react-client-session";
 import {useState, useEffect} from "react";
 
 import user_picture from "../images/user_placeholder.png";
@@ -9,9 +8,26 @@ const DropdownUser = () => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
-		const localimg = ReactSession.get("image_url");
-		if (localimg == undefined) setImg(user_picture);
-		else setImg(localimg);
+		fetch(`http://k1r2p10.42mulhouse.fr:4242/image_url`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				console.log(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}, []);
 
 	useEffect(() => {

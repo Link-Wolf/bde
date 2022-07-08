@@ -19,7 +19,8 @@ async function bootstrap() {
 			resave: false,
 			saveUninitialized: false,
 			cookie: {
-				maxAge: 600000
+				maxAge: 600000,
+				httpOnly: true
 			}
 		}
 	))
@@ -28,7 +29,8 @@ async function bootstrap() {
 		"origin": "http://k1r2p10.42mulhouse.fr:3000",
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
-		"optionsSuccessStatus": 204
+		"optionsSuccessStatus": 204,
+		"credentials": true
 	})
 	await app.listen(4242);
 
