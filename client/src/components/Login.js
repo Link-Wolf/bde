@@ -15,7 +15,7 @@ const Login = () => {
 		const code = searchParams.get("code");
 		const requestOptions = {
 			method: "post",
-			headers: {"Content-Type": "application/json"}, //add security token here i guess
+			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 				code: code
 			})
@@ -48,7 +48,7 @@ const Login = () => {
 			ReactSession.set("firstname", data.user.firstname);
 			ReactSession.set("lastname", data.user.lastname);
 			ReactSession.set("image_url", data.user.image_url);
-			ReactSession.set("accreditation", data.user.accreditation);
+			ReactSession.set("clearance", data.user.clearance);
 			setDataCheck(true);
 		}
 	}, [data]);
@@ -61,6 +61,7 @@ const Login = () => {
 	useEffect(() => {
 		if (dataCheck && tokenCheck)
 			setRet(<Navigate to={-1} replace={true} />);
+		// setRet(<></>);
 	}, [dataCheck, tokenCheck]);
 
 	return ret;

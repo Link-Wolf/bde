@@ -26,7 +26,7 @@ export class Stud {
 	isDirection: boolean
 
 	@Column({ default: 1 })
-	acreditation: number
+	clearance: number
 
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",

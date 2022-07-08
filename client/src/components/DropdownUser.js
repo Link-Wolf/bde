@@ -9,13 +9,9 @@ const DropdownUser = () => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
-		try {
-			const localimg = ReactSession.get("image_url");
-			if (localimg === "") setImg(user_picture);
-			else setImg(localimg);
-		} catch {
-			setImg(user_picture);
-		}
+		const localimg = ReactSession.get("image_url");
+		if (localimg == undefined) setImg(user_picture);
+		else setImg(localimg);
 	}, []);
 
 	useEffect(() => {
