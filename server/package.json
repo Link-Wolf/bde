@@ -36,6 +36,7 @@
       "express-session": "^1.17.3",
       "helmet": "^5.1.0",
       "nestjs-cookie-session": "^2.0.1",
+      "nestjs-session": "^2.0.0",
       "passport": "^0.5.3",
       "passport-jwt": "^4.0.0",
       "passport-local": "^1.0.0",

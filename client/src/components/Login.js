@@ -3,13 +3,14 @@ import {useState, useEffect} from "react";
 
 const Login = () => {
 	const [searchParams] = useSearchParams();
-	const [login, setLogin] = useState({});
+	const [login, setLogin] = useState(undefined);
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		const code = searchParams.get("code");
 		const requestOptions = {
 			method: "post",
+			credentials: "same-origin",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 				code: code
@@ -38,7 +39,7 @@ const Login = () => {
 
 	useEffect(() => {
 		console.log(login);
-		setRet(<Navigate to={-1} replace={true} />);
+		// setRet(<Navigate to={-1} replace={true} />);
 	}, [login]);
 
 	return ret;

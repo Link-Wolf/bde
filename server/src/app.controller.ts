@@ -9,4 +9,10 @@ export class AppController {
 		session.visit = session.visit ? session.visit + 1 : 1
 		return "session id :" + session.id + " \ncame " + session.visit + " times"
 	}
+
+	@Get('image_url')
+	async getImageUrl(@Session() session: Record<string, any>) {
+		console.log(session.image_url)
+		return { image_url: session.image_url }
+	}
 }
