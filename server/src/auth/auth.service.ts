@@ -53,16 +53,13 @@ export class AuthService {
 								isPremium: false
 							}
 							const retStud = await this.studService.logUser(stud, "42");
-							const jwt = this.jwtService.sign({
-								user: {
-									login: retStud.login,
-									firstname: retStud.firstname,
-									lastname: retStud.lastname,
-									image_url: response.data.image_url,
-									clearance: retStud.clearance
-								}
-							});
-							return jwt
+							return {
+								login: retStud.login,
+								firstname: retStud.firstname,
+								lastname: retStud.lastname,
+								image_url: response.data.image_url,
+								clearance: retStud.clearance
+							}
 						})
 						.catch(error => { return error })
 				})
