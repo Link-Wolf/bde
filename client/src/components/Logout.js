@@ -6,12 +6,12 @@ const Logout = () => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
-		ReactSession.set("login", "");
-		ReactSession.set("firstname", "");
-		ReactSession.set("lastname", "");
-		ReactSession.set("image_url", "");
-		ReactSession.set("token", "");
-		ReactSession.set("accreditation", "");
+		ReactSession.remove("login");
+		ReactSession.remove("firstname");
+		ReactSession.remove("lastname");
+		ReactSession.remove("image_url");
+		ReactSession.remove("token");
+		ReactSession.remove("clearance");
 		setRet(<Navigate to={-1} replace={true} />);
 	}, []);
 

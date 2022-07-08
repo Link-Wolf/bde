@@ -6,11 +6,7 @@ const Stud = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		try {
-			setToken(ReactSession.get("token"));
-		} catch {
-			setToken("");
-		}
+		setToken(ReactSession.get("token"));
 	}, []);
 
 	const getStud = () => {

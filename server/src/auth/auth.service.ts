@@ -59,7 +59,7 @@ export class AuthService {
 									firstname: retStud.firstname,
 									lastname: retStud.lastname,
 									image_url: response.data.image_url,
-									accreditation: retStud.acreditation
+									clearance: retStud.clearance
 								}
 							});
 							return jwt

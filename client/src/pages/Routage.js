@@ -33,6 +33,8 @@ const Routage = () => {
 				<Route path="legalthings" element={<Cgu />} />
 				<Route path="contact" element={<Contact />} />
 				<Route path="log" element={<Log />} />
+				<Route path="log/redirect" element={<Log />} />
+
 				<Route
 					path="stud"
 					element={
@@ -62,14 +64,6 @@ const Routage = () => {
 					element={
 						<RedirectInvite>
 							<Event />
-						</RedirectInvite>
-					}
-				/>
-				<Route
-					path="log/redirect"
-					element={
-						<RedirectInvite>
-							<Log />
 						</RedirectInvite>
 					}
 				/>

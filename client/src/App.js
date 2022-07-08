@@ -10,7 +10,7 @@ import Routage from "./pages/Routage";
 import Footer from "./pages/Footer";
 
 function App() {
-	ReactSession.setStoreType("cookie", "sessionStorage");
+	ReactSession.setStoreType("localStorage");
 
 	return (
 		<div className="App">

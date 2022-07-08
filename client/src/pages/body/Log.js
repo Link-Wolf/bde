@@ -8,14 +8,10 @@ const Log = () => {
 	const [login, setLogin] = useState("42");
 
 	useEffect(() => {
-		try {
-			setLogin(ReactSession.get("token"));
-		} catch {
-			setLogin("");
-		}
+		setLogin(ReactSession.get("token"));
 	}, []);
 	useEffect(() => {
-		if (login === "") setRet(<Login />);
+		if (login === undefined) setRet(<Login />);
 		else if (login !== "42") setRet(<Logout />);
 	}, [login]);
 

@@ -3,7 +3,7 @@ import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
 import {Dropdown} from "react-bootstrap";
 
-const Event = () => {
+const Events = () => {
 	const [filter, setFilter] = useState({
 		current: true,
 		free: false,
@@ -106,4 +106,4 @@ const Event = () => {
 	);
 };
 
-export default Event;
+export default Events;
