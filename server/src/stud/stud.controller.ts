@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, Session } from '@nestjs/common';
 import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
@@ -11,7 +11,7 @@ export class StudController {
 	constructor(private studService: StudService) { }
 
 	@Get()
-	findAll(@Req() req: any, @Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
+	findAll(@Session() session: Record<string, any>, @Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<Stud[]> {
 		console.log("cookie : ");
 		console.log(request.cookies);
 		console.log(" : end cookie")
@@ -22,31 +22,31 @@ export class StudController {
 		console.log(request.cookies);
 		console.log(" : end cookie 2")
 		//console.log("signed cookie 2:" + request.signedCookies)
-		return this.studService.findAll(req.user.login);
+		return this.studService.findAll(session.login);
 	}
 
 	@Get(':login')
-	findOne(@Req() req: any, @Param('login') login: string): Promise<Stud> {
-		return this.studService.findOne(login, req.user.login);
+	findOne(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
+		return this.studService.findOne(login, session.login);
 	}
 
 	@Post()
-	create(@Req() req: any, @Body(new StudDtoPipe()) stud: StudDto) {
-		return this.studService.create(stud, req.user.login);
+	create(@Session() session: Record<string, any>, @Body(new StudDtoPipe()) stud: StudDto) {
+		return this.studService.create(stud, session.login);
 	}
 
 	@Patch(':login')
-	update(@Req() req: any, @Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
-		return this.studService.update(login, stud, req.user.login);
+	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
+		return this.studService.update(login, stud, session.login);
 	}
 
 	@Delete(':login')
-	removeOne(@Req() req: any, @Param('login') login: string) {
-		return this.studService.removeOne(login, req.user.login);
+	removeOne(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.removeOne(login, session.login);
 	}
 
 	@Delete()
-	removeAll(@Req() req: any, ) {
-		return this.studService.removeAll(req.user.login);
+	removeAll(@Session() session: Record<string, any>, ) {
+		return this.studService.removeAll(session.login);
 	}
 }
