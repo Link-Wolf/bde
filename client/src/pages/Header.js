@@ -6,7 +6,7 @@ import DropdownUser from "../components/DropdownUser";
 import bde_logo from "../images/bde_logo.webp";
 
 function Header() {
-	const [clearance, setClearance] = useState(42);
+	const [clearance, setClearance] = useState(-42);
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 
@@ -17,7 +17,7 @@ function Header() {
 	}, []);
 
 	useEffect(() => {
-		if (clearance != 42) {
+		if (clearance != -42) {
 			if (clearance == 0) {
 				setLeftButton(
 					<Nav className="me-auto">
@@ -34,6 +34,7 @@ function Header() {
 				);
 			}
 			if (clearance >= 3) {
+				setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
 			}
 		}
 	}, [clearance]);
@@ -52,7 +53,7 @@ function Header() {
 				</Navbar.Brand>
 				{leftButton}
 				<Nav>
-					<Nav.Link href="/admin">Admin</Nav.Link>
+					{rightButton}
 					<DropdownUser />
 				</Nav>
 			</Container>
