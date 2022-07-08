@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Res, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Res, Req, UseGuards, Session } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/localAuth.guard';
@@ -25,5 +25,12 @@ export class AppController {
 	@Post('auth/login')
 	async login(@Req() req: any) {
 		return this.authService.login(req.user);
+	}
+
+	@Public()
+	@Get('sessionId')
+	async getSessionId(@Session() session: Record<string, any>) {
+		session.visit = session.visit ? session.visit + 1 : 1
+		return "session id :" + session.id + " \ncame " + session.visit + " times"
 	}
 }
