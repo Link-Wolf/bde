@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Req, Session } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Session } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
 
 @Controller('inscription')
