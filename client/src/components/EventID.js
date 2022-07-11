@@ -20,7 +20,7 @@ const EventID = () => {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/${param.id}`, {
+		fetch(`http://localhost:4242/event/${param.id}`, {
 			headers: {Authorization: `Bearer ${token}`}
 		})
 			.then(response => {

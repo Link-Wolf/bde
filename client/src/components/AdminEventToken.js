@@ -109,7 +109,7 @@ const AdminEventToken = param => {
 			};
 
 			fetch(
-				`http://k1r2p10.42mulhouse.fr:4242/event/${param.data.id}`,
+				`http://localhost:4242/event/${param.data.id}`,
 				requestOptions
 			)
 				.then(response => {

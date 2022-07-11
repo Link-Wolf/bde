@@ -16,7 +16,7 @@ const Login = () => {
 				code: code
 			})
 		};
-		fetch("http://k1r2p10.42mulhouse.fr:4242/auth", requestOptions)
+		fetch("http://localhost:4242/auth", requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

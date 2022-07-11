@@ -11,7 +11,7 @@ const AdminLogs = () => {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/admin/logs`, {
+		fetch(`http://localhost:4242/admin/logs`, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`
