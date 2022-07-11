@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, Session } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Session } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
