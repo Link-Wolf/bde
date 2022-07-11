@@ -27,7 +27,7 @@ const AdminStudents = () => {
 	}, []);
 
 	const getStud = id => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/inscription/${id}/stud`, {
+		fetch(`http://localhost:4242/inscription/${id}/stud`, {
 			headers: {Authorization: `Bearer ${token}`}
 		})
 			.then(response => {
@@ -58,7 +58,7 @@ const AdminStudents = () => {
 			}
 		};
 		fetch(
-			`http://k1r2p10.42mulhouse.fr:4242/inscription/admin/${eventId}/${login}`,
+			`http://localhost:4242/inscription/admin/${eventId}/${login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -105,7 +105,7 @@ const AdminStudents = () => {
 	};
 
 	const getAllEvent = () => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/event/current`, {
+		fetch(`http://localhost:4242/event/current`, {
 			headers: {Authorization: `Bearer ${token}`}
 		})
 			.then(response => {

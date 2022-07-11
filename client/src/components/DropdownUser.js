@@ -8,7 +8,7 @@ const DropdownUser = () => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/image_url`, {
+		fetch(`http://localhost:4242/image_url`, {
 			credentials: "include"
 		})
 			.then(response => {

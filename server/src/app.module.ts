@@ -14,8 +14,10 @@ import { LogsModule } from './logs/logs.module';
 import { Logs } from './entity/Logs';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { JwtAuthGuard } from './auth/jwtAuth.guard';
-import { APP_GUARD } from '@nestjs/core';
+//import { JwtAuthGuard } from './auth/jwtAuth.guard';
+//import { APP_GUARD } from '@nestjs/core';
+const { db_password } = require('../config.json')
+
 
 @Module({
 	imports: [
@@ -24,7 +26,7 @@ import { APP_GUARD } from '@nestjs/core';
 			host: 'localhost',
 			port: 5432,
 			username: 'linkar',
-			password: 'xeno1et2',
+			password: db_password,
 			database: 'bde',
 			entities: [Stud, Contribution, Event, Logs],
 			synchronize: true

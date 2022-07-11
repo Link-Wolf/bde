@@ -11,7 +11,7 @@ const AdminStudents = () => {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://k1r2p10.42mulhouse.fr:4242/stud`)
+		fetch(`http://localhost:4242/stud`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
