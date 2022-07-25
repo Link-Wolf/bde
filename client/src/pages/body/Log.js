@@ -7,7 +7,7 @@ const Log = () => {
 	const [login, setLogin] = useState("42");
 
 	useEffect(() => {
-// TODO: token
+// TODO: login
 	}, []);
 	useEffect(() => {
 		if (login === undefined) setRet(<Login />);
