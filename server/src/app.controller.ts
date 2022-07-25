@@ -32,4 +32,10 @@ export class AppController {
 		console.log("imageurl", session.id);
 		return session.image_url ? { image_url: session.image_url } : { image_url: "-42" }
 	}
+
+	@Get('clearance')
+	async getImageUrl(@Session() session: Record<string, any>) {		// console.log(session.image_url)
+		console.log("clearance", session.id);
+		return session.clearance ? { image_url: session.clearance } : { clearance: "-42" }
+	}
 }
