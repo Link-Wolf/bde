@@ -6,6 +6,7 @@ import user_picture from "../images/user_placeholder.png";
 const DropdownUser = () => {
 	const [img, setImg] = useState(user_picture);
 	const [ret, setRet] = useState(<></>);
+	const [check, setCheck] = useState(true);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/image_url`, {
@@ -20,7 +21,11 @@ const DropdownUser = () => {
 				return response.json();
 			})
 			.then(data => {
-				if (data.image_url !== "-42") setImg(data.image_url);
+				if (data.image_url !== "-42") {
+					setImg(data.image_url);
+					setCheck(false);
+				}
+				else setCheck(true);
 			})
 			.catch(function(error) {
 				console.log(
@@ -28,7 +33,7 @@ const DropdownUser = () => {
 						error.message
 				);
 			});
-	}, []);
+	}, [check]);
 
 	useEffect(() => {
 		if (img != user_picture)

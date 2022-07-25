@@ -1,14 +1,13 @@
 import {useState, useEffect} from "react";
 import Login from "../../components/Login";
 import Logout from "../../components/Logout";
-import {ReactSession} from "react-client-session";
 
 const Log = () => {
 	const [ret, setRet] = useState(<></>);
 	const [login, setLogin] = useState("42");
 
 	useEffect(() => {
-		setLogin(ReactSession.get("token"));
+// TODO: token
 	}, []);
 	useEffect(() => {
 		if (login === undefined) setRet(<Login />);
