@@ -1,7 +1,6 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
 import NoPage from "../pages/body/NoPage";
-import {ReactSession} from "react-client-session";
 
 import style from "../style/EventID.module.css";
 
@@ -12,11 +11,7 @@ const EventID = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		try {
-			setToken(ReactSession.get("token"));
-		} catch {
-			setToken("");
-		}
+		//TODO: get token fetch
 	}, []);
 
 	useEffect(() => {

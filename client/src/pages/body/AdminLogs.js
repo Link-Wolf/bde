@@ -1,13 +1,12 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
-import {ReactSession} from "react-client-session";
 
 const AdminLogs = () => {
 	const [data, setData] = useState([]);
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		setToken(ReactSession.get("token"));
+// TODO: get setToken
 	}, []);
 
 	useEffect(() => {

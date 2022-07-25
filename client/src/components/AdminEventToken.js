@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import {Accordion, Button, Form} from "react-bootstrap";
-import {ReactSession} from "react-client-session";
 
 const AdminEventToken = param => {
 	const [formState, setFormState] = useState({
@@ -43,11 +42,7 @@ const AdminEventToken = param => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		try {
-			setToken(ReactSession.get("token"));
-		} catch {
-			setToken("");
-		}
+		// TODO: fetch token 
 	}, []);
 
 	const handleFormChange = event => {

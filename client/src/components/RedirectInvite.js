@@ -7,11 +7,7 @@ const RedirectInvite = data => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
-		try {
-			setToken(ReactSession.get("token"));
-		} catch {
-			setToken("");
-		}
+		//TODO: fetch token
 	}, []);
 
 	useEffect(() => {

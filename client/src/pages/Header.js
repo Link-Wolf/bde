@@ -1,6 +1,5 @@
 import {Navbar, Nav, Container} from "react-bootstrap";
 import {useState, useEffect} from "react";
-import {ReactSession} from "react-client-session";
 import DropdownUser from "../components/DropdownUser";
 
 import bde_logo from "../images/bde_logo.webp";
@@ -11,7 +10,7 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		let clear = ReactSession.get("clearance");
+		let clear = undefined;// TODO: fetch clearance
 		if (clear === undefined) clear = 0;
 		setClearance(clear);
 	}, []);
