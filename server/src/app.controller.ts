@@ -29,13 +29,11 @@ export class AppController {
 
 	@Get('image_url')
 	async getImageUrl(@Session() session: Record<string, any>) {		// console.log(session.image_url)
-		console.log("imageurl", session.id);
 		return session.image_url ? { image_url: session.image_url } : { image_url: "-42" }
 	}
 
 	@Get('clearance')
 	async getClearance(@Session() session: Record<string, any>) {		// console.log(session.image_url)
-		console.log("clearance", session.id);
 		return session.clearance ? { clearance: session.clearance } : { clearance: "-42" }
 	}
 }
