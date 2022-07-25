@@ -20,7 +20,7 @@ const DropdownUser = () => {
 				return response.json();
 			})
 			.then(data => {
-				console.log(data);
+				if (data.image_url !== "-42") setImg(data.image_url);
 			})
 			.catch(function(error) {
 				console.log(

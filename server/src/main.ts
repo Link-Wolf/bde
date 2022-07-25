@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser'
 import session = require('express-session');
 
-const { session_secret } = require('../config.json')
+const { session_secret, url_client } = require('../config.json')
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule,
@@ -17,7 +17,7 @@ async function bootstrap() {
 		{
 			secret: session_secret,
 			resave: false,
-			saveUninitialized: false,
+			saveUninitialized: true,
 			cookie: {
 				maxAge: 600000,
 				httpOnly: true
@@ -26,7 +26,7 @@ async function bootstrap() {
 	))
 	app.useGlobalFilters(new HttpExceptionFilter());
 	app.enableCors({
-		"origin": "http://k1r2p10.42mulhouse.fr:3000",
+		"origin": url_client, //
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204,
