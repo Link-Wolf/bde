@@ -1,6 +1,5 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
-import {ReactSession} from "react-client-session";
 
 import style from "../../style/AdminEventsSubscribtions.module.css";
 
@@ -23,7 +22,7 @@ const AdminStudents = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		setToken(ReactSession.get("token"));
+// TODO: get token
 	}, []);
 
 	const getStud = id => {

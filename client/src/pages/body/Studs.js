@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
-import {ReactSession} from "react-client-session";
 
 const Stud = () => {
 	const [users, setUsers] = useState([]);
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		setToken(ReactSession.get("token"));
+		// TODO: check token
 	}, []);
 
 	const getStud = () => {

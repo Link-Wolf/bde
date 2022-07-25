@@ -1,7 +1,6 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import AdminEventToken from "../../components/AdminEventToken";
-import {ReactSession} from "react-client-session";
 
 import {Accordion, Button} from "react-bootstrap";
 
@@ -12,7 +11,7 @@ const AdminEventsGestion = param => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		setToken(ReactSession.get("token"));
+// TODO: fetch token
 	}, []);
 
 	useEffect(() => {

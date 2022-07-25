@@ -1,4 +1,3 @@
-import {ReactSession} from "react-client-session";
 
 // import logo from './logo.svg';
 // import "./App.css";
@@ -10,8 +9,6 @@ import Routage from "./pages/Routage";
 import Footer from "./pages/Footer";
 
 function App() {
-	ReactSession.setStoreType("localStorage");
-
 	return (
 		<div className="App">
 			<Header />

@@ -1,5 +1,4 @@
 import {useState, useEffect, React} from "react";
-import {ReactSession} from "react-client-session";
 
 import style from "../style/EventList.module.css";
 
@@ -8,11 +7,7 @@ const EventList = param => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		try {
-			setToken(ReactSession.get("token"));
-		} catch {
-			setToken("");
-		}
+	// TODO: fetch token
 	}, []);
 
 	useEffect(() => {
