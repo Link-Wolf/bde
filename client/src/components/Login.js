@@ -7,6 +7,8 @@ const Login = () => {
 	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
+		console.log("o");
+
 		const code = searchParams.get("code");
 		const requestOptions = {
 			method: "post",
@@ -36,13 +38,14 @@ const Login = () => {
 				setLogin(actualData.login);
 			})
 			.then(async () => {
+				console.log("b");
 				while (1) {
-					if (
-						(await fetch("http://localhost:4242/clearance")) !==
-						undefined
-					)
+					console.log("a");
+					let a = await fetch("http://localhost:4242/clearance");
+					if (a !== undefined)
 						setRet(<Navigate to={-1} replace={true} />);
 					//a
+					console.log(`here isssss ${a}`);
 					await new Promise(resolve => setTimeout(resolve, 100));
 				}
 			})
@@ -55,7 +58,7 @@ const Login = () => {
 	}, []);
 
 	useEffect(() => {
-		//console.log(login);
+		console.log(login);
 		// setRet(<Navigate to={-1} replace={true} />);
 	}, [login]);
 
