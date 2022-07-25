@@ -9,7 +9,6 @@ export class AuthController {
 	@Public()
 	@Post()
 	async loginIntra(@Body('code') code: string, @Session() session: Record<string, any>) {
-		console.log(session);
 		let ret = await this.authService.loginIntra(code);
 		session.login = ret.login;
 		session.clearance = ret.clearance;
