@@ -36,6 +36,6 @@ export class AppController {
 	@Get('clearance')
 	async getClearance(@Session() session: Record<string, any>) {		// console.log(session.image_url)
 		console.log("clearance", session.id);
-		return session.clearance ? { image_url: session.clearance } : { clearance: "-42" }
+		return session.clearance ? { clearance: session.clearance } : { clearance: "-42" }
 	}
 }
