@@ -103,7 +103,6 @@ export class StudService {
 			if (!user)
 				user = await this.create(stud, requestMaker)
 			this.logger.log(`Successfully logged student`, requestMaker);
-			console.log(user);
 			return user
 		} catch (error) {
 			this.logger.error(`Failed to log student on database (${error})`, requestMaker)
