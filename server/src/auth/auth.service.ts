@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { StudService } from '../stud/stud.service';
-const { intra_uid, intra_secret } = require("../../config.json")
+const { intra_uid, intra_secret, url_client } = require("../../config.json")
 
 @Injectable()
 export class AuthService {
@@ -29,7 +29,7 @@ export class AuthService {
 		let sessionToken: string
 		try {
 			return this.http.post('https://api.intra.42.fr/oauth/token', {
-				redirect_uri: "http://k1r2p10.42mulhouse.fr:3000/log",
+				redirect_uri: url_client + "/log",
 				code: code,
 				grant_type: "authorization_code",
 				client_id: intra_uid,
@@ -47,12 +47,14 @@ export class AuthService {
 						.then(async response => {
 							let stud = {
 								login: response.data.login,
-								firstname: response.data.usual_first_name, //might need some fixes : test with Xxxxx's account voir si cette variable est set sur Xxxxx ou si il faut la tester
+								firstname: response.data.usual_first_name
+									? response.data.usual_first_name
+									: response.data.first_name, //might need some fixes : test with Xxxxx's account voir si cette variable est set sur Xxxxx ou si il faut la tester
 								lastname: response.data.last_name,
 								isDirection: false,
 								isPremium: false
 							}
-							const retStud = await this.studService.logUser(stud, "42");
+							const retStud = await this.studService.logUser(stud, "42"); //yes
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,

@@ -86,7 +86,7 @@ const AdminStudents = () => {
 			body: JSON.stringify({login: login})
 		};
 		fetch(
-			`http://k1r2p10.42mulhouse.fr:4242/event/admin/${eventId}/inscription`,
+			`http://localhost:4242/event/admin/${eventId}/inscription`,
 			requestOptions
 		)
 			.then(response => {

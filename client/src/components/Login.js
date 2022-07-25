@@ -10,7 +10,8 @@ const Login = () => {
 		const code = searchParams.get("code");
 		const requestOptions = {
 			method: "post",
-			credentials: "same-origin",
+			credentials: "include",
+			// credentials: "tkt on prend tout ;) UwU OwO @w@ TwT $w$ ewe",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 				code: code
@@ -23,11 +24,19 @@ const Login = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
+				// console.log("1 : " + response.headers.get("Set-Cookie")); //cookie is not defined
+				// console.log("2 : ", response.headers.get("Content-Type"));
+				for (let entry of response.headers.entries()) {
+					console.log("header", entry);
+				}
 				return response.json();
 			})
 			.then(actualData => {
 				// console.log(actualData.token);
 				setLogin(actualData.login);
+			})
+			.then(() => {
+				//setRet(<Navigate to={-1} />);
 			})
 			.catch(function(error) {
 				console.log(
