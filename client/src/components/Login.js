@@ -35,8 +35,16 @@ const Login = () => {
 				// console.log(actualData.token);
 				setLogin(actualData.login);
 			})
-			.then(() => {
-				//setRet(<Navigate to={-1} />);
+			.then(async () => {
+				while (1) {
+					if (
+						(await fetch("http://localhost:4242/clearance")) !==
+						undefined
+					)
+						setRet(<Navigate to={-1} replace={true} />);
+					//a
+					await new Promise(resolve => setTimeout(resolve, 100));
+				}
 			})
 			.catch(function(error) {
 				console.log(
@@ -47,7 +55,7 @@ const Login = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(login);
+		//console.log(login);
 		// setRet(<Navigate to={-1} replace={true} />);
 	}, [login]);
 
