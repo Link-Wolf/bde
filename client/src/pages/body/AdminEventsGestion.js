@@ -64,6 +64,7 @@ const AdminEventsGestion = param => {
 	return (
 		<>
 			<AdminNavbar />
+			<Button onClick={createNewEvent}>New</Button>
 			{data.length ? (
 				<Accordion>
 					{data.map((item, i) => (
@@ -82,7 +83,6 @@ const AdminEventsGestion = param => {
 			) : (
 				<div>No event created</div>
 			)}
-			<Button onClick={createNewEvent}>New</Button>
 		</>
 	);
 };
