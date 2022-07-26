@@ -2,7 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 
 const UserProfile = options => {
-	const [stud, setStud] = useState({});
+	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/stud/${options.login}`, {
@@ -17,16 +17,25 @@ const UserProfile = options => {
 				return response.json();
 			})
 			.then(data => {
-				setStud(data);
+				console.log(data);
+				setRet(
+					<>
+						<h1>{data.login}</h1>
+						<h2>
+							{data.firstname} {data.lastname}
+						</h2>
+					</>
+				);
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
-	}, []);
+	}, [options]);
 
-	return <h1>{data.login}</h1>;
+	return ret;
 };
 
 export default UserProfile;
