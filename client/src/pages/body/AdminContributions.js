@@ -3,9 +3,18 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminContributions = () => {
 	const [data, setData] = useState([]);
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/contribution`, {credentials: "include"})
+		setUpdate(false);
+		const requestOptions = {
+			method: "post",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+		fetch(`http://localhost:4242/contribution`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -22,7 +31,7 @@ const AdminContributions = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [token]);
+	}, [update]);
 
 	const createNewContrib = () => {
 		fetch(`http://localhost:4242/contribution/admin`, {
@@ -35,6 +44,7 @@ const AdminContributions = () => {
 				stud: "[login]",
 				cost: 0,
 				begin_date: new Date(Date.now()),
+				end_date:
 				cost: 0
 			})
 		});
@@ -47,8 +57,8 @@ const AdminContributions = () => {
 			{data.length ? (
 				<Accordion>
 					{data.map((item, i) => (
-						<Accordion.Item eventKey={i} key={i}>
-							<AdminEventToken
+						<Accordion.Item contribKey={i} key={i}>
+							<AdminContribToken
 								data={item}
 								index={i}
 								key={i}
