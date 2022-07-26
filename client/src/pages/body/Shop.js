@@ -1,5 +1,5 @@
 const Shop = () => {
-	return <></>;
+	return <p>WIP</p>;
 };
 
 export default Shop;
