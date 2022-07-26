@@ -10,14 +10,30 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		let clear = undefined; // TODO: fetch clearance
-		if (clear === undefined) clear = 0;
-		setClearance(clear);
+		fetch(`http://localhost:4242/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.clearance != -42) setClearance(data.clearance);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " + error.message
+				);
+			});
 	}, []);
 
 	useEffect(() => {
 		if (clearance != -42) {
-			if (clearance == 0) {
+			if (clearance == global.config.clearance.default) {
 				setLeftButton(
 					<Nav className="me-auto">
 						<Nav.Link href="/shop">Shop</Nav.Link>
@@ -25,15 +41,16 @@ function Header() {
 					</Nav>
 				);
 			}
-			if (clearance > 0) {
+			if (clearance > global.config.clearance.default) {
 				setLeftButton(
 					<Nav className="me-auto">
 						<Nav.Link href="/events">Events</Nav.Link>
 						<Nav.Link href="/shop">Shop</Nav.Link>
+						<Nav.Link href="/contact">Contact</Nav.Link>
 					</Nav>
 				);
 			}
-			if (clearance >= 3) {
+			if (clearance >= global.config.clearance.admin) {
 				setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
 			}
 		}
