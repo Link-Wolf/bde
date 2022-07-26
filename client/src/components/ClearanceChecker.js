@@ -22,14 +22,16 @@ const ClearanceChecker = data => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, []);
 
 	useEffect(() => {
 		if (clearance != -42) {
-			if (clearance < data.securityLevel) setRet(<> {data.unauthorized} </>);
+			if (clearance < data.securityLevel)
+				setRet(<> {data.unauthorized} </>);
 			else setRet(<> {data.children} </>);
 		}
 	}, [clearance]);

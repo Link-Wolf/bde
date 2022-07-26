@@ -23,7 +23,9 @@ const AdminStudents = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(`This is a fetch error: The error is ${error.message}`);
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
 	}, [token]);
 
@@ -31,26 +33,28 @@ const AdminStudents = () => {
 		<div>
 			<AdminNavbar />
 			<div>
-				<h1> AdminPannel Students part </h1>{" "}
+				<h1> AdminPannel Students part </h1>
 				<div>
-					{" "}
 					{data.length > 0 && (
 						<ul>
-							{" "}
 							{data.map(user => (
 								<li key={user.login}>
-									{" "}
-									{user.login}{" "}
+									{user.login}
 									<ul>
-										<li> {user.firstname} </li> <li> {user.lastname} </li>{" "}
-										<li> {user.isDirection ? "direction" : "pnj"} </li>{" "}
-									</ul>{" "}
+										<li> {user.firstname} </li>
+										<li> {user.lastname} </li>
+										<li>
+											{user.isDirection
+												? "direction"
+												: "pnj"}
+										</li>
+									</ul>
 								</li>
-							))}{" "}
+							))}
 						</ul>
-					)}{" "}
-				</div>{" "}
-			</div>{" "}
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };
