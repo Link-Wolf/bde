@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Accordion, Button, Form} from "react-bootstrap";
 
-const AdminEventToken = param => {
+const AdminContribToken = param => {
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -40,6 +40,10 @@ const AdminEventToken = param => {
 	};
 
 	const [token, setToken] = useState("");
+
+	useEffect(() => {
+		// TODO: fetch token
+	}, []);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -154,7 +158,7 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
-	}, []);
+	}, [token]);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -178,7 +182,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param, update, formState, token]);
 
 	return (
 		<>
@@ -311,4 +315,4 @@ const AdminEventToken = param => {
 	);
 };
 
-export default AdminEventToken;
+export default AdminContribToken;
