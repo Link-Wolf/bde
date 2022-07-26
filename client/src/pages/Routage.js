@@ -20,6 +20,8 @@ import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
 import AdminStudents from "./body/AdminStudents";
 import Log from "./body/Log";
+import Me from "./body/Me";
+import Profile from "./body/Profile";
 
 const Routage = () => {
 	return (
@@ -37,6 +39,30 @@ const Routage = () => {
 				<Route path="shop" element={<Shop />} />
 
 				<Route
+					path="me"
+					element={
+						<ClearanceChecker
+							securityLevel={global.config.clearance.other_campus}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
+							<Me />
+						</ClearanceChecker>
+					}
+				/>
+
+				<Route
+					path="profile/:login"
+					element={
+						<ClearanceChecker
+							securityLevel={global.config.clearance.unpaid}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
+							<Profile />
+						</ClearanceChecker>
+					}
+				/>
+
+				<Route
 					path="events"
 					element={
 						<ClearanceChecker
@@ -47,6 +73,7 @@ const Routage = () => {
 						</ClearanceChecker>
 					}
 				/>
+
 				<Route
 					path="event/:id"
 					element={
