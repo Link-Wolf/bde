@@ -1,4 +1,9 @@
-import {useState, useEffect, React} from "react";
+import {
+	useState,
+	useEffect,
+	React
+}
+from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminStudents = () => {
@@ -6,7 +11,7 @@ const AdminStudents = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-// TODO: get setToken
+		// TODO: get setToken
 	}, []);
 
 	useEffect(() => {
@@ -29,33 +34,46 @@ const AdminStudents = () => {
 			});
 	}, [token]);
 
-	return (
-		<div>
-			<AdminNavbar />
-			<div>
-				<h1> AdminPannel Students part</h1>
-				<div>
-					{data.length > 0 && (
-						<ul>
-							{data.map(user => (
-								<li key={user.login}>
-									{user.login}
-									<ul>
-										<li>{user.firstname}</li>
-										<li>{user.lastname}</li>
-										<li>
-											{user.isDirection
-												? "direction"
-												: "pnj"}
-										</li>
-									</ul>
-								</li>
-							))}
-						</ul>
-					)}
-				</div>
-			</div>
-		</div>
+	return ( <
+		div >
+		<
+		AdminNavbar / >
+		<
+		div >
+		<
+		h1 > AdminPannel Students part < /h1> <
+		div > {
+			data.length > 0 && ( <
+				ul > {
+					data.map(user => ( <
+						li key = {
+							user.login
+						} > {
+							user.login
+						} <
+						ul >
+						<
+						li > {
+							user.firstname
+						} < /li> <
+						li > {
+							user.lastname
+						} < /li> <
+						li > {
+							user.isDirection ?
+							"direction" : "pnj"
+						} <
+						/li> < /
+						ul > <
+						/li>
+					))
+				} <
+				/ul>
+			)
+		} <
+		/div> < /
+		div > <
+		/div>
 	);
 };
 

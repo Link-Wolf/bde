@@ -36,4 +36,14 @@ export class AppController {
 	async getClearance(@Session() session: Record<string, any>) {		// console.log(session.image_url)
 		return session.clearance ? { clearance: session.clearance } : { clearance: "-42" }
 	}
+
+	@Get('session')
+	async getSession(@Session() session: Record<string, any>)
+	{
+		return {
+			clearance: session.clearance ? session.clearance : 0,
+			image_url: session.image_url ? session.image_url : -42,
+			login: session.login ? session.login : -42
+		}
+	}
 }
