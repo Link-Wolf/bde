@@ -4,15 +4,36 @@ import Logout from "../../components/Logout";
 
 const Log = () => {
 	const [ret, setRet] = useState(<></>);
-	const [login, setLogin] = useState("42");
+	const [clearance, setClearance] = useState(-42);
 
 	useEffect(() => {
-// TODO: login
+		fetch(`http://localhost:4242/session`, {
+			credentials: "include"
+		})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(
+					`This is an HTTP error: The status is ${response.status}`
+				);
+			}
+			return response.json();
+		})
+		.then(data => {
+			if (data.clearance != -42)
+				setClearance(data.clearance);
+		})
+		.catch(function(error) {
+			console.log(
+				"Il y a eu un problème avec l'opération fetch: " +
+					error.message
+			);
+		});
 	}, []);
+
 	useEffect(() => {
-		if (login === undefined) setRet(<Login />);
-		else if (login !== "42") setRet(<Logout />);
-	}, [login]);
+		if (clearance == 0) setRet(<Login />);
+		else if (clearance != -42) setRet(<Logout />);
+	}, [clearance]);
 
 	return ret;
 };
