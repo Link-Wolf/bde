@@ -25,7 +25,7 @@ export class Stud {
 	})
 	isDirection: boolean
 
-	@Column({ default: 1 })
+	@Column({ default: 0 })
 	clearance: number
 
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
