@@ -42,7 +42,7 @@ const AdminEventToken = param => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		// TODO: fetch token 
+		// TODO: fetch token
 	}, []);
 
 	const handleFormChange = event => {
@@ -100,13 +100,11 @@ const AdminEventToken = param => {
 				method: "PATCH",
 				headers: myHeaders,
 				body: raw,
-				redirect: "follow"
+				redirect: "follow",
+				credentials: "include"
 			};
 
-			fetch(
-				`http://localhost:4242/event/${param.data.id}`,
-				requestOptions
-			)
+			fetch(`http://localhost:4242/event/${param.data.id}`, requestOptions)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
@@ -116,8 +114,7 @@ const AdminEventToken = param => {
 				})
 				.catch(function(error) {
 					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+						"Il y a eu un problème avec l'opération fetch: " + error.message
 					);
 				});
 			setLocked(true);
@@ -163,21 +160,13 @@ const AdminEventToken = param => {
 		setUpdate(false);
 		if (locked)
 			setButton(
-				<Button
-					type="button"
-					defaultValue={param.index}
-					onClick={switchLock}
-				>
+				<Button type="button" defaultValue={param.index} onClick={switchLock}>
 					Edit
 				</Button>
 			);
 		else
 			setButton(
-				<Button
-					type="button"
-					defaultValue={param.index}
-					onClick={saveEvent}
-				>
+				<Button type="button" defaultValue={param.index} onClick={saveEvent}>
 					Save
 				</Button>
 			);

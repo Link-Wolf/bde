@@ -11,16 +11,16 @@ const AdminEventsGestion = param => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-// TODO: fetch token
+		// TODO: fetch token
 	}, []);
 
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
 			method: "post",
+			credentials: "include",
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
+				"Content-Type": "application/json"
 			}, //add security token here i guess
 			body: JSON.stringify(param.filter)
 		};
@@ -38,8 +38,7 @@ const AdminEventsGestion = param => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+					"Il y a eu un problème avec l'opération fetch: " + error.message
 				);
 			});
 	}, [param.filter, openEventId, update, token]);

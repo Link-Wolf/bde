@@ -22,12 +22,12 @@ const AdminStudents = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-// TODO: get token
+		// TODO: get token
 	}, []);
 
 	const getStud = id => {
 		fetch(`http://localhost:4242/inscription/${id}/stud`, {
-			headers: {Authorization: `Bearer ${token}`}
+			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -42,17 +42,15 @@ const AdminStudents = () => {
 			})
 			.catch(function(error) {
 				setStud([]);
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
 	};
 
 	const removeStud = (eventId, login) => {
 		const requestOptions = {
 			method: "DELETE",
+			credentials: "include",
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json"
 			}
 		};
@@ -69,17 +67,15 @@ const AdminStudents = () => {
 				setUpdate(true);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
 	};
 
 	const checkStud = (eventId, login) => {
 		const requestOptions = {
 			method: "PATCH",
+			credentials: "include",
 			headers: {
-				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({login: login})
@@ -105,7 +101,7 @@ const AdminStudents = () => {
 
 	const getAllEvent = () => {
 		fetch(`http://localhost:4242/event/current`, {
-			headers: {Authorization: `Bearer ${token}`}
+			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -119,9 +115,7 @@ const AdminStudents = () => {
 				setAllEvent(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
 	};
 
@@ -143,9 +137,7 @@ const AdminStudents = () => {
 	const handleSubButton = () => {
 		let toSub = document.getElementById("studToAdd").value;
 		if (
-			window.confirm(
-				`Tu es certain de vouloir inscrire ${toSub} de force ?`
-			)
+			window.confirm(`Tu es certain de vouloir inscrire ${toSub} de force ?`)
 		) {
 			if (toSub === "") setValidationClass(style.ko);
 			else {
@@ -167,14 +159,10 @@ const AdminStudents = () => {
 			setSubForm(
 				<FormGroup>
 					<Form.Label>
-						Entrez le login du stud a inscrire de force (doit s'etre
-						connecte au moins une fois)
+						Entrez le login du stud a inscrire de force (doit s'etre connecte au
+						moins une fois)
 					</Form.Label>
-					<Form.Control
-						type="text"
-						id="studToAdd"
-						placeholder="yoyostud"
-					/>
+					<Form.Control type="text" id="studToAdd" placeholder="yoyostud" />
 					<Button value="button" onClick={handleSubButton}>
 						Inscrire
 					</Button>
@@ -191,10 +179,7 @@ const AdminStudents = () => {
 				<div>
 					<Form>
 						Event :
-						<Form.Select
-							onChange={updateSelectedEvent}
-							value={selectedEvent}
-						>
+						<Form.Select onChange={updateSelectedEvent} value={selectedEvent}>
 							<option value="" disabled hidden>
 								Choose here
 							</option>
@@ -218,15 +203,8 @@ const AdminStudents = () => {
 									<ul>
 										<li>{user.firstname}</li>
 										<li>{user.lastname}</li>
-										<li>
-											{user.isDirection
-												? "direction"
-												: "pnj"}
-										</li>
-										<Button
-											value={user.login}
-											onClick={handleRemoveButton}
-										>
+										<li>{user.isDirection ? "direction" : "pnj"}</li>
+										<Button value={user.login} onClick={handleRemoveButton}>
 											❌
 										</Button>
 									</ul>

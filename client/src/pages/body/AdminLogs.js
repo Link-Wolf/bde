@@ -6,14 +6,14 @@ const AdminLogs = () => {
 	const [token, setToken] = useState("");
 
 	useEffect(() => {
-// TODO: get setToken
+		// TODO: get setToken
 	}, []);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/admin/logs`, {
+			credentials: "include",
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
+				"Content-Type": "application/json"
 			}
 		})
 			.then(response => {
@@ -28,9 +28,7 @@ const AdminLogs = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
 	}, [token]);
 

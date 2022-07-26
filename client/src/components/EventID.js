@@ -8,15 +8,10 @@ const EventID = () => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
 	const param = useParams();
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		//TODO: get token fetch
-	}, []);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/event/${param.id}`, {
-			headers: {Authorization: `Bearer ${token}`}
+			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -30,12 +25,10 @@ const EventID = () => {
 				setDataEvent(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
 		fetch(`http://localhost:4242/inscription/event/${param.id}`, {
-			headers: {Authorization: `Bearer ${token}`}
+			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -49,11 +42,9 @@ const EventID = () => {
 				setDataInsc(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
-	}, [token]);
+	}, []);
 	return dataEvent.name ? (
 		<div
 			className={`
@@ -82,9 +73,7 @@ const EventID = () => {
 							? `${dataInsc.length} / ${dataEvent.nb_places}`
 							: `${dataInsc.length} / ∞`}
 					</div>
-					<div className={style.box_dark_green}>
-						{dataEvent.place}
-					</div>
+					<div className={style.box_dark_green}>{dataEvent.place}</div>
 					<div className={`${style.box_dark_green} ${style.price}`}>
 						{dataEvent.cost !== 0
 							? dataEvent.premium_cost === dataEvent.cost

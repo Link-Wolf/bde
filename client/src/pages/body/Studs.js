@@ -9,7 +9,7 @@ const Stud = () => {
 	}, []);
 
 	const getStud = () => {
-		fetch("http://localhost:4242/stud")
+		fetch("http://localhost:4242/stud", {credentials: "include"})
 			.then(response => {
 				return response.json();
 			})
@@ -33,9 +33,7 @@ const Stud = () => {
 							<ul>
 								<li>{user.firstname}</li>
 								<li>{user.lastname}</li>
-								<li>
-									{user.isDirection ? "direction" : "pnj"}
-								</li>
+								<li>{user.isDirection ? "direction" : "pnj"}</li>
 							</ul>
 						</li>
 					))}

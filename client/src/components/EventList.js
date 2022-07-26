@@ -4,18 +4,13 @@ import style from "../style/EventList.module.css";
 
 const EventList = param => {
 	const [data, setData] = useState([]);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-	// TODO: fetch token
-	}, []);
 
 	useEffect(() => {
 		const requestOptions = {
 			method: "post",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
+				credentials: "include"
 			}, //add security token here i guess
 			body: JSON.stringify(param.filter)
 		};
@@ -33,11 +28,10 @@ const EventList = param => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+					"Il y a eu un problème avec l'opération fetch: " + error.message
 				);
 			});
-	}, [param.filter, token]);
+	}, [param.filter]);
 
 	return data.length ? (
 		<div className={style.scroll_container_40vw}>
