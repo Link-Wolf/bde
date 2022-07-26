@@ -1,5 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import {Accordion, Button} from "react-bootstrap";
+import AdminContribToken from "../../components/AdminContribToken";
 
 const AdminContributions = () => {
 	const [data, setData] = useState([]);
@@ -44,7 +46,7 @@ const AdminContributions = () => {
 				stud: "[login]",
 				cost: 0,
 				begin_date: new Date(Date.now()),
-				end_date:
+				end_date: 0,
 				cost: 0
 			})
 		});
@@ -58,14 +60,7 @@ const AdminContributions = () => {
 				<Accordion>
 					{data.map((item, i) => (
 						<Accordion.Item contribKey={i} key={i}>
-							<AdminContribToken
-								data={item}
-								index={i}
-								key={i}
-								open={openEventId}
-								onClickRetract={() => setOpenEventId(-1)}
-								onClickDeploy={() => setOpenEventId(i)}
-							/>
+							<AdminContribToken data={item} index={i} key={i} />
 						</Accordion.Item>
 					))}
 				</Accordion>

@@ -37,7 +37,7 @@ const AdminEventsGestion = param => {
 						error.message
 				);
 			});
-	}, [param.filter, openEventId, update, token]);
+	}, [param.filter, openEventId, update]);
 
 	const createNewEvent = () => {
 		fetch("http://localhost:4242/event", {
