@@ -3,15 +3,9 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminStudents = () => {
 	const [data, setData] = useState([]);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-	// TODO: fetch token ?
-	}, []);
-
 	useEffect(() => {
 		fetch(`http://localhost:4242/stud`, {
-			headers: {Authorization: `Bearer ${token}`}
+			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -25,11 +19,9 @@ const AdminStudents = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+				console.log(`This is a fetch error: The error is ${error.message}`);
 			});
-	}, [token]);
+	}, []);
 
 	return (
 		<div>
@@ -45,11 +37,7 @@ const AdminStudents = () => {
 									<ul>
 										<li>{user.firstname}</li>
 										<li>{user.lastname}</li>
-										<li>
-											{user.isDirection
-												? "direction"
-												: "pnj"}
-										</li>
+										<li>{user.isDirection ? "direction" : "pnj"}</li>
 									</ul>
 								</li>
 							))}
