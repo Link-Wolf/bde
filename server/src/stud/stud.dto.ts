@@ -5,4 +5,5 @@ export class StudDto {
 	lastname: string;
 	isPremium: boolean;
 	isDirection: boolean;
+	clearance: number;
 }
