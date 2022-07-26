@@ -45,6 +45,24 @@ export class AuthService {
 						{ headers: header })
 						.toPromise()
 						.then(async response => {
+							console.log(response.data)
+							let recent = 0;
+							if (response.data.cursus_users.length != 1) {
+								for (let i = 0; i < response.data.cursus_users.length; i++) {
+									console.log(i)
+									if (response.data.cursus_users[i].begin_at > response.data.cursus_users[recent].begin_at)
+										recent = i
+								}
+							}
+							console.log("ah ")
+							let clear;
+							if (response.data.campus[response.data.campus.length - 1].city.toLowerCase() != 'mulhouse')
+								clear = 2;
+							else if (response.data.cursus_users[recent].cursus.kind.toLowerCase() == 'piscine')
+								clear = 5;
+							else
+								clear = 7;
+							console.log("non.")
 							let stud = {
 								login: response.data.login,
 								firstname: response.data.usual_first_name
@@ -52,9 +70,13 @@ export class AuthService {
 									: response.data.first_name, //might need some fixes : test with Xxxxx's account voir si cette variable est set sur Xxxxx ou si il faut la tester
 								lastname: response.data.last_name,
 								isDirection: false,
-								isPremium: false
+								isPremium: false,
+								clearance: clear,
 							}
-							const retStud = await this.studService.logUser(stud, "42"); //yes
+							console.log("oui.")
+
+							console.log(stud)
+							const retStud = await this.studService.logUser(stud, "42intra-API"); //yes
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,
