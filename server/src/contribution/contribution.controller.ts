@@ -28,7 +28,12 @@ export class ContributionController {
 		return this.contributionService.create(contribution, session.login);
 	}
 
-	@Patch(':login')
+	@Post('admin')
+	forceCreate(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
+		return this.contributionService.create(contribution, session.login);
+	}
+
+	@Patch('admin/:login')
 	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
 		return this.contributionService.update(login, contribution, session.login);
 	}
