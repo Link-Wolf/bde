@@ -1,7 +1,7 @@
 import React from "react";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
-import RedirectInvite from "../components/RedirectInvite";
+import ClearanceChecker from "../components/ClearanceChecker";
 
 // Nos pagis
 import Home from "./body/Home";
@@ -34,83 +34,87 @@ const Routage = () => {
 				<Route path="contact" element={<Contact />} />
 				<Route path="log" element={<Log />} />
 				<Route path="log/redirect" element={<Log />} />
+				<Route path="shop" element={<Shop />} />
 
-				<Route
-					path="stud"
-					element={
-						<RedirectInvite>
-							<Stud />
-						</RedirectInvite>
-					}
-				/>
 				<Route
 					path="events"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.pool}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<Events />
-						</RedirectInvite>
-					}
-				/>
-				<Route
-					path="shop"
-					element={
-						<RedirectInvite>
-							<Shop />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="event/:id"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.pool}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<Event />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="admin/events/gestion"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<AdminEventsGestion />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="admin/events/subscribtions"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<AdminEventsSubscribtions />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="admin/contributions"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<AdminContributions />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="admin/logs"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<AdminLogs />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
 				<Route
 					path="admin/students"
 					element={
-						<RedirectInvite>
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
 							<AdminStudents />
-						</RedirectInvite>
+						</ClearanceChecker>
 					}
 				/>
-				<Route
-					path="admin/"
-					element={<Navigate to="/admin/students" />}
-				/>
+
+				<Route path="admin/" element={<Navigate to="/admin/students" />} />
 
 				<Route path="*" element={<NoPage />} />
 			</Routes>

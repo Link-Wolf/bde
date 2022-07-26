@@ -10,7 +10,7 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		let clear = undefined;// TODO: fetch clearance
+		let clear = undefined; // TODO: fetch clearance
 		if (clear === undefined) clear = 0;
 		setClearance(clear);
 	}, []);
@@ -20,7 +20,8 @@ function Header() {
 			if (clearance == 0) {
 				setLeftButton(
 					<Nav className="me-auto">
-						<Nav.Link href="/showcase">Events</Nav.Link>
+						<Nav.Link href="/shop">Shop</Nav.Link>
+						<Nav.Link href="/contact">Contact</Nav.Link>
 					</Nav>
 				);
 			}
