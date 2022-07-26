@@ -5,7 +5,7 @@ import user_picture from "../images/user_placeholder.png";
 
 const DropdownUser = () => {
 	const [img, setImg] = useState(user_picture);
-	const [ret, setRet] = useState(<> </>);
+	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/session`, {
