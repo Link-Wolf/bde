@@ -69,7 +69,7 @@ export class ContributionService {
 				throw new NotFoundException(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`);
 			}
 			await this.contributionRepository.update(cont.id, contribution);
-			this.logger.log(`Successfully updated current contribution of student ${studLogin}`, requestMaker)
+			this.logger.warn(`Successfully updated current contribution of student ${studLogin}`, requestMaker)
 		} catch (error) {
 			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker);
 			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database (${error})`);
@@ -84,6 +84,17 @@ export class ContributionService {
 		catch (error) {
 			await this.logger.error(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`, requestMaker);
 			throw new UnprocessableEntityException(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`);
+		}
+	}
+
+	async forceCreate(contributionData: ContributionDto, requestMaker: string): Promise<void> {
+		try {
+			await this.contributionRepository.insert(contributionData);
+			this.logger.warn(`Successfully force-created contribution for student ${contributionData.stud.login}`, requestMaker)
+		}
+		catch (error) {
+			await this.logger.error(`Failed to force-create contribution for student ${contributionData.stud.login} on database (${error})`, requestMaker);
+			throw new UnprocessableEntityException(`Failed to force-create contribution for student ${contributionData.stud.login} on database (${error})`);
 		}
 	}
 

@@ -8,11 +8,6 @@ const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
 	const [openEventId, setOpenEventId] = useState(-1);
 	const [update, setUpdate] = useState(false);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		// TODO: fetch token
-	}, []);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -38,7 +33,8 @@ const AdminEventsGestion = param => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, [param.filter, openEventId, update, token]);
@@ -46,9 +42,9 @@ const AdminEventsGestion = param => {
 	const createNewEvent = () => {
 		fetch("http://localhost:4242/event", {
 			method: "POST",
+			credentials: "include",
 			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
 				name: "[nom]",

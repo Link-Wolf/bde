@@ -3,11 +3,6 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminContributions = () => {
 	const [data, setData] = useState([]);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		// TODO: get setToken
-	}, []);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/contribution`, {credentials: "include"})
@@ -29,29 +24,46 @@ const AdminContributions = () => {
 			});
 	}, [token]);
 
+	const createNewContrib = () => {
+		fetch(`http://localhost:4242/contribution/admin`, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				stud: "[login]",
+				cost: 0,
+				begin_date: new Date(Date.now()),
+				cost: 0
+			})
+		});
+		setUpdate(true);
+	};
+
 	return (
-		<div>
+		<>
 			<AdminNavbar />
-			<div>
-				<h1> AdminPannel Contributions part </h1>
-				<div>
-					{data.length > 0 && (
-						<ul>
-							{data.map(contrib => (
-								<li key={contrib.studLogin}>
-									{contrib.studLogin}
-									<ul>
-										<li> {contrib.cost} </li>
-										<li> {contrib.begin_date} </li>
-										<li>{contrib.end_date}</li>
-									</ul>
-								</li>
-							))}
-						</ul>
-					)}
-				</div>
-			</div>
-		</div>
+			{data.length ? (
+				<Accordion>
+					{data.map((item, i) => (
+						<Accordion.Item eventKey={i} key={i}>
+							<AdminEventToken
+								data={item}
+								index={i}
+								key={i}
+								open={openEventId}
+								onClickRetract={() => setOpenEventId(-1)}
+								onClickDeploy={() => setOpenEventId(i)}
+							/>
+						</Accordion.Item>
+					))}
+				</Accordion>
+			) : (
+				<div>No event created</div>
+			)}
+			<Button onClick={createNewContrib}>New</Button>
+		</>
 	);
 };
 

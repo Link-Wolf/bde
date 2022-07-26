@@ -65,8 +65,6 @@ export class StudService {
 			if (await this.findOne(studDto.login, requestMaker)) {
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
-			// if ( /* check campus */ != "mulhouse")
-			// 	studDto.clearance = 2;
 			let ret = this.studRepository.save(studDto);
 			this.logger.log(`Successfully created new student ${studDto.login}`, requestMaker);
 		} catch (error) {
