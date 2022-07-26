@@ -1,12 +1,16 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminStudents = () => {
+const AdminContributions = () => {
 	const [data, setData] = useState([]);
+	const [token, setToken] = useState("");
+
 	useEffect(() => {
-		fetch(`http://localhost:4242/stud`, {
-			credentials: "include"
-		})
+		// TODO: get setToken
+	}, []);
+
+	useEffect(() => {
+		fetch(`http://localhost:4242/contribution`, {credentials: "include"})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -19,25 +23,27 @@ const AdminStudents = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(`This is a fetch error: The error is ${error.message}`);
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
-	}, []);
+	}, [token]);
 
 	return (
 		<div>
 			<AdminNavbar />
 			<div>
-				<h1> AdminPannel </h1>
+				<h1> AdminPannel Contributions part </h1>
 				<div>
 					{data.length > 0 && (
 						<ul>
-							{data.map(user => (
-								<li key={user.login}>
-									{user.login}
+							{data.map(contrib => (
+								<li key={contrib.studLogin}>
+									{contrib.studLogin}
 									<ul>
-										<li>{user.firstname}</li>
-										<li>{user.lastname}</li>
-										<li>{user.isDirection ? "direction" : "pnj"}</li>
+										<li> {contrib.cost} </li>
+										<li> {contrib.begin_date} </li>
+										<li>{contrib.end_date}</li>
 									</ul>
 								</li>
 							))}
@@ -49,4 +55,4 @@ const AdminStudents = () => {
 	);
 };
 
-export default AdminStudents;
+export default AdminContributions;
