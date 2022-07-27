@@ -3,32 +3,16 @@ import {Accordion, Button, Form} from "react-bootstrap";
 
 const AdminContribToken = param => {
 	const [formState, setFormState] = useState({
-		name: "",
-		desc: "",
+		studLogin: "",
+		cost: "",
 		begin_date: "",
-		end_date: "",
-		place: "",
-		nb_places: 0,
-		cost: 0,
-		premium_cost: 0,
-		hasEndDate: false,
-		sponso: false,
-		conso: false,
-		isOutside: false
+		end_date: ""
 	});
 	const [bodyState, setBodyState] = useState({
-		name: "",
-		desc: "",
+		studLogin: "",
+		cost: "",
 		begin_date: "",
-		end_date: "",
-		place: "",
-		nb_places: 0,
-		cost: 0,
-		premium_cost: 0,
-		hasEndDate: false,
-		sponso: false,
-		conso: false,
-		isOutside: false
+		end_date: ""
 	});
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
@@ -38,12 +22,6 @@ const AdminContribToken = param => {
 		setLocked(false);
 		setUpdate(true);
 	};
-
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		// TODO: fetch token
-	}, []);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -75,23 +53,15 @@ const AdminContribToken = param => {
 		setFormState(tmp);
 	};
 
-	const saveEvent = () => {
-		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
+	const saveContrib = () => {
+		if (window.confirm(`Desire tu modifier la cotisation de ${param.data.studLogin}`))
 		{
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
-			myHeaders.append("Authorization", `Bearer ${token}`);
 
 			var raw = JSON.stringify({
-				name: bodyState.name,
-				cost: bodyState.cost,
-				place: bodyState.place,
-				premium_cost: bodyState.premium_cost,
-				nb_places: bodyState.nb_places,
-				desc: bodyState.desc,
-				isOutside: bodyState.isOutside,
-				consos: bodyState.consos,
-				sponso: bodyState.sponso,
+				stud: param.data.studLogin,
+				cost: param.data.cost,
 				begin_date: bodyState.begin_date,
 				end_date: bodyState.end_date
 			});
@@ -105,7 +75,7 @@ const AdminContribToken = param => {
 			};
 
 			fetch(
-				`http://localhost:4242/event/${param.data.id}`,
+				`http://localhost:4242/contribution/admin/${param.data.studLogin}`,
 				requestOptions
 			)
 				.then(response => {
@@ -158,7 +128,8 @@ const AdminContribToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
-	}, [token]);
+	}, []);
+	//TODO : fixme daddy (or mommy)
 
 	useEffect(() => {
 		setUpdate(false);
@@ -177,32 +148,40 @@ const AdminContribToken = param => {
 				<Button
 					type="button"
 					defaultValue={param.index}
-					onClick={saveEvent}
+					onClick={saveContrib}
 				>
 					Save
 				</Button>
 			);
-	}, [param, update, formState, token]);
+	}, [param.data, param.index, update, formState]);
 
 	return (
 		<>
-			<Accordion.Header>
 				{formState.name} {formState.begin_date}
-			</Accordion.Header>
-			<Accordion.Body>
 				{" "}
 				<Form>
-					<Form.Label>Name : </Form.Label>
+					<Form.Label>Stud : </Form.Label>
 					<Form.Control
-						disabled={locked}
-						name="name"
+						disabled={true}
+						name="studLogin"
 						type="text"
-						id="formName"
+						id="formStud"
 						autoFocus="autofocus"
-						values={formState.name}
-						onChange={handleFormChange}
+						value={formState.studLogin}
 						required
 					/>
+					<Form.Label>Prix : </Form.Label>
+					<Form.Control
+						disabled={true}
+						type="text"
+						min="0"
+						step="0.01"
+						id="formCost"
+						value={formState.cost}
+						name="cost"
+						required
+					/>{" "}
+					€
 					<Form.Label> Dates : </Form.Label>
 					<Form.Control
 						id="formBeginDate"
@@ -221,96 +200,10 @@ const AdminContribToken = param => {
 						value={formState.end_date}
 						onChange={handleFormChange}
 						type="datetime-local"
-					/>
-					<Form.Switch
-						disabled={locked}
-						name="hasEndDate"
-						id="hasEndDate"
-						checked={formState.hasEndDate}
-						onChange={handleFormChange}
-					/>
-					<Form.Label>Description : </Form.Label>
-					<Form.Control
-						name="desc"
-						value={formState.desc}
-						disabled={locked}
-						onChange={handleFormChange}
-						id="formDesc"
-					/>
-					<Form.Label>Prix : </Form.Label>
-					<Form.Control
-						disabled={locked}
-						type="number"
-						min="0"
-						step="0.01"
-						id="formCost"
-						value={formState.cost}
-						name="cost"
-						onChange={handleFormChange}
 						required
-					/>{" "}
-					€ (
-					<Form.Control
-						disabled={locked}
-						type="number"
-						min="0"
-						id="formPremiumCost"
-						step="0.01"
-						name="premium_cost"
-						onChange={handleFormChange}
-						value={formState.premium_cost}
-					/>
-					€ )<Form.Label>Places : </Form.Label>
-					{" ? / "}
-					<Form.Control
-						disabled={locked}
-						type="number"
-						id="formNbPlaces"
-						min="-42"
-						name="nb_places"
-						onChange={handleFormChange}
-						value={formState.nb_places}
-					/>
-					<Form.Label>Lieu : </Form.Label>
-					<Form.Control
-						disabled={locked}
-						type="text"
-						id="formPlace"
-						name="place"
-						onChange={handleFormChange}
-						value={formState.place}
-						required
-					/>
-					<Form.Switch
-						disabled={locked}
-						id="formIsOutside"
-						label="Outside"
-						name="isOutside"
-						onChange={handleFormChange}
-						value={formState.isOutside}
-					/>
-					<Form.Switch
-						disabled={locked}
-						id="formSponso"
-						label="Sponsorised"
-						name="sponso"
-						onChange={handleFormChange}
-						value={formState.sponso}
-					/>
-					<Form.Switch
-						disabled={locked}
-						id="formConsos"
-						label="Consommation"
-						name="conso"
-						onChange={handleFormChange}
-						value={formState.conso}
 					/>
 					{button}
-					<Button type="reset" disabled={locked}>
-						Reset
-					</Button>
 				</Form>
-			</Accordion.Body>
 		</>
 	);
 };

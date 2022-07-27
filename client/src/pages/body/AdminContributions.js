@@ -10,7 +10,7 @@ const AdminContributions = () => {
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
-			method: "post",
+			method: "GET",
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"
@@ -43,11 +43,10 @@ const AdminContributions = () => {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({
-				stud: "[login]",
+				studLogin: "[login]",
 				cost: 0,
 				begin_date: new Date(Date.now()),
-				end_date: 0,
-				cost: 0
+				end_date: 0
 			})
 		});
 		setUpdate(true);
@@ -57,15 +56,12 @@ const AdminContributions = () => {
 		<>
 			<AdminNavbar />
 			{data.length ? (
-				<Accordion>
-					{data.map((item, i) => (
-						<Accordion.Item contribKey={i} key={i}>
-							<AdminContribToken data={item} index={i} key={i} />
-						</Accordion.Item>
-					))}
-				</Accordion>
+					data.map((item, i) => (
+						<AdminContribToken data={item} index={i} key={i} />
+					))
+
 			) : (
-				<div>No event created</div>
+				<div>No contributions found</div>
 			)}
 			<Button onClick={createNewContrib}>New</Button>
 		</>

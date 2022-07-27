@@ -20,6 +20,11 @@ export class EventDtoPipe implements PipeTransform {
 				value.isOutside = true
 			else
 				value.isOutside = false
+		if ("for_pool" in value)
+			if (value.for_pool == '1')
+				value.for_pool = true
+			else
+				value.for_pool = false
 		if ("sponso" in value)
 			if (value.sponso == '1')
 				value.sponso = true

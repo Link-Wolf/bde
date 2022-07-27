@@ -39,8 +39,6 @@ const AdminEventToken = param => {
 		setUpdate(true);
 	};
 
-	const [token, setToken] = useState("");
-
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -72,11 +70,10 @@ const AdminEventToken = param => {
 	};
 
 	const saveEvent = () => {
-		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`));
+		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`))
 		{
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
-			myHeaders.append("Authorization", `Bearer ${token}`);
 
 			var raw = JSON.stringify({
 				name: bodyState.name,
@@ -195,7 +192,7 @@ const AdminEventToken = param => {
 						type="text"
 						id="formName"
 						autoFocus="autofocus"
-						values={formState.name}
+						value={formState.name}
 						onChange={handleFormChange}
 						required
 					/>
