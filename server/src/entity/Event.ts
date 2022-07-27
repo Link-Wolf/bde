@@ -54,6 +54,12 @@ export class Event {
 		type: "bool",
 		nullable: false,
 	})
+	for_pool: boolean
+
+	@Column({
+		type: "bool",
+		nullable: false,
+	})
 	consos: boolean
 
 	@Column({
