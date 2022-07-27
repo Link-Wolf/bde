@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Session, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Session, Body, NotFoundException } from '@nestjs/common';
 import { Public } from './auth/public.decorator';
 
 @Controller()
@@ -28,18 +28,29 @@ export class AppController {
 	}
 
 	@Get('image_url')
-	async getImageUrl(@Session() session: Record<string, any>) {		// console.log(session.image_url)
+	async getImageUrl(@Session() session: Record<string, any>) {
 		return session.image_url ? { image_url: session.image_url } : { image_url: "-42" }
 	}
 
 	@Get('clearance')
-	async getClearance(@Session() session: Record<string, any>) {		// console.log(session.image_url)
+	async getClearance(@Session() session: Record<string, any>) {
 		return session.clearance ? { clearance: session.clearance } : { clearance: "-42" }
 	}
 
+	@Get('theme')
+	async getTheme(@Session() session: Record<string, any>) {
+		if (!session.theme)
+			session.theme = "light"
+		return { theme: session.theme }
+	}
+
+	@Patch('theme')
+	async toggleTheme(@Session() session: Record<string, any>) {
+		session.theme = session.theme === "light" ? "dark" : "light";
+	}
+
 	@Get('session')
-	async getSession(@Session() session: Record<string, any>)
-	{
+	async getSession(@Session() session: Record<string, any>) {
 		console.log(session);
 		return {
 			clearance: session.clearance ? session.clearance : 0,

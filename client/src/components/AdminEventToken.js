@@ -178,7 +178,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param.data, param.index, update, formState]);
 
 	return (
 		<>

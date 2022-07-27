@@ -1,6 +1,8 @@
 import {Navbar, Nav, Container} from "react-bootstrap";
 import {useState, useEffect} from "react";
+
 import DropdownUser from "../components/DropdownUser";
+import ThemeButton from "../components/ThemeButton";
 
 import bde_logo from "../images/bde_logo.webp";
 
@@ -26,7 +28,8 @@ function Header() {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, []);
@@ -72,6 +75,7 @@ function Header() {
 				<Nav>
 					{rightButton}
 					<DropdownUser />
+					<ThemeButton />
 				</Nav>
 			</Container>
 		</Navbar>

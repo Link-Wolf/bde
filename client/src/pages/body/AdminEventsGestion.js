@@ -59,6 +59,7 @@ const AdminEventsGestion = param => {
 			})
 		});
 		setUpdate(true);
+		window.location.reload(); // FIXME: si mieux faut gerter: ca flash
 	};
 
 	return (
