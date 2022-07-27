@@ -37,3 +37,13 @@
 input:invalid {
 	background-color: LightCoral;
 }
+
+.dark {
+	background: black;
+	color: white;
+}
+
+.light {
+	background: white;
+	color: black;
+}
