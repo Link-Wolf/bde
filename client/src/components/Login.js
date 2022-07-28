@@ -38,18 +38,28 @@ const Login = () => {
 				setLogin(actualData.login);
 			})
 			.then(async () => {
-				console.log("b");
 				while (1) {
-					console.log("a");
-					let a = await fetch("http://localhost:4242/clearance", {
-						credentials: "include"
-					});
-					if (a !== undefined)
-						setRet(<Navigate to={-1} replace={true} />);
-					//a
-					console.log(`here isssss ${a}`);
-					await new Promise(resolve => setTimeout(resolve, 100));
+					if (
+						(await fetch("http://localhost:4242/clearance", {
+							credentials: "include"
+						})
+							.then(response => {
+								if (!response.ok) {
+									throw new Error(
+										`This is an HTTP error: The status is ${response.status}`
+									);
+								}
+								return response.json();
+							})
+							.then(data => {
+								return data.credentials;
+							})) != 0
+					)
+						break;
 				}
+			})
+			.then(() => {
+				setRet(<Navigate to={-1} replace={true} />);
 			})
 			.catch(function(error) {
 				console.log(
