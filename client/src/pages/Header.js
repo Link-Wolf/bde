@@ -12,26 +12,28 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
+		setTimeout(() => {
+			fetch(`http://localhost:4242/session`, {
+				credentials: "include"
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					setClearance(data.clearance);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
 					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				setClearance(data.clearance);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+				});
+		}, 100);
 	}, []);
 
 	useEffect(() => {
