@@ -23,6 +23,11 @@ export class ContributionController {
 		return this.contributionService.findForUser(login, session.login);
 	}
 
+	@Post('admin')
+	forceCreate(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
+		return this.contributionService.create(contribution, session.login);
+	}
+
 	@Post()
 	create(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
 		return this.contributionService.create(contribution, session.login);
@@ -31,11 +36,6 @@ export class ContributionController {
 	@Patch('admin/:login')
 	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(ContributionDtoPipe) contribution: any) {
 		return this.contributionService.update(login, contribution, session.login);
-	}
-
-	@Post('admin')
-	forceCreate(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
-		return this.contributionService.create(contribution, session.login);
 	}
 
 	@Delete(':login')
