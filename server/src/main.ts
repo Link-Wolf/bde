@@ -6,24 +6,38 @@ import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser'
 import session = require('express-session');
 
+let RedisStore = require("connect-redis")(session)
+
 const { session_secret, url_client } = require('../config.json')
 
 async function bootstrap() {
+
+	const { createClient } = require("redis")
+	let redisClient = createClient({ legacyMode: true })
+	redisClient.connect().catch(console.error)
+	redisClient.on("error", console.error)
+
 	const app = await NestFactory.create(AppModule,
 		{
 			logger: ['debug']
 		});
-	app.use(helmet(), /*csurf(),*/ cookieParser("hi this is the secret"), session(
-		{
-			secret: session_secret,
-			resave: false,
-			saveUninitialized: true,
-			cookie: {
-				maxAge: 600000,
-				httpOnly: true
+	app.use(
+		helmet(),
+		// csurf(),
+		cookieParser("hi this is the secret"),
+		session(
+			{
+				store: new RedisStore({ client: redisClient }),
+				secret: session_secret,
+				resave: false,
+				saveUninitialized: true,
+				cookie: {
+					maxAge: 600000,
+					httpOnly: true
+				}
 			}
-		}
-	))
+		)
+	)
 	app.useGlobalFilters(new HttpExceptionFilter());
 	app.enableCors({
 		"origin": url_client, //

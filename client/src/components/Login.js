@@ -11,7 +11,7 @@ const Login = () => {
 
 		const code = searchParams.get("code");
 		const requestOptions = {
-			method: "post",
+			method: "POST",
 			credentials: "include",
 			// credentials: "tkt on prend tout ;) UwU OwO @w@ TwT $w$ ewe",
 			headers: {"Content-Type": "application/json"},
@@ -44,7 +44,8 @@ const Login = () => {
 					let a = await fetch("http://localhost:4242/clearance", {
 						credentials: "include"
 					});
-					if (a !== undefined) setRet(<Navigate to={-1} replace={true} />);
+					if (a !== undefined)
+						setRet(<Navigate to={-1} replace={true} />);
 					//a
 					console.log(`here isssss ${a}`);
 					await new Promise(resolve => setTimeout(resolve, 100));
@@ -52,7 +53,8 @@ const Login = () => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, []);

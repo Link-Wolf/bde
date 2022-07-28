@@ -10,3 +10,4 @@ temp/
 coverage/
 .DS_Store
 config.*
+dump.rdb

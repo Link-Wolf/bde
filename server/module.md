@@ -14,3 +14,7 @@
 - `npm i --save helmet`
 # CSURF
 - `npm i --save csurf`
+
+# Session fuckery
+- `brew install redis`
+- `redis-server`
