@@ -159,9 +159,9 @@ const AdminContribToken = param => {
 		<>
 				{formState.name} {formState.begin_date}
 				{" "}
-				<Form>
-					<Form.Label>Stud : </Form.Label>
-					<Form.Control
+				<form>
+					<label>Stud : </label>
+					<input
 						disabled={true}
 						name="studLogin"
 						type="text"
@@ -170,8 +170,8 @@ const AdminContribToken = param => {
 						value={formState.studLogin}
 						required
 					/>
-					<Form.Label>Prix : </Form.Label>
-					<Form.Control
+					<label>Prix : </label>
+					<input
 						disabled={true}
 						type="text"
 						min="0"
@@ -182,8 +182,8 @@ const AdminContribToken = param => {
 						required
 					/>{" "}
 					€
-					<Form.Label> Dates : </Form.Label>
-					<Form.Control
+					<label> Dates : </label>
+					<input
 						id="formBeginDate"
 						disabled={locked}
 						type="datetime-local"
@@ -193,7 +193,7 @@ const AdminContribToken = param => {
 						required
 					/>
 					{" - "}
-					<Form.Control
+					<input
 						id="formEndDate"
 						disabled={locked || !formState.hasEndDate}
 						name="end_date"
@@ -203,7 +203,7 @@ const AdminContribToken = param => {
 						required
 					/>
 					{button}
-				</Form>
+				</form>
 		</>
 	);
 };
