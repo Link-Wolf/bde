@@ -5,13 +5,17 @@ const Logout = () => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		fetch("http://localhost:4242/auth/logout", {credentials: "include"})
+		fetch("http://localhost:4242/auth/logout", {
+			method: "POST",
+			credentials: "include"
+		})
 			.then(() => {
 				setRet(<Navigate to="/" />);
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, []);

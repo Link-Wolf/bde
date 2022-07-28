@@ -19,37 +19,51 @@ export class EventController {
 	}
 
 	@Get(':id')
-	findOne(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number): Promise<Event> {
+	findOne(
+		@Session() session: Record<string, any>,
+		@Param('id', ParseIntPipe) id: number): Promise<Event> {
 		return this.eventService.findOne(id, session.login);
 	}
 
 	@Post('')
-	create(@Session() session: Record<string, any>, @Body(new EventDtoPipe()) event: EventDto) {
+	create(
+		@Session() session: Record<string, any>,
+		@Body(new EventDtoPipe()) event: EventDto) {
 		return this.eventService.create(event, session.login);
 	}
 
 	@Post('get')
-	findAllButFilter(@Body(new EventFilterDtoPipe()) filters: EventFilterDto, @Session() session: Record<string, any>): Promise<Event[]> {
+	findAllButFilter(
+		@Body(new EventFilterDtoPipe()) filters: EventFilterDto,
+		@Session() session: Record<string, any>): Promise<Event[]> {
 		return this.eventService.findAll(filters, session.login);
 	}
 
 	@Patch(':id')
-	update(@Session() session: Record<string, any>, @Param('id') id: number, @Body(new EventDtoPipe()) event: EventDto) {
+	update(
+		@Session() session: Record<string, any>, @Param('id') id: number,
+		@Body(new EventDtoPipe()) event: EventDto) {
 		return this.eventService.update(id, event, session.login);
 	}
 
 	@Patch(':id/inscription')
-	subscribe(@Session() session: Record<string, any>, @Param('id') id: number, @Body('login') login: string) {
+	subscribe(
+		@Session() session: Record<string, any>, @Param('id') id: number,
+		@Body('login') login: string) {
 		return this.eventService.subscribe(id, login, session.login);
 	}
 
 	@Patch('admin/:id/inscription')
-	forceSubscribe(@Session() session: Record<string, any>, @Param('id') id: number, @Body('login') login: string) {
+	forceSubscribe(
+		@Session() session: Record<string, any>, @Param('id') id: number,
+		@Body('login') login: string) {
 		return this.eventService.forceSubscribe(id, login, session.login);
 	}
 
 	@Delete(':id')
-	removeOne(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
+	removeOne(
+		@Session() session: Record<string, any>,
+		@Param('id', ParseIntPipe) id: number) {
 		return this.eventService.removeOne(id, session.login);
 	}
 
