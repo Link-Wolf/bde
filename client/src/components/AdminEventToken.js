@@ -70,8 +70,7 @@ const AdminEventToken = param => {
 	};
 
 	const saveEvent = () => {
-		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`))
-		{
+		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`)) {
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
 
@@ -175,7 +174,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param.data, param.index, update, formState]);
+	}, [param, update, formState]);
 
 	return (
 		<>
