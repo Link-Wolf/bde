@@ -54,8 +54,11 @@ const AdminContribToken = param => {
 	};
 
 	const saveContrib = () => {
-		if (window.confirm(`Desire tu modifier la cotisation de ${param.data.studLogin}`))
-		{
+		if (
+			window.confirm(
+				`Desire tu modifier la cotisation de ${param.data.studLogin}`
+			)
+		) {
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
 
@@ -153,57 +156,55 @@ const AdminContribToken = param => {
 					Save
 				</Button>
 			);
-	}, [param.data, param.index, update, formState]);
+	}, [param, update, formState]);
 
 	return (
 		<>
-				{formState.name} {formState.begin_date}
-				{" "}
-				<form>
-					<label>Stud : </label>
-					<input
-						disabled={true}
-						name="studLogin"
-						type="text"
-						id="formStud"
-						autoFocus="autofocus"
-						value={formState.studLogin}
-						required
-					/>
-					<label>Prix : </label>
-					<input
-						disabled={true}
-						type="text"
-						min="0"
-						step="0.01"
-						id="formCost"
-						value={formState.cost}
-						name="cost"
-						required
-					/>{" "}
-					€
-					<label> Dates : </label>
-					<input
-						id="formBeginDate"
-						disabled={locked}
-						type="datetime-local"
-						name="begin_date"
-						value={formState.begin_date}
-						onChange={handleFormChange}
-						required
-					/>
-					{" - "}
-					<input
-						id="formEndDate"
-						disabled={locked || !formState.hasEndDate}
-						name="end_date"
-						value={formState.end_date}
-						onChange={handleFormChange}
-						type="datetime-local"
-						required
-					/>
-					{button}
-				</form>
+			{formState.name} {formState.begin_date}{" "}
+			<form>
+				<label>Stud : </label>
+				<input
+					disabled={true}
+					name="studLogin"
+					type="text"
+					id="formStud"
+					autoFocus="autofocus"
+					value={formState.studLogin}
+					required
+				/>
+				<label>Prix : </label>
+				<input
+					disabled={true}
+					type="text"
+					min="0"
+					step="0.01"
+					id="formCost"
+					value={formState.cost}
+					name="cost"
+					required
+				/>{" "}
+				€<label> Dates : </label>
+				<input
+					id="formBeginDate"
+					disabled={locked}
+					type="datetime-local"
+					name="begin_date"
+					value={formState.begin_date}
+					onChange={handleFormChange}
+					required
+				/>
+				{" - "}
+				<input
+					id="formEndDate"
+					disabled={locked || !formState.hasEndDate}
+					name="end_date"
+					value={formState.end_date}
+					onChange={handleFormChange}
+					type="datetime-local"
+					required
+				/>
+				{button}
+			</form>
 		</>
 	);
 };

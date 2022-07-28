@@ -12,45 +12,28 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
+		setTimeout(() => {
+			fetch(`http://localhost:4242/session`, {
+				credentials: "include"
 			})
-			.then(data => {
-				if (data.clearance == global.config.clearance.default) {
-					setLeftButton(
-						<Nav className="me-auto">
-							<Nav.Link href="/shop">Shop</Nav.Link>
-							<Nav.Link href="/contact">Contact</Nav.Link>
-						</Nav>
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					setClearance(data.clearance);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
 					);
-				}
-				if (data.clearance > global.config.clearance.default) {
-					setLeftButton(
-						<Nav className="me-auto">
-							<Nav.Link href="/events">Events</Nav.Link>
-							<Nav.Link href="/shop">Shop</Nav.Link>
-							<Nav.Link href="/contact">Contact</Nav.Link>
-						</Nav>
-					);
-				}
-				if (data.clearance >= global.config.clearance.admin) {
-					setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+				});
+		}, 100);
 	}, []);
 
 	return (
