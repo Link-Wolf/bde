@@ -38,10 +38,10 @@ const Login = () => {
 				// console.log(actualData.token);
 				setLogin(actualData.login);
 			})
-			.then(async () => {
+			.then(() => {
 				while (1) {
 					if (
-						(await fetch("http://localhost:4242/clearance", {
+						fetch("http://localhost:4242/clearance", {
 							credentials: "include"
 						})
 							.then(response => {
@@ -55,13 +55,15 @@ const Login = () => {
 							})
 							.then(data => {
 								return data.credentials;
-							})) != 0
+							}) != 0
 					)
 						break;
 				}
 			})
 			.then(() => {
-				setRet(<Navigate to={-1} replace={true} />);
+				setTimeout(() => {
+					setRet(<Navigate to={-1} replace={true} />);
+				}, 1000);
 			})
 			.catch(function(error) {
 				console.log(
