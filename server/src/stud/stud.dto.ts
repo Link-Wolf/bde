@@ -1,4 +1,3 @@
-
 export class StudDto {
 	login: string;
 	firstname: string;
