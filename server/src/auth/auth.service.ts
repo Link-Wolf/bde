@@ -48,7 +48,6 @@ export class AuthService {
 							let recent = 0;
 							if (response.data.cursus_users.length != 1) {
 								for (let i = 0; i < response.data.cursus_users.length; i++) {
-									console.log(i)
 									if (response.data.cursus_users[i].begin_at > response.data.cursus_users[recent].begin_at)
 										recent = i
 								}
