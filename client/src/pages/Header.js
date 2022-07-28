@@ -7,7 +7,7 @@ import ThemeButton from "../components/ThemeButton";
 import bde_logo from "../images/bde_logo.webp";
 
 function Header() {
-	const [clearance, setClearance] = useState(-42);
+	const [clearance, setClearance] = useState(-1);
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 
@@ -24,7 +24,26 @@ function Header() {
 				return response.json();
 			})
 			.then(data => {
-				setClearance(data.clearance);
+				if (data.clearance == global.config.clearance.default) {
+					setLeftButton(
+						<Nav className="me-auto">
+							<Nav.Link href="/shop">Shop</Nav.Link>
+							<Nav.Link href="/contact">Contact</Nav.Link>
+						</Nav>
+					);
+				}
+				if (data.clearance > global.config.clearance.default) {
+					setLeftButton(
+						<Nav className="me-auto">
+							<Nav.Link href="/events">Events</Nav.Link>
+							<Nav.Link href="/shop">Shop</Nav.Link>
+							<Nav.Link href="/contact">Contact</Nav.Link>
+						</Nav>
+					);
+				}
+				if (data.clearance >= global.config.clearance.admin) {
+					setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
+				}
 			})
 			.catch(function(error) {
 				console.log(
@@ -33,31 +52,6 @@ function Header() {
 				);
 			});
 	}, []);
-
-	useEffect(() => {
-		if (clearance != -42) {
-			if (clearance == global.config.clearance.default) {
-				setLeftButton(
-					<Nav className="me-auto">
-						<Nav.Link href="/shop">Shop</Nav.Link>
-						<Nav.Link href="/contact">Contact</Nav.Link>
-					</Nav>
-				);
-			}
-			if (clearance > global.config.clearance.default) {
-				setLeftButton(
-					<Nav className="me-auto">
-						<Nav.Link href="/events">Events</Nav.Link>
-						<Nav.Link href="/shop">Shop</Nav.Link>
-						<Nav.Link href="/contact">Contact</Nav.Link>
-					</Nav>
-				);
-			}
-			if (clearance >= global.config.clearance.admin) {
-				setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
-			}
-		}
-	}, [clearance]);
 
 	return (
 		<Navbar sticky="top" collapseOnSelect bg="dark" variant="dark">
