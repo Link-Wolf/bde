@@ -24,7 +24,7 @@ function Header() {
 				return response.json();
 			})
 			.then(data => {
-				if (data.clearance != -42) setClearance(data.clearance);
+				setClearance(data.clearance);
 			})
 			.catch(function(error) {
 				console.log(
