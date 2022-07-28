@@ -55,9 +55,23 @@ const AdminEventsGestion = param => {
 				consos: false,
 				place: "[lieu]",
 				desc: "[description]",
-				sponso: false
+				sponso: false,
+				for_pool: false
 			})
-		});
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 		setUpdate(true);
 		window.location.reload(); // FIXME: si mieux faut gerter: ca flash
 	};
