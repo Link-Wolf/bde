@@ -8,10 +8,10 @@ const EventList = param => {
 	useEffect(() => {
 		const requestOptions = {
 			method: "post",
+			credentials: "include",
 			headers: {
-				"Content-Type": "application/json",
-				credentials: "include"
-			}, //add security token here i guess
+				"Content-Type": "application/json"
+			},
 			body: JSON.stringify(param.filter)
 		};
 		fetch(`http://localhost:4242/event/get`, requestOptions)
@@ -28,7 +28,8 @@ const EventList = param => {
 			})
 			.catch(function(error) {
 				console.log(
-					"Il y a eu un problème avec l'opération fetch: " + error.message
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
 				);
 			});
 	}, [param.filter]);

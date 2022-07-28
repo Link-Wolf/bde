@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Body, Post, Session } from '@nestjs/common';
+import { Controller, Get, Body, Post, Session } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
 
@@ -10,10 +10,9 @@ export class AuthController {
 	@Post()
 	async loginIntra(@Body('code') code: string, @Session() session: Record<string, any>) {
 		let ret = await this.authService.loginIntra(code);
-		await (session.login = ret.login);
-		await (session.clearance = ret.clearance);
-		await (session.image_url = ret.image_url);
-		await (session.save());
+		session.login = ret.login;
+		session.clearance = ret.clearance;
+		session.image_url = ret.image_url;
 		return {
 			login: session.login
 		};
@@ -22,6 +21,8 @@ export class AuthController {
 	@Public()
 	@Get('logout')
 	async logout(@Session() session: Record<string, any>) {
-		await (session.destroy());
+		const theme = session.theme;
+		session.destroy();
+		session.theme = theme;
 	}
 }
