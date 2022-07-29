@@ -7,7 +7,6 @@ import ThemeButton from "../components/ThemeButton";
 import bde_logo from "../images/bde_logo.webp";
 
 function Header() {
-	const [clearance, setClearance] = useState(-42);
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 
