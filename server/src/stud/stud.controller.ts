@@ -14,23 +14,17 @@ export class StudController {
 		@Session() session: Record<string, any>,
 		@Res({ passthrough: true }) response: Response,
 		@Req() request: Request): Promise<Stud[]> {
-		// NOTE: Shall we remove all those cookies ?
-		// console.log("cookie : ");
-		// console.log(request.cookies);
-		// console.log(" : end cookie")
-		// //console.log("signed cookie :" + request.signedCookies)
-		// //response.cookie('test', 's:yeet')
-		// response.cookie('test', 'yeet')
-		// console.log("cookie 2: ");
-		// console.log(request.cookies);
-		// console.log(" : end cookie 2")
-		// //console.log("signed cookie 2:" + request.signedCookies)
 		return this.studService.findAll(session.login);
 	}
 
 	@Get(':login')
 	findOne(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
 		return this.studService.findOne(login, session.login);
+	}
+
+	@Get('admin/direction')
+	findDirection(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findDirection(session.login);
 	}
 
 	@Post()
