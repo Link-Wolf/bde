@@ -155,6 +155,7 @@ const AdminEventToken = () => {
 				<Form.Control
 					id="formEndDate"
 					name="end_date"
+					disabled={formState.hasEndDate}
 					value={formState.end_date}
 					onChange={handleFormChange}
 					type="datetime-local"
