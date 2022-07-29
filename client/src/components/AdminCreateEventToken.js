@@ -87,8 +87,10 @@ const AdminEventToken = () => {
 					consos: bodyState.consos,
 					sponso: bodyState.sponso,
 					begin_date: bodyState.begin_date,
-					end_date: bodyState.end_date
+					end_date: bodyState.hasEndDate ? bodyState.end_date : null,
+					for_pool: bodyState.for_pool
 				});
+				if (window.confirm(`${raw}`));
 
 				var requestOptions = {
 					method: "POST",
