@@ -17,6 +17,7 @@ import AdminEventsGestion from "./body/AdminEventsGestion";
 import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
 import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
+import AdminCaptainManagement from "./body/AdminCaptainManagement";
 import AdminStudents from "./body/AdminStudents";
 import Log from "./body/Log";
 import Me from "./body/Me";
@@ -81,6 +82,17 @@ const Routage = () => {
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
 							<Event />
+						</ClearanceChecker>
+					}
+				/>
+				<Route
+					path="admin/teammanagement"
+					element={
+						<ClearanceChecker
+							securityLevel={global.config.clearance.bde_director}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
+							<AdminCaptainManagement />
 						</ClearanceChecker>
 					}
 				/>
