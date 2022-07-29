@@ -51,6 +51,7 @@ export class AppController {
 
 	@Get('session')
 	async getSession(@Session() session: Record<string, any>) {
+		console.log(session);
 		return {
 			clearance: session.clearance ? session.clearance : 0,
 			image_url: session.image_url ? session.image_url : -42,

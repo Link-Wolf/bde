@@ -8,7 +8,6 @@ import Home from "./body/Home";
 import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Cgv from "./body/Cgv";
-import Stud from "./body/Studs";
 import Shop from "./body/Shop";
 import Events from "./body/Events";
 import Event from "./body/Event";

@@ -24,7 +24,7 @@ function App() {
 				return response.json();
 			})
 			.then(data => {
-				if (data.theme != -42) setTheme(data.theme);
+				if (data.theme !== -42) setTheme(data.theme);
 			})
 			.catch(function(error) {
 				console.log(
@@ -35,11 +35,9 @@ function App() {
 	}, []);
 
 	return (
-		<div className="App">
+		<div className={`App ${theme}`}>
 			<Header />
-			<div className={theme}>
-				<Routage />
-			</div>
+			<Routage />
 			<Footer />
 		</div>
 	);

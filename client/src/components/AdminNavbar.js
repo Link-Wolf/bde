@@ -1,24 +1,22 @@
-import Dropdown from "../components/Dropdown";
+import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 
 const AdminNavbar = () => {
 	return (
-		<div>
-			<ul>
-				<a href="/admin/students">
-					<button>Students</button>
-				</a>
-				<Dropdown title="Events">
-					<a href="/admin/events/gestion"> Gestion </a>
-					<a href="/admin/events/subscribtions"> Inscriptions </a>
-				</Dropdown>
-				<a href="/admin/contributions">
-					<button>Contributions</button>
-				</a>
-				<a href="/admin/logs">
-					<button>Logs</button>
-				</a>
-			</ul>
-		</div>
+		<Navbar collapseOnSelect bg="secondary" variant="dark">
+			<Nav className="me-auto">
+				<Nav.Link href="/admin/students">Students</Nav.Link>
+				<NavDropdown title="Events">
+					<NavDropdown.Item href="/admin/events/gestion">
+						Gestion
+					</NavDropdown.Item>
+					<NavDropdown.Item href="/admin/events/subscribtions">
+						Inscriptions
+					</NavDropdown.Item>
+				</NavDropdown>
+				<Nav.Link href="/admin/contributions">Contributions</Nav.Link>
+				<Nav.Link href="/admin/logs">Logs</Nav.Link>
+			</Nav>
+		</Navbar>
 	);
 };
 
