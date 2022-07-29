@@ -47,3 +47,7 @@ input:invalid {
 	background: white;
 	color: black;
 }
+
+.App {
+	height: 100%;
+}

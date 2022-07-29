@@ -57,7 +57,13 @@ function Header() {
 	}, []);
 
 	return (
-		<Navbar sticky="top" collapseOnSelect bg="dark" variant="dark">
+		<Navbar
+			sticky="top"
+			collapseOnSelect
+			bg="dark"
+			variant="dark"
+			id="header"
+		>
 			<Container>
 				<Navbar.Brand href="/home">
 					<img
