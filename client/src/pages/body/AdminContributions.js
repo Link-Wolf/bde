@@ -35,7 +35,7 @@ const AdminContributions = () => {
 			});
 	}, [update]);
 
-	const createNewContrib = () => {
+	const saveNewContrib = () => {
 		fetch(`http://localhost:4242/contribution/admin`, {
 			method: "POST",
 			credentials: "include",
@@ -50,6 +50,10 @@ const AdminContributions = () => {
 			})
 		});
 		setUpdate(true);
+	}
+
+	const createNewContrib = () => {
+
 	};
 
 	return (
