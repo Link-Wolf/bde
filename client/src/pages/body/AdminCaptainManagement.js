@@ -1,4 +1,5 @@
 import {useState, useEffect, React} from "react";
+import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminCaptainManagement = param => {
 	const [data, setData] = useState([]);
@@ -33,17 +34,14 @@ const AdminCaptainManagement = param => {
 			method: "patch",
 			credentials: "include"
 		};
-		fetch(
-			`http://localhost:4242/stud/admin/direction/${toYeet}`,
-			requestOptions
-		)
+		fetch(`http://localhost:4242/stud/admin/${toYeet}`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
+				return;
 			})
 			.then(() => {
 				//maybe refresh
@@ -82,6 +80,7 @@ const AdminCaptainManagement = param => {
 								`Voulez vous ne pas virer ${login} du bureau de direction et annuler?`
 							)
 						) {
+							console.log("tesr");
 							yeetConfirm(login);
 						}
 					}
@@ -91,21 +90,28 @@ const AdminCaptainManagement = param => {
 	};
 
 	return (
-		<div>
-			{data.map(item => (
-				<li key={item.login}>
-					<label>{item.login}</label>
-					<label>{item.firstname}</label>
-					<label>{item.lastname}</label>
-					<button
-						onClick={() => {
-							yeetMember(item.login);
-						}}
-					>
-						X
-					</button>
-				</li>
-			))}
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
+			<AdminNavbar />
+			<div>
+				{data.map(item => (
+					<li key={item.login}>
+						<label>{item.login} </label>
+						<label>{item.firstname} </label>
+						<label>{item.lastname} </label>
+						<button
+							onClick={() => {
+								yeetMember(item.login);
+							}}
+						>
+							X
+						</button>
+					</li>
+				))}
+			</div>
 		</div>
 	);
 };

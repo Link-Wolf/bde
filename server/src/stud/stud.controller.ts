@@ -37,6 +37,11 @@ export class StudController {
 		return this.studService.update(login, stud, session.login);
 	}
 
+	@Patch('admin/:login')
+	updateDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.updateDirection(login, session.login);
+	}
+
 	@Delete(':login')
 	removeOne(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.studService.removeOne(login, session.login);

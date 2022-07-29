@@ -75,6 +75,22 @@ export class StudService {
 		}
 	}
 
+	async updateDirection(login: string, requestMaker): Promise<void> {
+		try {
+			let user = await this.findOne(login, requestMaker);
+			if (!user) {
+				this.logger.error(`Failed to yeet direction member with login ${login} : direction member does not exist`, requestMaker);
+				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
+			}
+			let updatedOne = `UPDATE stud SET isDirection = 'f' WHERE login = ${login}`;
+			await this.studRepository.query(updatedOne);
+			this.logger.warn(`Successfully yeet direction member ${login}`, requestMaker);
+		} catch (error) {
+			this.logger.error(`Failed to yeet direction member ${login} on database (${error})`, requestMaker)
+			throw new NotFoundException(`Failed to yeet direction member ${login} on database (${error})`)
+		}
+	}
+
 	async create(studDto: StudDto, requestMaker): Promise<any> {
 		try {
 			if (await this.findOne(studDto.login, requestMaker)) {
