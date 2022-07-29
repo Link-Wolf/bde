@@ -35,8 +35,11 @@ const AdminNavbar = () => {
 		<div
 			style={{
 				display: "flex",
-				height: "100vh",
-				overflow: "scroll initial"
+				height: `calc(100vh - (${
+					document.getElementById("header").offsetHeight
+				}px + ${document.getElementById("footer").offsetHeight}px))`,
+				position: "sticky",
+				top: `${document.getElementById("header").offsetHeight}px`
 			}}
 		>
 			<CDBSidebar textColor="#fff" backgroundColor="#333">
@@ -91,16 +94,6 @@ const AdminNavbar = () => {
 						</NavLink>
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
-
-				<CDBSidebarFooter style={{textAlign: "center"}}>
-					<div
-						style={{
-							padding: "20px 5px"
-						}}
-					>
-						Sidebar Footer
-					</div>
-				</CDBSidebarFooter>
 			</CDBSidebar>
 		</div>
 	);

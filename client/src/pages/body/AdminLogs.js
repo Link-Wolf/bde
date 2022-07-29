@@ -28,12 +28,18 @@ const AdminLogs = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(`This is a fetch error: The error is ${error.message}`);
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
 	}, [token]);
 
 	return (
-		<div>
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
 			<AdminNavbar />
 			<div>
 				<h1> AdminPannel </h1>
