@@ -32,10 +32,12 @@ export class EventDtoPipe implements PipeTransform {
 				value.sponso = false
 		if ("nb_places" in value)
 			value.nb_places = Number(value.nb_places)
-		if ("begin_date" in value)
+		if ("begin_date" in value && value.begin_date !== null)
 			value.begin_date = new Date(value.begin_date)
 		if ("end_date" in value)
 			value.end_date = new Date(value.end_date)
+		if ("desc" in value && value.desc === "")
+			value.desc = value.name
 		return value;
 	}
 }
