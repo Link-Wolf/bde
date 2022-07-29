@@ -7,7 +7,6 @@ import ThemeButton from "../components/ThemeButton";
 import bde_logo from "../images/bde_logo.webp";
 
 function Header() {
-	const [clearance, setClearance] = useState(-1);
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 
@@ -25,7 +24,28 @@ function Header() {
 					return response.json();
 				})
 				.then(data => {
-					setClearance(data.clearance);
+					if (data.clearance === global.config.clearance.default) {
+						setLeftButton(
+							<Nav className="me-auto">
+								<Nav.Link href="/shop">Shop</Nav.Link>
+								<Nav.Link href="/contact">Contact</Nav.Link>
+							</Nav>
+						);
+					}
+					if (data.clearance > global.config.clearance.default) {
+						setLeftButton(
+							<Nav className="me-auto">
+								<Nav.Link href="/events">Events</Nav.Link>
+								<Nav.Link href="/shop">Shop</Nav.Link>
+								<Nav.Link href="/contact">Contact</Nav.Link>
+							</Nav>
+						);
+					}
+					if (data.clearance >= global.config.clearance.admin) {
+						setRightButton(
+							<Nav.Link href="/admin">Admin</Nav.Link>
+						);
+					}
 				})
 				.catch(function(error) {
 					console.log(
@@ -41,6 +61,7 @@ function Header() {
 			<Container>
 				<Navbar.Brand href="/home">
 					<img
+						alt="logo bde"
 						height="30"
 						width="30"
 						className="d-inline-block align-top"

@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Accordion, Button, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 const AdminEventToken = () => {
 	const [formState, setFormState] = useState({
@@ -65,68 +65,67 @@ const AdminEventToken = () => {
 		setFormState(tmp);
 	};
 
-	const saveEvent = () => {
-		if (window.confirm(`Desire tu creer cet event ?`)) {
-			var myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			var raw = JSON.stringify({
-				name: bodyState.name,
-				cost: bodyState.cost,
-				place: bodyState.place,
-				premium_cost: bodyState.premium_cost,
-				nb_places: bodyState.nb_places,
-				desc: bodyState.desc,
-				isOutside: bodyState.isOutside,
-				consos: bodyState.consos,
-				sponso: bodyState.sponso,
-				begin_date: bodyState.begin_date,
-				end_date: bodyState.end_date,
-				for_pool: bodyState.for_pool
-			});
-
-			var requestOptions = {
-				method: "POST",
-				headers: myHeaders,
-				body: raw,
-				redirect: "follow",
-				credentials: "include"
-			};
-
-			fetch(`http://localhost:4242/event/`, requestOptions)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.then(() => {
-					document.location.reload();
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-			setUpdate(true);
-		}
-	};
-
 	const two_digiter = nb => {
 		if (nb < 10) return "0" + nb;
 		return nb;
 	};
 
 	useEffect(() => {
+		const saveEvent = () => {
+			if (window.confirm(`Desire tu creer cet event ?`)) {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					name: bodyState.name,
+					cost: bodyState.cost,
+					place: bodyState.place,
+					premium_cost: bodyState.premium_cost,
+					nb_places: bodyState.nb_places,
+					desc: bodyState.desc,
+					isOutside: bodyState.isOutside,
+					consos: bodyState.consos,
+					sponso: bodyState.sponso,
+					begin_date: bodyState.begin_date,
+					end_date: bodyState.end_date
+				});
+
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow",
+					credentials: "include"
+				};
+
+				fetch(`http://localhost:4242/event/`, requestOptions)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ${response.status}`
+							);
+						}
+					})
+					.then(() => {
+						document.location.reload();
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+				setUpdate(true);
+			}
+		};
+
 		setUpdate(false);
 		setButton(
 			<Button type="button" defaultValue={-1} onClick={saveEvent}>
 				Save
 			</Button>
 		);
-	}, [update, formState]);
+	}, [update, formState, bodyState]);
 
 	return (
 		<>
