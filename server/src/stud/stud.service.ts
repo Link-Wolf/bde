@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
@@ -26,6 +26,21 @@ export class StudService {
 		catch (error) {
 			this.logger.error(`Failed to get all students on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to get all students on database (${error})`);
+		}
+	}
+
+	async findDirection(requestMaker): Promise<Stud[]> {
+		try {
+			let studs = await this.studRepository.findBy({
+				isDirection: true,
+				clearance: Not(21)
+			});
+			this.logger.log(`Got all direction members`, requestMaker);
+			return studs;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all direction members on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to get all direction members on database (${error})`);
 		}
 	}
 
