@@ -9,14 +9,30 @@ const Logout = () => {
 			method: "POST",
 			credentials: "include"
 		})
-			.then(() => {
-				setRet(<Navigate to="/" />);
+			.then(async () => {
+				let loop = true;
+				while (loop) {
+					await fetch("http://localhost:4242/session", {
+						credentials: "include"
+					})
+						.then(response => {
+							if (!response.ok) {
+								throw new Error(
+									`This is an HTTP error: The status is ` +
+										`${response.status}`
+								);
+							}
+							return response.json();
+						})
+						.then(data => {
+							console.log(data);
+							if (data.clearance == 0) loop = false;
+						});
+					await new Promise(res => setTimeout(res, 1000));
+				}
 			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
+			.then(() => {
+				setRet(<Navigate to="/home" replace={true} />);
 			});
 	}, []);
 
