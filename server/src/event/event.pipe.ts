@@ -38,6 +38,7 @@ export class EventDtoPipe implements PipeTransform {
 			value.end_date = new Date(value.end_date)
 		if ("desc" in value && value.desc === "")
 			value.desc = value.name
+		console.log(value.end_date)
 		return value;
 	}
 }
