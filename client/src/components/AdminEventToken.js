@@ -79,7 +79,7 @@ const AdminEventToken = param => {
 	useEffect(() => {
 		let tmp = {...param.data};
 		tmp.hasEndDate = param.data.end_date !== null;
-		tmp.end_date = tmp.end_date ? tmp.end_date : tmp.begin_date;
+		tmp.end_date = tmp.end_date ? tmp.end_date : null;
 		let end_date = new Date(Date.parse(tmp.end_date));
 		tmp.end_date =
 			two_digiter(end_date.getFullYear()) +
