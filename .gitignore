@@ -11,3 +11,5 @@ coverage/
 .DS_Store
 config.*
 dump.rdb
+server/build
+server/dist

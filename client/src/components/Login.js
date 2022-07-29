@@ -51,7 +51,9 @@ const Login = () => {
 				}
 			})
 			.then(() => {
-				setRet(<Navigate to={-1} replace={true} />);
+				setTimeout(() => {
+					setRet(<Navigate to={-1} replace={true} />);
+				}, 1000);
 			})
 			.catch(function(error) {
 				console.log(
