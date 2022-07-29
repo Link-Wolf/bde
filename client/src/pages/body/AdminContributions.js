@@ -55,17 +55,23 @@ const AdminContributions = () => {
 	const createNewContrib = () => {};
 
 	return (
-		<>
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
 			<AdminNavbar />
-			{data.length ? (
-				data.map((item, i) => (
-					<AdminContribToken data={item} index={i} key={i} />
-				))
-			) : (
-				<div>No contributions found</div>
-			)}
-			<Button onClick={createNewContrib}>New</Button>
-		</>
+			<div>
+				{data.length ? (
+					data.map((item, i) => (
+						<AdminContribToken data={item} index={i} key={i} />
+					))
+				) : (
+					<div>No contributions found</div>
+				)}
+				<Button onClick={createNewContrib}>New</Button>
+			</div>
+		</div>
 	);
 };
 
