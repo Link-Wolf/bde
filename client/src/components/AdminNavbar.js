@@ -72,6 +72,9 @@ const AdminNavbar = () => {
 						<Nav.Link href="/admin/logs">
 							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
 						</Nav.Link>
+						<Nav.Link href="/admin/teammanagement">
+							<CDBSidebarMenuItem>Management</CDBSidebarMenuItem>
+						</Nav.Link>
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
 			</CDBSidebar>
