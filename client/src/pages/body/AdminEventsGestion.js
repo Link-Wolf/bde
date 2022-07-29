@@ -52,29 +52,35 @@ const AdminEventsGestion = param => {
 	};
 
 	return (
-		<>
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
 			<AdminNavbar />
-			<Button onClick={createNewEvent}>New</Button>
-			<Accordion>
-				{newEvent}
-				{data.length ? (
-					data.map((item, i) => (
-						<Accordion.Item eventKey={i} key={i}>
-							<AdminEventToken
-								data={item}
-								index={i}
-								key={i}
-								open={openEventId}
-								onClickRetract={() => setOpenEventId(-42)}
-								onClickDeploy={() => setOpenEventId(i)}
-							/>
-						</Accordion.Item>
-					))
-				) : (
-					<div>No event created</div>
-				)}
-			</Accordion>
-		</>
+			<div>
+				<Button onClick={createNewEvent}>New</Button>
+				<Accordion>
+					{newEvent}
+					{data.length ? (
+						data.map((item, i) => (
+							<Accordion.Item eventKey={i} key={i}>
+								<AdminEventToken
+									data={item}
+									index={i}
+									key={i}
+									open={openEventId}
+									onClickRetract={() => setOpenEventId(-42)}
+									onClickDeploy={() => setOpenEventId(i)}
+								/>
+							</Accordion.Item>
+						))
+					) : (
+						<div>No event created</div>
+					)}
+				</Accordion>
+			</div>
+		</div>
 	);
 };
 

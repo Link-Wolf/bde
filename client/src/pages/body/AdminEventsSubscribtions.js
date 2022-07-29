@@ -184,7 +184,11 @@ const AdminStudents = () => {
 	}, [selectedEvent, update, token]);
 
 	return (
-		<div>
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
 			<AdminNavbar />
 			<div>
 				<h1> AdminPannel </h1>
