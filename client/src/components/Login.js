@@ -49,13 +49,11 @@ const Login = () => {
 							console.log(data);
 							if (data.clearance !== 0) breakLoop();
 						});
-					await new Promise(res => setTimeout(res, 1000));
+					await new Promise(res => setTimeout(res, 200));
 				}
 			})
 			.then(() => {
-				setTimeout(() => {
-					setRet(<Navigate to={-1} replace={true} />);
-				}, 1000);
+				setRet(<Navigate to={-1} replace={true} />);
 			})
 			.catch(function(error) {
 				console.log(
