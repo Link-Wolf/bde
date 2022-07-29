@@ -13,8 +13,9 @@ const AdminEventToken = () => {
 		premium_cost: 0,
 		hasEndDate: false,
 		sponso: false,
-		conso: false,
-		isOutside: false
+		consos: false,
+		isOutside: false,
+		for_pool: false
 	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
@@ -27,8 +28,9 @@ const AdminEventToken = () => {
 		premium_cost: 0,
 		hasEndDate: false,
 		sponso: false,
-		conso: false,
-		isOutside: false
+		consos: false,
+		isOutside: false,
+		for_pool: false
 	});
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
@@ -79,7 +81,8 @@ const AdminEventToken = () => {
 				consos: bodyState.consos,
 				sponso: bodyState.sponso,
 				begin_date: bodyState.begin_date,
-				end_date: bodyState.end_date
+				end_date: bodyState.end_date,
+				for_pool: bodyState.for_pool
 			});
 
 			var requestOptions = {
@@ -225,9 +228,16 @@ const AdminEventToken = () => {
 				<Form.Switch
 					id="formConsos"
 					label="Consommation"
-					name="conso"
+					name="consos"
 					onChange={handleFormChange}
-					value={formState.conso}
+					value={formState.consos}
+				/>
+				<Form.Switch
+					id="formForPool"
+					label="Pour les piscineux"
+					name="for_pool"
+					onChange={handleFormChange}
+					value={formState.for_pool}
 				/>
 				{button}
 			</Form>
