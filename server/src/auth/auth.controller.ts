@@ -13,6 +13,8 @@ export class AuthController {
 		await (session.login = ret.login);
 		await (session.clearance = ret.clearance);
 		await (session.image_url = ret.image_url);
+		await (session.mail = ret.mail);
+		await (session.firstname = ret.firstname);
 		await (session.save())
 		return {
 			login: session.login
