@@ -55,43 +55,23 @@ const AdminNavbar = () => {
 
 				<CDBSidebarContent className="sidebar-content">
 					<CDBSidebarMenu>
-						<NavLink
-							exact
-							to="/admin/students"
-							activeClassName="activeClicked"
-						>
+						<Nav.Link href="/admin/students">
 							<CDBSidebarMenuItem>Students</CDBSidebarMenuItem>
-						</NavLink>
-						<NavLink
-							exact
-							to="/admin/events/gestion"
-							activeClassName="activeClicked"
-						>
+						</Nav.Link>
+						<Nav.Link href="/admin/events/gestion">
 							<CDBSidebarMenuItem>Events</CDBSidebarMenuItem>
-						</NavLink>
-						<NavLink
-							exact
-							to="/admin/events/subscribtions"
-							activeClassName="activeClicked"
-						>
+						</Nav.Link>
+						<Nav.Link href="/admin/events/subscribtions">
 							<CDBSidebarMenuItem>
 								Inscriptions
 							</CDBSidebarMenuItem>
-						</NavLink>
-						<NavLink
-							exact
-							to="/admin/contributions"
-							activeClassName="activeClicked"
-						>
+						</Nav.Link>
+						<Nav.Link href="/admin/contributions">
 							<CDBSidebarMenuItem>Cotisations</CDBSidebarMenuItem>
-						</NavLink>
-						<NavLink
-							exact
-							to="/admin/logs"
-							activeClassName="activeClicked"
-						>
+						</Nav.Link>
+						<Nav.Link href="/admin/logs">
 							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
-						</NavLink>
+						</Nav.Link>
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
 			</CDBSidebar>
