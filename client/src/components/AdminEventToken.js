@@ -11,11 +11,11 @@ const AdminEventToken = param => {
 		nb_places: 0,
 		cost: 0,
 		premium_cost: 0,
-		hasEndDate: false,
-		sponso: false,
-		consos: false,
-		isOutside: false,
-		for_pool: false
+		hasEndDate: true,
+		sponso: true,
+		consos: true,
+		isOutside: true,
+		for_pool: true
 	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
@@ -26,11 +26,11 @@ const AdminEventToken = param => {
 		nb_places: 0,
 		cost: 0,
 		premium_cost: 0,
-		hasEndDate: false,
-		sponso: false,
-		consos: false,
-		isOutside: false,
-		for_pool: false
+		hasEndDate: true,
+		sponso: true,
+		consos: true,
+		isOutside: true,
+		for_pool: true
 	});
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
@@ -102,6 +102,17 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getHours()) +
 			":" +
 			two_digiter(begin_date.getMinutes());
+		console.log(`Outside de ${param.data.name} : ${param.data.isOutside}`);
+		console.log(`Sponso de ${param.data.name} : ${param.data.sponso}`);
+
+		console.log(`Consos de ${param.data.name} : ${param.data.consos}`);
+
+		console.log(`For_pool de ${param.data.name} : ${param.data.for_pool}`);
+
+		tmp.isOutside = param.data.isOutside;
+		tmp.sponso = param.data.sponso;
+		tmp.consos = param.data.consos;
+		tmp.for_pool = param.data.for_pool;
 		setFormState(tmp);
 	}, [param.data]);
 
@@ -283,7 +294,7 @@ const AdminEventToken = param => {
 						label="Outside"
 						name="isOutside"
 						onChange={handleFormChange}
-						value={formState.isOutside}
+						checked={formState.isOutside}
 					/>
 					<Form.Switch
 						disabled={locked}
@@ -291,7 +302,7 @@ const AdminEventToken = param => {
 						label="Sponsorised"
 						name="sponso"
 						onChange={handleFormChange}
-						value={formState.sponso}
+						checked={formState.sponso}
 					/>
 					<Form.Switch
 						disabled={locked}
@@ -299,14 +310,15 @@ const AdminEventToken = param => {
 						label="Consommation"
 						name="consos"
 						onChange={handleFormChange}
-						value={formState.consos}
+						checked={formState.consos}
 					/>
 					<Form.Switch
+						disabled={locked}
 						id="formForPool"
 						label="Pour les piscineux"
 						name="for_pool"
 						onChange={handleFormChange}
-						value={formState.for_pool}
+						checked={formState.for_pool}
 					/>
 					{button}
 					<Button type="reset" disabled={locked}>
