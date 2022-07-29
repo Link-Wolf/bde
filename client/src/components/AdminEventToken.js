@@ -13,8 +13,9 @@ const AdminEventToken = param => {
 		premium_cost: 0,
 		hasEndDate: false,
 		sponso: false,
-		conso: false,
-		isOutside: false
+		consos: false,
+		isOutside: false,
+		for_pool: false
 	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
@@ -27,8 +28,9 @@ const AdminEventToken = param => {
 		premium_cost: 0,
 		hasEndDate: false,
 		sponso: false,
-		conso: false,
-		isOutside: false
+		consos: false,
+		isOutside: false,
+		for_pool: false
 	});
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
@@ -295,9 +297,16 @@ const AdminEventToken = param => {
 						disabled={locked}
 						id="formConsos"
 						label="Consommation"
-						name="conso"
+						name="consos"
 						onChange={handleFormChange}
-						value={formState.conso}
+						value={formState.consos}
+					/>
+					<Form.Switch
+						id="formForPool"
+						label="Pour les piscineux"
+						name="for_pool"
+						onChange={handleFormChange}
+						value={formState.for_pool}
 					/>
 					{button}
 					<Button type="reset" disabled={locked}>
