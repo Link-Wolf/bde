@@ -1,5 +1,15 @@
-// import {Navbar, Nav, NavDropdown} from "react-bootstrap";
-//
+import React from "react";
+import {Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {
+	CDBSidebar,
+	CDBSidebarContent,
+	CDBSidebarFooter,
+	CDBSidebarHeader,
+	CDBSidebarMenu,
+	CDBSidebarMenuItem
+} from "cdbreact";
+import {NavLink} from "react-router-dom";
+
 // const AdminNavbar = () => {
 // 	return (
 // 		<Navbar collapseOnSelect bg="secondary" variant="dark">
@@ -19,19 +29,6 @@
 // 		</Navbar>
 // 	);
 // };
-//
-// export default AdminNavbar;
-
-import React from "react";
-import {
-	CDBSidebar,
-	CDBSidebarContent,
-	CDBSidebarFooter,
-	CDBSidebarHeader,
-	CDBSidebarMenu,
-	CDBSidebarMenuItem
-} from "cdbreact";
-import {NavLink} from "react-router-dom";
 
 const AdminNavbar = () => {
 	return (
@@ -43,62 +40,54 @@ const AdminNavbar = () => {
 			}}
 		>
 			<CDBSidebar textColor="#fff" backgroundColor="#333">
-				<CDBSidebarHeader
-					prefix={<i className="fa fa-bars fa-large"></i>}
-				>
+				<CDBSidebarHeader>
 					<a
-						href="/"
+						href="/admin"
 						className="text-decoration-none"
 						style={{color: "inherit"}}
 					>
-						Sidebar
+						Admin pannel
 					</a>
 				</CDBSidebarHeader>
 
 				<CDBSidebarContent className="sidebar-content">
 					<CDBSidebarMenu>
-						<NavLink exact to="/" activeClassName="activeClicked">
-							<CDBSidebarMenuItem icon="columns">
-								Dashboard
+						<NavLink
+							exact
+							to="/admin/students"
+							activeClassName="activeClicked"
+						>
+							<CDBSidebarMenuItem>Students</CDBSidebarMenuItem>
+						</NavLink>
+						<NavLink
+							exact
+							to="/admin/events/gestion"
+							activeClassName="activeClicked"
+						>
+							<CDBSidebarMenuItem>Events</CDBSidebarMenuItem>
+						</NavLink>
+						<NavLink
+							exact
+							to="/admin/events/subscribtions"
+							activeClassName="activeClicked"
+						>
+							<CDBSidebarMenuItem>
+								Inscriptions
 							</CDBSidebarMenuItem>
 						</NavLink>
 						<NavLink
 							exact
-							to="/tables"
+							to="/admin/contributions"
 							activeClassName="activeClicked"
 						>
-							<CDBSidebarMenuItem icon="table">
-								Tables
-							</CDBSidebarMenuItem>
+							<CDBSidebarMenuItem>Cotisations</CDBSidebarMenuItem>
 						</NavLink>
 						<NavLink
 							exact
-							to="/profile"
+							to="/admin/logs"
 							activeClassName="activeClicked"
 						>
-							<CDBSidebarMenuItem icon="user">
-								Profile page
-							</CDBSidebarMenuItem>
-						</NavLink>
-						<NavLink
-							exact
-							to="/analytics"
-							activeClassName="activeClicked"
-						>
-							<CDBSidebarMenuItem icon="chart-line">
-								Analytics
-							</CDBSidebarMenuItem>
-						</NavLink>
-
-						<NavLink
-							exact
-							to="/hero404"
-							target="_blank"
-							activeClassName="activeClicked"
-						>
-							<CDBSidebarMenuItem icon="exclamation-circle">
-								404 page
-							</CDBSidebarMenuItem>
+							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
 						</NavLink>
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
