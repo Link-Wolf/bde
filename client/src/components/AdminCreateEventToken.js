@@ -90,7 +90,6 @@ const AdminEventToken = () => {
 					end_date: bodyState.hasEndDate ? bodyState.end_date : null,
 					for_pool: bodyState.for_pool
 				});
-				if (window.confirm(`${raw}`));
 
 				var requestOptions = {
 					method: "POST",
