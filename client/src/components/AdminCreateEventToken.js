@@ -70,63 +70,55 @@ const AdminEventToken = () => {
 		return nb;
 	};
 
-	useEffect(() => {
-		const saveEvent = () => {
-			if (window.confirm(`Desire tu creer cet event ?`)) {
-				var myHeaders = new Headers();
-				myHeaders.append("Content-Type", "application/json");
+	const saveEvent = () => {
+		if (window.confirm(`Desire tu creer cet event ?`)) {
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
 
-				var raw = JSON.stringify({
-					name: bodyState.name,
-					cost: bodyState.cost,
-					place: bodyState.place,
-					premium_cost: bodyState.premium_cost,
-					nb_places: bodyState.nb_places,
-					desc: bodyState.desc,
-					isOutside: bodyState.isOutside,
-					consos: bodyState.consos,
-					sponso: bodyState.sponso,
-					begin_date: bodyState.begin_date,
-					end_date: bodyState.hasEndDate ? bodyState.end_date : null,
-					for_pool: bodyState.for_pool
-				});
+			var raw = JSON.stringify({
+				name: bodyState.name,
+				cost: bodyState.cost,
+				place: bodyState.place,
+				premium_cost: bodyState.premium_cost,
+				nb_places: bodyState.nb_places,
+				desc: bodyState.desc,
+				isOutside: bodyState.isOutside,
+				consos: bodyState.consos,
+				sponso: bodyState.sponso,
+				begin_date: bodyState.begin_date,
+				end_date: bodyState.hasEndDate ? bodyState.end_date : null,
+				for_pool: bodyState.for_pool
+			});
+			if (window.confirm(`${raw}`));
 
-				var requestOptions = {
-					method: "POST",
-					headers: myHeaders,
-					body: raw,
-					redirect: "follow",
-					credentials: "include"
-				};
+			var requestOptions = {
+				method: "POST",
+				headers: myHeaders,
+				body: raw,
+				redirect: "follow",
+				credentials: "include"
+			};
 
-				fetch(`http://localhost:4242/event/`, requestOptions)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error: The status is ${response.status}`
-							);
-						}
-					})
-					.then(() => {
-						document.location.reload();
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
+			fetch(`http://localhost:4242/event/`, requestOptions)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
 						);
-					});
-				setUpdate(true);
-			}
-		};
-
-		setUpdate(false);
-		setButton(
-			<Button type="button" defaultValue={-1} onClick={saveEvent}>
-				Save
-			</Button>
-		);
-	}, [update, formState, bodyState]);
+					}
+				})
+				.then(() => {
+					document.location.reload();
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+			setUpdate(true);
+		}
+	};
 
 	return (
 		<>
@@ -154,7 +146,7 @@ const AdminEventToken = () => {
 				<Form.Control
 					id="formEndDate"
 					name="end_date"
-					disabled={formState.hasEndDate}
+					disabled={!formState.hasEndDate}
 					value={formState.end_date}
 					onChange={handleFormChange}
 					type="datetime-local"
@@ -240,7 +232,9 @@ const AdminEventToken = () => {
 					onChange={handleFormChange}
 					value={formState.for_pool}
 				/>
-				{button}
+				<Button type="button" defaultValue={-1} onClick={saveEvent}>
+					Save
+				</Button>
 			</Form>
 		</>
 	);
