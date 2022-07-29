@@ -24,7 +24,7 @@ function Header() {
 					return response.json();
 				})
 				.then(data => {
-					if (data.clearance == global.config.clearance.default) {
+					if (data.clearance === global.config.clearance.default) {
 						setLeftButton(
 							<Nav className="me-auto">
 								<Nav.Link href="/shop">Shop</Nav.Link>
@@ -61,6 +61,7 @@ function Header() {
 			<Container>
 				<Navbar.Brand href="/home">
 					<img
+						alt="logo bde"
 						height="30"
 						width="30"
 						className="d-inline-block align-top"

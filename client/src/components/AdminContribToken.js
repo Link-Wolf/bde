@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Accordion, Button, Form} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 
 const AdminContribToken = param => {
 	const [formState, setFormState] = useState({
@@ -53,52 +53,6 @@ const AdminContribToken = param => {
 		setFormState(tmp);
 	};
 
-	const saveContrib = () => {
-		if (
-			window.confirm(
-				`Desire tu modifier la cotisation de ${param.data.studLogin}`
-			)
-		) {
-			var myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			var raw = JSON.stringify({
-				stud: param.data.studLogin,
-				cost: param.data.cost,
-				begin_date: bodyState.begin_date,
-				end_date: bodyState.end_date
-			});
-
-			var requestOptions = {
-				method: "PATCH",
-				headers: myHeaders,
-				body: raw,
-				redirect: "follow",
-				credentials: "include"
-			};
-
-			fetch(
-				`http://localhost:4242/contribution/admin/${param.data.studLogin}`,
-				requestOptions
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-			setLocked(true);
-			setUpdate(true);
-		}
-	};
-
 	const two_digiter = nb => {
 		if (nb < 10) return "0" + nb;
 		return nb;
@@ -131,10 +85,56 @@ const AdminContribToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
-	}, []);
+	}, [param]);
 	//TODO : fixme daddy (or mommy)
 
 	useEffect(() => {
+		const saveContrib = () => {
+			if (
+				window.confirm(
+					`Desire tu modifier la cotisation de ${param.data.studLogin}`
+				)
+			) {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					stud: param.data.studLogin,
+					cost: param.data.cost,
+					begin_date: bodyState.begin_date,
+					end_date: bodyState.end_date
+				});
+
+				var requestOptions = {
+					method: "PATCH",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow",
+					credentials: "include"
+				};
+
+				fetch(
+					`http://localhost:4242/contribution/admin/${param.data.studLogin}`,
+					requestOptions
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ${response.status}`
+							);
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+				setLocked(true);
+				setUpdate(true);
+			}
+		};
+
 		setUpdate(false);
 		if (locked)
 			setButton(
@@ -156,7 +156,7 @@ const AdminContribToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param, update, formState, locked, bodyState]);
 
 	return (
 		<>

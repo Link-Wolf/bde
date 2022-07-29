@@ -69,55 +69,6 @@ const AdminEventToken = param => {
 		setFormState(tmp);
 	};
 
-	const saveEvent = () => {
-		if (window.confirm(`Desire tu modifier l'event ${param.data.name}`)) {
-			var myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			var raw = JSON.stringify({
-				name: bodyState.name,
-				cost: bodyState.cost,
-				place: bodyState.place,
-				premium_cost: bodyState.premium_cost,
-				nb_places: bodyState.nb_places,
-				desc: bodyState.desc,
-				isOutside: bodyState.isOutside,
-				consos: bodyState.consos,
-				sponso: bodyState.sponso,
-				begin_date: bodyState.begin_date,
-				end_date: bodyState.end_date
-			});
-
-			var requestOptions = {
-				method: "PATCH",
-				headers: myHeaders,
-				body: raw,
-				redirect: "follow",
-				credentials: "include"
-			};
-
-			fetch(
-				`http://localhost:4242/event/${param.data.id}`,
-				requestOptions
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-			setLocked(true);
-			setUpdate(true);
-		}
-	};
-
 	const two_digiter = nb => {
 		if (nb < 10) return "0" + nb;
 		return nb;
@@ -150,9 +101,60 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
-	}, []);
+	}, [param.data]);
 
 	useEffect(() => {
+		const saveEvent = () => {
+			if (
+				window.confirm(`Desire tu modifier l'event ${param.data.name}`)
+			) {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					name: bodyState.name,
+					cost: bodyState.cost,
+					place: bodyState.place,
+					premium_cost: bodyState.premium_cost,
+					nb_places: bodyState.nb_places,
+					desc: bodyState.desc,
+					isOutside: bodyState.isOutside,
+					consos: bodyState.consos,
+					sponso: bodyState.sponso,
+					begin_date: bodyState.begin_date,
+					end_date: bodyState.end_date
+				});
+
+				var requestOptions = {
+					method: "PATCH",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow",
+					credentials: "include"
+				};
+
+				fetch(
+					`http://localhost:4242/event/${param.data.id}`,
+					requestOptions
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ${response.status}`
+							);
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+				setLocked(true);
+				setUpdate(true);
+			}
+		};
+
 		setUpdate(false);
 		if (locked)
 			setButton(
@@ -174,7 +176,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState]);
+	}, [param, update, formState, locked, bodyState]);
 
 	return (
 		<>

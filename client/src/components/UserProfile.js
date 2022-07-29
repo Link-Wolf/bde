@@ -2,7 +2,9 @@ import React from "react";
 import {useState, useEffect} from "react";
 
 const UserProfile = options => {
-	const [ret, setRet] = useState(<></>);
+	const [title, setTitle] = useState(<></>);
+	// const [eventSubed, setEventSubed] = useState(<></>);
+	// const [contributionMarker, setContributionMarker] = useState(<></>);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/stud/${options.login}`, {
@@ -18,7 +20,7 @@ const UserProfile = options => {
 			})
 			.then(data => {
 				console.log(data);
-				setRet(
+				setTitle(
 					<>
 						<h1>{data.login}</h1>
 						<h2>
@@ -35,7 +37,7 @@ const UserProfile = options => {
 			});
 	}, [options]);
 
-	return ret;
+	return <>{title}</>;
 };
 
 export default UserProfile;

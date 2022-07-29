@@ -21,7 +21,7 @@ const DropdownUser = () => {
 					return response.json();
 				})
 				.then(data => {
-					if (data.image_url != -42) setImg(data.image_url);
+					if (data.image_url !== -42) setImg(data.image_url);
 				})
 				.catch(function(error) {
 					console.log(
@@ -33,9 +33,18 @@ const DropdownUser = () => {
 	}, []);
 
 	useEffect(() => {
-		if (img != user_picture)
+		if (img !== user_picture)
 			setRet(
-				<NavDropdown title={<img width="30" height="30" src={img} />}>
+				<NavDropdown
+					title={
+						<img
+							alt="ta petite bouille"
+							width="30"
+							height="30"
+							src={img}
+						/>
+					}
+				>
 					{" "}
 					<NavDropdown.Item href="/me">
 						{" "}
@@ -49,7 +58,16 @@ const DropdownUser = () => {
 			);
 		else
 			setRet(
-				<NavDropdown title={<img width="30" height="30" src={img} />}>
+				<NavDropdown
+					title={
+						<img
+							alt="placeholder petite bouille"
+							width="30"
+							height="30"
+							src={img}
+						/>
+					}
+				>
 					{" "}
 					<NavDropdown.Item href={global.config.intra.redirect}>
 						Login{" "}

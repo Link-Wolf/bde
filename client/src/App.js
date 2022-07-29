@@ -24,7 +24,7 @@ function App() {
 				return response.json();
 			})
 			.then(data => {
-				if (data.theme != -42) setTheme(data.theme);
+				if (data.theme !== -42) setTheme(data.theme);
 			})
 			.catch(function(error) {
 				console.log(

@@ -11,6 +11,9 @@ const Logout = () => {
 		})
 			.then(async () => {
 				let loop = true;
+				let breakLoop = () => {
+					loop = false;
+				};
 				while (loop) {
 					await fetch("http://localhost:4242/session", {
 						credentials: "include"
@@ -26,7 +29,7 @@ const Logout = () => {
 						})
 						.then(data => {
 							console.log(data);
-							if (data.clearance == 0) loop = false;
+							if (data.clearance === 0) breakLoop();
 						});
 					await new Promise(res => setTimeout(res, 1000));
 				}
