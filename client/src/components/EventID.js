@@ -25,7 +25,9 @@ const EventID = () => {
 				setDataEvent(actualData);
 			})
 			.catch(function(error) {
-				console.log(`This is a fetch error: The error is ${error.message}`);
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
 		fetch(`http://localhost:4242/inscription/event/${param.id}`, {
 			credentials: "include"
@@ -42,9 +44,11 @@ const EventID = () => {
 				setDataInsc(actualData);
 			})
 			.catch(function(error) {
-				console.log(`This is a fetch error: The error is ${error.message}`);
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
-	}, []);
+	}, [param.id]);
 	return dataEvent.name ? (
 		<div
 			className={`
@@ -73,7 +77,9 @@ const EventID = () => {
 							? `${dataInsc.length} / ${dataEvent.nb_places}`
 							: `${dataInsc.length} / ∞`}
 					</div>
-					<div className={style.box_dark_green}>{dataEvent.place}</div>
+					<div className={style.box_dark_green}>
+						{dataEvent.place}
+					</div>
 					<div className={`${style.box_dark_green} ${style.price}`}>
 						{dataEvent.cost !== 0
 							? dataEvent.premium_cost === dataEvent.cost

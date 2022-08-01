@@ -54,7 +54,9 @@ export class AppController {
 		return {
 			clearance: session.clearance ? session.clearance : 0,
 			image_url: session.image_url ? session.image_url : -42,
-			login: session.login ? session.login : -42
+			login: session.login ? session.login : -42,
+			firstname: session.firstname ? session.firstname : "",
+			mail: session.mail ? session.mail : "",
 		}
 	}
 }

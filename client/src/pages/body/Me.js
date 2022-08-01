@@ -20,7 +20,7 @@ const Me = () => {
 				return response.json();
 			})
 			.then(data => {
-				if (data.login != -42) setLogin(data.login);
+				if (data.login !== -42) setLogin(data.login);
 			})
 			.catch(function(error) {
 				console.log(
