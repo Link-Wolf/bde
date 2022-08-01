@@ -23,7 +23,7 @@ const Contact = () => {
 			.then(data => {
 				setEmail(data.email);
 				setName(data.firstname);
-				if (data.clearance == 0)
+				if (data.clearance === 0)
 					setIdForm(
 						<Form.Group>
 							<Form.Group>

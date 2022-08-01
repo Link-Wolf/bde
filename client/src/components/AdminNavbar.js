@@ -1,14 +1,12 @@
 import React from "react";
-import {Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 import {
 	CDBSidebar,
 	CDBSidebarContent,
-	CDBSidebarFooter,
 	CDBSidebarHeader,
 	CDBSidebarMenu,
 	CDBSidebarMenuItem
 } from "cdbreact";
-import {NavLink} from "react-router-dom";
 
 // const AdminNavbar = () => {
 // 	return (

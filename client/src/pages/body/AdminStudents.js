@@ -3,11 +3,6 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminStudents = () => {
 	const [data, setData] = useState([]);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		// TODO: get setToken
-	}, []);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/stud`, {credentials: "include"})
@@ -27,7 +22,7 @@ const AdminStudents = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [token]);
+	}, []);
 
 	return (
 		<div

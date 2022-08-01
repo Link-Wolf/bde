@@ -3,11 +3,6 @@ import AdminNavbar from "../../components/AdminNavbar";
 
 const AdminLogs = () => {
 	const [data, setData] = useState([]);
-	const [token, setToken] = useState("");
-
-	useEffect(() => {
-		// TODO: get setToken
-	}, []);
 
 	useEffect(() => {
 		fetch(`http://localhost:4242/admin/logs`, {
@@ -32,7 +27,7 @@ const AdminLogs = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [token]);
+	}, []);
 
 	return (
 		<div
