@@ -31,7 +31,7 @@ const AdminCaptainManagement = param => {
 
 	const yeetConfirm = toYeet => {
 		const requestOptions = {
-			method: "patch",
+			method: "PATCH",
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"
