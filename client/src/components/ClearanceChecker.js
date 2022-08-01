@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react";
-import {Navigate} from "react-router-dom";
 
 const ClearanceChecker = data => {
 	const [clearance, setClearance] = useState(-42);
@@ -18,7 +17,7 @@ const ClearanceChecker = data => {
 				return response.json();
 			})
 			.then(data => {
-				if (data.clearance != -42) setClearance(data.clearance);
+				if (data.clearance !== -42) setClearance(data.clearance);
 			})
 			.catch(function(error) {
 				console.log(
@@ -29,12 +28,12 @@ const ClearanceChecker = data => {
 	}, []);
 
 	useEffect(() => {
-		if (clearance != -42) {
+		if (clearance !== -42) {
 			if (clearance < data.securityLevel)
 				setRet(<> {data.unauthorized} </>);
 			else setRet(<> {data.children} </>);
 		}
-	}, [clearance]);
+	}, [clearance, data]);
 
 	return ret;
 };
