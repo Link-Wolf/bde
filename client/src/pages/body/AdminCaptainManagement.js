@@ -32,7 +32,10 @@ const AdminCaptainManagement = param => {
 	const yeetConfirm = toYeet => {
 		const requestOptions = {
 			method: "patch",
-			credentials: "include"
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json"
+			}
 		};
 		fetch(`http://localhost:4242/stud/admin/${toYeet}`, requestOptions)
 			.then(response => {
