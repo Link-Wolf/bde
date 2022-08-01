@@ -1,25 +1,14 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-import style from "../../style/AdminEventsSubscribtions.module.css";
-
-import {
-	Form,
-	Button,
-	FormGroup,
-	ControlLabel,
-	FormControl
-} from "react-bootstrap";
+import {Form, Button, FormGroup} from "react-bootstrap";
 
 const AdminStudents = () => {
 	const [stud, setStud] = useState([]);
 	const [allEvent, setAllEvent] = useState([]);
-	const [eventPreload, setEventPreload] = useState(false);
 	const [selectedEvent, setSelectedEvent] = useState("");
 	const [update, setUpdate] = useState(false);
 	const [subForm, setSubForm] = useState(<></>);
-	const [validationClass, setValidationClass] = useState(style.neutral);
-	const [token, setToken] = useState("");
 
 	useEffect(() => {
 		// TODO: get token
@@ -95,11 +84,9 @@ const AdminStudents = () => {
 					);
 				}
 				setUpdate(true);
-				setValidationClass(style.ok);
 			})
 			.catch(function() {
 				setUpdate(true);
-				setValidationClass(style.ko);
 			});
 	};
 
@@ -140,27 +127,27 @@ const AdminStudents = () => {
 		}
 	};
 
-	const handleSubButton = () => {
-		let toSub = document.getElementById("studToAdd").value;
-		if (
-			window.confirm(
-				`Tu es certain de vouloir inscrire ${toSub} de force ?`
-			)
-		) {
-			if (toSub === "") setValidationClass(style.ko);
-			else {
-				checkStud(selectedEvent, toSub);
-				toSub = 0;
-			}
-			setUpdate(true);
-		}
-	};
 	useEffect(() => {
 		getAllEvent();
-	}, [token]);
+	}, []);
 
 	useEffect(() => {
 		setUpdate(false);
+
+		const handleSubButton = () => {
+			let toSub = document.getElementById("studToAdd").value;
+			if (
+				window.confirm(
+					`Tu es certain de vouloir inscrire ${toSub} de force ?`
+				)
+			) {
+				if (toSub !== "") {
+					checkStud(selectedEvent, toSub);
+					toSub = 0;
+				}
+				setUpdate(true);
+			}
+		};
 
 		if (selectedEvent !== "") {
 			getStud(selectedEvent);
@@ -181,7 +168,7 @@ const AdminStudents = () => {
 				</FormGroup>
 			);
 		}
-	}, [selectedEvent, update, token]);
+	}, [selectedEvent, update]);
 
 	return (
 		<div
