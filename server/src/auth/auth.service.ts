@@ -86,7 +86,7 @@ export class AuthService {
 								lastname: retStud.lastname,
 								image_url: response.data.image_url,
 								clearance: retStud.clearance,
-								email: response.data.email
+								mail: response.data.email
 							}
 						})
 						.catch(error => { return error })
