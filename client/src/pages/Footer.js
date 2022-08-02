@@ -1,8 +1,8 @@
 import style from "../style/Footer.module.css";
 
-import twitter_logo from "../images/logos/twitter.png";
-import discord_logo from "../images/logos/discord.png";
-import instagram_logo from "../images/logos/instagram.png";
+import twitter_logo from "../assets/logos/twitter.png";
+import discord_logo from "../assets/logos/discord.png";
+import instagram_logo from "../assets/logos/instagram.png";
 
 function Footer() {
 	return (
