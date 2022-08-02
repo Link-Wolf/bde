@@ -168,10 +168,8 @@ const RouteWrapper = params => {
 				securityLevel={params.check}
 				unauthorized={<Navigate to="/home"></Navigate>}
 			>
-				//
 				<Header />
 				{params.route}
-				//
 				<Footer />
 			</ClearanceChecker>
 			/>

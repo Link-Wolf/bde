@@ -11,51 +11,47 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		setTimeout(() => {
-			fetch(`http://${global.config.api.authority}/session`, {
-				credentials: "include"
-			})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					return response.json();
-				})
-				.then(data => {
-					if (data.clearance === global.config.clearance.default) {
-						setLeftButton(
-							<Nav className="me-auto">
-								<Nav.Link href="/shop">Shop</Nav.Link>
-								<Nav.Link href="/contact">Contact</Nav.Link>
-								<Nav.Link href="/about">About Us</Nav.Link>
-							</Nav>
-						);
-					}
-					if (data.clearance > global.config.clearance.default) {
-						setLeftButton(
-							<Nav className="me-auto">
-								<Nav.Link href="/events">Events</Nav.Link>
-								<Nav.Link href="/shop">Shop</Nav.Link>
-								<Nav.Link href="/contact">Contact</Nav.Link>
-								<Nav.Link href="/about">About Us</Nav.Link>
-							</Nav>
-						);
-					}
-					if (data.clearance >= global.config.clearance.admin) {
-						setRightButton(
-							<Nav.Link href="/admin">Admin</Nav.Link>
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+		fetch(`http://${global.config.api.authority}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-		}, 100);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.clearance === global.config.clearance.default) {
+					setLeftButton(
+						<Nav className="me-auto">
+							<Nav.Link href="/shop">Shop</Nav.Link>
+							<Nav.Link href="/contact">Contact</Nav.Link>
+							<Nav.Link href="/about">About Us</Nav.Link>
+						</Nav>
+					);
+				}
+				if (data.clearance > global.config.clearance.default) {
+					setLeftButton(
+						<Nav className="me-auto">
+							<Nav.Link href="/events">Events</Nav.Link>
+							<Nav.Link href="/shop">Shop</Nav.Link>
+							<Nav.Link href="/contact">Contact</Nav.Link>
+							<Nav.Link href="/about">About Us</Nav.Link>
+						</Nav>
+					);
+				}
+				if (data.clearance >= global.config.clearance.admin) {
+					setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}, []);
 
 	return (
