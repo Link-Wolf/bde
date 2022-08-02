@@ -5,7 +5,7 @@ const Logout = () => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		fetch("http://${global.config.api.authority}/auth/logout", {
+		fetch(`http://${global.config.api.authority}/auth/logout`, {
 			method: "POST",
 			credentials: "include"
 		})
@@ -15,9 +15,12 @@ const Logout = () => {
 					loop = false;
 				};
 				while (loop) {
-					await fetch("http://${global.config.api.authority}/session", {
-						credentials: "include"
-					})
+					await fetch(
+						`http://${global.config.api.authority}/session`,
+						{
+							credentials: "include"
+						}
+					)
 						.then(response => {
 							if (!response.ok) {
 								throw new Error(

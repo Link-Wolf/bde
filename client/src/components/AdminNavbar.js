@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Nav} from "react-bootstrap";
 import {
 	CDBSidebar,
@@ -29,15 +29,24 @@ import {
 // };
 
 const AdminNavbar = () => {
+	const [headerHeight, setHeaderHeight] = useState(0);
+	const [footerHeight, setFooterHeight] = useState(0);
+
+	useEffect(() => {
+		if (document.getElementById("header"))
+			setHeaderHeight(document.getElementById("header").offsetHeight);
+		if (document.getElementById("footer"))
+			setHeaderHeight(document.getElementById("footer").offsetHeight);
+	}, []);
+
+	console.log(document.getElementById("header"));
 	return (
 		<div
 			style={{
 				display: "flex",
-				height: `calc(100vh - (${
-					document.getElementById("header").offsetHeight
-				}px + ${document.getElementById("footer").offsetHeight}px))`,
+				height: `calc(100vh - (${headerHeight}px + ${footerHeight}px))`,
 				position: "sticky",
-				top: `${document.getElementById("header").offsetHeight}px`
+				top: `${headerHeight}px`
 			}}
 		>
 			<CDBSidebar textColor="#fff" backgroundColor="#333">
