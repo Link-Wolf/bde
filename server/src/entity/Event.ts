@@ -80,6 +80,12 @@ export class Event {
 	})
 	end_date: Date
 
+	@Column({
+		type: 'text',
+		nullable: true
+	})
+	thumbnail_filename: string
+
 	@ManyToMany(() => Stud, (stud) => stud.inscriptions, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
