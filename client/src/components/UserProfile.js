@@ -7,7 +7,7 @@ const UserProfile = options => {
 	// const [contributionMarker, setContributionMarker] = useState(<></>);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/stud/${options.login}`, {
+		fetch(`http://${global.config.api.authority}/stud/${options.login}`, {
 			credentials: "include"
 		})
 			.then(response => {

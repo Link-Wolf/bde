@@ -99,7 +99,10 @@ const AdminEventToken = () => {
 				credentials: "include"
 			};
 
-			fetch(`http://localhost:4242/event/`, requestOptions)
+			fetch(
+				`http://${global.config.api.authority}/event/`,
+				requestOptions
+			)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(

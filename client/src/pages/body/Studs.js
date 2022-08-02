@@ -9,7 +9,9 @@ const Stud = () => {
 	}, []);
 
 	const getStud = () => {
-		fetch("http://localhost:4242/stud", {credentials: "include"})
+		fetch(`http://${global.config.api.authority}/stud`, {
+			credentials: "include"
+		})
 			.then(response => {
 				return response.json();
 			})
@@ -33,7 +35,9 @@ const Stud = () => {
 							<ul>
 								<li>{user.firstname}</li>
 								<li>{user.lastname}</li>
-								<li>{user.isDirection ? "direction" : "pnj"}</li>
+								<li>
+									{user.isDirection ? "direction" : "pnj"}
+								</li>
 							</ul>
 						</li>
 					))}

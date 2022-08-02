@@ -12,7 +12,7 @@ function App() {
 	const [theme, setTheme] = useState("light");
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/theme`, {
+		fetch(`http://${global.config.api.authority}/theme`, {
 			credentials: "include"
 		})
 			.then(response => {

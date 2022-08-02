@@ -10,7 +10,7 @@ const EventID = () => {
 	const param = useParams();
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/event/${param.id}`, {
+		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -29,9 +29,12 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		fetch(`http://localhost:4242/inscription/event/${param.id}`, {
-			credentials: "include"
-		})
+		fetch(
+			`http://${global.config.api.authority}/inscription/event/${param.id}`,
+			{
+				credentials: "include"
+			}
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
