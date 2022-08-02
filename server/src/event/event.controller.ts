@@ -3,6 +3,7 @@ import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
 import { EventDtoPipe, EventFilterDtoPipe } from './event.pipe';
+import { File } from '@babel/types';
 
 @Controller('event/')
 export class EventController {
@@ -37,6 +38,14 @@ export class EventController {
 		@Body(new EventFilterDtoPipe()) filters: EventFilterDto,
 		@Session() session: Record<string, any>): Promise<Event[]> {
 		return this.eventService.findAll(filters, session.login);
+	}
+
+	@Post('upload_image/:event_id')
+	uploadImage(
+		@Param('id', ParseIntPipe) id: number,
+		@Body('file') file: File
+	) {
+		console.log(file)
 	}
 
 	@Patch(':id')
