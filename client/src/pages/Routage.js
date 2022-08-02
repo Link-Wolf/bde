@@ -63,115 +63,94 @@ const Routage = () => {
 				<Route
 					path="me"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.other_campus}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<Me />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<Me />}
+							check={global.config.clearance.other_campus}
+						/>
 					}
 				/>
 				<Route
 					path="profile/:login"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.unpaid}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<Profile />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<Profile />}
+							check={global.config.clearance.unpaid}
+						/>
 					}
 				/>
 				<Route
 					path="events"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.pool}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<Events />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<Events />}
+							check={global.config.clearance.pool}
+						/>
 					}
 				/>
 				<Route
 					path="event/:id"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.pool}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<Event />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<Event />}
+							check={global.config.clearance.pool}
+						/>
 					}
 				/>
 				<Route
 					path="admin/teammanagement"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.bde_director}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<AdminCaptainManagement />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminCaptainManagement />}
+							check={global.config.clearance.bde_director}
+						/>
 					}
 				/>
 				<Route
 					path="admin/events/gestion"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<AdminEventsGestion />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminEventsGestion />}
+							check={global.config.clearance.admin}
+						/>
 					}
 				/>
 				<Route
 					path="admin/events/subscribtions"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper
-								route={<AdminEventsSubscribtions />}
-							/>
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminEventsSubscribtions />}
+							check={global.config.clearance.admin}
+						/>
 					}
 				/>
 				<Route
 					path="admin/contributions"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<AdminContributions />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminContributions />}
+							check={global.config.clearance.admin}
+						/>
 					}
 				/>
 				<Route
 					path="admin/logs"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<AdminLogs />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminLogs />}
+							check={global.config.clearance.admin}
+						/>
 					}
 				/>
 				<Route
 					path="admin/students"
 					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<RouteWrapper route={<AdminStudents />} />
-						</ClearanceChecker>
+						<RouteWrapper
+							route={<AdminStudents />}
+							check={global.config.clearance.admin}
+						/>
 					}
 				/>
+
 				<Route
 					path="admin/*"
 					element={<Navigate to="/admin/students" />}
@@ -185,17 +164,17 @@ const Routage = () => {
 const RouteWrapper = params => {
 	return (
 		<>
-			<Header />
-			{params.route}
-			<Footer />
-		</>
-	);
-};
-
-const AdminRoutes = () => {
-	return (
-		<>
-			<Routes></Routes>
+			<ClearanceChecker
+				securityLevel={params.check}
+				unauthorized={<Navigate to="/home"></Navigate>}
+			>
+				//
+				<Header />
+				{params.route}
+				//
+				<Footer />
+			</ClearanceChecker>
+			/>
 		</>
 	);
 };
