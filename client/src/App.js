@@ -36,9 +36,7 @@ function App() {
 
 	return (
 		<div className={`App ${theme}`}>
-			<Header />
 			<Routage />
-			<Footer />
 		</div>
 	);
 }

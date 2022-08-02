@@ -178,7 +178,7 @@ export class StudService {
 		}
 	}
 
-	async changeCaptain(login: string, requestMaker: string) { //GUARDS
+	async changeCaptain(login: string, requestMaker: string) {
 		try {
 			let newCaptain = await this.findOne(login, requestMaker);
 			let captain = await this.studRepository.findOneBy({ clearance: 21 })

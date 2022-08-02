@@ -23,20 +23,43 @@ import Log from "./body/Log";
 import Me from "./body/Me";
 import Profile from "./body/Profile";
 
+import Header from "./Header";
+import Footer from "./Footer";
+
 const Routage = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="" element={<Navigate to="/home" />} />
-				<Route path="home" element={<Home />} />
-				<Route path="about" element={<About />} />
-				<Route path="cgu" element={<Cgu />} />
-				<Route path="dollarthings" element={<Cgv />} />
-				<Route path="legalthings" element={<Cgu />} />
-				<Route path="contact" element={<Contact />} />
-				<Route path="log" element={<Log />} />
-				<Route path="log/redirect" element={<Log />} />
-				<Route path="shop" element={<Shop />} />
+				<Route
+					path="home"
+					element={<RouteWrapper route={<Home />} />}
+				/>
+				<Route
+					path="about"
+					element={<RouteWrapper route={<About />} />}
+				/>
+				<Route
+					path="dollarthings"
+					element={<RouteWrapper route={<Cgv />} />}
+				/>
+				<Route
+					path="legalthings"
+					element={<RouteWrapper route={<Cgu />} />}
+				/>
+				<Route
+					path="contact"
+					element={<RouteWrapper route={<Contact />} />}
+				/>
+				<Route path="log" element={<RouteWrapper route={<Log />} />} />
+				<Route
+					path="log/redirect"
+					element={<RouteWrapper route={<Log />} />}
+				/>
+				<Route
+					path="shop"
+					element={<RouteWrapper route={<Shop />} />}
+				/>
 
 				<Route
 					path="me"
@@ -45,7 +68,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.other_campus}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<Me />
+							<RouteWrapper route={<Me />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -57,7 +80,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.unpaid}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<Profile />
+							<RouteWrapper route={<Profile />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -69,7 +92,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.pool}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<Events />
+							<RouteWrapper route={<Events />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -81,10 +104,32 @@ const Routage = () => {
 							securityLevel={global.config.clearance.pool}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<Event />
+							<RouteWrapper route={<Event />} />
 						</ClearanceChecker>
 					}
 				/>
+
+				<Route path="admin/*" element={<AdminRoutes />} />
+
+				<Route path="*" element={<NoPage />} />
+			</Routes>
+		</BrowserRouter>
+	);
+};
+const RouteWrapper = params => {
+	return (
+		<>
+			<Header />
+			{params.route}
+			<Footer />
+		</>
+	);
+};
+
+const AdminRoutes = () => {
+	return (
+		<>
+			<Routes>
 				<Route
 					path="admin/teammanagement"
 					element={
@@ -92,7 +137,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.bde_director}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminCaptainManagement />
+							<RouteWrapper route={<AdminCaptainManagement />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -103,7 +148,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.admin}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminEventsGestion />
+							<RouteWrapper route={<AdminEventsGestion />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -114,7 +159,9 @@ const Routage = () => {
 							securityLevel={global.config.clearance.admin}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminEventsSubscribtions />
+							<RouteWrapper
+								route={<AdminEventsSubscribtions />}
+							/>
 						</ClearanceChecker>
 					}
 				/>
@@ -125,7 +172,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.admin}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminContributions />
+							<RouteWrapper route={<AdminContributions />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -136,7 +183,7 @@ const Routage = () => {
 							securityLevel={global.config.clearance.admin}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminLogs />
+							<RouteWrapper route={<AdminLogs />} />
 						</ClearanceChecker>
 					}
 				/>
@@ -147,19 +194,23 @@ const Routage = () => {
 							securityLevel={global.config.clearance.admin}
 							unauthorized={<Navigate to="/home"></Navigate>}
 						>
-							<AdminStudents />
+							<RouteWrapper route={<AdminStudents />} />
 						</ClearanceChecker>
 					}
 				/>
-
 				<Route
-					path="admin/"
-					element={<Navigate to="/admin/students" />}
+					path="admin/*"
+					element={
+						<ClearanceChecker
+							securityLevel={global.config.clearance.admin}
+							unauthorized={<Navigate to="/home"></Navigate>}
+						>
+							<Navigate to="/admin/students"></Navigate>
+						</ClearanceChecker>
+					}
 				/>
-
-				<Route path="*" element={<NoPage />} />
 			</Routes>
-		</BrowserRouter>
+		</>
 	);
 };
 
