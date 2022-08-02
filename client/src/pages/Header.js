@@ -10,6 +10,35 @@ function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 
+	const [isShrunk, setShrunk] = useState(false);
+
+	useEffect(() => {
+		const handler = () => {
+			setShrunk(isShrunk => {
+				if (
+					!isShrunk &&
+					(document.body.scrollTop > 20 ||
+						document.documentElement.scrollTop > 20)
+				) {
+					return true;
+				}
+
+				if (
+					isShrunk &&
+					document.body.scrollTop < 4 &&
+					document.documentElement.scrollTop < 4
+				) {
+					return false;
+				}
+
+				return isShrunk;
+			});
+		};
+
+		window.addEventListener("scroll", handler);
+		return () => window.removeEventListener("scroll", handler);
+	}, []);
+
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/session`, {
 			credentials: "include"
@@ -61,6 +90,11 @@ function Header() {
 			bg="dark"
 			variant="dark"
 			id="header"
+			style={{
+				transition: "0.5s",
+				marginBottom: "10vh"
+			}}
+			className={isShrunk ? "py-2" : "py-5"}
 		>
 			<Container>
 				<Navbar.Brand href="/home">
