@@ -27,6 +27,11 @@ export class StudController {
 		return this.studService.findDirection(session.login);
 	}
 
+	@Get('admin/noDirection')
+	findNoDirection(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findNoDirection(session.login);
+	}
+
 	@Post()
 	create(@Session() session: Record<string, any>, @Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.create(stud, session.login);

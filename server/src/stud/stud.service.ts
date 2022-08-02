@@ -44,6 +44,20 @@ export class StudService {
 		}
 	}
 
+	async findNoDirection(requestMaker: string): Promise<Stud[]> {
+		try {
+			let studs = await this.studRepository.findBy({
+				isDirection: false,
+			});
+			this.logger.log(`Got all non-direction members`, requestMaker);
+			return studs;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all non-direction members on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to get all non-direction members on database (${error})`);
+		}
+	}
+
 	async findOne(login: string, requestMaker: string): Promise<Stud> {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
@@ -83,12 +97,11 @@ export class StudService {
 				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
 			}
 			let updatedOne = `UPDATE stud SET "isDirection" = ${!user.isDirection} WHERE login = '${login}'`;
-			console.log(updatedOne)
 			await this.studRepository.query(updatedOne);
-			this.logger.warn(`Successfully yeet direction member ${login}`, requestMaker);
+			this.logger.warn(`Successfully yeet/promote direction member ${login}`, requestMaker);
 		} catch (error) {
-			this.logger.error(`Failed to yeet direction member ${login} on database (${error})`, requestMaker)
-			throw new NotFoundException(`Failed to yeet direction member ${login} on database (${error})`)
+			this.logger.error(`Failed to yeet/promote direction member ${login} on database (${error})`, requestMaker)
+			throw new NotFoundException(`Failed to yeet/promote direction member ${login} on database (${error})`)
 		}
 	}
 

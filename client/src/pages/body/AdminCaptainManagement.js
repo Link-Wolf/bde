@@ -1,6 +1,8 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
+import AddDirectionSearchBar from "../../components/AddDirectionSearchBar";
+
 const AdminCaptainManagement = () => {
 	const [data, setData] = useState([]);
 
@@ -103,20 +105,23 @@ const AdminCaptainManagement = () => {
 		>
 			<AdminNavbar />
 			<div>
-				{data.map(item => (
-					<li key={item.login}>
-						<label>{item.login} </label>
-						<label>{item.firstname} </label>
-						<label>{item.lastname} </label>
-						<button
-							onClick={() => {
-								yeetMember(item.login);
-							}}
-						>
-							X
-						</button>
-					</li>
-				))}
+				<AddDirectionSearchBar />
+				{data.length > 0
+					? data.map(item => (
+							<li key={item.login}>
+								<label>{item.login} </label>
+								<label>{item.firstname} </label>
+								<label>{item.lastname} </label>
+								<button
+									onClick={() => {
+										yeetMember(item.login);
+									}}
+								>
+									X
+								</button>
+							</li>
+					  ))
+					: "Le Bureau est vide"}
 			</div>
 		</div>
 	);
