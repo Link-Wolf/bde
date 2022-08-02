@@ -40,47 +40,51 @@ function Header() {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
+		setTimeout(() => {
+			fetch(`http://${global.config.api.authority}/session`, {
+				credentials: "include"
 			})
-			.then(data => {
-				if (data.clearance === global.config.clearance.default) {
-					setLeftButton(
-						<Nav className="me-auto">
-							<Nav.Link href="/shop">Shop</Nav.Link>
-							<Nav.Link href="/contact">Contact</Nav.Link>
-							<Nav.Link href="/about">About Us</Nav.Link>
-						</Nav>
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.clearance === global.config.clearance.default) {
+						setLeftButton(
+							<Nav className="me-auto">
+								<Nav.Link href="/shop">Shop</Nav.Link>
+								<Nav.Link href="/contact">Contact</Nav.Link>
+								<Nav.Link href="/about">About Us</Nav.Link>
+							</Nav>
+						);
+					}
+					if (data.clearance > global.config.clearance.default) {
+						setLeftButton(
+							<Nav className="me-auto">
+								<Nav.Link href="/events">Events</Nav.Link>
+								<Nav.Link href="/shop">Shop</Nav.Link>
+								<Nav.Link href="/contact">Contact</Nav.Link>
+								<Nav.Link href="/about">About Us</Nav.Link>
+							</Nav>
+						);
+					}
+					if (data.clearance >= global.config.clearance.admin) {
+						setRightButton(
+							<Nav.Link href="/admin">Admin</Nav.Link>
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
 					);
-				}
-				if (data.clearance > global.config.clearance.default) {
-					setLeftButton(
-						<Nav className="me-auto">
-							<Nav.Link href="/events">Events</Nav.Link>
-							<Nav.Link href="/shop">Shop</Nav.Link>
-							<Nav.Link href="/contact">Contact</Nav.Link>
-							<Nav.Link href="/about">About Us</Nav.Link>
-						</Nav>
-					);
-				}
-				if (data.clearance >= global.config.clearance.admin) {
-					setRightButton(<Nav.Link href="/admin">Admin</Nav.Link>);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+				});
+		}, 100);
 	}, []);
 
 	return (
@@ -91,8 +95,7 @@ function Header() {
 			variant="dark"
 			id="header"
 			style={{
-				transition: "0.5s",
-				marginBottom: "10vh"
+				transition: "0.5s"
 			}}
 			className={isShrunk ? "py-2" : "py-5"}
 		>
