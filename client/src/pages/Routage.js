@@ -60,7 +60,6 @@ const Routage = () => {
 					path="shop"
 					element={<RouteWrapper route={<Shop />} />}
 				/>
-
 				<Route
 					path="me"
 					element={
@@ -72,7 +71,6 @@ const Routage = () => {
 						</ClearanceChecker>
 					}
 				/>
-
 				<Route
 					path="profile/:login"
 					element={
@@ -84,7 +82,6 @@ const Routage = () => {
 						</ClearanceChecker>
 					}
 				/>
-
 				<Route
 					path="events"
 					element={
@@ -96,7 +93,6 @@ const Routage = () => {
 						</ClearanceChecker>
 					}
 				/>
-
 				<Route
 					path="event/:id"
 					element={
@@ -108,28 +104,6 @@ const Routage = () => {
 						</ClearanceChecker>
 					}
 				/>
-
-				<Route path="admin/*" element={<AdminRoutes />} />
-
-				<Route path="*" element={<NoPage />} />
-			</Routes>
-		</BrowserRouter>
-	);
-};
-const RouteWrapper = params => {
-	return (
-		<>
-			<Header />
-			{params.route}
-			<Footer />
-		</>
-	);
-};
-
-const AdminRoutes = () => {
-	return (
-		<>
-			<Routes>
 				<Route
 					path="admin/teammanagement"
 					element={
@@ -200,16 +174,28 @@ const AdminRoutes = () => {
 				/>
 				<Route
 					path="admin/*"
-					element={
-						<ClearanceChecker
-							securityLevel={global.config.clearance.admin}
-							unauthorized={<Navigate to="/home"></Navigate>}
-						>
-							<Navigate to="/admin/students"></Navigate>
-						</ClearanceChecker>
-					}
+					element={<Navigate to="/admin/students" />}
 				/>
+
+				<Route path="*" element={<NoPage />} />
 			</Routes>
+		</BrowserRouter>
+	);
+};
+const RouteWrapper = params => {
+	return (
+		<>
+			<Header />
+			{params.route}
+			<Footer />
+		</>
+	);
+};
+
+const AdminRoutes = () => {
+	return (
+		<>
+			<Routes></Routes>
 		</>
 	);
 };
