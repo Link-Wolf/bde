@@ -39,7 +39,6 @@ const AdminNavbar = () => {
 			setHeaderHeight(document.getElementById("footer").offsetHeight);
 	}, []);
 
-	console.log(document.getElementById("header"));
 	return (
 		<div
 			style={{
