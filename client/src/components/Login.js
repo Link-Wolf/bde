@@ -16,7 +16,7 @@ const Login = () => {
 				code: code
 			})
 		};
-		fetch("http://localhost:4242/auth", requestOptions)
+		fetch(`http://${global.config.api.authority}/auth`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -33,9 +33,12 @@ const Login = () => {
 					loop = false;
 				};
 				while (loop) {
-					await fetch("http://localhost:4242/session", {
-						credentials: "include"
-					})
+					await fetch(
+						`http://${global.config.api.authority}/session`,
+						{
+							credentials: "include"
+						}
+					)
 						.then(response => {
 							if (!response.ok) {
 								throw new Error(

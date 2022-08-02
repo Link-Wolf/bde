@@ -5,7 +5,7 @@ const AdminLogs = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/admin/logs`, {
+		fetch(`http://${global.config.api.authority}/admin/logs`, {
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"

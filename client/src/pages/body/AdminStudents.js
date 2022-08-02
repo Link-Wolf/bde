@@ -5,7 +5,7 @@ const AdminStudents = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/stud`, {credentials: "include"})
+		fetch(`http://${global.config.api.authority}/stud`, {credentials: "include"})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

@@ -15,7 +15,7 @@ const AdminStudents = () => {
 	}, []);
 
 	const getStud = id => {
-		fetch(`http://localhost:4242/inscription/${id}/stud`, {
+		fetch(`http://${global.config.api.authority}/inscription/${id}/stud`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -46,7 +46,7 @@ const AdminStudents = () => {
 			}
 		};
 		fetch(
-			`http://localhost:4242/inscription/admin/${eventId}/${login}`,
+			`http://${global.config.api.authority}/inscription/admin/${eventId}/${login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -74,7 +74,7 @@ const AdminStudents = () => {
 			body: JSON.stringify({login: login})
 		};
 		fetch(
-			`http://localhost:4242/event/admin/${eventId}/inscription`,
+			`http://${global.config.api.authority}/event/admin/${eventId}/inscription`,
 			requestOptions
 		)
 			.then(response => {
@@ -91,7 +91,7 @@ const AdminStudents = () => {
 	};
 
 	const getAllEvent = () => {
-		fetch(`http://localhost:4242/event/current`, {
+		fetch(`http://${global.config.api.authority}/event/current`, {
 			credentials: "include"
 		})
 			.then(response => {

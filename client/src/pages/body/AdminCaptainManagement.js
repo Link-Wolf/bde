@@ -9,7 +9,7 @@ const AdminCaptainManagement = param => {
 			method: "get",
 			credentials: "include"
 		};
-		fetch(`http://localhost:4242/stud/admin/direction`, requestOptions)
+		fetch(`http://${global.config.api.authority}/stud/admin/direction`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -37,7 +37,7 @@ const AdminCaptainManagement = param => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(`http://localhost:4242/stud/admin/${toYeet}`, requestOptions)
+		fetch(`http://${global.config.api.authority}/stud/admin/${toYeet}`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

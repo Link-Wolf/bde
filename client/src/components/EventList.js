@@ -14,7 +14,7 @@ const EventList = param => {
 			},
 			body: JSON.stringify(param.filter)
 		};
-		fetch(`http://localhost:4242/event/get`, requestOptions)
+		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

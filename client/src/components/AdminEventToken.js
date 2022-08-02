@@ -147,7 +147,7 @@ const AdminEventToken = param => {
 				};
 
 				fetch(
-					`http://localhost:4242/event/${param.data.id}`,
+					`http://${global.config.api.authority}/event/${param.data.id}`,
 					requestOptions
 				)
 					.then(response => {

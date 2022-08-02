@@ -5,7 +5,7 @@ const ClearanceChecker = data => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		fetch(`http://localhost:4242/session`, {
+		fetch(`http://${global.config.api.authority}/session`, {
 			credentials: "include"
 		})
 			.then(response => {

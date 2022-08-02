@@ -16,7 +16,7 @@ const AdminContributions = () => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(`http://localhost:4242/contribution`, requestOptions)
+		fetch(`http://${global.config.api.authority}/contribution`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -36,7 +36,7 @@ const AdminContributions = () => {
 	}, [update]);
 
 	// const saveNewContrib = () => {
-	// 	fetch(`http://localhost:4242/contribution/admin`, {
+	// 	fetch(`http://${global.config.api.authority}/contribution/admin`, {
 	// 		method: "POST",
 	// 		credentials: "include",
 	// 		headers: {
