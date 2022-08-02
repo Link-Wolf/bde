@@ -89,7 +89,6 @@ const AdminCaptainManagement = () => {
 								`Voulez vous ne pas virer ${login} du bureau de direction et annuler?`
 							)
 						) {
-							console.log("tesr");
 							yeetConfirm(login);
 						}
 					}
