@@ -89,7 +89,7 @@ export class StudService {
 		}
 	}
 
-	async updateDirection(login: string, requestMaker: string): Promise<void> {
+	async updateDirection(login: string, requestMaker: string): Promise<void> {// TODO: make it 2 end points and change credential
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
@@ -151,7 +151,23 @@ export class StudService {
 			return user
 		} catch (error) {
 			this.logger.error(`Failed to log student on database (${error})`, requestMaker)
-			throw new NotFoundException(`log student on database (${error})`)
+			throw new NotFoundException(`Failed to log student on database (${error})`)
+		}
+	}
+
+	async changeCaptain(login: string, requestMaker: string) {
+		try {
+			let newCaptain = await this.findOne(login, requestMaker);
+			let captain = await this.studRepository.findOneBy({ clearance: 21 })
+			if (!newCaptain || !captain) {
+				this.logger.error(`Failed to give the tricorn to ${login} : direction member does not exist`, requestMaker);
+				throw new NotFoundException(`Failed to give the tricorn to ${login} : direction member does not exist`)
+			}
+			await this.studRepository.query(`UPDATE stud SET "clearance" = 11 WHERE login = '${captain.login}'`);
+			await this.studRepository.query(`UPDATE stud SET "clearance" = 21 WHERE login = '${newCaptain.login}'`);
+		} catch (error) {
+			this.logger.error(`Failed to give the tricorn to ${login} on database (${error})`, requestMaker)
+			throw new NotFoundException(`Failed to give the tricorn to ${login} on database (${error})`)
 		}
 	}
 }
