@@ -42,9 +42,14 @@ export class StudController {
 		return this.studService.update(login, stud, session.login);
 	}
 
-	@Patch('admin/:login')
-	updateDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
-		return this.studService.updateDirection(login, session.login);
+	@Patch('admin/yeet/:login')
+	removeDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.addDirection(login, session.login);
+	}
+
+	@Patch('admin/promote/:login')
+	addDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.removeDirection(login, session.login);
 	}
 
 	@Delete(':login')
