@@ -32,8 +32,8 @@ const AdminEventToken = () => {
 		isOutside: false,
 		for_pool: false
 	});
-	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
+	const [selectedImage, setSelectedImage] = useState(null);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -234,6 +234,14 @@ const AdminEventToken = () => {
 					name="for_pool"
 					onChange={handleFormChange}
 					value={formState.for_pool}
+				/>
+				<Form.Control
+					type="file"
+					name="myImage"
+					onChange={event => {
+						console.log(event.target.files[0]);
+						setSelectedImage(event.target.files[0]);
+					}}
 				/>
 				<Button type="button" defaultValue={-1} onClick={saveEvent}>
 					Save

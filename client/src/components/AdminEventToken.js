@@ -35,6 +35,7 @@ const AdminEventToken = param => {
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
+	const [selectedImage, setSelectedImage] = useState(null);
 
 	const switchLock = () => {
 		setLocked(false);
@@ -102,18 +103,27 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getHours()) +
 			":" +
 			two_digiter(begin_date.getMinutes());
-		console.log(`Outside de ${param.data.name} : ${param.data.isOutside}`);
-		console.log(`Sponso de ${param.data.name} : ${param.data.sponso}`);
-
-		console.log(`Consos de ${param.data.name} : ${param.data.consos}`);
-
-		console.log(`For_pool de ${param.data.name} : ${param.data.for_pool}`);
-
 		tmp.isOutside = param.data.isOutside;
 		tmp.sponso = param.data.sponso;
 		tmp.consos = param.data.consos;
 		tmp.for_pool = param.data.for_pool;
 		setFormState(tmp);
+		let tmpBody = {...tmp};
+		tmpBody.end_date =
+			two_digiter(end_date.getFullYear()) +
+			"-" +
+			two_digiter(end_date.getMonth() + 1) +
+			"-" +
+			two_digiter(end_date.getDate());
+		tmpBody.begin_date =
+			two_digiter(begin_date.getFullYear()) +
+			"-" +
+			two_digiter(begin_date.getMonth() + 1) +
+			"-" +
+			two_digiter(begin_date.getDate());
+		// console.log(tmpBody.begin_date);
+		// console.log(tmpBody.end_date);
+		setBodyState(tmpBody);
 	}, [param.data]);
 
 	useEffect(() => {
@@ -135,8 +145,9 @@ const AdminEventToken = param => {
 					consos: bodyState.consos,
 					sponso: bodyState.sponso,
 					begin_date: bodyState.begin_date,
-					end_date: bodyState.end_date
+					end_date: bodyState.hasEndDate ? bodyState.end_date : null
 				});
+				if (window.confirm(`${raw}`));
 
 				var requestOptions = {
 					method: "PATCH",
@@ -163,6 +174,41 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
+				if (selectedImage) {
+					if (selectedImage["type"].split("/")[0] === "image") {
+						myHeaders = new Headers();
+						myHeaders.append("Content-Type", "application/json");
+
+						let data = new FormData();
+
+						data.append("file", selectedImage);
+
+						requestOptions = {
+							method: "POST",
+							headers: myHeaders,
+							body: data,
+							credentials: "include"
+						};
+
+						fetch(
+							`http://${global.config.api.authority}/event/upload_image/${param.data.id}`,
+							requestOptions
+						)
+							.then(response => {
+								if (!response.ok) {
+									throw new Error(
+										`This is an HTTP error: The status is ${response.status}`
+									);
+								}
+							})
+							.catch(function(error) {
+								console.log(
+									"Il y a eu un problème avec l'opération fetch: " +
+										error.message
+								);
+							});
+					}
+				}
 				setLocked(true);
 				setUpdate(true);
 			}
@@ -320,6 +366,14 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						checked={formState.for_pool}
 					/>
+					<Form.Control
+						type="file"
+						name="myImage"
+						onChange={event => {
+							setSelectedImage(event.target.files[0]);
+						}}
+						disabled={locked}
+					/>
 					{button}
 					<Button type="reset" disabled={locked}>
 						Reset
@@ -331,3 +385,11 @@ const AdminEventToken = param => {
 };
 
 export default AdminEventToken;
+
+// TODO:
+// check si fichier OK
+// delete fichier ref dans evnet
+// save new fichier (en renamant clean)
+// save nouvelle ref
+// :)
+// (debug)
