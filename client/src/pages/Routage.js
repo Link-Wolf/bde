@@ -172,7 +172,6 @@ const RouteWrapper = params => {
 				{params.route}
 				<Footer />
 			</ClearanceChecker>
-			/>
 		</>
 	);
 };

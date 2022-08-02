@@ -50,4 +50,5 @@ input:invalid {
 
 .App {
 	height: 100%;
+	overflow-anchor: none;
 }
