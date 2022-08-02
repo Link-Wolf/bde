@@ -1,13 +1,13 @@
 import {useState, useEffect} from "react";
 
-const AddDirectionSearchBar = () => {
+const Mutiny = () => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
 
-	const promoteUser = () => {
+	const tricorn = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
-				`http://${global.config.api.authority}/stud/admin/${selectedUser}`,
+				`http://${global.config.api.authority}/stud/admin/${selectedUser}/mutiny`,
 				{
 					credentials: "include",
 					method: "PATCH"
@@ -33,7 +33,7 @@ const AddDirectionSearchBar = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/stud/admin/noDirection`, {
+		fetch(`http://${global.config.api.authority}/stud/admin/direction`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -57,19 +57,19 @@ const AddDirectionSearchBar = () => {
 
 	return (
 		<>
-			<datalist id="captain_list">
+			<datalist id="user_list">
 				{userList.map((user, i) => (
 					<option key={i} value={user.login} />
 				))}
 			</datalist>
 			<input
-				list="captain_list"
+				list="user_list"
 				value={selectedUser}
 				onChange={e => setSelectedUser(e.target.value)}
 			/>
-			<button onClick={promoteUser}>Promouvoir</button>
+			<button onClick={tricorn}>Léguer le tricorne de Capitaine</button>
 		</>
 	);
 };
 
-export default AddDirectionSearchBar;
+export default Mutiny;
