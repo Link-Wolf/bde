@@ -13,7 +13,7 @@ export class StudService {
 		private readonly logger: LoggerService
 	) { }
 
-	async findAll(requestMaker): Promise<Stud[]> {
+	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.find();
 			// if (studs.length == 0) {
@@ -29,7 +29,7 @@ export class StudService {
 		}
 	}
 
-	async findDirection(requestMaker): Promise<Stud[]> {
+	async findDirection(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
 				isDirection: true,
@@ -44,7 +44,7 @@ export class StudService {
 		}
 	}
 
-	async findOne(login: string, requestMaker): Promise<Stud> {
+	async findOne(login: string, requestMaker: string): Promise<Stud> {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (stud)
@@ -60,7 +60,7 @@ export class StudService {
 		}
 	}
 
-	async update(login: string, studData: any, requestMaker): Promise<void> {
+	async update(login: string, studData: any, requestMaker: string): Promise<void> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
@@ -75,14 +75,15 @@ export class StudService {
 		}
 	}
 
-	async updateDirection(login: string, requestMaker): Promise<void> {
+	async updateDirection(login: string, requestMaker: string): Promise<void> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
 				this.logger.error(`Failed to yeet direction member with login ${login} : direction member does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
 			}
-			let updatedOne = `UPDATE stud SET isDirection = 'f' WHERE login = ${login}`;
+			let updatedOne = `UPDATE stud SET "isDirection" = ${!user.isDirection} WHERE login = '${login}'`;
+			console.log(updatedOne)
 			await this.studRepository.query(updatedOne);
 			this.logger.warn(`Successfully yeet direction member ${login}`, requestMaker);
 		} catch (error) {
@@ -91,7 +92,7 @@ export class StudService {
 		}
 	}
 
-	async create(studDto: StudDto, requestMaker): Promise<any> {
+	async create(studDto: StudDto, requestMaker: string): Promise<any> {
 		try {
 			if (await this.findOne(studDto.login, requestMaker)) {
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
@@ -104,7 +105,7 @@ export class StudService {
 		}
 	}
 
-	async removeOne(login: string, requestMaker): Promise<void> {
+	async removeOne(login: string, requestMaker: string): Promise<void> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user)
@@ -118,7 +119,7 @@ export class StudService {
 		}
 	}
 
-	async removeAll(requestMaker): Promise<void> {
+	async removeAll(requestMaker: string): Promise<void> {
 		try {
 			await this.studRepository.delete({});
 			this.logger.warn(`Successfully deleted all students`, requestMaker);
@@ -128,7 +129,7 @@ export class StudService {
 		}
 	}
 
-	async logUser(stud: StudDto, requestMaker) {
+	async logUser(stud: StudDto, requestMaker: string) {
 		try {
 			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)

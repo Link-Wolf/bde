@@ -1,7 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
-const AdminCaptainManagement = param => {
+const AdminCaptainManagement = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -9,7 +9,10 @@ const AdminCaptainManagement = param => {
 			method: "get",
 			credentials: "include"
 		};
-		fetch(`http://${global.config.api.authority}/stud/admin/direction`, requestOptions)
+		fetch(
+			`http://${global.config.api.authority}/stud/admin/direction`,
+			requestOptions
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -32,12 +35,12 @@ const AdminCaptainManagement = param => {
 	const yeetConfirm = toYeet => {
 		const requestOptions = {
 			method: "PATCH",
-			credentials: "include",
-			headers: {
-				"Content-Type": "application/json"
-			}
+			credentials: "include"
 		};
-		fetch(`http://${global.config.api.authority}/stud/admin/${toYeet}`, requestOptions)
+		fetch(
+			`http://${global.config.api.authority}/stud/admin/${toYeet}`,
+			requestOptions
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
