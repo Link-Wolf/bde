@@ -4,9 +4,7 @@ import {useState, useEffect} from "react";
 
 import "./style/App.css";
 
-import Header from "./pages/Header";
 import Routage from "./pages/Routage";
-import Footer from "./pages/Footer";
 
 function App() {
 	const [theme, setTheme] = useState("light");
