@@ -178,16 +178,21 @@ export class StudService {
 		}
 	}
 
-	async changeCaptain(login: string, requestMaker: string) {
+	async changeCaptain(login: string, requestMaker: string) { //GUARDS
 		try {
 			let newCaptain = await this.findOne(login, requestMaker);
 			let captain = await this.studRepository.findOneBy({ clearance: 21 })
-			if (!newCaptain || !captain) {
-				this.logger.error(`Failed to give the tricorn to ${login} : direction member does not exist`, requestMaker);
-				throw new NotFoundException(`Failed to give the tricorn to ${login} : direction member does not exist`)
+			if (!captain) {
+				this.logger.error(`Failed to give the tricorn to ${login} : there is not any current Captain`, requestMaker);
+				throw new NotFoundException(`Failed to give the tricorn to ${login} : there is not any current Captain`)
+			}
+			if (!newCaptain || !newCaptain.isDirection) {
+				this.logger.error(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`, requestMaker);
+				throw new NotFoundException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
 			}
 			await this.studRepository.query(`UPDATE stud SET "clearance" = 11 WHERE login = '${captain.login}'`);
 			await this.studRepository.query(`UPDATE stud SET "clearance" = 21 WHERE login = '${newCaptain.login}'`);
+			this.logger.warn(`Successfully transfered the captain's tricorn from ${captain.login} to ${newCaptain.login}`, requestMaker)
 		} catch (error) {
 			this.logger.error(`Failed to give the tricorn to ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to give the tricorn to ${login} on database (${error})`)
