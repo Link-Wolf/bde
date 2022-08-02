@@ -1,7 +1,7 @@
 import {NavDropdown} from "react-bootstrap";
 import {useState, useEffect} from "react";
 
-import user_picture from "../images/user_placeholder.png";
+import user_picture from "../images/placeholders/user_profile.png";
 
 const DropdownUser = () => {
 	const [img, setImg] = useState(user_picture);
