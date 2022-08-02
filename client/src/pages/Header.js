@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 import DropdownUser from "../components/DropdownUser";
 import ThemeButton from "../components/ThemeButton";
 
-import bde_logo from "../images/bde_logo.webp";
+import bde_logo from "../images/placeholders/bde_logo.webp";
 
 function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
