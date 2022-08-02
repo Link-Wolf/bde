@@ -7,7 +7,7 @@ const AddDirectionSearchBar = () => {
 	const promoteUser = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
-				`http://${global.config.api.authority}/stud/admin/${selectedUser}`,
+				`http://${global.config.api.authority}/stud/admin/promote/${selectedUser}`,
 				{
 					credentials: "include",
 					method: "PATCH"

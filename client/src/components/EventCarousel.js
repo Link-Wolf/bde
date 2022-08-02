@@ -1,9 +1,9 @@
 import Carousel from "react-bootstrap/Carousel";
 
-import abel from "../images/placeholders/abel.png";
-import yoyo from "../images/placeholders/yohan.png";
-import caro from "../images/placeholders/caroline.png";
-import iman from "../images/placeholders/imane.png";
+import abel from "../assets/placeholders/abel.png";
+import yoyo from "../assets/placeholders/yohan.png";
+import caro from "../assets/placeholders/caroline.png";
+import iman from "../assets/placeholders/imane.png";
 
 import style from "../style/EventCarousel.module.css";
 

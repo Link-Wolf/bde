@@ -41,7 +41,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/stud/admin/${toYeet}`,
+			`http://${global.config.api.authority}/stud/admin/yeet/${toYeet}`,
 			requestOptions
 		)
 			.then(response => {
