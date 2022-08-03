@@ -5,8 +5,10 @@ import {
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
-import { EventDtoPipe, EventFilterDtoPipe } from './event.pipe';
+import { EventDtoPipe, EventFilterDtoPipe, FileTypeValidationPipe } from './event.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
+import * as fs from 'fs';
+
 
 @Controller('event/')
 export class EventController {
@@ -47,8 +49,18 @@ export class EventController {
 	@UseInterceptors(FileInterceptor('thumbnail'))
 	uploadImage(
 		@Param('id', ParseIntPipe) id: number,
-		@UploadedFile() file: Express.Multer.File) {
-		console.log(file)
+		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File) {
+		console.log(file);
+		fs.writeFile(
+			`assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`,
+			file.buffer,
+			(err) => {
+				if (err)
+					console.log(err);
+				else {
+					// ecrire dans DB qu'on a thumbnail :)
+				}
+			})
 	}
 
 	@Patch(':id')
