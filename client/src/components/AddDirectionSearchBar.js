@@ -22,7 +22,7 @@ const AddDirectionSearchBar = () => {
 					return;
 				})
 				.then(() => {
-					//maybe refresh
+					window.location.reload();
 				})
 				.catch(function(error) {
 					console.log(

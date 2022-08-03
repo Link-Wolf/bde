@@ -7,10 +7,12 @@ import instagram_logo from "../assets/logos/instagram.png";
 function Footer() {
 	return (
 		<footer className={style.footer} id="footer">
-			<div className={style.horizontal_div_footer} hidden>
-				<img src={twitter_logo} alt="twitter logo" />
-				<img src={discord_logo} alt="discord logo" />
-				<img src={instagram_logo} alt="instagram logo" />
+			<div className={style.horizontal_div_footer}>
+				<img src={twitter_logo} alt="twitter logo" hidden />
+				<img src={discord_logo} alt="discord logo" hidden />
+				<a href="https://www.instagram.com/bde_42mulhouse/">
+					<img src={instagram_logo} alt="instagram logo" />
+				</a>
 			</div>
 			<div className={style.horizontal_div_footer}>
 				<div>CC COPYRIGHT TOUSSA</div>
