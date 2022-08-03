@@ -387,9 +387,14 @@ const AdminEventToken = param => {
 					<Form.Control
 						type="file"
 						id="thumbnail"
+						onChange={event => {
+							setSrcImg(
+								URL.createObjectURL(event.target.files[0])
+							);
+						}}
 						disabled={locked}
 					/>
-					<img src={srcImg} />
+					<img src={srcImg} height="150px" />
 					<Button disabled={locked} onClick={changeThumbnail}>
 						Changer Miniature
 					</Button>
