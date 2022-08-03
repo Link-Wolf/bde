@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Session } from '@nestjs/common';
+import {
+	Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
+	Session, UseInterceptors, UploadedFile
+} from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
 import { EventDtoPipe, EventFilterDtoPipe } from './event.pipe';
-import { File } from '@babel/types';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('event/')
 export class EventController {
@@ -40,11 +43,11 @@ export class EventController {
 		return this.eventService.findAll(filters, session.login);
 	}
 
-	@Post('upload_image/:event_id')
+	@Post('upload_image/:id')
+	@UseInterceptors(FileInterceptor('thumbnail'))
 	uploadImage(
 		@Param('id', ParseIntPipe) id: number,
-		@Body('file') file: File
-	) {
+		@UploadedFile() file: Express.Multer.File) {
 		console.log(file)
 	}
 
