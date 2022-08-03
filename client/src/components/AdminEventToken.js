@@ -36,6 +36,7 @@ const AdminEventToken = param => {
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [srcImg, setSrcImg] = useState(null);
 
 	const switchLock = () => {
 		setLocked(false);
@@ -158,13 +159,15 @@ const AdminEventToken = param => {
 				};
 
 				fetch(
-					`http://${global.config.api.authority}/event/${param.data.id}`,
+					`http://${global.config.api.authority}
+					/event/${param.data.id}`,
 					requestOptions
 				)
 					.then(response => {
 						if (!response.ok) {
 							throw new Error(
-								`This is an HTTP error: The status is ${response.status}`
+								`This is an HTTP error:
+								 The status is ${response.status}`
 							);
 						}
 					})
@@ -189,24 +192,6 @@ const AdminEventToken = param => {
 							body: data,
 							credentials: "include"
 						};
-
-						fetch(
-							`http://${global.config.api.authority}/event/upload_image/${param.data.id}`,
-							requestOptions
-						)
-							.then(response => {
-								if (!response.ok) {
-									throw new Error(
-										`This is an HTTP error: The status is ${response.status}`
-									);
-								}
-							})
-							.catch(function(error) {
-								console.log(
-									"Il y a eu un problème avec l'opération fetch: " +
-										error.message
-								);
-							});
 					}
 				}
 				setLocked(true);
@@ -236,6 +221,35 @@ const AdminEventToken = param => {
 				</Button>
 			);
 	}, [param, update, formState, locked, bodyState]);
+
+	const changeThumbnail = () => {
+		const data = new FormData();
+		data.append("thumbnail", document.getElementById("thumbnail").files[0]);
+
+		fetch(
+			`http://${global.config.api.authority}/event/upload_image
+			/${param.data.id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
 
 	return (
 		<>
@@ -366,17 +380,18 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						checked={formState.for_pool}
 					/>
-					<Form.Control
-						type="file"
-						name="myImage"
-						onChange={event => {
-							setSelectedImage(event.target.files[0]);
-						}}
-						disabled={locked}
-					/>
 					{button}
 					<Button type="reset" disabled={locked}>
 						Reset
+					</Button>
+					<Form.Control
+						type="file"
+						id="thumbnail"
+						disabled={locked}
+					/>
+					<img src={srcImg} />
+					<Button disabled={locked} onClick={changeThumbnail}>
+						Changer Miniature
 					</Button>
 				</Form>
 			</Accordion.Body>
