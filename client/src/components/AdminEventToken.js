@@ -222,6 +222,33 @@ const AdminEventToken = param => {
 			);
 	}, [param, update, formState, locked, bodyState]);
 
+	useState(() => {
+		fetch(
+			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setSrcImg(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
+
 	const changeThumbnail = () => {
 		const data = new FormData();
 		data.append("thumbnail", document.getElementById("thumbnail").files[0]);
