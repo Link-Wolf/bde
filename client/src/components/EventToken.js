@@ -34,7 +34,8 @@ const EventToken = param => {
 		<>
 			<h1>
 				<a href={`/event/${param.event.id}`}>
-					{param.event.name} : {param.event.begin_date}
+					{param.event.name} :{" "}
+					{new Date(param.event.begin_date).toLocaleDateString()}
 				</a>
 			</h1>
 			<img src={imgSrc} width="150px" />

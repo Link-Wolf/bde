@@ -66,7 +66,10 @@ const EventID = () => {
 						{dataEvent.name}
 					</div>
 					<div className={`${style.box_dark_copper} ${style.date}`}>
-						{dataEvent.begin_date}
+						{`Le ${new Date(
+							dataEvent.begin_date
+						).toLocaleDateString()} à
+							${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
 					</div>
 				</div>
 				<div>
@@ -91,7 +94,12 @@ const EventID = () => {
 							: `Gratuit !`}
 					</div>
 					<div className={style.box_dark_green}>
-						{dataEvent.end_date - dataEvent.begin_date}
+						{dataEvent.end_date
+							? new Date(
+									new Date(dataEvent.end_date) -
+										new Date(dataEvent.begin_date)
+							  ).getHours()
+							: "Never Ending Fun"}
 					</div>
 				</div>
 				<div>
