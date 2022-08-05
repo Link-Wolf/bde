@@ -6,6 +6,16 @@ import { StudService } from '../stud/stud.service';
 
 @Injectable()
 export class InscriptionService {
+	async getIsSubbed(id: number, login: any) {
+		try {
+			const isSubbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId"=${id} AND "studLogin"='${login}'`)).length > 0
+			this.logger.log(`Successfully checked if ${login} is subbed to event ${id}`, login)
+			return { isSubbed: isSubbed }
+		} catch (error) {
+			this.logger.error(`Failed to check if ${login} is subbed to event ${id} on database (${error})`, login);
+			throw new InternalServerErrorException(`Failed check if ${login} is subbed to event ${id} on database (${error})`);
+		}
+	}
 	constructor(
 		private manager: EntityManager,
 		private logger: LoggerService,

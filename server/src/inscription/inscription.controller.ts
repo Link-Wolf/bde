@@ -25,9 +25,22 @@ export class InscriptionController {
 		return this.inscriptionService.getStudByEvent(id, session.login);
 	}
 
+	@Get(':id/isSubbed')
+	getIsSubbed(@Session() session: Record<string, any>,
+		@Param('id', ParseIntPipe) id: number) {
+		return this.inscriptionService.getIsSubbed(id, session.login)
+	}
+
 	@Post() //body id + login
 	async link(@Session() session: Record<string, any>, @Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
 		return this.inscriptionService.link(id, login, session.login);
+	}
+
+	@Post('me/:id')
+	async subMe(
+		@Session() session: Record<string, any>,
+		@Param('id', ParseIntPipe) id: number) {
+		return this.inscriptionService.link(id, session.login, session.login);
 	}
 
 	@Delete('event/:id')
@@ -43,6 +56,13 @@ export class InscriptionController {
 	@Delete(':event/:login')
 	remove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
 		return this.inscriptionService.remove(event, login, session.login);
+	}
+
+	@Delete('me/:id')
+	unsubMe(
+		@Session() session: Record<string, any>,
+		@Param('id', ParseIntPipe) id: number) {
+		return this.inscriptionService.remove(id, session.login, session.login);
 	}
 
 	@Delete('/admin/:event/:login')
