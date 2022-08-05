@@ -98,7 +98,15 @@ const EventID = () => {
 							? new Date(
 									new Date(dataEvent.end_date) -
 										new Date(dataEvent.begin_date)
-							  ).getHours()
+							  ).getUTCHours() > 24
+								? `${new Date(
+										new Date(dataEvent.end_date) -
+											new Date(dataEvent.begin_date)
+								  ).getUTCDate()} jour(s)`
+								: `${new Date(
+										new Date(dataEvent.end_date) -
+											new Date(dataEvent.begin_date)
+								  ).getUTCHours()} heure(s)`
 							: "Never Ending Fun"}
 					</div>
 				</div>

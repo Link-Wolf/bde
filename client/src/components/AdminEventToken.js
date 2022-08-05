@@ -60,15 +60,22 @@ const AdminEventToken = param => {
 			"-" +
 			two_digiter(end_date.getMonth() + 1) +
 			"-" +
-			two_digiter(end_date.getDate());
+			two_digiter(end_date.getDate()) +
+			"T" +
+			two_digiter(end_date.getHours()) +
+			":" +
+			two_digiter(end_date.getMinutes());
 		tmpBody.begin_date =
 			two_digiter(begin_date.getFullYear()) +
 			"-" +
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
-			two_digiter(begin_date.getDate());
-		// console.log(tmpBody.begin_date);
-		// console.log(tmpBody.end_date);
+			two_digiter(begin_date.getDate()) +
+			"T" +
+			two_digiter(begin_date.getHours()) +
+			":" +
+			two_digiter(begin_date.getMinutes());
+		setBodyState(tmpBody);
 		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
@@ -115,15 +122,21 @@ const AdminEventToken = param => {
 			"-" +
 			two_digiter(end_date.getMonth() + 1) +
 			"-" +
-			two_digiter(end_date.getDate());
+			two_digiter(end_date.getDate()) +
+			"T" +
+			two_digiter(end_date.getHours()) +
+			":" +
+			two_digiter(end_date.getMinutes());
 		tmpBody.begin_date =
 			two_digiter(begin_date.getFullYear()) +
 			"-" +
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
-			two_digiter(begin_date.getDate());
-		// console.log(tmpBody.begin_date);
-		// console.log(tmpBody.end_date);
+			two_digiter(begin_date.getDate()) +
+			"T" +
+			two_digiter(begin_date.getHours()) +
+			":" +
+			two_digiter(begin_date.getMinutes());
 		setBodyState(tmpBody);
 	}, [param.data]);
 
