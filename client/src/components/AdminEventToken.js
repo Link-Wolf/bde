@@ -222,7 +222,7 @@ const AdminEventToken = param => {
 			);
 	}, [param, update, formState, locked, bodyState]);
 
-	useState(() => {
+	useEffect(() => {
 		fetch(
 			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
 			{
