@@ -1,12 +1,14 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
 import NoPage from "../pages/body/NoPage";
+import {Button} from "react-bootstrap";
 
 import style from "../style/EventID.module.css";
 
 const EventID = () => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
+	const [button, setButton] = useState(<></>);
 	const param = useParams();
 
 	useEffect(() => {
@@ -52,6 +54,78 @@ const EventID = () => {
 				);
 			});
 	}, [param.id]);
+
+	const unsub = () => {
+		fetch(
+			`http://${global.config.api.authority}/inscription/me/${param.id}`,
+			{
+				method: "delete",
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	};
+
+	const sub = () => {
+		fetch(
+			`http://${global.config.api.authority}/inscription/me/${param.id}`,
+			{
+				method: "POST",
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	};
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/inscription/${param.id}/isSubbed`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.isSubbed)
+					setButton(<Button onClick={unsub}>Unsubscribe</Button>);
+				else setButton(<Button onClick={sub}>Subscribe</Button>);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, []);
+
 	return dataEvent.name ? (
 		<div
 			className={`
@@ -110,12 +184,7 @@ const EventID = () => {
 							: "Never Ending Fun"}
 					</div>
 				</div>
-				<div>
-					<button className={style.button}>
-						{" "}
-						Subscribe / Unsubscribe (TODO){" "}
-					</button>
-				</div>
+				<div>{button}</div>
 			</div>
 		</div>
 	) : (
