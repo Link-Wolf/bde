@@ -59,7 +59,7 @@ export class InscriptionController {
 	}
 
 	@Delete('me/:id')
-	unsubMe(
+	async unsubMe(
 		@Session() session: Record<string, any>,
 		@Param('id', ParseIntPipe) id: number) {
 		return this.inscriptionService.remove(id, session.login, session.login);
