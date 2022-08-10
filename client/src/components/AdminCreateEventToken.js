@@ -1,7 +1,10 @@
 import {useEffect, useState} from "react";
 import {Button, Form} from "react-bootstrap";
+import useConfirm from "./useConfirm";
 
 const AdminEventToken = () => {
+	const {isConfirmed} = useConfirm();
+
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -77,8 +80,9 @@ const AdminEventToken = () => {
 		return nb;
 	};
 
-	const saveEvent = () => {
-		if (window.confirm(`Desire tu creer cet event ?`)) {
+	const saveEvent = async () => {
+		const confirm = await isConfirmed(`Desire tu creer cet event ?`);
+		if (confirm) {
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
 
@@ -96,7 +100,6 @@ const AdminEventToken = () => {
 				end_date: bodyState.hasEndDate ? bodyState.end_date : null,
 				for_pool: bodyState.for_pool
 			});
-			if (window.confirm(`${raw}`));
 
 			var requestOptions = {
 				method: "POST",
