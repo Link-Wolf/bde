@@ -31,7 +31,7 @@ export class InscriptionController {
 		return this.inscriptionService.getIsSubbed(id, session.login)
 	}
 
-	@Post() //body id + login
+	@Post()
 	async link(@Session() session: Record<string, any>, @Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
 		return this.inscriptionService.link(id, login, session.login);
 	}
@@ -53,21 +53,20 @@ export class InscriptionController {
 		return this.inscriptionService.removeByStud(login, session.login);
 	}
 
-	@Delete(':event/:login')
-	remove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
-		return this.inscriptionService.remove(event, login, session.login);
-	}
-
-	@Delete('me/:id')
-	async unsubMe(
-		@Session() session: Record<string, any>,
-		@Param('id', ParseIntPipe) id: number) {
+	@Delete('minecraft/:id')
+	unsubMe(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
+		console.log(`${id} ettt ${session.login}`)
 		return this.inscriptionService.remove(id, session.login, session.login);
 	}
 
 	@Delete('/admin/:event/:login')
 	forceRemove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
 		return this.inscriptionService.forceRemove(event, login, session.login);
+	}
+
+	@Delete(':event/:login')
+	remove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
+		return this.inscriptionService.remove(event, login, session.login);
 	}
 
 	@Delete()

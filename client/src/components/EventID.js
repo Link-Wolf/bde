@@ -95,7 +95,7 @@ const EventID = () => {
 
 	const unsub = () => {
 		fetch(
-			`http://${global.config.api.authority}/inscription/me/${param.id}`,
+			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
 			{
 				method: "DELETE",
 				credentials: "include"
