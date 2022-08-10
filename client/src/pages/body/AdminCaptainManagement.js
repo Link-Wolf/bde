@@ -1,10 +1,13 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import useConfirm from "../../components/useConfirm";
 
 import AddDirectionSearchBar from "../../components/AddDirectionSearchBar";
 import Mutiny from "../../components/Mutiny";
 
 const AdminCaptainManagement = () => {
+	const {isConfirmed} = useConfirm();
+
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -63,31 +66,31 @@ const AdminCaptainManagement = () => {
 			});
 	};
 
-	const yeetMember = login => {
+	const yeetMember = async login => {
 		if (
-			window.confirm(
+			await isConfirmed(
 				`Voulez vous virer ${login} du bureau de direction ?`
 			)
 		) {
 			if (
-				window.confirm(
+				await isConfirmed(
 					`Voulez vous VRAIMENT virer ${login} du bureau de direction ?`
 				)
 			) {
 				if (
-					window.confirm(
+					await isConfirmed(
 						`Etes vous absolument certain de vouloir virer ${login} du bureau de direction ?`
 					)
 				) {
 					if (
-						window.confirm(
+						await isConfirmed(
 							`Il est encore temps de changer d'avis. Virer ${login} du bureau de direction ?`
 						)
 					) {
 						if (
-							!window.confirm(
+							!(await isConfirmed(
 								`Voulez vous ne pas virer ${login} du bureau de direction et annuler?`
-							)
+							))
 						) {
 							yeetConfirm(login);
 						}

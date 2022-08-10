@@ -1,9 +1,12 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import useConfirm from "../../components/useConfirm";
 
 import {Form, Button, FormGroup} from "react-bootstrap";
 
 const AdminStudents = () => {
+	const {isConfirmed} = useConfirm();
+
 	const [stud, setStud] = useState([]);
 	const [allEvent, setAllEvent] = useState([]);
 	const [selectedEvent, setSelectedEvent] = useState("");
@@ -116,9 +119,9 @@ const AdminStudents = () => {
 		setSelectedEvent(event.target.value);
 	};
 
-	const handleRemoveButton = event => {
+	const handleRemoveButton = async event => {
 		if (
-			window.confirm(
+			await isConfirmed(
 				`Tu es certain de vouloir désinscrire ${event.target.value} de force ?`
 			)
 		) {
@@ -134,10 +137,10 @@ const AdminStudents = () => {
 	useEffect(() => {
 		setUpdate(false);
 
-		const handleSubButton = () => {
+		const handleSubButton = async () => {
 			let toSub = document.getElementById("studToAdd").value;
 			if (
-				window.confirm(
+				await isConfirmed(
 					`Tu es certain de vouloir inscrire ${toSub} de force ?`
 				)
 			) {

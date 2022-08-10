@@ -1,7 +1,10 @@
 import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
 
+import useConfirm from "./useConfirm";
+
 const AdminContribToken = param => {
+	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
 		studLogin: "",
 		cost: "",
@@ -89,9 +92,9 @@ const AdminContribToken = param => {
 	//TODO : fixme daddy (or mommy)
 
 	useEffect(() => {
-		const saveContrib = () => {
+		const saveContrib = async () => {
 			if (
-				window.confirm(
+				await isConfirmed(
 					`Desire tu modifier la cotisation de ${param.data.studLogin}`
 				)
 			) {
