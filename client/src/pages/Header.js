@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 import DropdownUser from "../components/DropdownUser";
 import ThemeButton from "../components/ThemeButton";
 
-import bde_logo from "../assets/placeholders/bde_logo.webp";
+import bde_logo from "../assets/logos/bde_logo.jpeg";
 
 function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
@@ -108,7 +108,7 @@ function Header() {
 						className="d-inline-block align-top"
 						src={bde_logo}
 					/>
-					<Navbar.Text>Fregate</Navbar.Text>
+					<Navbar.Text> La Fregate</Navbar.Text>
 				</Navbar.Brand>
 				{leftButton}
 				<Nav>
