@@ -1,5 +1,7 @@
 import {useState, useEffect, React} from "react";
 
+import EventToken from "./EventToken";
+
 import style from "../style/EventList.module.css";
 
 const EventList = param => {
@@ -38,12 +40,7 @@ const EventList = param => {
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
 				<li key={item.id}>
-					<h1>
-						<a href={`/event/${item.id}`}>
-							{item.id} {item.name}
-						</a>
-					</h1>
-					<p> {item.desc} </p>
+					<EventToken event={item} />
 				</li>
 			))}
 		</div>
