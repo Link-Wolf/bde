@@ -1,4 +1,7 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+	Injectable, InternalServerErrorException,
+	NotFoundException, StreamableFile
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
 import { Event } from '../entity/Event'
@@ -6,9 +9,50 @@ import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
 import { EventDto, EventFilterDto } from './event.dto';
+import * as fs from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class EventService {
+	async getThumbnail(id: number, login: any) {
+		try {
+			const thumb_path = (await this.eventRepository.findOneById(id))
+				.thumbnail_filename;
+			if (!thumb_path)
+				throw new NotFoundException
+			const file = fs.createReadStream(join(process.cwd(), thumb_path));
+			this.logger.log(`Successfully got the thumbnail of event ${id}`, login);
+			return new StreamableFile(file);
+		} catch (error) {
+			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
+			throw new InternalServerErrorException(`Failed to to get thumbnail of event ${id} on database(${error})`)
+		}
+	}
+
+	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
+		try {
+			console.log(file)
+			fs.writeFile(
+				`assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`,
+				file.buffer,
+				(err) => {
+					if (err) {
+						this.logger.error(`Error while creating thumbnail (${err})`,
+							login);
+						throw err
+					}
+					else {
+						this.eventRepository.update(id, {
+							thumbnail_filename: `assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`
+						})
+						this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+					}
+				})
+		} catch (error) {
+			this.logger.error(`Failed to get all filtered events on database(${error})`, login);
+			throw new InternalServerErrorException(`Could not find filtered events on database(${error})`)
+		}
+	}
 
 	constructor(
 		@InjectRepository(Event)
@@ -17,7 +61,8 @@ export class EventService {
 		private logger: LoggerService,
 	) { }
 
-	async findAll(filterDto: EventFilterDto, requestMaker: string): Promise<Event[]> {
+	async findAll(filterDto: EventFilterDto, requestMaker: string):
+		Promise<Event[]> {
 		try {
 			let match = `SELECT * FROM "event" WHERE '1' = '1'`;
 			if (filterDto.current)
@@ -25,7 +70,8 @@ export class EventService {
 			if (filterDto.free)
 				match += ` AND "cost" = 0`
 			if (filterDto.available)
-				match += ` AND ("nb_places" > (SELECT COUNT(*) FROM "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
+				match += ` AND ("nb_places" > (SELECT COUNT(*) FROM
+				 "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
 			if (filterDto.food)
 				match += ` AND "consos" = 't'`
 			if (filterDto.unlimited)
@@ -34,7 +80,8 @@ export class EventService {
 				match += ` AND "isOutside" = 't'`
 			if (filterDto.sponsorised)
 				match += ` AND "sponsorised" = 't'`
-			match += ` ORDER BY ${filterDto.sort} ${filterDto.asc ? "ASC" : "DESC"}`
+			match += ` ORDER BY ${filterDto.sort} ${filterDto.asc ? "ASC"
+				: "DESC"}`
 			match += `;`
 			let events = await this.eventRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
@@ -67,17 +114,17 @@ export class EventService {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
 			if (event)
-				// 	this.logger.warn(`Failed to find event with id ${ id } : event does not exist`)
-				// else
 				this.logger.log(`Got event with id ${id} `, requestMaker);
 			return event;
 		} catch (error) {
-			this.logger.error(`Failed to find event ${id} on database(${error})`, requestMaker);
+			this.logger.error(`Failed to find event
+				 ${id} on database(${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to find event ${id} on database(${error})`)
 		}
 	}
 
-	async update(id: number, eventData: EventDto, requestMaker: string): Promise<void> {
+	async update(id: number, eventData: EventDto, requestMaker: string)
+		: Promise<void> {
 		// if no event id (find) -> err NotFoundException
 		try {
 			if (!await this.findOne(id, requestMaker)) {
@@ -85,24 +132,28 @@ export class EventService {
 				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
 			await this.eventRepository.update(id, eventData);
-			this.logger.warn(`Successfully updated event ${id} `, requestMaker);
+			this.logger.warn("Successfully updated event " + id, requestMaker);
 		} catch (error) {
-			this.logger.error(`Failed to update event ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to update event ${id}
+				 on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to update event ${id} on database(${error})`)
 		}
 	}
 
-	async subscribe(id: number, login: string, requestMaker: string): Promise<void> {
+	async subscribe(id: number, login: string, requestMaker: string)
+		: Promise<void> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
-				this.logger.error(`Failed to subscribe student ${login} to event ${id} : event does not exist`, requestMaker)
+				this.logger.error(`Failed to subscribe student ${login} to event ${id} : event does not exist`
+					, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : event does not exist`)
 			}
 			event.studs = await this.getStuds(id, requestMaker);
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
-				this.logger.error(`Failed to subscribe student ${login} to event ${id} : student does not exist`, requestMaker)
+				this.logger.error(`Failed to subscribe student ${login} to event ${id} : student does not exist`
+					, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			event.studs.push(stud);
@@ -114,26 +165,26 @@ export class EventService {
 		}
 	}
 
-	async forceSubscribe(id: number, login: string, requestMaker: string): Promise<void> {
+	async forceSubscribe(id: number, login: string, requestMaker: string)
+		: Promise<void> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
-				this.logger.error(`Failed to force subscribe student ${login} to event ${id} : event does not exist`, requestMaker)
+				this.logger.error(`Failed to force subscribe student ${login} to event ${id} : event does not exist`
+					, requestMaker)
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : event does not exist`)
 			}
 			event.studs = await this.getStuds(id, requestMaker);
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
-				// this.logger.error(`Failed to force subscribe student ${login} to event ${id} : student does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			event.studs.push(stud);
 			await this.eventRepository.save(event);
 			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker);
 		} catch (error) {
-			// this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
-			// throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
-			throw error;
+			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
 		}
 	}
 
@@ -151,7 +202,8 @@ export class EventService {
 		try {
 			if (await this.findOne(id, requestMaker)) {
 				await this.eventRepository.delete({ id: id });
-				this.logger.warn(`Successfully deleted event ${id} `, requestMaker);
+				this.logger.warn(`Successfully deleted event ${id} `,
+					requestMaker);
 			}
 			else
 				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker);
@@ -172,6 +224,14 @@ export class EventService {
 	}
 
 	async getStuds(id: number, requestMaker: string): Promise<Stud[]> {
-		return this.eventRepository.query("SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin\" FROM inscriptions insc WHERE \"eventId\" = '" + id + "' );");
+		try {
+			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin" FROM inscriptions insc WHERE "eventId" = '${id}' );`);
+			this.logger.log(`Successfully got all students subbed in event ${id}`, requestMaker)
+			return a;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all students subbed in event ${id} on database(${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to get all students subbed in event ${id} on database(${error})`)
+		}
 	}
 }

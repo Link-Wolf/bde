@@ -1,5 +1,4 @@
-import { ArgumentMetadata } from "@nestjs/common";
-import { Injectable, PipeTransform } from "@nestjs/common";
+import { PipeTransform, Injectable, ArgumentMetadata, NotAcceptableException } from '@nestjs/common';
 
 @Injectable()
 export class EventDtoPipe implements PipeTransform {
@@ -88,6 +87,17 @@ export class EventFilterDtoPipe implements PipeTransform {
 		return value;
 	}
 }
+
+
+@Injectable()
+export class FileTypeValidationPipe implements PipeTransform {
+	transform(value: any, _metadata: ArgumentMetadata) {
+		if (value.mimetype.split('/')[0] === "image")
+			return value
+		else throw new NotAcceptableException()
+	}
+}
+
 
 /* 	current: boolean; //fin de levent dans le futur
 	free: boolean; //gratuit

@@ -60,15 +60,22 @@ const AdminEventToken = param => {
 			"-" +
 			two_digiter(end_date.getMonth() + 1) +
 			"-" +
-			two_digiter(end_date.getDate());
+			two_digiter(end_date.getDate()) +
+			"T" +
+			two_digiter(end_date.getHours()) +
+			":" +
+			two_digiter(end_date.getMinutes());
 		tmpBody.begin_date =
 			two_digiter(begin_date.getFullYear()) +
 			"-" +
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
-			two_digiter(begin_date.getDate());
-		// console.log(tmpBody.begin_date);
-		// console.log(tmpBody.end_date);
+			two_digiter(begin_date.getDate()) +
+			"T" +
+			two_digiter(begin_date.getHours()) +
+			":" +
+			two_digiter(begin_date.getMinutes());
+		setBodyState(tmpBody);
 		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
@@ -115,15 +122,21 @@ const AdminEventToken = param => {
 			"-" +
 			two_digiter(end_date.getMonth() + 1) +
 			"-" +
-			two_digiter(end_date.getDate());
+			two_digiter(end_date.getDate()) +
+			"T" +
+			two_digiter(end_date.getHours()) +
+			":" +
+			two_digiter(end_date.getMinutes());
 		tmpBody.begin_date =
 			two_digiter(begin_date.getFullYear()) +
 			"-" +
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
-			two_digiter(begin_date.getDate());
-		// console.log(tmpBody.begin_date);
-		// console.log(tmpBody.end_date);
+			two_digiter(begin_date.getDate()) +
+			"T" +
+			two_digiter(begin_date.getHours()) +
+			":" +
+			two_digiter(begin_date.getMinutes());
 		setBodyState(tmpBody);
 	}, [param.data]);
 
@@ -221,6 +234,33 @@ const AdminEventToken = param => {
 				</Button>
 			);
 	}, [param, update, formState, locked, bodyState]);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setSrcImg(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
 
 	const changeThumbnail = () => {
 		const data = new FormData();
@@ -387,9 +427,14 @@ const AdminEventToken = param => {
 					<Form.Control
 						type="file"
 						id="thumbnail"
+						onChange={event => {
+							setSrcImg(
+								URL.createObjectURL(event.target.files[0])
+							);
+						}}
 						disabled={locked}
 					/>
-					<img src={srcImg} />
+					<img src={srcImg} height="150px" />
 					<Button disabled={locked} onClick={changeThumbnail}>
 						Changer Miniature
 					</Button>

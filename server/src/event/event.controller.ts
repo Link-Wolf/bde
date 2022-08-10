@@ -1,12 +1,13 @@
 import {
 	Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
-	Session, UseInterceptors, UploadedFile
+	Session, UseInterceptors, UploadedFile, Res
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
 import { EventDto, EventFilterDto } from './event.dto';
-import { EventDtoPipe, EventFilterDtoPipe } from './event.pipe';
+import { EventDtoPipe, EventFilterDtoPipe, FileTypeValidationPipe } from './event.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
+import * as fs from 'fs';
 
 @Controller('event/')
 export class EventController {
@@ -29,6 +30,13 @@ export class EventController {
 		return this.eventService.findOne(id, session.login);
 	}
 
+	@Get(':id/thumbnail')
+	async getThumbnail(
+		@Param('id', ParseIntPipe) id: number,
+		@Session() session: Record<string, any>) {
+		return this.eventService.getThumbnail(id, session.login)
+	}
+
 	@Post('')
 	create(
 		@Session() session: Record<string, any>,
@@ -45,10 +53,11 @@ export class EventController {
 
 	@Post('upload_image/:id')
 	@UseInterceptors(FileInterceptor('thumbnail'))
-	uploadImage(
+	async uploadImage(
 		@Param('id', ParseIntPipe) id: number,
-		@UploadedFile() file: Express.Multer.File) {
-		console.log(file)
+		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File,
+		@Session() session: Record<string, any>) {
+		return this.eventService.saveThumbnail(id, file, session.login)
 	}
 
 	@Patch(':id')
