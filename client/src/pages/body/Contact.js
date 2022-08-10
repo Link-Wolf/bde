@@ -25,8 +25,7 @@ const Contact = () => {
 		setFormState(tmp);
 	};
 
-	const sendMail = () => {
-		window.confirm();
+	const sendMail = async () => {
 		emailjs
 			.send(
 				global.config.emailjs.service_id,

@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import {Accordion, Button, Form} from "react-bootstrap";
+import useConfirm from "./useConfirm";
 
 const AdminEventToken = param => {
+	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -141,9 +143,11 @@ const AdminEventToken = param => {
 	}, [param.data]);
 
 	useEffect(() => {
-		const saveEvent = () => {
+		const saveEvent = async () => {
 			if (
-				window.confirm(`Desire tu modifier l'event ${param.data.name}`)
+				await isConfirmed(
+					`Desire tu modifier l'event ${param.data.name}`
+				)
 			) {
 				var myHeaders = new Headers();
 				myHeaders.append("Content-Type", "application/json");
@@ -161,7 +165,6 @@ const AdminEventToken = param => {
 					begin_date: bodyState.begin_date,
 					end_date: bodyState.hasEndDate ? bodyState.end_date : null
 				});
-				if (window.confirm(`${raw}`));
 
 				var requestOptions = {
 					method: "PATCH",
