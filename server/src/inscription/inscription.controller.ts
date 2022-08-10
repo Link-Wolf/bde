@@ -60,9 +60,10 @@ export class InscriptionController {
 
 	@Delete('me/:id')
 	async unsubMe(
-		@Session() session: Record<string, any>,
-		@Param('id', ParseIntPipe) id: number) {
-		return this.inscriptionService.remove(id, session.login, session.login);
+		// @Session() session: Record<string, any>,
+		// @Param('id', ParseIntPipe) id: number
+	) {
+		// return this.inscriptionService.remove(id, session.login, session.login);
 	}
 
 	@Delete('/admin/:event/:login')

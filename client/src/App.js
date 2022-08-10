@@ -1,6 +1,8 @@
 // import logo from './logo.svg';
 // import "./App.css";
 import {useState, useEffect} from "react";
+import ConfirmContextProvider from "./components/ConfirmContextProvider";
+import ConfirmModal from "./components/ConfirmModal";
 
 import "./style/App.css";
 
@@ -33,9 +35,12 @@ function App() {
 	}, []);
 
 	return (
-		<div className={`App ${theme}`}>
-			<Routage />
-		</div>
+		<ConfirmContextProvider>
+			<div className={`App ${theme}`}>
+				<Routage />
+				<ConfirmModal />
+			</div>
+		</ConfirmContextProvider>
 	);
 }
 
