@@ -3,10 +3,12 @@ import AdminNavbar from "../../components/AdminNavbar";
 import {Button} from "react-bootstrap";
 import AdminContribToken from "../../components/AdminContribToken";
 
+import AdminCreateContributionToken from "../../components/AdminCreateContributionToken";
+
 const AdminContributions = () => {
 	const [data, setData] = useState([]);
 	const [update, setUpdate] = useState(false);
-
+	const [form, setForm] = useState(<></>);
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
@@ -38,25 +40,6 @@ const AdminContributions = () => {
 			});
 	}, [update]);
 
-	// const saveNewContrib = () => {
-	// 	fetch(`http://${global.config.api.authority}/contribution/admin`, {
-	// 		method: "POST",
-	// 		credentials: "include",
-	// 		headers: {
-	// 			"Content-Type": "application/json"
-	// 		},
-	// 		body: JSON.stringify({
-	// 			studLogin: "[login]",
-	// 			cost: 0,
-	// 			begin_date: new Date(Date.now()),
-	// 			end_date: 0
-	// 		})
-	// 	});
-	// 	setUpdate(true);
-	// };
-
-	const createNewContrib = () => {};
-
 	return (
 		<div
 			style={{
@@ -72,7 +55,14 @@ const AdminContributions = () => {
 				) : (
 					<div>No contributions found</div>
 				)}
-				<Button onClick={createNewContrib}>New</Button>
+				<Button
+					onClick={() => {
+						setForm(<AdminCreateContributionToken />);
+					}}
+				>
+					New
+				</Button>
+				{form}
 			</div>
 		</div>
 	);
