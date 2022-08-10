@@ -16,7 +16,10 @@ const AdminContributions = () => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(`http://${global.config.api.authority}/contribution`, requestOptions)
+		fetch(
+			`http://${global.config.api.authority}/contribution`,
+			requestOptions
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
