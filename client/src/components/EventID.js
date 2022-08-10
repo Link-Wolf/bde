@@ -113,7 +113,6 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		window.reload();
 	};
 
 	const sub = () => {
@@ -136,7 +135,6 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		window.reload();
 	};
 
 	useEffect(() => {
