@@ -8,8 +8,37 @@ import style from "../style/EventID.module.css";
 const EventID = () => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
-	const [button, setButton] = useState(<></>);
+	const [button, setButton] = useState(<> </>);
+	const [duration, setDuration] = useState("Never Ending Fun");
+	const [thumbnail, setThumnail] = useState(null);
 	const param = useParams();
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/event/${param.id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumnail(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
@@ -25,6 +54,15 @@ const EventID = () => {
 			})
 			.then(actualData => {
 				setDataEvent(actualData);
+				if (actualData.end_date) {
+					const span =
+						new Date(actualData.end_date) -
+						new Date(actualData.begin_date);
+					const span_hour = span / 1000 / 60 / 60;
+					const span_days = span_hour / 24;
+					if (span_hour >= 24) setDuration(`${span_days} jour(s)`);
+					else setDuration(`${span_hour} heure(s)`);
+				}
 			})
 			.catch(function(error) {
 				console.log(
@@ -59,7 +97,7 @@ const EventID = () => {
 		fetch(
 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
 			{
-				method: "delete",
+				method: "DELETE",
 				credentials: "include"
 			}
 		)
@@ -75,6 +113,7 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		window.reload();
 	};
 
 	const sub = () => {
@@ -97,6 +136,7 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		window.reload();
 	};
 
 	useEffect(() => {
@@ -116,8 +156,8 @@ const EventID = () => {
 			})
 			.then(data => {
 				if (data.isSubbed)
-					setButton(<Button onClick={unsub}>Unsubscribe</Button>);
-				else setButton(<Button onClick={sub}>Subscribe</Button>);
+					setButton(<Button onClick={unsub}> Unsubscribe </Button>);
+				else setButton(<Button onClick={sub}> Subscribe </Button>);
 			})
 			.catch(function(error) {
 				console.log(
@@ -149,6 +189,9 @@ const EventID = () => {
 				<div>
 					<div className={style.box_med_copper}>{dataEvent.desc}</div>
 				</div>
+				<div>
+					<img className={style.box_med_copper} src={thumbnail} />
+				</div>
 			</div>
 			<div className={`${style.col_flex} ${style.middlespace} ${"flex"}`}>
 				<div>
@@ -167,24 +210,9 @@ const EventID = () => {
 								: `Prix publique : ${dataEvent.cost}€\nPrix premium : ${dataEvent.premium_cost}€`
 							: `Gratuit !`}
 					</div>
-					<div className={style.box_dark_green}>
-						{dataEvent.end_date
-							? new Date(
-									new Date(dataEvent.end_date) -
-										new Date(dataEvent.begin_date)
-							  ).getUTCHours() > 24
-								? `${new Date(
-										new Date(dataEvent.end_date) -
-											new Date(dataEvent.begin_date)
-								  ).getUTCDate()} jour(s)`
-								: `${new Date(
-										new Date(dataEvent.end_date) -
-											new Date(dataEvent.begin_date)
-								  ).getUTCHours()} heure(s)`
-							: "Never Ending Fun"}
-					</div>
+					<div className={style.box_dark_green}>{duration}</div>
 				</div>
-				<div>{button}</div>
+				<div> {button} </div>
 			</div>
 		</div>
 	) : (
