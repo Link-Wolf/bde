@@ -163,7 +163,8 @@ const AdminContribToken = param => {
 
 	return (
 		<>
-			{formState.name} {formState.begin_date}{" "}
+			{formState.studLogin}{" "}
+			{new Date(formState.begin_date).toLocaleDateString()}
 			<form>
 				<label>Stud : </label>
 				<input
