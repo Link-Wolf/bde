@@ -48,13 +48,6 @@ const AdminContributions = () => {
 		>
 			<AdminNavbar />
 			<div>
-				{data.length ? (
-					data.map((item, i) => (
-						<AdminContribToken data={item} index={i} key={i} />
-					))
-				) : (
-					<div>No contributions found</div>
-				)}
 				<Button
 					onClick={() => {
 						setForm(<AdminCreateContributionToken />);
@@ -63,6 +56,14 @@ const AdminContributions = () => {
 					New
 				</Button>
 				{form}
+				<div></div>
+				{data.length ? (
+					data.map((item, i) => (
+						<AdminContribToken data={item} index={i} key={i} />
+					))
+				) : (
+					<div>No contributions found</div>
+				)}
 			</div>
 		</div>
 	);
