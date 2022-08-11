@@ -42,9 +42,8 @@ export class EventService {
 
 	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
-			console.log(file)
 			fs.writeFile(
-				`assets / thumbnails / ${id}.${file.mimetype.split('/')[1]}`,
+				`assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`,
 				file.buffer,
 				(err) => {
 					if (err) {
@@ -54,7 +53,7 @@ export class EventService {
 					}
 					else {
 						this.eventRepository.update(id, {
-							thumbnail_filename: `assets / thumbnails / ${id}.${file.mimetype.split('/')[1]} `
+							thumbnail_filename: `assets/thumbnails/${id}.${file.mimetype.split('/')[1]} `
 						})
 						this.logger.log(`Successfully saved thumbnail of event ${id} `, login)
 					}
