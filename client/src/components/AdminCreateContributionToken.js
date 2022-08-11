@@ -1,14 +1,15 @@
 import {useState, useEffect, React} from "react";
+import {Button} from "react-bootstrap";
 
 const AdminCreateContributionToken = () => {
 	const [formState, setFormState] = useState({
-		login: "",
+		studLogin: "",
 		begin_date: "",
 		end_date: "",
 		cost: 0
 	});
 	const [bodyState, setBodyState] = useState({
-		login: "",
+		studLogin: "",
 		begin_date: "",
 		end_date: "",
 		cost: 0
@@ -31,21 +32,13 @@ const AdminCreateContributionToken = () => {
 			"-" +
 			two_digiter(end_date.getMonth() + 1) +
 			"-" +
-			two_digiter(end_date.getDate()) +
-			"T" +
-			two_digiter(end_date.getHours()) +
-			":" +
-			two_digiter(end_date.getMinutes());
+			two_digiter(end_date.getDate());
 		tmpBody.begin_date =
 			two_digiter(begin_date.getFullYear()) +
 			"-" +
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
-			two_digiter(begin_date.getDate()) +
-			"T" +
-			two_digiter(begin_date.getHours()) +
-			":" +
-			two_digiter(begin_date.getMinutes());
+			two_digiter(begin_date.getDate());
 		setBodyState(tmpBody);
 		setBodyState(tmpBody);
 		setFormState(tmp);
@@ -57,6 +50,7 @@ const AdminCreateContributionToken = () => {
 	};
 
 	const saveNewContrib = () => {
+		console.log(JSON.stringify(bodyState));
 		fetch(`http://${global.config.api.authority}/contribution/admin`, {
 			method: "POST",
 			credentials: "include",
@@ -64,7 +58,22 @@ const AdminCreateContributionToken = () => {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(bodyState)
-		});
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+		window.location.reload();
 	};
 
 	return (
@@ -73,7 +82,7 @@ const AdminCreateContributionToken = () => {
 				<label>Stud :</label>
 				<input
 					value={formState.login}
-					name="login"
+					name="studLogin"
 					placeholder="yoyostud"
 					onChange={handleFormChange}
 				/>
@@ -100,7 +109,7 @@ const AdminCreateContributionToken = () => {
 					type="date"
 					onChange={handleFormChange}
 				/>
-				<button onClick={saveNewContrib}> Save </button>
+				<Button onClick={saveNewContrib}> Save </Button>
 			</form>
 		</>
 	);
