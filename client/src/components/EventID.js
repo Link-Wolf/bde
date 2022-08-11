@@ -172,46 +172,42 @@ const EventID = () => {
 				${"flex"}
 				`}
 		>
-			<div>
-				<div className={`${style.title_conta} ${"flex"}`}>
-					<div className={`${style.box_dark_copper} ${style.name}`}>
-						{dataEvent.name}
-					</div>
-					<div className={`${style.box_dark_copper} ${style.date}`}>
+			<Card
+				style={{
+					width: "18rem"
+				}}
+			>
+				<img className={style.box_med_copper} src={thumbnail} />
+				<CardBody>
+					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{`Le ${new Date(
 							dataEvent.begin_date
 						).toLocaleDateString()} à
-							${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
-					</div>
-				</div>
-				<div>
-					<div className={style.box_med_copper}>{dataEvent.desc}</div>
-				</div>
-				<div>
-					<img className={style.box_med_copper} src={thumbnail} />
-				</div>
-			</div>
-			<div className={`${style.col_flex} ${style.middlespace} ${"flex"}`}>
-				<div>
-					<div className={style.box_dark_green}>
+						${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{dataEvent.nb_places !== -42
-							? `${dataInsc.length} / ${dataEvent.nb_places}`
-							: `${dataInsc.length} / ∞`}
-					</div>
-					<div className={style.box_dark_green}>
-						{dataEvent.place}
-					</div>
-					<div className={`${style.box_dark_green} ${style.price}`}>
+							? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
+							: `Places : ${dataInsc.length} / ∞`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Lieu : ${dataEvent.place}`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{dataEvent.cost !== 0
 							? dataEvent.premium_cost === dataEvent.cost
 								? `Prix : ${dataEvent.cost}€`
-								: `Prix publique : ${dataEvent.cost}€\nPrix premium : ${dataEvent.premium_cost}€`
+								: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
 							: `Gratuit !`}
-					</div>
-					<div className={style.box_dark_green}>{duration}</div>
-				</div>
-				<div> {button} </div>
-			</div>
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Durée : ${duration}`}
+					</CardSubtitle>
+					<CardText>{dataEvent.desc}</CardText>
+					<Button>Button</Button>
+				</CardBody>
+			</Card>
 		</div>
 	) : (
 		<NoPage />
