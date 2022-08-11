@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
-import {Accordion, Button, Form} from "react-bootstrap";
+import {Accordion, Form} from "react-bootstrap";
+import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
 
 const AdminEventToken = param => {
@@ -38,6 +39,7 @@ const AdminEventToken = param => {
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [img, setImg] = useState(null);
 	const [srcImg, setSrcImg] = useState(null);
 
 	const switchLock = () => {
@@ -175,8 +177,7 @@ const AdminEventToken = param => {
 				};
 
 				fetch(
-					`http://${global.config.api.authority}
-					/event/${param.data.id}`,
+					`http://${global.config.api.authority}/event/${param.data.id}`,
 					requestOptions
 				)
 					.then(response => {
@@ -220,6 +221,7 @@ const AdminEventToken = param => {
 			setButton(
 				<Button
 					type="button"
+					color="danger"
 					defaultValue={param.index}
 					onClick={switchLock}
 				>
@@ -230,6 +232,7 @@ const AdminEventToken = param => {
 			setButton(
 				<Button
 					type="button"
+					color="danger"
 					defaultValue={param.index}
 					onClick={saveEvent}
 				>
@@ -267,8 +270,8 @@ const AdminEventToken = param => {
 
 	const changeThumbnail = () => {
 		const data = new FormData();
-		data.append("thumbnail", document.getElementById("thumbnail").files[0]);
-
+		data.append("thumbnail", img);
+		console.log(document.getElementById("thumbnail").files);
 		fetch(
 			`http://${global.config.api.authority}/event/upload_image
 			/${param.data.id}`,
@@ -424,9 +427,10 @@ const AdminEventToken = param => {
 						checked={formState.for_pool}
 					/>
 					{button}
-					<Button type="reset" disabled={locked}>
+					<Button color="secondary" type="reset" disabled={locked}>
 						Reset
 					</Button>
+					<Button color="danger"> Delete </Button>
 					<Form.Control
 						type="file"
 						id="thumbnail"
@@ -434,6 +438,7 @@ const AdminEventToken = param => {
 							setSrcImg(
 								URL.createObjectURL(event.target.files[0])
 							);
+							setImg(event.target.files[0]);
 						}}
 						disabled={locked}
 					/>

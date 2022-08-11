@@ -2,6 +2,7 @@ import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
 import NoPage from "../pages/body/NoPage";
 import {Button} from "react-bootstrap";
+import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 
 import style from "../style/EventID.module.css";
 
