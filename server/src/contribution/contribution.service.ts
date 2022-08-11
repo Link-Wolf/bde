@@ -82,21 +82,19 @@ export class ContributionService {
 			this.logger.log(`Successfully created contribution for student ${contributionData.stud.login}`, requestMaker)
 		}
 		catch (error) {
-			await this.logger.error(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`, requestMaker);
-			throw new UnprocessableEntityException(`Failed to create contribution for student ${contributionData.stud.login} on database (${error})`);
+			await this.logger.error(`Failed to create contribution for student on database (${error})`, requestMaker);
+			throw new UnprocessableEntityException(`Failed to create contribution for student on database (${error})`);
 		}
 	}
 
 	async forceCreate(contributionData: ContributionDto, requestMaker: string): Promise<void> {
 		try {
-			console.log("try")
 			await this.contributionRepository.insert(contributionData);
 			this.logger.warn(`Successfully force-created contribution for student ${contributionData.stud.login}`, requestMaker)
 		}
 		catch (error) {
-			console.log("caatch")
-			await this.logger.error(`Failed to force-create contribution for student ${contributionData.stud.login} on database (${error})`, requestMaker);
-			throw new UnprocessableEntityException(`Failed to force-create contribution for student ${contributionData.stud.login} on database (${error})`);
+			await this.logger.error(`Failed to force-create contribution for student on database (${error})`, requestMaker);
+			throw new UnprocessableEntityException(`Failed to force-create contribution for student on database (${error})`);
 		}
 	}
 

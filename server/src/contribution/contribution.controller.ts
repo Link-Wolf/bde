@@ -24,7 +24,9 @@ export class ContributionController {
 	}
 
 	@Post('admin')
-	forceCreate(@Session() session: Record<string, any>, @Body(ContributionDtoPipe) contribution: ContributionDto) {
+	forceCreate(
+		@Session() session: Record<string, any>,
+		@Body(ContributionDtoPipe) contribution: ContributionDto) {
 		return this.contributionService.forceCreate(contribution, session.login);
 	}
 

@@ -50,7 +50,6 @@ const AdminCreateContributionToken = () => {
 	};
 
 	const saveNewContrib = () => {
-		console.log(JSON.stringify(bodyState));
 		fetch(`http://${global.config.api.authority}/contribution/admin`, {
 			method: "POST",
 			credentials: "include",
@@ -65,7 +64,6 @@ const AdminCreateContributionToken = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
 			})
 			.catch(function(error) {
 				console.log(
@@ -73,7 +71,7 @@ const AdminCreateContributionToken = () => {
 						error.message
 				);
 			});
-		window.location.reload();
+		// window.location.reload();
 	};
 
 	return (
