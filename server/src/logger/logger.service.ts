@@ -18,7 +18,10 @@ export class LoggerService {
 			message: `${requestMaker} : ${message}`,
 			type: "error"
 		})
-		this.logfile("error", `${requestMaker} : ${message}`)
+		if (requestMaker == "undefined")
+			this.logfile("error", `(unknown public) : ${message}`)
+		else
+			this.logfile("error", `(${requestMaker}) : ${message}`)
 	}
 
 	async warn(message: string, requestMaker: string) {
@@ -28,7 +31,10 @@ export class LoggerService {
 			message: `${requestMaker} : ${message}`,
 			type: "warn"
 		})
-		this.logfile("warning", `${requestMaker} : ${message}`)
+		if (requestMaker == "undefined")
+			this.logfile("warning", `(unknown public) : ${message}`)
+		else
+			this.logfile("warning", `(${requestMaker}) : ${message}`)
 	}
 
 	async log(message: string, requestMaker: string) {
@@ -38,7 +44,10 @@ export class LoggerService {
 		// 	message: message,
 		// 	type: "log"
 		// })
-		this.logfile("log", `${requestMaker} : ${message}`)
+		if (requestMaker == "undefined")
+			this.logfile("log", `(unknown public) : ${message}`)
+		else
+			this.logfile("log", `(${requestMaker}) : ${message}`)
 	}
 
 	async verbose(message: string, requestMaker: string) {
@@ -48,7 +57,10 @@ export class LoggerService {
 		// 	message: message,
 		// 	type: "verbose"
 		// })
-		this.logfile("verbose", `${requestMaker} : ${message}`)
+		if (requestMaker == "undefined")
+			this.logfile("verbose", `(unknown public) : ${message}`)
+		else
+			this.logfile("verbose", `(${requestMaker}) : ${message}`)
 	}
 
 	async logfile(type: string, message: string) {
@@ -72,7 +84,7 @@ export class LoggerService {
 			seconds = '0' + seconds
 		const time = hours + ':' + minutes + ':' + seconds
 		const style = ' [' + type.toUpperCase() + ']'
-		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) + ' : ' + message + '\n', (err) => {
+		fs.appendFile(file, time + style + ' '.repeat(8 - type.length) + ' > ' + message + '\n', (err) => {
 			if (err) throw err;
 		});
 	}
