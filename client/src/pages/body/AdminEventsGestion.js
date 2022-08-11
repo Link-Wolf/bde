@@ -18,7 +18,7 @@ const AdminEventsGestion = param => {
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"
-			}, //add security token here i guess
+			},
 			body: JSON.stringify(param.filter)
 		};
 		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
@@ -46,6 +46,7 @@ const AdminEventsGestion = param => {
 			<AdminCreateEventToken
 				onClickRetract={() => setOpenEventId(-42)}
 				onClickDeploy={() => setOpenEventId(-1)}
+				cancel={() => setNewEvent(<></>)}
 			/>
 		);
 		setOpenEventId(-1);
