@@ -171,7 +171,7 @@ const EventID = () => {
 				width: "18rem"
 			}}
 		>
-			<img className={style.box_med_copper} src={thumbnail} />
+			<img src={thumbnail} />
 			<CardBody>
 				<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
 				<CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -199,7 +199,7 @@ const EventID = () => {
 					{`Durée : ${duration}`}
 				</CardSubtitle>
 				<CardText>{dataEvent.desc}</CardText>
-				<Button>Button</Button>
+				{button}
 			</CardBody>
 		</Card>
 	) : (
