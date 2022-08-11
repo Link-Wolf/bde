@@ -125,6 +125,7 @@ const UserProfile = options => {
 				</div>
 				<QRCode
 					value={`http://${window.location.host}/profile/${dataStud.login}`}
+					level="H"
 				/>
 			</div>
 			{contributionStatus}

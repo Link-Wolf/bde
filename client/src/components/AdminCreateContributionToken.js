@@ -1,5 +1,6 @@
 import {useState, useEffect, React} from "react";
 import {Button} from "react-bootstrap";
+import {Alert} from "reactstrap";
 
 const AdminCreateContributionToken = () => {
 	const [formState, setFormState] = useState({
@@ -8,6 +9,7 @@ const AdminCreateContributionToken = () => {
 		end_date: "",
 		cost: 0
 	});
+	const [alert, setAlert] = useState(<></>);
 	const [bodyState, setBodyState] = useState({
 		studLogin: "",
 		begin_date: "",
@@ -49,23 +51,32 @@ const AdminCreateContributionToken = () => {
 		return nb;
 	};
 
-	const saveNewContrib = () => {
-		console.log(JSON.stringify(bodyState));
-		fetch(`http://${global.config.api.authority}/contribution/admin`, {
-			method: "POST",
-			credentials: "include",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(bodyState)
-		})
+	const saveNewContrib = async () => {
+		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
+			setAlert(
+				<Alert color="danger">
+					You must set the end date AFTER the begin date
+				</Alert>
+			);
+			throw "You must set the end date AFTER the begin date";
+		}
+		await fetch(
+			`http://${global.config.api.authority}/contribution/admin`,
+			{
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(bodyState)
+			}
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
 			})
 			.catch(function(error) {
 				console.log(
@@ -78,6 +89,7 @@ const AdminCreateContributionToken = () => {
 
 	return (
 		<>
+			{alert}
 			<form>
 				<label>Stud :</label>
 				<input
