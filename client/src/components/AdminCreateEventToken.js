@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {Button, Form} from "react-bootstrap";
 import useConfirm from "./useConfirm";
 
-const AdminEventToken = () => {
+const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
 
 	const [formState, setFormState] = useState({
@@ -254,6 +254,9 @@ const AdminEventToken = () => {
 				/>
 				<Button type="button" defaultValue={-1} onClick={saveEvent}>
 					Save
+				</Button>
+				<Button type="button" defaultValue={-1} onClick={param.cancel}>
+					Cancel
 				</Button>
 			</Form>
 		</>
