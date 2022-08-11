@@ -14,6 +14,17 @@ import { join } from 'path';
 
 @Injectable()
 export class EventService {
+	findEventSubbed(login: string, rm: string): Promise<Event[]> {
+		try {
+			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscriptions WHERE "studLogin" = '${login}');`);
+			this.logger.log(`Successfully got all events ${login} subbed to`, rm)
+			return ret;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all events ${login} subbed to on database(${error})`, login);
+			throw new InternalServerErrorException(`Failed to get all events ${login} subbed to on database(${error})`)
+		}
+	}
 	async getThumbnail(id: number, login: any) {
 		try {
 			const thumb_path = (await this.eventRepository.findOneById(id))
@@ -33,19 +44,19 @@ export class EventService {
 		try {
 			console.log(file)
 			fs.writeFile(
-				`assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`,
+				`assets / thumbnails / ${id}.${file.mimetype.split('/')[1]}`,
 				file.buffer,
 				(err) => {
 					if (err) {
-						this.logger.error(`Error while creating thumbnail (${err})`,
+						this.logger.error(`Error while creating thumbnail(${err})`,
 							login);
 						throw err
 					}
 					else {
 						this.eventRepository.update(id, {
-							thumbnail_filename: `assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`
+							thumbnail_filename: `assets / thumbnails / ${id}.${file.mimetype.split('/')[1]} `
 						})
-						this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+						this.logger.log(`Successfully saved thumbnail of event ${id} `, login)
 					}
 				})
 		} catch (error) {
@@ -66,11 +77,11 @@ export class EventService {
 		try {
 			let match = `SELECT * FROM "event" WHERE '1' = '1'`;
 			if (filterDto.current)
-				match += ` AND ("end_date" IS NULL OR "end_date" > 'NOW()')`
+				match += ` AND("end_date" IS NULL OR "end_date" > 'NOW()')`
 			if (filterDto.free)
 				match += ` AND "cost" = 0`
 			if (filterDto.available)
-				match += ` AND ("nb_places" > (SELECT COUNT(*) FROM
+				match += ` AND("nb_places" > (SELECT COUNT(*) FROM
 				 "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
 			if (filterDto.food)
 				match += ` AND "consos" = 't'`
@@ -80,9 +91,11 @@ export class EventService {
 				match += ` AND "isOutside" = 't'`
 			if (filterDto.sponsorised)
 				match += ` AND "sponsorised" = 't'`
-			match += ` ORDER BY ${filterDto.sort} ${filterDto.asc ? "ASC"
-				: "DESC"}`
-			match += `;`
+			match += ` ORDER BY ${filterDto.sort} ${
+				filterDto.asc ? "ASC"
+					: "DESC"
+				} `
+			match += `; `
 			let events = await this.eventRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
@@ -118,7 +131,7 @@ export class EventService {
 			return event;
 		} catch (error) {
 			this.logger.error(`Failed to find event
-				 ${id} on database(${error})`, requestMaker);
+			${ id} on database(${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to find event ${id} on database(${error})`)
 		}
 	}
@@ -135,7 +148,7 @@ export class EventService {
 			this.logger.warn("Successfully updated event " + id, requestMaker);
 		} catch (error) {
 			this.logger.error(`Failed to update event ${id}
-				 on database(${error})`, requestMaker)
+			on database(${ error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to update event ${id} on database(${error})`)
 		}
 	}
@@ -225,8 +238,8 @@ export class EventService {
 
 	async getStuds(id: number, requestMaker: string): Promise<Stud[]> {
 		try {
-			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin" FROM inscriptions insc WHERE "eventId" = '${id}' );`);
-			this.logger.log(`Successfully got all students subbed in event ${id}`, requestMaker)
+			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN(SELECT \"studLogin" FROM inscriptions insc WHERE "eventId" = '${id}'); `);
+			this.logger.log(`Successfully got all students subbed in event ${id} `, requestMaker)
 			return a;
 		}
 		catch (error) {

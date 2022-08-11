@@ -30,6 +30,13 @@ export class EventController {
 		return this.eventService.findOne(id, session.login);
 	}
 
+	@Get('stud/:login')
+	findEventSubbed(
+		@Session() session: Record<string, any>,
+		@Param('login') login: string): Promise<Event[]> {
+		return this.eventService.findEventSubbed(login, session.login);
+	}
+
 	@Get(':id/thumbnail')
 	async getThumbnail(
 		@Param('id', ParseIntPipe) id: number,
