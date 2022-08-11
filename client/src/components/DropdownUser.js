@@ -50,10 +50,10 @@ const DropdownUser = () => {
 						{" "}
 						Profile{" "}
 					</NavDropdown.Item>{" "}
-					<NavDropdown.Item href="/settings">
-						Settings{" "}
+					<NavDropdown.Item href="/log">
+						{" "}
+						Logout{" "}
 					</NavDropdown.Item>{" "}
-					<NavDropdown.Item href="/log"> Logout </NavDropdown.Item>{" "}
 				</NavDropdown>
 			);
 		else
