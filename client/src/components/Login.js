@@ -32,7 +32,8 @@ const Login = () => {
 				let breakLoop = () => {
 					loop = false;
 				};
-				while (loop) {
+				let tries = 0;
+				while (loop && tries < 10) {
 					await fetch(
 						`http://${global.config.api.authority}/session`,
 						{
@@ -51,7 +52,11 @@ const Login = () => {
 						.then(data => {
 							if (data.clearance !== 0) breakLoop();
 						});
-					await new Promise(res => setTimeout(res, 200));
+					tries++;
+					await new Promise(res => setTimeout(res, 100));
+				}
+				if (tries >= 10) {
+					setRet(<Navigate to="/home?errno=1" replace={true} />);
 				}
 			})
 			.then(() => {

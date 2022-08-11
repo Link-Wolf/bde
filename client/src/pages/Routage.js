@@ -51,7 +51,7 @@ const Routage = () => {
 					path="contact"
 					element={<RouteWrapper route={<Contact />} />}
 				/>
-				<Route path="log" element={<RouteWrapper route={<Log />} />} />
+				<Route path="log" element={<Log />} />
 				<Route
 					path="log/redirect"
 					element={<RouteWrapper route={<Log />} />}
