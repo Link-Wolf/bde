@@ -92,8 +92,7 @@ export class EventFilterDtoPipe implements PipeTransform {
 @Injectable()
 export class FileTypeValidationPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
-		console.log(value)
-		if (value.mimetype.split('/')[0] === "image")
+		if (value !== undefined && value.mimetype.split('/')[0] === "image")
 			return value
 		else throw new NotAcceptableException()
 	}

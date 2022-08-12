@@ -64,6 +64,7 @@ export class EventController {
 		@Param('id', ParseIntPipe) id: number,
 		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File,
 		@Session() session: Record<string, any>) {
+		console.log(file);
 		return this.eventService.saveThumbnail(id, file, session.login)
 	}
 

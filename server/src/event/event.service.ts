@@ -42,8 +42,9 @@ export class EventService {
 
 	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
+			let path = `assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`
 			fs.writeFile(
-				`assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`,
+				path,
 				file.buffer,
 				(err) => {
 					if (err) {
@@ -53,9 +54,9 @@ export class EventService {
 					}
 					else {
 						this.eventRepository.update(id, {
-							thumbnail_filename: `assets/thumbnails/${id}.${file.mimetype.split('/')[1]} `
+							thumbnail_filename: path
 						})
-						this.logger.log(`Successfully saved thumbnail of event ${id} `, login)
+						this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
 					}
 				})
 		} catch (error) {
@@ -109,8 +110,11 @@ export class EventService {
 	async findCurrent(requestMaker: string): Promise<Event[]> {
 		try {
 			let events = await this.eventRepository.findBy({
-				end_date: IsNull() || MoreThanOrEqual(new Date(Date.now()))
+				end_date: MoreThanOrEqual(new Date(Date.now()))
 			});
+			events = events.concat(await this.eventRepository.findBy({
+				end_date: IsNull()
+			}));
 			// if (events.length == 0)
 			// 	this.logger.warn(`No current events found`)
 			// else

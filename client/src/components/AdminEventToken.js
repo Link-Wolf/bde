@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
@@ -38,8 +38,7 @@ const AdminEventToken = param => {
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
 	const [update, setUpdate] = useState(false);
-	const [selectedImage, setSelectedImage] = useState(null);
-	const [img, setImg] = useState(null);
+	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
 
 	const switchLock = () => {
@@ -194,25 +193,9 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
-				if (selectedImage) {
-					if (selectedImage["type"].split("/")[0] === "image") {
-						myHeaders = new Headers();
-						myHeaders.append("Content-Type", "application/json");
-
-						let data = new FormData();
-
-						data.append("file", selectedImage);
-
-						requestOptions = {
-							method: "POST",
-							headers: myHeaders,
-							body: data,
-							credentials: "include"
-						};
-					}
-				}
 				setLocked(true);
 				setUpdate(true);
+				changeThumbnail();
 			}
 		};
 
@@ -221,7 +204,7 @@ const AdminEventToken = param => {
 			setButton(
 				<Button
 					type="button"
-					color="danger"
+					color="primary"
 					defaultValue={param.index}
 					onClick={switchLock}
 				>
@@ -232,7 +215,7 @@ const AdminEventToken = param => {
 			setButton(
 				<Button
 					type="button"
-					color="danger"
+					color="primary"
 					defaultValue={param.index}
 					onClick={saveEvent}
 				>
@@ -270,8 +253,8 @@ const AdminEventToken = param => {
 
 	const changeThumbnail = () => {
 		const data = new FormData();
-		data.append("thumbnail", img);
-		console.log(document.getElementById("thumbnail").files);
+		data.append("thumbnail", img.current);
+		console.log(img.current);
 		fetch(
 			`http://${global.config.api.authority}/event/upload_image
 			/${param.data.id}`,
@@ -295,6 +278,33 @@ const AdminEventToken = param => {
 						error.message
 				);
 			});
+	};
+
+	const deleteEvent = async () => {
+		if (true) {
+			await fetch(
+				`http://${global.config.api.authority}/event/${param.data.id}`,
+				{
+					method: "DELETE",
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error:
+					 The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+			window.location.reload();
+		}
 	};
 
 	return (
@@ -426,25 +436,25 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						checked={formState.for_pool}
 					/>
-					{button}
-					<Button color="secondary" type="reset" disabled={locked}>
-						Reset
-					</Button>
-					<Button color="danger"> Delete </Button>
 					<Form.Control
 						type="file"
 						id="thumbnail"
 						onChange={event => {
+							console.log("file :", event.target.files[0]);
+							img.current = event.target.files[0];
 							setSrcImg(
 								URL.createObjectURL(event.target.files[0])
 							);
-							setImg(event.target.files[0]);
 						}}
 						disabled={locked}
 					/>
 					<img src={srcImg} height="150px" />
-					<Button disabled={locked} onClick={changeThumbnail}>
-						Changer Miniature
+					{button}
+					<Button color="secondary" type="reset" disabled={locked}>
+						Reset
+					</Button>
+					<Button color="danger" onClick={deleteEvent}>
+						Delete
 					</Button>
 				</Form>
 			</Accordion.Body>

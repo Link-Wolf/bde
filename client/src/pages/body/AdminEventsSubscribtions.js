@@ -93,28 +93,6 @@ const AdminStudents = () => {
 			});
 	};
 
-	const getAllEvent = () => {
-		fetch(`http://${global.config.api.authority}/event/current`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(actualData => {
-				setAllEvent(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
-			});
-	};
-
 	const updateSelectedEvent = event => {
 		setSelectedEvent(event.target.value);
 	};
@@ -131,7 +109,26 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
-		getAllEvent();
+		fetch(`http://${global.config.api.authority}/event/current`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(actualData => {
+				console.log(actualData);
+				setAllEvent(actualData);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
 	}, []);
 
 	useEffect(() => {
