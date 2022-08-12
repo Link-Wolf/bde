@@ -1,4 +1,7 @@
-import React from "react";
+import {React} from "react";
+import {useParams} from "react-router-dom";
+import {Alert} from "reactstrap";
+
 import EventList from "../../components/EventList";
 import EventCarousel from "../../components/EventCarousel";
 
