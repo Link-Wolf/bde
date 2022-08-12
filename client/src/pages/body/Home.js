@@ -1,7 +1,4 @@
-import {React} from "react";
-import {useParams} from "react-router-dom";
-import {Alert} from "reactstrap";
-
+import React from "react";
 import EventList from "../../components/EventList";
 import EventCarousel from "../../components/EventCarousel";
 
@@ -9,6 +6,8 @@ import style from "../../style/Home.module.css";
 
 const Home = () => {
 	const param = useParams();
+
+	console.log(param);
 
 	return (
 		<div>
