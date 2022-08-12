@@ -5,6 +5,8 @@ import EventCarousel from "../../components/EventCarousel";
 import style from "../../style/Home.module.css";
 
 const Home = () => {
+	const param = useParams();
+
 	return (
 		<div>
 			<p className={style.p}>
@@ -29,6 +31,11 @@ const Home = () => {
 				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
 				pulvinar et, accumsan eu lectus. Sed porttitor.
 			</p>
+			{param.errno == 1 ? (
+				<Alert color="danger">
+					Error while logging in, please retry or contact us
+				</Alert>
+			) : null}
 			<p className={style.p}>Ouais salut c'est le BDE</p>
 			<p className={style.p}>Ici on est pas la pour faire des oeufs</p>
 			<p className={style.p}>Alors accroche toi bien a ton iMac</p>
