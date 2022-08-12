@@ -8,29 +8,33 @@ import {
 	CDBSidebarMenuItem
 } from "cdbreact";
 
-// const AdminNavbar = () => {
-// 	return (
-// 		<Navbar collapseOnSelect bg="secondary" variant="dark">
-// 			<Nav className="me-auto">
-// 				<Nav.Link href="/admin/students">Students</Nav.Link>
-// 				<NavDropdown title="Events">
-// 					<NavDropdown.Item href="/admin/events/gestion">
-// 						Gestion
-// 					</NavDropdown.Item>
-// 					<NavDropdown.Item href="/admin/events/subscribtions">
-// 						Inscriptions
-// 					</NavDropdown.Item>
-// 				</NavDropdown>
-// 				<Nav.Link href="/admin/contributions">Contributions</Nav.Link>
-// 				<Nav.Link href="/admin/logs">Logs</Nav.Link>
-// 			</Nav>
-// 		</Navbar>
-// 	);
-// };
-
 const AdminNavbar = () => {
+	const [clearance, setClearance] = useState(-42);
 	const [headerHeight, setHeaderHeight] = useState(0);
 	const [footerHeight, setFooterHeight] = useState(0);
+
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.clearance !== -42) setClearance(data.clearance);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
 
 	useEffect(() => {
 		if (document.getElementById("header"))
@@ -78,9 +82,13 @@ const AdminNavbar = () => {
 						<Nav.Link href="/admin/logs">
 							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
 						</Nav.Link>
-						<Nav.Link href="/admin/teammanagement">
-							<CDBSidebarMenuItem>Management</CDBSidebarMenuItem>
-						</Nav.Link>
+						{clearance >= 21 ? (
+							<Nav.Link href="/admin/teammanagement">
+								<CDBSidebarMenuItem>
+									Management
+								</CDBSidebarMenuItem>
+							</Nav.Link>
+						) : null}
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
 			</CDBSidebar>

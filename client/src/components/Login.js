@@ -11,7 +11,6 @@ const Login = () => {
 		const requestOptions = {
 			method: "POST",
 			credentials: "include",
-			// credentials: "tkt on prend tout ;) UwU OwO @w@ TwT $w$ ewe",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
 				code: code
@@ -25,8 +24,6 @@ const Login = () => {
 							`The status is ${response.status}`
 					);
 				}
-				// console.log("1 : " + response.headers.get("Set-Cookie")); //cookie is not defined
-				// console.log("2 : ", response.headers.get("Content-Type"))
 			})
 			.then(async () => {
 				let loop = true;
