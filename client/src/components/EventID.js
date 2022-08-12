@@ -94,8 +94,8 @@ const EventID = () => {
 			});
 	}, [param.id]);
 
-	const unsub = () => {
-		fetch(
+	const unsub = async () => {
+		await fetch(
 			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
 			{
 				method: "DELETE",
@@ -114,10 +114,11 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		window.location.reload();
 	};
 
-	const sub = () => {
-		fetch(
+	const sub = async () => {
+		await fetch(
 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
 			{
 				method: "POST",
@@ -136,6 +137,7 @@ const EventID = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		window.location.reload();
 	};
 
 	useEffect(() => {
