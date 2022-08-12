@@ -41,7 +41,7 @@ export class AuthService {
 						'Authorization': `Bearer ${token}`
 					}
 					return this.http.get(
-						"https://api.intra.42.fr/v2/",
+						"https://api.intra.42.fr/v2/me",
 						{ headers: header })
 						.toPromise()
 						.then(async response => {

@@ -1,10 +1,10 @@
 import {useSearchParams, Navigate} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 
 const Login = () => {
 	const [searchParams] = useSearchParams();
 	const [ret, setRet] = useState(<></>);
-	const [tries, setTries] = useState(0);
+	const tries = useRef(0);
 
 	useEffect(() => {
 		const code = searchParams.get("code");
@@ -33,7 +33,7 @@ const Login = () => {
 				let breakLoop = () => {
 					loop = false;
 				};
-				while (loop && tries < 10) {
+				while (loop && tries.current < 10) {
 					await fetch(
 						`http://${global.config.api.authority}/session`,
 						{
@@ -52,15 +52,17 @@ const Login = () => {
 						.then(data => {
 							if (data.clearance !== 0) breakLoop();
 						});
-					setTries(tries + 1);
+					console.log(tries.current);
+					tries.current += 1;
 					await new Promise(res => setTimeout(res, 100));
 				}
-				if (tries >= 10) {
+				if (tries.current >= 10) {
 					setRet(<Navigate to="/home?errno=1" replace={true} />);
 				}
 			})
 			.then(() => {
-				if (tries < 10) setRet(<Navigate to={-1} replace={true} />);
+				if (tries.current < 10)
+					setRet(<Navigate to={-1} replace={true} />);
 			})
 			.catch(function(error) {
 				console.log(
