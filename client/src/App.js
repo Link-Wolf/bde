@@ -3,6 +3,8 @@
 import {useState, useEffect} from "react";
 import ConfirmContextProvider from "./components/ConfirmContextProvider";
 import ConfirmModal from "./components/ConfirmModal";
+import Notification from "./components/Notification";
+import NotificationContextProvider from "./components/NotificationContextProvider";
 
 import "./style/App.css";
 
@@ -35,12 +37,15 @@ function App() {
 	}, []);
 
 	return (
-		<ConfirmContextProvider>
-			<div className={`App ${theme}`}>
-				<Routage />
-				<ConfirmModal />
-			</div>
-		</ConfirmContextProvider>
+		<NotificationContextProvider>
+			<ConfirmContextProvider>
+				<div className={`App ${theme}`}>
+					<Routage />
+					<ConfirmModal />
+					<Notification />
+				</div>
+			</ConfirmContextProvider>
+		</NotificationContextProvider>
 	);
 }
 
