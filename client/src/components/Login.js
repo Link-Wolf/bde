@@ -4,6 +4,7 @@ import {useState, useEffect} from "react";
 const Login = () => {
 	const [searchParams] = useSearchParams();
 	const [ret, setRet] = useState(<></>);
+	const [tries, setTries] = useState(0);
 
 	useEffect(() => {
 		const code = searchParams.get("code");
@@ -32,7 +33,6 @@ const Login = () => {
 				let breakLoop = () => {
 					loop = false;
 				};
-				let tries = 0;
 				while (loop && tries < 10) {
 					await fetch(
 						`http://${global.config.api.authority}/session`,
@@ -52,7 +52,7 @@ const Login = () => {
 						.then(data => {
 							if (data.clearance !== 0) breakLoop();
 						});
-					tries++;
+					setTries(tries + 1);
 					await new Promise(res => setTimeout(res, 100));
 				}
 				if (tries >= 10) {
@@ -60,7 +60,7 @@ const Login = () => {
 				}
 			})
 			.then(() => {
-				setRet(<Navigate to={-1} replace={true} />);
+				if (tries < 10) setRet(<Navigate to={-1} replace={true} />);
 			})
 			.catch(function(error) {
 				console.log(
