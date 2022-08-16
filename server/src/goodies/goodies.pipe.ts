@@ -3,6 +3,7 @@ import { PipeTransform, Injectable, ArgumentMetadata, NotAcceptableException } f
 @Injectable()
 export class GoodiesDtoPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
+		console.log(value)
 		if ("cost" in value)
 			value.cost = Number(value.cost)
 		if ("available" in value)
