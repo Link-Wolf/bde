@@ -14,6 +14,13 @@ import { join } from 'path';
 
 @Injectable()
 export class EventService {
+	constructor(
+		@InjectRepository(Event)
+		private eventRepository: Repository<Event>,
+		private studService: StudService,
+		private logger: LoggerService,
+	) { }
+
 	findEventSubbed(login: string, rm: string): Promise<Event[]> {
 		try {
 			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscriptions WHERE "studLogin" = '${login}');`);
@@ -42,13 +49,13 @@ export class EventService {
 
 	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
-			let path = `assets/thumbnails/${id}.${file.mimetype.split('/')[1]}`
+			let path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
 			fs.writeFile(
 				path,
 				file.buffer,
 				(err) => {
 					if (err) {
-						this.logger.error(`Error while creating thumbnail(${err})`,
+						this.logger.error(`Error while creating event ${id} thumbnail(${err})`,
 							login);
 						throw err
 					}
@@ -60,17 +67,10 @@ export class EventService {
 					}
 				})
 		} catch (error) {
-			this.logger.error(`Failed to get all filtered events on database(${error})`, login);
-			throw new InternalServerErrorException(`Could not find filtered events on database(${error})`)
+			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login);
+			throw new InternalServerErrorException(`Failed to save thumbnail of event ${id} on database(${error})`)
 		}
 	}
-
-	constructor(
-		@InjectRepository(Event)
-		private eventRepository: Repository<Event>,
-		private studService: StudService,
-		private logger: LoggerService,
-	) { }
 
 	async findAll(filterDto: EventFilterDto, requestMaker: string):
 		Promise<Event[]> {
@@ -115,9 +115,6 @@ export class EventService {
 			events = events.concat(await this.eventRepository.findBy({
 				end_date: IsNull()
 			}));
-			// if (events.length == 0)
-			// 	this.logger.warn(`No current events found`)
-			// else
 			this.logger.log(`Got all current events`, requestMaker);
 			return events;
 		} catch (error) {
@@ -141,7 +138,6 @@ export class EventService {
 
 	async update(id: number, eventData: EventDto, requestMaker: string)
 		: Promise<void> {
-		// if no event id (find) -> err NotFoundException
 		try {
 			if (!await this.findOne(id, requestMaker)) {
 				this.logger.error(`Failed to update event with id ${id} : event does not exist`, requestMaker);
