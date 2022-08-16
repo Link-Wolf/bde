@@ -13,6 +13,7 @@ import Events from "./body/Events";
 import Event from "./body/Event";
 import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
+import Product from "./body/Product";
 import AdminEventsGestion from "./body/AdminEventsGestion";
 import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
 import AdminContributions from "./body/AdminContributions";
@@ -22,6 +23,7 @@ import AdminStudents from "./body/AdminStudents";
 import Log from "./body/Log";
 import Me from "./body/Me";
 import Profile from "./body/Profile";
+import AdminShopGestion from "./body/AdminShopGestion";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -59,6 +61,15 @@ const Routage = () => {
 				<Route
 					path="shop"
 					element={<RouteWrapper route={<Shop />} />}
+				/>
+				<Route
+					path="product/:id"
+					element={
+						<RouteWrapper
+							route={<Product />}
+							check={global.config.clearance.pool}
+						/>
+					}
 				/>
 				<Route
 					path="me"
@@ -102,6 +113,15 @@ const Routage = () => {
 						<RouteWrapper
 							route={<AdminCaptainManagement />}
 							check={global.config.clearance.bde_director}
+						/>
+					}
+				/>
+				<Route
+					path="admin/shop"
+					element={
+						<RouteWrapper
+							route={<AdminShopGestion />}
+							check={global.config.clearance.admin}
 						/>
 					}
 				/>

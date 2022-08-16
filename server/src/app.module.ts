@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContributionModule } from './contribution/contribution.module';
 import { Contribution } from './entity/Contribution';
+import { Goodies } from './entity/Goodies';
 import { Event } from './entity/Event';
 import { Stud } from './entity/Stud';
 import { StudModule } from './stud/stud.module';
@@ -14,6 +15,7 @@ import { LogsModule } from './logs/logs.module';
 import { Logs } from './entity/Logs';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { GoodiesModule } from './goodies/goodies.module';
 //import { JwtAuthGuard } from './auth/jwtAuth.guard';
 //import { APP_GUARD } from '@nestjs/core';
 const { db_password } = require('../config.json')
@@ -28,7 +30,7 @@ const { db_password } = require('../config.json')
 			username: 'linkar',
 			password: db_password,
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Logs],
+			entities: [Stud, Contribution, Event, Logs, Goodies],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({
@@ -37,6 +39,7 @@ const { db_password } = require('../config.json')
 		StudModule,
 		ContributionModule,
 		EventModule,
+		GoodiesModule,
 		InscriptionModule,
 		LogsModule,
 		LoggerModule,

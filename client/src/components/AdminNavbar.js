@@ -79,16 +79,15 @@ const AdminNavbar = () => {
 						<Nav.Link href="/admin/contributions">
 							<CDBSidebarMenuItem>Cotisations</CDBSidebarMenuItem>
 						</Nav.Link>
+						<Nav.Link href="/admin/shop">
+							<CDBSidebarMenuItem>Shop</CDBSidebarMenuItem>
+						</Nav.Link>
 						<Nav.Link href="/admin/logs">
 							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
 						</Nav.Link>
-						{clearance >= 21 ? (
-							<Nav.Link href="/admin/teammanagement">
-								<CDBSidebarMenuItem>
-									Management
-								</CDBSidebarMenuItem>
-							</Nav.Link>
-						) : null}
+						<Nav.Link href="/admin/teammanagement">
+							<CDBSidebarMenuItem>Management</CDBSidebarMenuItem>
+						</Nav.Link>
 					</CDBSidebarMenu>
 				</CDBSidebarContent>
 			</CDBSidebar>

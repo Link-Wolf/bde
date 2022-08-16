@@ -75,6 +75,7 @@ export class GoodiesService {
 	async findOne(id: number, requestMaker: string): Promise<Goodies> {
 		try {
 			let goodies = await this.goodiesRepository.findOneBy({ id: id });
+			console.log(goodies)
 			if (goodies)
 				this.logger.log(`Got goodies with id ${id} `, requestMaker);
 			return goodies;
@@ -84,15 +85,14 @@ export class GoodiesService {
 		}
 	}
 
-	async update(id: number, goodiesData: GoodiesDto, requestMaker: string)
-		: Promise<void> {
+	async update(id: number, goodiesData: GoodiesDto, requestMaker: string): Promise<void> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
 				this.logger.error(`Failed to update goodies with id ${id} : goodies does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update goodies with id ${id} : goodies does not exist`);
 			}
 			await this.goodiesRepository.update(id, goodiesData);
-			this.logger.warn("Successfully updated goodies " + id, requestMaker);
+			this.logger.warn(`Successfully updated goodies ${id}`, requestMaker);
 		} catch (error) {
 			this.logger.error(`Failed to update goodies ${id} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to update goodies ${id} on database(${error})`)
