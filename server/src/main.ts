@@ -40,7 +40,7 @@ async function bootstrap() {
 	)
 	app.useGlobalFilters(new HttpExceptionFilter());
 	app.enableCors({
-		"origin": url_client, //
+		"origin": url_client,
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204,
