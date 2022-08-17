@@ -1,11 +1,11 @@
 import {useState, useEffect, React} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, Navigate} from "react-router-dom";
 import NoPage from "./NoPage";
 import Me from "./Me";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 
 const Product = () => {
-	const [dataProduct, setDataProduct] = useState([]);
+	const [dataProduct, setDataProduct] = useState(<></>);
 	const [thumbnail, setThumnail] = useState(null);
 	const param = useParams();
 
@@ -42,14 +42,31 @@ const Product = () => {
 		})
 			.then(response => {
 				if (!response.ok) {
+					setDataProduct(<Navigate to="/home" />);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
 				return response.json();
 			})
-			.then(actualData => {
-				setDataProduct(actualData);
+			.then(d => {
+				console.log(d);
+				setDataProduct(
+					<Card
+						style={{
+							width: "18rem"
+						}}
+					>
+						<img src={thumbnail} />
+						<CardBody>
+							<CardTitle tag="h5"> {d.name}</CardTitle>
+							<CardSubtitle tag="h6">
+								{`Prix : ${dataProduct.cost}`}
+							</CardSubtitle>
+							<CardText>{d.desc}</CardText>
+						</CardBody>
+					</Card>
+				);
 			})
 			.catch(function(error) {
 				console.log(
@@ -58,23 +75,6 @@ const Product = () => {
 			});
 	}, [param.id]);
 
-	return dataProduct.name ? (
-		<Card
-			style={{
-				width: "18rem"
-			}}
-		>
-			<img src={thumbnail} />
-			<CardBody>
-				<CardTitle tag="h5"> {dataProduct.name}</CardTitle>
-				<CardSubtitle tag="h6">
-					{`Prix : ${dataProduct.cost}`}
-				</CardSubtitle>
-				<CardText>{dataProduct.desc}</CardText>
-			</CardBody>
-		</Card>
-	) : (
-		<Me />
-	);
+	return <> {dataProduct}</>;
 };
 export default Product;
