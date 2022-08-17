@@ -174,7 +174,7 @@ const AdminEventToken = param => {
 					credentials: "include"
 				};
 
-				fetch(
+				await fetch(
 					`http://${global.config.api.authority}/event/${param.data.id}`,
 					requestOptions
 				)
@@ -192,9 +192,8 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
-				setLocked(true);
-				setUpdate(true);
 				changeThumbnail();
+				window.location.reload();
 			}
 		};
 
