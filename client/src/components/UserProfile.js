@@ -115,53 +115,49 @@ const UserProfile = options => {
 
 	return (
 		<>
-			{dataStud.length ? (
-				<div>
-					<div style={{display: "flex"}}>
-						<img
-							height="100px"
-							src={`https://cdn.intra.42.fr/users/${dataStud.login}.jpg`}
-						/>
-						<div>
-							<h1>{dataStud.login}</h1>
-							<h2>{`${dataStud.firstname} ${dataStud.lastname}`}</h2>
-						</div>
-						<QRCode
-							value={`http://${window.location.host}/profile/${dataStud.login}`}
-							level="H"
-						/>
+			<div>
+				<div style={{display: "flex"}}>
+					<img
+						height="100px"
+						src={`https://cdn.intra.42.fr/users/${dataStud.login}.jpg`}
+					/>
+					<div>
+						<h1>{dataStud.login}</h1>
+						<h2>{`${dataStud.firstname} ${dataStud.lastname}`}</h2>
 					</div>
-					{contributionStatus}
-					<div style={{display: "flex"}}>
-						<div>
-							<h3> Historique de contributions</h3>
-							<ul>
-								{dataContrib.map(data => (
-									<li key={data.id}>
-										{`${new Date(
-											data.begin_date
-										).toLocaleDateString()} - ${new Date(
-											data.end_date
-										).toLocaleDateString()}`}
-									</li>
-								))}
-							</ul>
-						</div>
-						<div>
-							<h3> Events inscrits </h3>
-							<ul>
-								{dataEvent.map(data => (
-									<li key={data.id}>
-										<EventToken event={data} />
-									</li>
-								))}
-							</ul>
-						</div>
+					<QRCode
+						value={`http://${window.location.host}/profile/${dataStud.login}`}
+						level="H"
+					/>
+				</div>
+				{contributionStatus}
+				<div style={{display: "flex"}}>
+					<div>
+						<h3> Historique de contributions</h3>
+						<ul>
+							{dataContrib.map(data => (
+								<li key={data.id}>
+									{`${new Date(
+										data.begin_date
+									).toLocaleDateString()} - ${new Date(
+										data.end_date
+									).toLocaleDateString()}`}
+								</li>
+							))}
+						</ul>
+					</div>
+					<div>
+						<h3> Events inscrits </h3>
+						<ul>
+							{dataEvent.map(data => (
+								<li key={data.id}>
+									<EventToken event={data} />
+								</li>
+							))}
+						</ul>
 					</div>
 				</div>
-			) : (
-				<Navigate to="/home"></Navigate>
-			)}
+			</div>
 		</>
 	);
 };
