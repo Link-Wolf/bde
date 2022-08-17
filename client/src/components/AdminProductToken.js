@@ -54,7 +54,7 @@ const AdminProductToken = param => {
 		const saveProduct = async () => {
 			if (
 				await isConfirmed(
-					`Desire tu modifier le goodies ${param.data.name}`
+					`Desire tu modifier le goodies ${param.data.name} ?`
 				)
 			) {
 				var myHeaders = new Headers();
@@ -75,7 +75,7 @@ const AdminProductToken = param => {
 					credentials: "include"
 				};
 
-				fetch(
+				await fetch(
 					`http://${global.config.api.authority}/goodies/${param.data.id}`,
 					requestOptions
 				)
@@ -93,9 +93,8 @@ const AdminProductToken = param => {
 								error.message
 						);
 					});
-				setLocked(true);
-				setUpdate(true);
 				changeThumbnail();
+				window.location.reload();
 			}
 		};
 
