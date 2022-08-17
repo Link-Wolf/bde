@@ -1,27 +1,26 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
-import AdminEventToken from "../../components/AdminEventToken";
-import AdminCreateEventToken from "../../components/AdminCreateEventToken";
+import AdminProductToken from "../../components/AdminProductToken";
+import AdminCreateProductToken from "../../components/AdminCreateProductToken";
 
 import {Accordion, Button} from "react-bootstrap";
 
-const AdminEventsGestion = param => {
+const AdminShopGestion = param => {
 	const [data, setData] = useState([]);
-	const [openEventId, setOpenEventId] = useState(-42);
+	const [openProductId, setOpenProductId] = useState(-42);
 	const [update, setUpdate] = useState(false);
-	const [newEvent, setNewEvent] = useState(<></>);
+	const [newProduct, setNewProduct] = useState(<></>);
 
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
-			method: "post",
+			method: "get",
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(param.filter)
+			}
 		};
-		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
+		fetch(`http://${global.config.api.authority}/goodies`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -39,17 +38,17 @@ const AdminEventsGestion = param => {
 						error.message
 				);
 			});
-	}, [param.filter, openEventId, update]);
+	}, [param.filter, openProductId, update]);
 
-	const createNewEvent = () => {
-		setNewEvent(
-			<AdminCreateEventToken
-				onClickRetract={() => setOpenEventId(-42)}
-				onClickDeploy={() => setOpenEventId(-1)}
-				cancel={() => setNewEvent(<></>)}
+	const createNewProduct = () => {
+		setNewProduct(
+			<AdminCreateProductToken
+				onClickRetract={() => setOpenProductId(-42)}
+				onClickDeploy={() => setOpenProductId(-1)}
+				cancel={() => setNewProduct(<></>)}
 			/>
 		);
-		setOpenEventId(-1);
+		setOpenProductId(-1);
 	};
 
 	return (
@@ -60,24 +59,24 @@ const AdminEventsGestion = param => {
 		>
 			<AdminNavbar />
 			<div>
-				<Button onClick={createNewEvent}>New</Button>
+				<Button onClick={createNewProduct}>New</Button>
 				<Accordion>
-					{newEvent}
+					{newProduct}
 					{data.length ? (
 						data.map((item, i) => (
 							<Accordion.Item eventKey={i} key={i}>
-								<AdminEventToken
+								<AdminProductToken
 									data={item}
 									index={i}
 									key={i}
-									open={openEventId}
-									onClickRetract={() => setOpenEventId(-42)}
-									onClickDeploy={() => setOpenEventId(i)}
+									open={openProductId}
+									onClickRetract={() => setOpenProductId(-42)}
+									onClickDeploy={() => setOpenProductId(i)}
 								/>
 							</Accordion.Item>
 						))
 					) : (
-						<div>No event created</div>
+						<div>No product created</div>
 					)}
 				</Accordion>
 			</div>
@@ -85,4 +84,4 @@ const AdminEventsGestion = param => {
 	);
 };
 
-export default AdminEventsGestion;
+export default AdminShopGestion;
