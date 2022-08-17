@@ -76,8 +76,9 @@ export class GoodiesService {
 		try {
 			let goodies = await this.goodiesRepository.findOneBy({ id: id });
 			console.log(goodies)
-			if (goodies)
-				this.logger.log(`Got goodies with id ${id} `, requestMaker);
+			if (!goodies)
+				throw new NotFoundException(`Couldn't get goody with id ${id}`);
+			this.logger.log(`Got goody with id ${id}`, requestMaker);
 			return goodies;
 		} catch (error) {
 			this.logger.error(`Failed to find goodies ${id} on database(${error})`, requestMaker);
