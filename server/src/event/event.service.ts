@@ -49,23 +49,34 @@ export class EventService {
 
 	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
-			let path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
-			fs.writeFile(
-				path,
-				file.buffer,
-				(err) => {
-					if (err) {
-						this.logger.error(`Error while creating event ${id} thumbnail(${err})`,
-							login);
-						throw err
-					}
-					else {
-						this.eventRepository.update(id, {
-							thumbnail_filename: path
-						})
-						this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
-					}
+			let path: any
+			if ('err' in file) {
+				let nb = Math.floor(Math.random() * 5)
+				path = "assets/thumbnails/events/placeholder" + nb + ".jpg"
+				this.eventRepository.update(id, {
+					thumbnail_filename: path
 				})
+				this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+			}
+			else {
+				path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
+				fs.writeFile(
+					path,
+					file.buffer,
+					(err) => {
+						if (err) {
+							this.logger.error(`Error while creating event ${id} thumbnail(${err})`,
+								login);
+							throw err
+						}
+						else {
+							this.eventRepository.update(id, {
+								thumbnail_filename: path
+							})
+							this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+						}
+					})
+			}
 		} catch (error) {
 			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login);
 			throw new InternalServerErrorException(`Failed to save thumbnail of event ${id} on database(${error})`)
