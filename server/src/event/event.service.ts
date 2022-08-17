@@ -37,7 +37,8 @@ export class EventService {
 			const thumb_path = (await this.eventRepository.findOneById(id))
 				.thumbnail_filename;
 			if (!thumb_path)
-				throw new NotFoundException
+				// throw new NotFoundException
+				return null
 			const file = fs.createReadStream(join(process.cwd(), thumb_path));
 			this.logger.log(`Successfully got the thumbnail of event ${id}`, login);
 			return new StreamableFile(file);
@@ -200,10 +201,11 @@ export class EventService {
 		}
 	}
 
-	async create(eventDto: EventDto, requestMaker: string): Promise<void> {
+	async create(eventDto: EventDto, requestMaker: string): Promise<any> {
 		try {
-			await this.eventRepository.save(eventDto);
+			let ret = await this.eventRepository.save(eventDto);
 			this.logger.warn(`Successfully created new event ${eventDto.name} `, requestMaker);
+			return (ret);
 		} catch (error) {
 			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database(${error})`)

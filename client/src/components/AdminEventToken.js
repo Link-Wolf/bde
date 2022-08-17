@@ -460,11 +460,3 @@ const AdminEventToken = param => {
 };
 
 export default AdminEventToken;
-
-// TODO:
-// check si fichier OK
-// delete fichier ref dans evnet
-// save new fichier (en renamant clean)
-// save nouvelle ref
-// :)
-// (debug)

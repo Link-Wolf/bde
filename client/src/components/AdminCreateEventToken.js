@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import {useState, useRef} from "react";
 import {Button, Form} from "react-bootstrap";
 import useConfirm from "./useConfirm";
 
-const AdminEventToken = param => {
+const AdminCreateEventToken = param => {
 	const {isConfirmed} = useConfirm();
 
 	const [formState, setFormState] = useState({
@@ -35,8 +35,8 @@ const AdminEventToken = param => {
 		isOutside: false,
 		for_pool: false
 	});
-	const [update, setUpdate] = useState(false);
-	const [selectedImage, setSelectedImage] = useState(null);
+	const img = useRef(null);
+	const [srcImg, setSrcImg] = useState(null);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -118,9 +118,12 @@ const AdminEventToken = param => {
 							`This is an HTTP error: The status is ${response.status}`
 						);
 					}
+					return response.json();
 				})
-				.then(() => {
-					document.location.reload();
+				.then(data => {
+					changeThumbnail(data.id).then(() => {
+						document.location.reload();
+					});
 				})
 				.catch(function(error) {
 					console.log(
@@ -128,8 +131,35 @@ const AdminEventToken = param => {
 							error.message
 					);
 				});
-			setUpdate(true);
 		}
+	};
+
+	const changeThumbnail = async id => {
+		const data = new FormData();
+		data.append("thumbnail", img.current);
+		console.log(data);
+		await fetch(
+			`http://${global.config.api.authority}/event/upload_image/${id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	};
 
 	return (
@@ -246,11 +276,14 @@ const AdminEventToken = param => {
 				/>
 				<Form.Control
 					type="file"
-					name="myImage"
+					id="thumbnail"
 					onChange={event => {
-						setSelectedImage(event.target.files[0]);
+						console.log("file :", event.target.files[0]);
+						img.current = event.target.files[0];
+						setSrcImg(URL.createObjectURL(event.target.files[0]));
 					}}
 				/>
+				<img src={srcImg} height="150px" />
 				<Button type="button" defaultValue={-1} onClick={saveEvent}>
 					Save
 				</Button>
@@ -262,4 +295,4 @@ const AdminEventToken = param => {
 	);
 };
 
-export default AdminEventToken;
+export default AdminCreateEventToken;
