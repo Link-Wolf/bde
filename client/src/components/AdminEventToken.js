@@ -79,7 +79,6 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setBodyState(tmpBody);
-		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
 
@@ -254,7 +253,6 @@ const AdminEventToken = param => {
 	const changeThumbnail = () => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
-		console.log(img.current);
 		fetch(
 			`http://${global.config.api.authority}/event/upload_image
 			/${param.data.id}`,
