@@ -71,7 +71,6 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setBodyState(tmpBody);
-		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
 
