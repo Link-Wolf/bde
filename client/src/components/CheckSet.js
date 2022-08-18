@@ -1,9 +1,9 @@
 const CheckSet = param => {
 	return (
 		<fieldset>
-			{param.set.map(item => {
+			{param.set.map((item, i) => {
 				return (
-					<div>
+					<div key={i}>
 						<input
 							type={param.type}
 							name={item.name}
