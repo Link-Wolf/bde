@@ -100,10 +100,11 @@ export class GoodiesService {
 		}
 	}
 
-	async create(goodiesDto: GoodiesDto, requestMaker: string): Promise<void> {
+	async create(goodiesDto: GoodiesDto, requestMaker: string): Promise<any> {
 		try {
-			await this.goodiesRepository.save(goodiesDto);
+			let ret = await this.goodiesRepository.save(goodiesDto);
 			this.logger.warn(`Successfully created new goodies ${goodiesDto.name} `, requestMaker);
+			return (ret)
 		} catch (error) {
 			this.logger.error(`Failed to create goodies ${goodiesDto.name} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to create goodies ${goodiesDto.name} on database(${error})`)
