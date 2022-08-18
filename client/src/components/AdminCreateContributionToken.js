@@ -97,6 +97,7 @@ const AdminCreateContributionToken = () => {
 					name="studLogin"
 					placeholder="yoyostud"
 					onChange={handleFormChange}
+					required
 				/>
 				<label>Prix :</label>
 				<input
@@ -106,6 +107,7 @@ const AdminCreateContributionToken = () => {
 					min="0"
 					step="0.01"
 					onChange={handleFormChange}
+					required
 				/>
 				<label>Dates : </label>
 				<input
@@ -113,6 +115,7 @@ const AdminCreateContributionToken = () => {
 					name="begin_date"
 					type="date"
 					onChange={handleFormChange}
+					required
 				/>
 				<label>-</label>
 				<input
@@ -120,6 +123,7 @@ const AdminCreateContributionToken = () => {
 					name="end_date"
 					type="date"
 					onChange={handleFormChange}
+					required
 				/>
 				<Button onClick={saveNewContrib}> Save </Button>
 			</form>

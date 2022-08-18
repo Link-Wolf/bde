@@ -61,11 +61,12 @@ export class StudService {
 	async findOne(login: string, requestMaker: string): Promise<Stud> {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
-			if (stud)
-				// 	this.logger.warn(`Failed to find student with login ${login} : student does not exist`)
-				// }
-				// else
-				this.logger.log(`Got student with login ${login}`, requestMaker);
+			if (!stud)
+				throw new NotFoundException(`Failed to find student ${login}`)
+			// 	this.logger.warn(`Failed to find student with login ${login} : student does not exist`)
+			// }
+			// else
+			this.logger.log(`Got student with login ${login}`, requestMaker);
 			return stud
 		}
 		catch (error) {
@@ -74,22 +75,23 @@ export class StudService {
 		}
 	}
 
-	async update(login: string, studData: any, requestMaker: string): Promise<void> {
+	async update(login: string, studData: any, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
 				this.logger.error(`Failed to update student with login ${login} : student does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
-			await this.studRepository.update(login, studData);
+			let ret = await this.studRepository.update(login, studData);
 			this.logger.warn(`Successfully updated student ${login}`, requestMaker);
+			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to update student ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to update student ${login} on database (${error})`)
 		}
 	}
 
-	async addDirection(login: string, requestMaker: string): Promise<void> {
+	async addDirection(login: string, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
@@ -101,8 +103,9 @@ export class StudService {
 				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud is already a direction member`)
 			}
 			let updatedOne = `UPDATE stud SET "isDirection" = 't', "clearance" = 11 WHERE login = '${login}'`;
-			await this.studRepository.query(updatedOne);
+			let ret = await this.studRepository.query(updatedOne);
 			this.logger.warn(`Successfully add direction member ${login}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to add direction member ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to add direction member ${login} on database (${error})`)
@@ -120,8 +123,9 @@ export class StudService {
 				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud isn't direction member`)
 			}
 			let updatedOne = `UPDATE stud SET "isDirection" = 'f', "clearance" = 7 WHERE login = '${login}'`;
-			await this.studRepository.query(updatedOne);
+			let ret = await this.studRepository.query(updatedOne);
 			this.logger.warn(`Successfully yeet direction member ${login}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to yeet direction member ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to yeet direction member ${login} on database (${error})`)
@@ -135,30 +139,32 @@ export class StudService {
 			}
 			let ret = this.studRepository.save(studDto);
 			this.logger.log(`Successfully created new student ${studDto.login}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to create user ${studDto.login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to create user ${studDto.login} on database (${error})`)
 		}
 	}
 
-	async removeOne(login: string, requestMaker: string): Promise<void> {
+	async removeOne(login: string, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user)
-				this.logger.warn(`Failed to delete student ${login} : student does no exist`, requestMaker);
-			else
-				this.logger.warn(`Successfully delete student ${login}`, requestMaker);
-			await this.studRepository.delete({ login: login });
+				throw new NotFoundException(`stud ${login} does not exist`)
+			let ret = await this.studRepository.delete({ login: login });
+			this.logger.warn(`Successfully delete student ${login}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete student ${login} on database (${error})`, requestMaker)
 			throw new NotFoundException(`Failed to delete student ${login} on database (${error})`)
 		}
 	}
 
-	async removeAll(requestMaker: string): Promise<void> {
+	async removeAll(requestMaker: string): Promise<any> {
 		try {
-			await this.studRepository.delete({});
+			let ret = await this.studRepository.delete({});
 			this.logger.warn(`Successfully deleted all students`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all students on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to delete all students on database (${error})`)
@@ -191,8 +197,9 @@ export class StudService {
 				throw new NotFoundException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
 			}
 			await this.studRepository.query(`UPDATE stud SET "clearance" = 11 WHERE login = '${captain.login}'`);
-			await this.studRepository.query(`UPDATE stud SET "clearance" = 21 WHERE login = '${newCaptain.login}'`);
+			let ret = await this.studRepository.query(`UPDATE stud SET "clearance" = 21 WHERE login = '${newCaptain.login}'`);
 			this.logger.warn(`Successfully transfered the captain's tricorn from ${captain.login} to ${newCaptain.login}`, requestMaker)
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to give the tricorn to ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to give the tricorn to ${login} on database (${error})`)

@@ -19,6 +19,7 @@ const UserProfile = options => {
 			<img height="50px" src={greyStar} />
 		</div>
 	);
+	const [nav, setNav] = useState(<></>);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/stud/${options.login}`, {
@@ -26,6 +27,7 @@ const UserProfile = options => {
 		})
 			.then(response => {
 				if (!response.ok) {
+					setNav(<Navigate to="/home" />);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -115,6 +117,7 @@ const UserProfile = options => {
 
 	return (
 		<>
+			{nav}
 			<div>
 				<div style={{display: "flex"}}>
 					<img
@@ -125,10 +128,14 @@ const UserProfile = options => {
 						<h1>{dataStud.login}</h1>
 						<h2>{`${dataStud.firstname} ${dataStud.lastname}`}</h2>
 					</div>
-					<QRCode
-						value={`http://${window.location.host}/profile/${dataStud.login}`}
-						level="H"
-					/>
+					<a
+						href={`http://${window.location.host}/profile/${dataStud.login}`}
+					>
+						<QRCode
+							value={`http://${window.location.host}/profile/${dataStud.login}`}
+							level="H"
+						/>
+					</a>
 				</div>
 				{contributionStatus}
 				<div style={{display: "flex"}}>
