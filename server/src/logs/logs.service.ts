@@ -16,14 +16,31 @@ export class LogsService {
 		private logger: LoggerService,
 	) { }
 
-	async findAll(requestMaker: string): Promise<Logs[]> {
+	async findAll(filterDto: LogsFilterDto, requestMaker: string): Promise<Logs[]> {
 		try {
-			let logs = await this.logsRepository.find();
-			this.logger.log(`Got all logs`, requestMaker);
+			let match = `SELECT * FROM "logs" WHERE '1' = '1'`;
+			if (filterDto.warn) {
+				if (filterDto.error)
+					match += ` AND ("type" = 'warn' OR "type" = 'error')`
+				else
+					match += ` AND "type" = 'warn'`
+			}
+			else if (filterDto.error)
+				match += ` AND "type" = 'error'`
+			match += ` ORDER BY "date" ${
+				filterDto.asc ? "ASC"
+					: "DESC"
+				} `
+			match += `; `
+			console.log(match)
+			let logs = await this.logsRepository.query(match);
+			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
+			// else
+			this.logger.log(`Got all filtered logs`, requestMaker);
 			return logs;
 		} catch (error) {
-			this.logger.error(`Failed to get all logs on database(${error})`, requestMaker);
-			throw new InternalServerErrorException(`Could not find logs on database(${error})`)
+			this.logger.error(`Failed to get all filtered logs on database(${error})`, requestMaker);
+			throw new InternalServerErrorException(`Could not find filtered logs on database(${error})`)
 		}
 	}
 

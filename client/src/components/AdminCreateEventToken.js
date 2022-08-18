@@ -137,7 +137,6 @@ const AdminCreateEventToken = param => {
 	const changeThumbnail = async id => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
-		console.log(data);
 		await fetch(
 			`http://${global.config.api.authority}/event/upload_image/${id}`,
 			{

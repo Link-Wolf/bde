@@ -33,56 +33,14 @@ export class LogsDtoPipe implements PipeTransform {
 @Injectable()
 export class LogsFilterDtoPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
-		// if ("current" in value && value.current == '1')
-		// 	value.current = true
-		// else
-		// 	value.current = false
-		// if ("free" in value && value.free == '1')
-		// 	value.free = true
-		// else
-		// 	value.free = false
-		// if ("available" in value && value.available == '1')
-		// 	value.available = true
-		// else
-		// 	value.available = false
-		// // if ("subed" in value && value.subed == '1')
-		// // 	value.subed = true
-		// // else
-		// // 	value.subed = false
-		// if ("food" in value && value.food == '1')
-		// 	value.food = true
-		// else
-		// 	value.food = false
-		// if ("unlimited" in value && value.unlimited == '1')
-		// 	value.unlimited = true
-		// else
-		// 	value.unlimited = false
-		// if ("outside" in value && value.outside == '1')
-		// 	value.outside = true
-		// else
-		// 	value.outside = false
-		// if ("sponsorised" in value && value.sponsorised == '1')
-		// 	value.sponsorised = true
-		// else
-		// 	value.sponsorised = false
-		// if ("asc" in value && value.asc == '1')
-		// 	value.asc = true
-		// else
-		// 	value.asc = false
-		// if (!("sort" in value && ["begin_date", "name", "place", "cost"]
-		// 	.includes(value.sort)))
-		// 	value.sort = "begin_date"
+		if ("warn" in value && value.warn == '1')
+			value.warn = true
+		else
+			value.warn = false
+		if ("error" in value && value.error == '1')
+			value.error = true
+		else
+			value.error = false
 		return value;
 	}
 }
-
-/* 	current: boolean; //fin de llogs dans le futur
-	free: boolean; //gratuit
-	available: boolean; //encore des places
-	// subed: boolean; //billy est inscrit
-	food: boolean; //ya du miam miam ou du glou glou
-	unlimited: boolean;//pouvoir illimité
-	outside: boolean;// pas a 42
-	sponsorised: boolean;// thunas
-	asc: boolean;// tri order (default desc)
-	sort: string;//tri selon (default date) */
