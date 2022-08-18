@@ -61,7 +61,7 @@ export class EventService {
 			}
 			else {
 				path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
-				fs.writeFile(
+				let ret = fs.writeFile(
 					path,
 					file.buffer,
 					(err) => {
@@ -77,6 +77,7 @@ export class EventService {
 							this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
 						}
 					})
+				return (ret);
 			}
 		} catch (error) {
 			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login);
@@ -148,15 +149,15 @@ export class EventService {
 		}
 	}
 
-	async update(id: number, eventData: EventDto, requestMaker: string)
-		: Promise<void> {
+	async update(id: number, eventData: EventDto, requestMaker: string): Promise<any> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
 				this.logger.error(`Failed to update event with id ${id} : event does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
-			await this.eventRepository.update(id, eventData);
+			let ret = await this.eventRepository.update(id, eventData);
 			this.logger.warn("Successfully updated event " + id, requestMaker);
+			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to update event ${id}
 			on database(${ error})`, requestMaker)
@@ -164,8 +165,7 @@ export class EventService {
 		}
 	}
 
-	async subscribe(id: number, login: string, requestMaker: string)
-		: Promise<void> {
+	async subscribe(id: number, login: string, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
@@ -181,16 +181,16 @@ export class EventService {
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			event.studs.push(stud);
-			await this.eventRepository.save(event);
+			let ret = await this.eventRepository.save(event);
 			this.logger.log(`Successfully subscribe student ${login} to event ${id} `, requestMaker);
+			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to subscribe student ${login} to event ${id} on database(${error})`)
 		}
 	}
 
-	async forceSubscribe(id: number, login: string, requestMaker: string)
-		: Promise<void> {
+	async forceSubscribe(id: number, login: string, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
@@ -204,8 +204,9 @@ export class EventService {
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			event.studs.push(stud);
-			await this.eventRepository.save(event);
+			let ret = await this.eventRepository.save(event);
 			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker);
+			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
@@ -223,12 +224,13 @@ export class EventService {
 		}
 	}
 
-	async removeOne(id: number, requestMaker: string): Promise<void> {
+	async removeOne(id: number, requestMaker: string): Promise<any> {
 		try {
 			if (await this.findOne(id, requestMaker)) {
-				await this.eventRepository.delete({ id: id });
+				let ret = await this.eventRepository.delete({ id: id });
 				this.logger.warn(`Successfully deleted event ${id} `,
 					requestMaker);
+				return ret
 			}
 			else
 				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker);
@@ -238,10 +240,11 @@ export class EventService {
 		}
 	}
 
-	async removeAll(requestMaker: string): Promise<void> {
+	async removeAll(requestMaker: string): Promise<any> {
 		try {
-			await this.eventRepository.delete({});
+			let ret = await this.eventRepository.delete({});
 			this.logger.warn(`Successfully deleted all events`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all events on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to delete all events on database(${error})`)
