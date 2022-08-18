@@ -1,33 +1,32 @@
-import {useState, useEffect, React} from "react";
+import {useState, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
+import CheckSet from "../../components/CheckSet";
+import {Dropdown} from "react-bootstrap";
+import AdminLogList from "../../components/AdminLogList";
 
 const AdminLogs = () => {
-	const [data, setData] = useState([]);
+	const [filter, setFilter] = useState({
+		warn: true,
+		error: true,
+		sort: "date",
+		asc: false
+	});
 
-	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/admin/logs`, {
-			credentials: "include",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(actualData => {
-				setData(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
-			});
-	}, []);
+	const handleFormChange = event => {
+		let tempFilter = {...filter};
+		const target = event.target;
+		const value =
+			target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		tempFilter[name] = value;
+		setFilter(tempFilter);
+	};
+
+	const handleButtonChange = () => {
+		let tempFilter = {...filter};
+		tempFilter["asc"] = !filter.asc;
+		setFilter(tempFilter);
+	};
 
 	return (
 		<div
@@ -36,23 +35,36 @@ const AdminLogs = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
-				<h1> AdminPannel </h1>
+			<div className={`${"flex"}`}>
 				<div>
-					{data.length > 0 && (
-						<ul>
-							{data.map(log => (
-								<li key={log.id}>
-									{log.id}
-									<ul>
-										<li>{log.type}</li>
-										<li>{log.message}</li>
-										<li>{log.date}</li>
-									</ul>
-								</li>
-							))}
-						</ul>
-					)}
+					<Dropdown>
+						<Dropdown.Toggle variant="success" id="dropdown-basic">
+							Filtrer
+						</Dropdown.Toggle>
+
+						<Dropdown.Menu>
+							<CheckSet
+								set={[
+									{
+										label: "Warn",
+										name: "warn",
+										checked: filter.warn
+									},
+									{
+										label: "Error",
+										name: "error",
+										checked: filter.error
+									}
+								]}
+								onChange={handleFormChange}
+								type="checkbox"
+							/>
+						</Dropdown.Menu>
+					</Dropdown>
+					<p> Trier par : </p>
+					<label>Date : </label>
+					<button onClick={handleButtonChange}>⇃↾</button>
+					<AdminLogList filter={filter} />
 				</div>
 			</div>
 		</div>

@@ -10,7 +10,14 @@ export class LogsController {
 
 	@Get('')
 	findAll(@Session() session: Record<string, any>): Promise<Logs[]> {
-		return this.logsService.findAll(session.login);
+		return this.logsService.findAll(null, session.login);
+	}
+
+	@Post('get')
+	findAllButFilter(
+		@Body(new LogsFilterDtoPipe()) filters: LogsFilterDto,
+		@Session() session: Record<string, any>): Promise<Logs[]> {
+		return this.logsService.findAll(filters, session.login);
 	}
 
 	// @Get('current')

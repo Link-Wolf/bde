@@ -9,6 +9,9 @@ export class Logs {
 	date: Date
 
 	@Column({ type: "text" })
+	login: string
+
+	@Column({ type: "text" })
 	message: string
 
 	@Column({ type: "text" })
