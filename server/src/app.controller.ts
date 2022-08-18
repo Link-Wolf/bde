@@ -1,25 +1,11 @@
 import { Controller, Get, Post, Patch, Session, Body, NotFoundException } from '@nestjs/common';
-import { Public } from './auth/public.decorator';
 
 @Controller()
 export class AppController {
-	@Public()
-	@Get('sessionId')
-	async getSessionId(@Session() session: Record<string, any>) {
-		session.visit = session.visit ? session.visit + 1 : 1
-		return "session id :" + session.id + " \ncame " + session.visit + " times"
-	}
-
-	@Get('sessionId2')
-	async getSessionId2(@Session() session: Record<string, any>) {
-		session.visit = session.visit ? session.visit + 1 : 1
-		return "session id :" + session.id + " \ncame " + session.visit + " times"
-	}
-
 	@Post('sessionLogin')
 	async postSessionLogin(@Body('login') login: string, @Session() session: Record<string, any>) {
 		session.login = login;
-		return ":)"
+		return { login: login }
 	}
 
 	@Get('sessionLogin')
@@ -47,6 +33,7 @@ export class AppController {
 	@Patch('theme')
 	async toggleTheme(@Session() session: Record<string, any>) {
 		session.theme = session.theme === "light" ? "dark" : "light";
+		return { theme: session.theme }
 	}
 
 	@Get('session')
