@@ -1,24 +1,12 @@
 import {React} from "react";
-import {useLocation} from "react-router-dom";
-import {Alert} from "reactstrap";
 import EventList from "../../components/EventList";
 import EventCarousel from "../../components/EventCarousel";
 
 import style from "../../style/Home.module.css";
 
 const Home = () => {
-	let param = new URLSearchParams(useLocation().search).get("errno");
-
-	console.log(param);
-
 	return (
 		<div>
-			{" "}
-			{param === "1" ? (
-				<Alert color="danger">
-					Error while logging in, please retry or contact us
-				</Alert>
-			) : null}
 			<p className={style.p}>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
