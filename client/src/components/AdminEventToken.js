@@ -20,6 +20,21 @@ const AdminEventToken = param => {
 		isOutside: true,
 		for_pool: true
 	});
+	const [defaultForm, setDefaultForm] = useState({
+		name: "",
+		desc: "",
+		begin_date: "",
+		end_date: "",
+		place: "",
+		nb_places: 0,
+		cost: 0,
+		premium_cost: 0,
+		hasEndDate: true,
+		sponso: true,
+		consos: true,
+		isOutside: true,
+		for_pool: true
+	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
 		desc: "",
@@ -117,6 +132,7 @@ const AdminEventToken = param => {
 		tmp.sponso = param.data.sponso;
 		tmp.consos = param.data.consos;
 		tmp.for_pool = param.data.for_pool;
+		setDefaultForm(tmp);
 		setFormState(tmp);
 		let tmpBody = {...tmp};
 		tmpBody.end_date =
@@ -447,7 +463,13 @@ const AdminEventToken = param => {
 					/>
 					<img src={srcImg} height="150px" />
 					{button}
-					<Button color="secondary" type="reset" disabled={locked}>
+					<Button
+						color="secondary"
+						onClick={() => {
+							setFormState(defaultForm);
+						}}
+						disabled={locked}
+					>
 						Reset
 					</Button>
 					<Button color="danger" onClick={deleteEvent}>
