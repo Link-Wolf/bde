@@ -114,7 +114,6 @@ function Header() {
 				<Nav>
 					{rightButton}
 					<DropdownUser />
-					<ThemeButton hidden />
 				</Nav>
 			</Container>
 		</Navbar>
