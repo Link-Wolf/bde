@@ -27,12 +27,13 @@ export class LogsService {
 			}
 			else if (filterDto.error)
 				match += ` AND "type" = 'error'`
+			if (filterDto.login && filterDto.login != "")
+				match += ` AND "login" = '${filterDto.login}'`
 			match += ` ORDER BY "date" ${
 				filterDto.asc ? "ASC"
 					: "DESC"
 				} `
 			match += `; `
-			console.log(match)
 			let logs = await this.logsRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
