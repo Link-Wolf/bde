@@ -34,10 +34,10 @@ export class GoodiesService {
 		}
 	}
 
-	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
+	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
 			let path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
-			fs.writeFile(
+			let ret = fs.writeFile(
 				path,
 				file.buffer,
 				(err) => {
@@ -53,6 +53,7 @@ export class GoodiesService {
 						this.logger.log(`Successfully saved thumbnail of goodies ${id}`, login)
 					}
 				})
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to save thumbnail of goodies ${id} on database(${error})`, login);
 			throw new InternalServerErrorException(`Failed to save thumbnail of goodies ${id} on database(${error})`)
@@ -86,14 +87,15 @@ export class GoodiesService {
 		}
 	}
 
-	async update(id: number, goodiesData: GoodiesDto, requestMaker: string): Promise<void> {
+	async update(id: number, goodiesData: GoodiesDto, requestMaker: string): Promise<any> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
 				this.logger.error(`Failed to update goodies with id ${id} : goodies does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update goodies with id ${id} : goodies does not exist`);
 			}
-			await this.goodiesRepository.update(id, goodiesData);
+			let ret = await this.goodiesRepository.update(id, goodiesData);
 			this.logger.warn(`Successfully updated goodies ${id}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to update goodies ${id} on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to update goodies ${id} on database(${error})`)
@@ -111,11 +113,12 @@ export class GoodiesService {
 		}
 	}
 
-	async removeOne(id: number, requestMaker: string): Promise<void> {
+	async removeOne(id: number, requestMaker: string): Promise<any> {
 		try {
 			if (await this.findOne(id, requestMaker)) {
-				await this.goodiesRepository.delete({ id: id });
+				let ret = await this.goodiesRepository.delete({ id: id });
 				this.logger.warn(`Successfully deleted goodies ${id}`, requestMaker);
+				return ret
 			}
 			else
 				this.logger.warn(`Failed to delete goodies ${id} : goodies does no exist`, requestMaker);
@@ -125,10 +128,11 @@ export class GoodiesService {
 		}
 	}
 
-	async removeAll(requestMaker: string): Promise<void> {
+	async removeAll(requestMaker: string): Promise<any> {
 		try {
-			await this.goodiesRepository.delete({});
+			let ret = await this.goodiesRepository.delete({});
 			this.logger.warn(`Successfully deleted all goodies`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all goodies on database(${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to delete all goodies on database(${error})`)

@@ -7,7 +7,6 @@ import { ContributionDto } from './contribution.dto';
 
 @Injectable()
 export class ContributionService {
-
 	constructor(
 		@InjectRepository(Contribution)
 		private contributionRepository: Repository<Contribution>,
@@ -61,25 +60,27 @@ export class ContributionService {
 		}
 	}
 
-	async update(studLogin: string, contribution: any, requestMaker: string): Promise<void> {
+	async update(studLogin: string, contribution: any, requestMaker: string): Promise<any> {
 		try {
 			let cont = await this.findLast(studLogin, requestMaker)
 			if (!cont) {
 				await this.logger.error(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`, requestMaker);
 				throw new NotFoundException(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`);
 			}
-			await this.contributionRepository.update(cont.id, contribution);
+			let ret = await this.contributionRepository.update(cont.id, contribution);
 			this.logger.warn(`Successfully updated current contribution of student ${studLogin}`, requestMaker)
+			return ret
 		} catch (error) {
 			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker);
 			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async create(contributionData: ContributionDto, requestMaker: string): Promise<void> {
+	async create(contributionData: ContributionDto, requestMaker: string): Promise<any> {
 		try {
-			await this.contributionRepository.insert(contributionData);
+			let ret = await this.contributionRepository.insert(contributionData);
 			this.logger.log(`Successfully created contribution for student ${contributionData.stud.login}`, requestMaker)
+			return ret
 		}
 		catch (error) {
 			await this.logger.error(`Failed to create contribution for student on database (${error})`, requestMaker);
@@ -87,10 +88,11 @@ export class ContributionService {
 		}
 	}
 
-	async forceCreate(contributionData: ContributionDto, requestMaker: string): Promise<void> {
+	async forceCreate(contributionData: ContributionDto, requestMaker: string): Promise<any> {
 		try {
-			await this.contributionRepository.insert(contributionData);
+			let ret = await this.contributionRepository.insert(contributionData);
 			this.logger.warn(`Successfully force-created contribution for student ${contributionData.stud.login}`, requestMaker)
+			return ret
 		}
 		catch (error) {
 			await this.logger.error(`Failed to force-create contribution for student on database (${error})`, requestMaker);
@@ -98,24 +100,26 @@ export class ContributionService {
 		}
 	}
 
-	async removeOne(studLogin: string, requestMaker: string): Promise<void> {
+	async removeOne(studLogin: string, requestMaker: string): Promise<any> {
 		let cont = await this.findLast(studLogin, requestMaker)
 		if (!cont) {
 			await this.logger.warn(`Failed to delete contributions of student ${studLogin} : contribution does not exist`, requestMaker);
 		}
 		try {
-			await this.contributionRepository.delete({ studLogin: studLogin });
+			let ret = await this.contributionRepository.delete({ studLogin: studLogin });
 			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`, requestMaker)
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all contributions of student ${studLogin} on database (${error})`, requestMaker)
 			throw new UnprocessableEntityException(`Failed to delete contributions of student ${studLogin} on database (${error})`);
 		}
 	}
 
-	async removeAll(requestMaker: string): Promise<void> {
+	async removeAll(requestMaker: string): Promise<any> {
 		try {
-			await this.contributionRepository.delete({});
+			let ret = await this.contributionRepository.delete({});
 			this.logger.log(`Successfully deleted all contributions`, requestMaker)
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all contributions on database (${error})`, requestMaker)
 			throw new UnprocessableEntityException(`Failed to delete all contributions on database (${error})`);

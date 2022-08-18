@@ -6,6 +6,13 @@ import { StudService } from '../stud/stud.service';
 
 @Injectable()
 export class InscriptionService {
+	constructor(
+		private manager: EntityManager,
+		private logger: LoggerService,
+		private studService: StudService,
+		private eventService: EventService,
+	) { }
+
 	async getIsSubbed(id: number, login: any) {
 		try {
 			const isSubbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId"=${id} AND "studLogin"='${login}'`)).length > 0
@@ -16,28 +23,24 @@ export class InscriptionService {
 			throw new InternalServerErrorException(`Failed check if ${login} is subbed to event ${id} on database (${error})`);
 		}
 	}
-	constructor(
-		private manager: EntityManager,
-		private logger: LoggerService,
-		private studService: StudService,
-		private eventService: EventService,
-	) { }
 
-	removeAll(requestMaker: string) {
+	async removeAll(requestMaker: string) {
 		try {
-			this.manager.query(`DELETE FROM "inscriptions"`);
+			let ret = await this.manager.query(`DELETE FROM "inscriptions"`);
 			this.logger.warn(`Successfully deleted all inscriptions`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all inscriptions on database (${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to delete all inscriptions on database (${error})`);
 		}
 	}
 
-	removeByStud(login: string, requestMaker: string) {
+	async removeByStud(login: string, requestMaker: string) {
 		try {
 			if (this.studService.findOne(login, requestMaker)) {
-				this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
+				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
 				this.logger.warn(`Successfully deleted all inscriptions of student ${login}`, requestMaker);
+				return ret
 			}
 			else {
 				this.logger.error(`Failed to remove all inscriptions of student ${login} : student does not exist`, requestMaker)
@@ -49,11 +52,12 @@ export class InscriptionService {
 		}
 	}
 
-	removeByEvent(id: number, requestMaker: string) {
+	async removeByEvent(id: number, requestMaker: string) {
 		try {
 			if (this.eventService.findOne(id, requestMaker)) {
-				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
+				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
 				this.logger.warn(`Successfully deleted all inscriptions for event ${id}`, requestMaker);
+				return ret
 			}
 			else {
 				this.logger.error(`Failed to delete all inscriptions for event ${id} : event does not exist`, requestMaker)
@@ -78,8 +82,9 @@ export class InscriptionService {
 				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : event does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to save inscription for student ${login} to event ${id} : event does not exist`)
 			}
-			this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
+			let ret = this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
 			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to save inscription for student ${login} to event ${id} on database (${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to save inscription for student ${login} to event ${id} on database (${error})`);
@@ -132,8 +137,9 @@ export class InscriptionService {
 		try {
 			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			if (insc.length) {
-				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 				this.logger.log(`Successfully delete inscription for student ${login} and event ${id}`, requestMaker);
+				return ret
 			}
 			else
 				this.logger.warn(`Failed to delete inscription for student ${login} and event ${id} : inscription does not exist`, requestMaker)
@@ -146,12 +152,13 @@ export class InscriptionService {
 	async forceRemove(id: number, login: string, requestMaker: string) {
 		try {
 			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
-			if (insc.length) {
-				this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
-				this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`, requestMaker);
-			}
-			else
+			if (!insc.lenght) {
 				this.logger.warn(`Failed to force delete inscription for student ${login} and event ${id} : inscription does not exist`, requestMaker)
+				throw new NotFoundException(`inscription does not exist`)
+			}
+			let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+			this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`, requestMaker);
+			return ret
 		} catch (error) {
 			this.logger.error(`Failed to force delete inscription for student ${login} and event ${id} on database (${error})`, requestMaker);
 			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
