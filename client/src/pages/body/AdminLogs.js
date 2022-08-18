@@ -9,7 +9,8 @@ const AdminLogs = () => {
 		warn: true,
 		error: true,
 		sort: "date",
-		asc: false
+		asc: false,
+		login: ""
 	});
 
 	const handleFormChange = event => {
@@ -59,6 +60,17 @@ const AdminLogs = () => {
 								onChange={handleFormChange}
 								type="checkbox"
 							/>
+							<div class="dropdown-divider"></div>
+							<div class="form-group">
+								<label>Filtrer par login</label>
+								<input
+									autoFocus="true"
+									class="form-control"
+									placeholder="Login"
+									name="login"
+									onChange={handleFormChange}
+								/>
+							</div>
 						</Dropdown.Menu>
 					</Dropdown>
 					<p> Trier par : </p>
