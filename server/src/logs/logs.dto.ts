@@ -8,5 +8,6 @@ export class LogsDto {
 export class LogsFilterDto {
 	warn: boolean;
 	error: boolean;
+	login: string;
 	asc: boolean;
 }
