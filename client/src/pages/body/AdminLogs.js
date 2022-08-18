@@ -60,12 +60,12 @@ const AdminLogs = () => {
 								onChange={handleFormChange}
 								type="checkbox"
 							/>
-							<div class="dropdown-divider"></div>
-							<div class="form-group">
+							<div className="dropdown-divider"></div>
+							<div className="form-group">
 								<label>Filtrer par login</label>
 								<input
-									autoFocus="true"
-									class="form-control"
+									autoFocus={true}
+									className="form-control"
 									placeholder="Login"
 									name="login"
 									onChange={handleFormChange}
