@@ -1,15 +1,16 @@
 import {useState, useEffect, React} from "react";
+import {Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
-import {Alert} from "reactstrap";
+import {Store} from "react-notifications-component";
 
 const AdminCreateContributionToken = () => {
+	const [ret, setRet] = useState(<></>);
 	const [formState, setFormState] = useState({
 		studLogin: "",
 		begin_date: "",
 		end_date: "",
 		cost: 0
 	});
-	const [alert, setAlert] = useState(<></>);
 	const [bodyState, setBodyState] = useState({
 		studLogin: "",
 		begin_date: "",
@@ -53,43 +54,62 @@ const AdminCreateContributionToken = () => {
 
 	const saveNewContrib = async () => {
 		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
-			setAlert(
-				<Alert color="danger">
-					You must set the end date AFTER the begin date
-				</Alert>
-			);
-			throw "You must set the end date AFTER the begin date";
-		}
-		await fetch(
-			`http://${global.config.api.authority}/contribution/admin`,
-			{
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(bodyState)
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
+			Store.addNotification({
+				title: "Contribution",
+				message: "Error, end_date must be after begin_date",
+				type: "danger",
+				insert: "top",
+				container: "top-right",
+				animationIn: ["animate__animated", "animate__fadeIn"],
+				animationOut: ["animate__animated", "animate__fadeOut"],
+				dismiss: {
+					duration: 5000
 				}
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
 			});
-		window.location.reload();
+		} else {
+			await fetch(
+				`http://${global.config.api.authority}/contribution/admin`,
+				{
+					method: "POST",
+					credentials: "include",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(bodyState)
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+			window.location.reload();
+			setRet(<Navigate to={"/admin/contributions"} />);
+			Store.addNotification({
+				title: "Contribution",
+				message: "Successfully created the new contribution",
+				type: "success",
+				insert: "top",
+				container: "top-right",
+				animationIn: ["animate__animated", "animate__fadeIn"],
+				animationOut: ["animate__animated", "animate__fadeOut"],
+				dismiss: {
+					duration: 5000
+				}
+			});
+		}
 	};
 
 	return (
 		<>
-			{alert}
 			<form>
 				<label>Stud :</label>
 				<input
