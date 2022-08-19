@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import useConfirm from "../../components/useConfirm";
+import {NotificationManager} from "react-notifications";
 
 import AddDirectionSearchBar from "../../components/AddDirectionSearchBar";
 import Mutiny from "../../components/Mutiny";
@@ -96,6 +97,11 @@ const AdminCaptainManagement = () => {
 							))
 						) {
 							yeetConfirm(login);
+							NotificationManager.success(
+								`Successfully yeet ${login} to direction`,
+								"Validation",
+								3000
+							);
 						}
 					}
 				}

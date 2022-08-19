@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import useConfirm from "../../components/useConfirm";
+import {NotificationManager} from "react-notifications";
 
 import {Form, Button, FormGroup} from "react-bootstrap";
 
@@ -105,6 +106,11 @@ const AdminStudents = () => {
 		) {
 			removeStud(selectedEvent, event.target.value);
 			setUpdate(true);
+			NotificationManager.success(
+				`Successfully unsubscribe ${event.target.value}`,
+				"Validation",
+				3000
+			);
 		}
 	};
 
@@ -142,6 +148,11 @@ const AdminStudents = () => {
 			) {
 				if (toSub !== "") {
 					checkStud(selectedEvent, toSub);
+					NotificationManager.success(
+						`Successfully subscribe ${toSub}`,
+						"Validation",
+						3000
+					);
 					toSub = 0;
 				}
 				setUpdate(true);

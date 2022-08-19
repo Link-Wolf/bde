@@ -3,6 +3,8 @@ import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
 import ClearanceChecker from "../components/ClearanceChecker";
 
+import {NotificationContainer} from "react-notifications";
+
 // Nos pagis
 import Home from "./body/Home";
 import About from "./body/About";
@@ -189,6 +191,7 @@ const RouteWrapper = params => {
 				unauthorized={<Navigate to="/home"></Navigate>}
 			>
 				<Header />
+				<NotificationContainer />
 				{params.route}
 				<Footer />
 			</ClearanceChecker>

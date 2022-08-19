@@ -1,6 +1,6 @@
 import {useSearchParams, Navigate} from "react-router-dom";
 import {useState, useEffect, useRef} from "react";
-import {Store} from "react-notifications-component";
+import {NotificationManager} from "react-notifications";
 
 const Login = () => {
 	const [searchParams] = useSearchParams();
@@ -56,19 +56,11 @@ const Login = () => {
 				}
 				if (tries.current >= 10) {
 					setRet(<Navigate to="/home" replace={true} />);
-					Store.addNotification({
-						title: "Login",
-						message:
-							"Error while logging in, please retry or contact us",
-						type: "danger",
-						insert: "top",
-						container: "top-right",
-						animationIn: ["animate__animated", "animate__fadeIn"],
-						animationOut: ["animate__animated", "animate__fadeOut"],
-						dismiss: {
-							duration: 5000
-						}
-					});
+					NotificationManager.error(
+						"Error while loggin in, please retry or contact us",
+						"Erreur",
+						3000
+					);
 				}
 			})
 			.then(() => {
