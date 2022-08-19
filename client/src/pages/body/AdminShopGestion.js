@@ -46,6 +46,10 @@ const AdminShopGestion = param => {
 				onClickRetract={() => setOpenProductId(-42)}
 				onClickDeploy={() => setOpenProductId(-1)}
 				cancel={() => setNewProduct(<></>)}
+				setUpdate={d => {
+					setUpdate(d);
+					setNewProduct(<></>);
+				}}
 			/>
 		);
 		setOpenProductId(-1);
@@ -72,6 +76,7 @@ const AdminShopGestion = param => {
 									open={openProductId}
 									onClickRetract={() => setOpenProductId(-42)}
 									onClickDeploy={() => setOpenProductId(i)}
+									setUpdate={setUpdate}
 								/>
 							</Accordion.Item>
 						))

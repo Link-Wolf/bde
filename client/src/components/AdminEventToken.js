@@ -5,6 +5,7 @@ import useConfirm from "./useConfirm";
 
 const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
+	const [update, setUpdate] = useState(false);
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -52,7 +53,6 @@ const AdminEventToken = param => {
 	});
 	const [locked, setLocked] = useState(true);
 	const [button, setButton] = useState(<></>);
-	const [update, setUpdate] = useState(false);
 	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
 
@@ -103,6 +103,7 @@ const AdminEventToken = param => {
 	};
 
 	useEffect(() => {
+		setUpdate(false);
 		let tmp = {...param.data};
 		tmp.hasEndDate = param.data.end_date !== null;
 		tmp.end_date = tmp.end_date ? tmp.end_date : null;
@@ -156,9 +157,10 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(begin_date.getMinutes());
 		setBodyState(tmpBody);
-	}, [param.data]);
+	}, [param.data, update]);
 
 	useEffect(() => {
+		setUpdate(false);
 		const saveEvent = async () => {
 			if (
 				await isConfirmed(
@@ -209,11 +211,11 @@ const AdminEventToken = param => {
 						);
 					});
 				changeThumbnail();
-				window.location.reload();
+				param.setUpdate(true);
+				setUpdate(true);
+				setLocked(true);
 			}
 		};
-
-		setUpdate(false);
 		if (locked)
 			setButton(
 				<Button
@@ -239,6 +241,7 @@ const AdminEventToken = param => {
 	}, [param, update, formState, locked, bodyState]);
 
 	useEffect(() => {
+		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
 			{
@@ -263,12 +266,12 @@ const AdminEventToken = param => {
 						error.message
 				);
 			});
-	}, []);
+	}, [update]);
 
-	const changeThumbnail = () => {
+	const changeThumbnail = async () => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
-		fetch(
+		await fetch(
 			`http://${global.config.api.authority}/event/upload_image
 			/${param.data.id}`,
 			{
@@ -291,6 +294,7 @@ const AdminEventToken = param => {
 						error.message
 				);
 			});
+		setUpdate(true);
 	};
 
 	const deleteEvent = async () => {
@@ -319,7 +323,8 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
-				window.location.reload();
+				param.setUpdate(true);
+				setUpdate(true);
 			}
 		}
 	};
