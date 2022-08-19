@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {NotificationManager} from "react-notifications";
 
 const AddDirectionSearchBar = param => {
 	const [userList, setUserList] = useState([]);
@@ -25,6 +26,11 @@ const AddDirectionSearchBar = param => {
 				.then(() => {
 					param.setUpdate(true);
 					setUpdate(true);
+					NotificationManager.success(
+						`Successfully added ${selectedUser} to direction`,
+						"Validation",
+						3000
+					);
 					setSelectedUser("");
 				})
 				.catch(function(error) {
