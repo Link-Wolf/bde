@@ -59,7 +59,7 @@ const AdminCaptainManagement = () => {
 				return;
 			})
 			.then(() => {
-				window.location.reload();
+				setUpdate(true);
 			})
 			.catch(function(error) {
 				console.log(

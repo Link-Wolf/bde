@@ -71,7 +71,7 @@ const AdminProductToken = param => {
 				})
 				.then(data => {
 					changeThumbnail(data.id).then(() => {
-						document.location.reload();
+						param.setUpdate(true);
 					});
 				})
 				.catch(function(error) {
