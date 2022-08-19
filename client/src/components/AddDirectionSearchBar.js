@@ -1,8 +1,9 @@
 import {useState, useEffect} from "react";
 
-const AddDirectionSearchBar = () => {
+const AddDirectionSearchBar = param => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
+	const [update, setUpdate] = useState(false);
 
 	const promoteUser = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
@@ -22,7 +23,9 @@ const AddDirectionSearchBar = () => {
 					return;
 				})
 				.then(() => {
-					window.location.reload();
+					param.setUpdate(true);
+					setUpdate(true);
+					setSelectedUser("");
 				})
 				.catch(function(error) {
 					console.log(
@@ -33,6 +36,7 @@ const AddDirectionSearchBar = () => {
 	};
 
 	useEffect(() => {
+		setUpdate(false);
 		fetch(`http://${global.config.api.authority}/stud/admin/noDirection`, {
 			credentials: "include"
 		})
@@ -53,7 +57,7 @@ const AddDirectionSearchBar = () => {
 						error.message
 				);
 			});
-	}, []);
+	}, [update]);
 
 	return (
 		<>

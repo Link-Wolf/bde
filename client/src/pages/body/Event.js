@@ -5,6 +5,7 @@ import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 
 const Event = () => {
+	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
 	const [button, setButton] = useState(<> </>);
@@ -37,7 +38,7 @@ const Event = () => {
 						error.message
 				);
 			});
-	}, []);
+	}, [param.id]);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
@@ -112,7 +113,7 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		window.location.reload();
+		setUpdate(true);
 	};
 
 	const sub = async () => {
@@ -135,10 +136,11 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-		window.location.reload();
+		setUpdate(true);
 	};
 
 	useEffect(() => {
+		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/inscription/${param.id}/isSubbed`,
 			{
@@ -163,7 +165,7 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, []);
+	}, [update]);
 
 	return dataEvent.name ? (
 		<Card

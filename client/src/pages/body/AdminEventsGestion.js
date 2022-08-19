@@ -47,6 +47,10 @@ const AdminEventsGestion = param => {
 				onClickRetract={() => setOpenEventId(-42)}
 				onClickDeploy={() => setOpenEventId(-1)}
 				cancel={() => setNewEvent(<></>)}
+				setUpdate={d => {
+					setUpdate(d);
+					setNewEvent(<></>);
+				}}
 			/>
 		);
 		setOpenEventId(-1);
