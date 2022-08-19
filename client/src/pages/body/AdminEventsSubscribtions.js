@@ -49,7 +49,7 @@ const AdminStudents = () => {
 			}
 		};
 		fetch(
-			`http://${global.config.api.authority}/inscription/admin/${eventId}/${login}`,
+			`http://${global.config.api.authority}/inscription/${eventId}/${login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -121,7 +121,6 @@ const AdminStudents = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setAllEvent(actualData);
 			})
 			.catch(function(error) {
@@ -161,6 +160,7 @@ const AdminStudents = () => {
 						type="text"
 						id="studToAdd"
 						placeholder="yoyostud"
+						autoFocus={true}
 					/>
 					<Button value="button" onClick={handleSubButton}>
 						Inscrire
