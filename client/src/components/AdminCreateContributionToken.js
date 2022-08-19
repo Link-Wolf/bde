@@ -53,43 +53,35 @@ const AdminCreateContributionToken = () => {
 	};
 
 	const saveNewContrib = async () => {
-		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
-			NotificationManager.error(
-				"End_date must be after begin_date",
-				"Erreur",
-				3000
-			);
-		} else {
-			await fetch(
-				`http://${global.config.api.authority}/contribution/admin`,
-				{
-					method: "POST",
-					credentials: "include",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(bodyState)
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+		await fetch(
+			`http://${global.config.api.authority}/contribution/admin`,
+			{
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(bodyState)
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-			NotificationManager.success(
-				"New contribution successfully added",
-				"Validation",
-				3000
-			);
-		}
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+		NotificationManager.success(
+			"New contribution successfully added",
+			"Validation",
+			3000
+		);
 	};
 
 	return (
