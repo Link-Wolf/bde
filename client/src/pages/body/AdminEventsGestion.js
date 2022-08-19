@@ -77,6 +77,10 @@ const AdminEventsGestion = param => {
 									open={openEventId}
 									onClickRetract={() => setOpenEventId(-42)}
 									onClickDeploy={() => setOpenEventId(i)}
+									setUpdate={d => {
+										setUpdate(d);
+										setOpenEventId(-42); //RETRACT TOI BATAR
+									}}
 								/>
 							</Accordion.Item>
 						))

@@ -94,7 +94,7 @@ const AdminProductToken = param => {
 						);
 					});
 				changeThumbnail();
-				window.location.reload();
+				param.setUpdate(true);
 			}
 		};
 
@@ -201,7 +201,9 @@ const AdminProductToken = param => {
 							error.message
 					);
 				});
-			window.location.reload();
+			param.setUpdate(true);
+			setUpdate(true);
+			setLocked(true);
 		}
 	};
 
