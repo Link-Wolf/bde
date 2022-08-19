@@ -1,10 +1,10 @@
 import {useState, useEffect, React} from "react";
-import {Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
-import {Store} from "react-notifications-component";
+import {NotificationContainer, NotificationManager} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 const AdminCreateContributionToken = () => {
-	const [ret, setRet] = useState(<></>);
+	const [refresh, setRefresh] = useState(<></>);
 	const [formState, setFormState] = useState({
 		studLogin: "",
 		begin_date: "",
@@ -54,18 +54,11 @@ const AdminCreateContributionToken = () => {
 
 	const saveNewContrib = async () => {
 		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
-			Store.addNotification({
-				title: "Contribution",
-				message: "Error, end_date must be after begin_date",
-				type: "danger",
-				insert: "top",
-				container: "top-right",
-				animationIn: ["animate__animated", "animate__fadeIn"],
-				animationOut: ["animate__animated", "animate__fadeOut"],
-				dismiss: {
-					duration: 5000
-				}
-			});
+			NotificationManager.error(
+				"End_date must be after begin_date",
+				"Erreur",
+				3000
+			);
 		} else {
 			await fetch(
 				`http://${global.config.api.authority}/contribution/admin`,
@@ -91,20 +84,11 @@ const AdminCreateContributionToken = () => {
 							error.message
 					);
 				});
-			window.location.reload();
-			setRet(<Navigate to={"/admin/contributions"} />);
-			Store.addNotification({
-				title: "Contribution",
-				message: "Successfully created the new contribution",
-				type: "success",
-				insert: "top",
-				container: "top-right",
-				animationIn: ["animate__animated", "animate__fadeIn"],
-				animationOut: ["animate__animated", "animate__fadeOut"],
-				dismiss: {
-					duration: 5000
-				}
-			});
+			NotificationManager.success(
+				"New contribution successfully added",
+				"Validation",
+				3000
+			);
 		}
 	};
 
@@ -147,6 +131,7 @@ const AdminCreateContributionToken = () => {
 				/>
 				<Button onClick={saveNewContrib}> Save </Button>
 			</form>
+			<NotificationContainer />
 		</>
 	);
 };
