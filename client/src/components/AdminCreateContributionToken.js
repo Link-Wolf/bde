@@ -1,6 +1,6 @@
 import {useState, useEffect, React} from "react";
 import {Button} from "react-bootstrap";
-import {NotificationContainer, NotificationManager} from "react-notifications";
+import {NotificationManager} from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
 const AdminCreateContributionToken = () => {
@@ -131,7 +131,6 @@ const AdminCreateContributionToken = () => {
 				/>
 				<Button onClick={saveNewContrib}> Save </Button>
 			</form>
-			<NotificationContainer />
 		</>
 	);
 };

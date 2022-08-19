@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {NotificationManager} from "react-notifications";
 
 const Mutiny = () => {
 	const [userList, setUserList] = useState([]);
@@ -22,7 +23,11 @@ const Mutiny = () => {
 					return;
 				})
 				.then(() => {
-					//maybe refresh
+					NotificationManager.success(
+						`Successfully give the tricorn to ${selectedUser}`,
+						"Validation",
+						3000
+					);
 				})
 				.catch(function(error) {
 					console.log(
