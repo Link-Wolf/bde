@@ -27,6 +27,8 @@ export class LogsService {
 			}
 			else if (filterDto.error)
 				match += ` AND "type" = 'error'`
+			else
+				match += ` AND "type" != 'error' AND "type" != 'warn'`
 			if (filterDto.login && filterDto.login != "")
 				match += ` AND "login" = '${filterDto.login}'`
 			match += ` ORDER BY "date" ${
