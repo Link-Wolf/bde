@@ -9,8 +9,11 @@ const AdminCaptainManagement = () => {
 	const {isConfirmed} = useConfirm();
 
 	const [data, setData] = useState([]);
+	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
+		console.log("new rounf");
+		setUpdate(false);
 		const requestOptions = {
 			method: "get",
 			credentials: "include"
@@ -36,7 +39,7 @@ const AdminCaptainManagement = () => {
 						error.message
 				);
 			});
-	}, []);
+	}, [update]);
 
 	const yeetConfirm = toYeet => {
 		const requestOptions = {
@@ -108,7 +111,11 @@ const AdminCaptainManagement = () => {
 		>
 			<AdminNavbar />
 			<div>
-				<AddDirectionSearchBar />
+				<AddDirectionSearchBar
+					setUpdate={d => {
+						setUpdate(d);
+					}}
+				/>
 				{data.length > 0
 					? data.map(item => (
 							<li key={item.login}>
