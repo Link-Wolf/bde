@@ -51,7 +51,7 @@ export class EventService {
 
 	async getAlbum(id: number, login: any) {
 		try {
-			const addFilesFromDirectoryToZip = (directoryPath = "", zip: JSZip) => {
+			const addFilesFromDirectoryToZip = (directoryPath = `/assets/album/events/${id}`, zip: JSZip) => {
 				const directoryContents = fs.readdirSync(directoryPath, {
 					withFileTypes: true,
 				});
