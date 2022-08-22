@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from "react";
 import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
+import Placeholder from "react-bootstrap/Placeholder";
 
 const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
@@ -52,7 +53,9 @@ const AdminEventToken = param => {
 		for_pool: true
 	});
 	const [locked, setLocked] = useState(true);
-	const [button, setButton] = useState(<></>);
+	const [button, setButton] = useState(
+		<Placeholder.Button variant="primary" />
+	);
 	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
 

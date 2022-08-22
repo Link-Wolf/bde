@@ -4,7 +4,6 @@ import {NotificationManager} from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
 const AdminCreateContributionToken = () => {
-	const [refresh, setRefresh] = useState(<></>);
 	const [formState, setFormState] = useState({
 		studLogin: "",
 		begin_date: "",
@@ -17,6 +16,8 @@ const AdminCreateContributionToken = () => {
 		end_date: "",
 		cost: 0
 	});
+	const [userList, setUserList] = useState([]);
+	const [update, setUpdate] = useState(false);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -53,23 +54,71 @@ const AdminCreateContributionToken = () => {
 	};
 
 	const saveNewContrib = async () => {
-		await fetch(
-			`http://${global.config.api.authority}/contribution/admin`,
-			{
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(bodyState)
-			}
-		)
+		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
+			NotificationManager.error(
+				"End_date must be after begin_date",
+				"Erreur",
+				3000
+			);
+		} else if (userList.some(i => i.login.includes(formState.studLogin))) {
+			NotificationManager.error(
+				"Student not in database",
+				"Erreur",
+				3000
+			);
+		} else {
+			await fetch(
+				`http://${global.config.api.authority}/contribution/admin`,
+				{
+					method: "POST",
+					credentials: "include",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(bodyState)
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						NotificationManager.error(
+							"Could not create that contribution, check your inputs",
+							"Erreur",
+							3000
+						);
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					NotificationManager.success(
+						"New contribution successfully added",
+						"Validation",
+						3000
+					);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+		}
+	}; //
+
+	useEffect(() => {
+		setUpdate(false);
+		fetch(`http://${global.config.api.authority}/stud`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
+				return response.json();
+			})
+			.then(data => {
+				setUserList(data);
 			})
 			.catch(function(error) {
 				console.log(
@@ -77,18 +126,19 @@ const AdminCreateContributionToken = () => {
 						error.message
 				);
 			});
-		NotificationManager.success(
-			"New contribution successfully added",
-			"Validation",
-			3000
-		);
-	};
+	}, [update]);
 
 	return (
 		<>
+			<datalist id="user_list">
+				{userList.map((user, i) => (
+					<option key={i} value={user.login} />
+				))}
+			</datalist>
 			<form>
 				<label>Stud :</label>
 				<input
+					list="user_list"
 					value={formState.login}
 					name="studLogin"
 					placeholder="yoyostud"
@@ -112,6 +162,7 @@ const AdminCreateContributionToken = () => {
 					type="date"
 					onChange={handleFormChange}
 					required
+					max={formState.end_date}
 				/>
 				<label>-</label>
 				<input
@@ -120,6 +171,7 @@ const AdminCreateContributionToken = () => {
 					type="date"
 					onChange={handleFormChange}
 					required
+					min={formState.begin_date}
 				/>
 				<Button onClick={saveNewContrib}> Save </Button>
 			</form>

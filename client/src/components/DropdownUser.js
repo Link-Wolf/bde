@@ -5,7 +5,22 @@ import user_picture from "../assets/placeholders/user_profile.png";
 
 const DropdownUser = () => {
 	const [img, setImg] = useState(user_picture);
-	const [ret, setRet] = useState(<></>);
+	const [ret, setRet] = useState(
+		<NavDropdown
+			title={
+				<img
+					alt="placeholder petite bouille"
+					width="30"
+					height="30"
+					src={img}
+				/>
+			}
+		>
+			<NavDropdown.Item href={global.config.intra.redirect}>
+				Login
+			</NavDropdown.Item>
+		</NavDropdown>
+	);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -53,24 +68,6 @@ const DropdownUser = () => {
 					<NavDropdown.Item href="/log">
 						{" "}
 						Logout{" "}
-					</NavDropdown.Item>{" "}
-				</NavDropdown>
-			);
-		else
-			setRet(
-				<NavDropdown
-					title={
-						<img
-							alt="placeholder petite bouille"
-							width="30"
-							height="30"
-							src={img}
-						/>
-					}
-				>
-					{" "}
-					<NavDropdown.Item href={global.config.intra.redirect}>
-						Login{" "}
 					</NavDropdown.Item>{" "}
 				</NavDropdown>
 			);
