@@ -31,7 +31,7 @@ const Login = () => {
 				let breakLoop = () => {
 					loop = false;
 				};
-				while (loop && tries.current < 10) {
+				while (loop && tries.current < 15) {
 					await fetch(
 						`http://${global.config.api.authority}/session`,
 						{
