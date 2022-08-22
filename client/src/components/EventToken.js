@@ -32,12 +32,10 @@ const EventToken = param => {
 
 	return (
 		<>
-			<h1>
-				<a href={`/event/${param.event.id}`}>
-					{param.event.name} :{" "}
-					{new Date(param.event.begin_date).toLocaleDateString()}
-				</a>
-			</h1>
+			<h2>
+				{new Date(param.event.begin_date).toLocaleDateString()}
+				<a href={`/event/${param.event.id}`}>{param.event.name}</a>
+			</h2>
 			{param.type == "event" ? (
 				<>
 					<img src={imgSrc} width="150px" />{" "}

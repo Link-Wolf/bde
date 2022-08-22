@@ -168,42 +168,45 @@ const Event = () => {
 	}, [update]);
 
 	return dataEvent.name ? (
-		<Card
-			style={{
-				width: "18rem"
-			}}
-		>
-			<img src={thumbnail} />
-			<CardBody>
-				<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
-					{`Le ${new Date(
-						dataEvent.begin_date
-					).toLocaleDateString()} à
+		<>
+			<Card
+				style={{
+					width: "18rem"
+				}}
+			>
+				<img src={thumbnail} />
+				<CardBody>
+					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Le ${new Date(
+							dataEvent.begin_date
+						).toLocaleDateString()} à
 						${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
-				</CardSubtitle>
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
-					{dataEvent.nb_places !== -42
-						? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
-						: `Places : ${dataInsc.length} / ∞`}
-				</CardSubtitle>
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
-					{`Lieu : ${dataEvent.place}`}
-				</CardSubtitle>
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
-					{dataEvent.cost !== 0
-						? dataEvent.premium_cost === dataEvent.cost
-							? `Prix : ${dataEvent.cost}€`
-							: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
-						: `Gratuit !`}
-				</CardSubtitle>
-				<CardSubtitle className="mb-2 text-muted" tag="h6">
-					{`Durée : ${duration}`}
-				</CardSubtitle>
-				<CardText>{dataEvent.desc}</CardText>
-				{button}
-			</CardBody>
-		</Card>
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{dataEvent.nb_places !== -42
+							? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
+							: `Places : ${dataInsc.length} / ∞`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Lieu : ${dataEvent.place}`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{dataEvent.cost !== 0
+							? dataEvent.premium_cost === dataEvent.cost
+								? `Prix : ${dataEvent.cost}€`
+								: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
+							: `Gratuit !`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Durée : ${duration}`}
+					</CardSubtitle>
+					<CardText>{dataEvent.desc}</CardText>
+					{button}
+				</CardBody>
+			</Card>
+			<div>Images here</div>
+		</>
 	) : (
 		<NoPage />
 	);
