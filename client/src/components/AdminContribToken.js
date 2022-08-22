@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
+import {NotificationManager} from "react-notifications";
 
 import useConfirm from "./useConfirm";
 
@@ -98,43 +99,54 @@ const AdminContribToken = param => {
 					`Desire tu modifier la cotisation de ${param.data.studLogin}`
 				)
 			) {
-				var myHeaders = new Headers();
-				myHeaders.append("Content-Type", "application/json");
+				if (
+					new Date(bodyState.end_date) <=
+					new Date(bodyState.begin_date)
+				) {
+					NotificationManager.error(
+						"End_date must be after begin_date",
+						"Erreur",
+						3000
+					);
+				} else {
+					var myHeaders = new Headers();
+					myHeaders.append("Content-Type", "application/json");
 
-				var raw = JSON.stringify({
-					stud: param.data.studLogin,
-					cost: param.data.cost,
-					begin_date: bodyState.begin_date,
-					end_date: bodyState.end_date
-				});
-
-				var requestOptions = {
-					method: "PATCH",
-					headers: myHeaders,
-					body: raw,
-					redirect: "follow",
-					credentials: "include"
-				};
-
-				fetch(
-					`http://${global.config.api.authority}/contribution/admin/${param.data.studLogin}`,
-					requestOptions
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error: The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
-						);
+					var raw = JSON.stringify({
+						stud: param.data.studLogin,
+						cost: param.data.cost,
+						begin_date: bodyState.begin_date,
+						end_date: bodyState.end_date
 					});
-				setLocked(true);
-				setUpdate(true);
+
+					var requestOptions = {
+						method: "PATCH",
+						headers: myHeaders,
+						body: raw,
+						redirect: "follow",
+						credentials: "include"
+					};
+
+					fetch(
+						`http://${global.config.api.authority}/contribution/admin/${param.data.studLogin}`,
+						requestOptions
+					)
+						.then(response => {
+							if (!response.ok) {
+								throw new Error(
+									`This is an HTTP error: The status is ${response.status}`
+								);
+							}
+						})
+						.catch(function(error) {
+							console.log(
+								"Il y a eu un problème avec l'opération fetch: " +
+									error.message
+							);
+						});
+					setLocked(true);
+					setUpdate(true);
+				}
 			}
 		};
 
@@ -196,6 +208,7 @@ const AdminContribToken = param => {
 					value={formState.begin_date}
 					onChange={handleFormChange}
 					required
+					max={formState.end_date}
 				/>
 				{" - "}
 				<input
@@ -206,6 +219,7 @@ const AdminContribToken = param => {
 					onChange={handleFormChange}
 					type="datetime-local"
 					required
+					min={formState.begin_date}
 				/>
 				{button}
 			</form>
