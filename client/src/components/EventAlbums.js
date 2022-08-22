@@ -4,7 +4,7 @@ import EventToken from "./EventToken";
 
 import style from "../style/EventList.module.css";
 
-const EventList = param => {
+const EventAlbums = param => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -40,13 +40,13 @@ const EventList = param => {
 		<div className={style.scroll_container_40vw}>
 			{data.map(item => (
 				<li key={item.id}>
-					<EventToken event={item} type="event" />
+					<EventToken event={item} type="album" />
 				</li>
 			))}
 		</div>
 	) : (
-		<div>No event for the moment ma boi</div>
+		<div>No event has been save with foto</div>
 	);
 };
 
-export default EventList;
+export default EventAlbums;

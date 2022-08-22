@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import EventList from "../../components/EventList";
+import EventAlbums from "../../components/EventAlbums";
 import CheckSet from "../../components/CheckSet";
 import {Dropdown} from "react-bootstrap";
 
@@ -100,7 +101,20 @@ const Events = () => {
 			</div>
 			<div>
 				Album
-				<div>Arboresence des events avec liens</div>
+				<EventAlbums
+					filter={{
+						current: false,
+						free: false,
+						available: false,
+						food: false,
+						unlimited: false,
+						outside: false,
+						sponsorised: false,
+						sort: "begin_date",
+						asc: false,
+						album: true
+					}}
+				/>
 			</div>
 		</div>
 	);

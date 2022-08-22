@@ -11,6 +11,7 @@ export class EventDto {
 	sponso: boolean;
 	begin_date: Date;
 	end_date: Date;
+	album: boolean
 }
 
 export class EventFilterDto {
@@ -24,4 +25,5 @@ export class EventFilterDto {
 	sponsorised: boolean;// thunas
 	asc: boolean;// tri order (default desc)
 	sort: string;//tri selon (default date)
+	album: boolean
 }
