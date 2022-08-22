@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
 import {NotificationManager} from "react-notifications";
-
+import Placeholder from "react-bootstrap/Placeholder";
 import useConfirm from "./useConfirm";
 
 const AdminContribToken = param => {
@@ -19,7 +19,9 @@ const AdminContribToken = param => {
 		end_date: ""
 	});
 	const [locked, setLocked] = useState(true);
-	const [button, setButton] = useState(<></>);
+	const [button, setButton] = useState(
+		<Placeholder.Button variant="primary" />
+	);
 	const [update, setUpdate] = useState(false);
 
 	const switchLock = () => {
