@@ -51,7 +51,7 @@ export class EventService {
 
 	async getAlbum(id: number, login: any) {
 		try {
-			const addFilesFromDirectoryToZip = (directoryPath = "", zip: JSZip) => {
+			const addFilesFromDirectoryToZip = (directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
 				const directoryContents = fs.readdirSync(directoryPath, {
 					withFileTypes: true,
 				});
@@ -60,7 +60,7 @@ export class EventService {
 					const path = `${directoryPath}/${name}`;
 
 					if (fs.statSync(path).isFile()) {
-						zip.file(path, fs.readFileSync(path, "utf-8"));
+						zip.file(path, fs.readFileSync(path, { encoding: "utf-8" }));
 					}
 
 					if (fs.statSync(path).isDirectory()) {
@@ -73,7 +73,7 @@ export class EventService {
 			const zip = new JSZip();
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
-			// return zip
+			return zip
 			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
 
 			return zipAsBase64;
