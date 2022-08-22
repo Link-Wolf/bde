@@ -78,8 +78,8 @@ export class EventService {
 
 			return zipAsBase64;
 		} catch (error) {
-			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to to get thumbnail of event ${id} on database(${error})`)
+			this.logger.error(`Failed to get album of event ${id} on database(${error})`, login);
+			throw new InternalServerErrorException(`Failed to to get album of event ${id} on database(${error})`)
 		}
 	}
 
