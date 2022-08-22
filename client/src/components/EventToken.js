@@ -38,8 +38,12 @@ const EventToken = param => {
 					{new Date(param.event.begin_date).toLocaleDateString()}
 				</a>
 			</h1>
-			<img src={imgSrc} width="150px" />
-			<p> {param.event.desc} </p>
+			{param.type == "event" ? (
+				<>
+					<img src={imgSrc} width="150px" />{" "}
+					<p> {param.event.desc} </p>
+				</>
+			) : null}
 		</>
 	);
 };

@@ -58,6 +58,12 @@ export class Event {
 
 	@Column({
 		type: "bool",
+		nullable: true,
+	})
+	album: boolean
+
+	@Column({
+		type: "bool",
 		nullable: false,
 	})
 	consos: boolean

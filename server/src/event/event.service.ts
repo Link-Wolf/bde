@@ -11,6 +11,7 @@ import { StudService } from '../stud/stud.service';
 import { EventDto, EventFilterDto } from './event.dto';
 import * as fs from 'fs';
 import { join } from 'path';
+import archiver = require('archiver');
 
 @Injectable()
 export class EventService {
@@ -41,6 +42,57 @@ export class EventService {
 				return null
 			const file = fs.createReadStream(join(process.cwd(), thumb_path));
 			this.logger.log(`Successfully got the thumbnail of event ${id}`, login);
+			return new StreamableFile(file);
+		} catch (error) {
+			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
+			throw new InternalServerErrorException(`Failed to to get thumbnail of event ${id} on database(${error})`)
+		}
+	}
+
+	async getAlbum(id: number, login: any) {
+		try {
+			// create a file to stream archive data to.
+			const output = fs.createWriteStream(__dirname + '/example.zip');
+			const archive = archiver('zip', {
+				zlib: { level: 9 } // Sets the compression level.
+			});
+			output.on('close', function() {
+				console.log(archive.pointer() + ' total bytes');
+				console.log('archiver has been finalized and the output file descriptor has closed.');
+			});
+
+			output.on('end', function() {
+				console.log('Data has been drained');
+			});
+
+			archive.on('warning', function(err) {
+				if (err.code === 'ENOENT') {
+					console.log(`hahah warning boloss`)
+				} else {
+					console.log(`yahaha other fdp`)
+					throw err;
+				}
+			});
+
+			archive.on('error', function(err) {
+				console.log(`viktim`)
+				throw err;
+			});
+
+			archive.pipe(output);
+
+			const albumFiles = fs.readdirSync(`/assets/album/events/${id}`);
+			let i = 0;
+			for (const file of albumFiles) {
+				archive.file(file, { name: `album${id}_${i}.jpg` })
+			}
+
+			// finalize the archive (ie we are done appending files but streams have to finish yet)
+			// 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
+			archive.finalize();
+			output.close()
+			const file = fs.createReadStream(__dirname + '/example.zip')
+			console.log(file)
 			return new StreamableFile(file);
 		} catch (error) {
 			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
@@ -89,21 +141,26 @@ export class EventService {
 		Promise<Event[]> {
 		try {
 			let match = `SELECT * FROM "event" WHERE '1' = '1'`;
-			if (filterDto.current)
-				match += ` AND("end_date" IS NULL OR "end_date" > 'NOW()')`
-			if (filterDto.free)
-				match += ` AND "cost" = 0`
-			if (filterDto.available)
-				match += ` AND("nb_places" > (SELECT COUNT(*) FROM
+			if (filterDto.album) {
+				match += ` AND "album" = 't'`
+			}
+			else {
+				if (filterDto.current)
+					match += ` AND("end_date" IS NULL OR "end_date" > 'NOW()')`
+				if (filterDto.free)
+					match += ` AND "cost" = 0`
+				if (filterDto.available)
+					match += ` AND("nb_places" > (SELECT COUNT(*) FROM
 				 "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
-			if (filterDto.food)
-				match += ` AND "consos" = 't'`
-			if (filterDto.unlimited)
-				match += ` AND "nb_places" = -42`
-			if (filterDto.outside)
-				match += ` AND "isOutside" = 't'`
-			if (filterDto.sponsorised)
-				match += ` AND "sponsorised" = 't'`
+				if (filterDto.food)
+					match += ` AND "consos" = 't'`
+				if (filterDto.unlimited)
+					match += ` AND "nb_places" = -42`
+				if (filterDto.outside)
+					match += ` AND "isOutside" = 't'`
+				if (filterDto.sponsorised)
+					match += ` AND "sponsorised" = 't'`
+			}
 			match += ` ORDER BY ${filterDto.sort} ${
 				filterDto.asc ? "ASC"
 					: "DESC"
