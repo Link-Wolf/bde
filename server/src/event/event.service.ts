@@ -11,7 +11,7 @@ import { StudService } from '../stud/stud.service';
 import { EventDto, EventFilterDto } from './event.dto';
 import * as fs from 'fs';
 import { join } from 'path';
-import archiver = require('archiver');
+import * as JSZip from "jszip";
 
 @Injectable()
 export class EventService {
@@ -51,49 +51,32 @@ export class EventService {
 
 	async getAlbum(id: number, login: any) {
 		try {
-			// create a file to stream archive data to.
-			const output = fs.createWriteStream(__dirname + '/example.zip');
-			const archive = archiver('zip', {
-				zlib: { level: 9 } // Sets the compression level.
-			});
-			output.on('close', function() {
-				console.log(archive.pointer() + ' total bytes');
-				console.log('archiver has been finalized and the output file descriptor has closed.');
-			});
+			const addFilesFromDirectoryToZip = (directoryPath = "", zip: JSZip) => {
+				const directoryContents = fs.readdirSync(directoryPath, {
+					withFileTypes: true,
+				});
 
-			output.on('end', function() {
-				console.log('Data has been drained');
-			});
+				directoryContents.forEach(({ name }) => {
+					const path = `${directoryPath}/${name}`;
 
-			archive.on('warning', function(err) {
-				if (err.code === 'ENOENT') {
-					console.log(`hahah warning boloss`)
-				} else {
-					console.log(`yahaha other fdp`)
-					throw err;
-				}
-			});
+					if (fs.statSync(path).isFile()) {
+						zip.file(path, fs.readFileSync(path, "utf-8"));
+					}
 
-			archive.on('error', function(err) {
-				console.log(`viktim`)
-				throw err;
-			});
+					if (fs.statSync(path).isDirectory()) {
+						addFilesFromDirectoryToZip(path, zip);
+					}
+				});
+			};
 
-			archive.pipe(output);
+			const directoryPath = `assets/album/events/${id}`
+			const zip = new JSZip();
 
-			const albumFiles = fs.readdirSync(`/assets/album/events/${id}`);
-			let i = 0;
-			for (const file of albumFiles) {
-				archive.file(file, { name: `album${id}_${i}.jpg` })
-			}
+			addFilesFromDirectoryToZip(directoryPath, zip);
+			// return zip
+			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
 
-			// finalize the archive (ie we are done appending files but streams have to finish yet)
-			// 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
-			archive.finalize();
-			output.close()
-			const file = fs.createReadStream(__dirname + '/example.zip')
-			console.log(file)
-			return new StreamableFile(file);
+			return zipAsBase64;
 		} catch (error) {
 			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
 			throw new InternalServerErrorException(`Failed to to get thumbnail of event ${id} on database(${error})`)
