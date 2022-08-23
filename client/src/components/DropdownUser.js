@@ -2,9 +2,10 @@ import {NavDropdown} from "react-bootstrap";
 import {useState, useEffect} from "react";
 
 import user_picture from "../assets/placeholders/user_profile.png";
+import tmp_picture from "../assets/placeholders/tmp_profile.png";
 
 const DropdownUser = () => {
-	const [img, setImg] = useState(user_picture);
+	const [img, setImg] = useState(tmp_picture);
 	const [ret, setRet] = useState(
 		<NavDropdown
 			title={
@@ -37,6 +38,7 @@ const DropdownUser = () => {
 				})
 				.then(data => {
 					if (data.image_url !== -42) setImg(data.image_url);
+					if (data.clearance == -42) setImg(user_picture);
 				})
 				.catch(function(error) {
 					console.log(
