@@ -208,7 +208,7 @@ const Event = () => {
 			<DLButton id={param.id} />
 		</>
 	) : (
-		<NoPage />
+		<NoPage /> // TODO: redirect events
 	);
 };
 export default Event;

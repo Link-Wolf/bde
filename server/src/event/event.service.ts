@@ -60,7 +60,7 @@ export class EventService {
 					const path = `${directoryPath}/${name}`;
 
 					if (fs.statSync(path).isFile()) {
-						zip.file(path, fs.readFileSync(path, { encoding: "utf-8" }));
+						zip.file(`${name}`, fs.readFileSync(path));
 					}
 
 					if (fs.statSync(path).isDirectory()) {
@@ -73,7 +73,6 @@ export class EventService {
 			const zip = new JSZip();
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
-			return zip
 			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
 
 			return zipAsBase64;

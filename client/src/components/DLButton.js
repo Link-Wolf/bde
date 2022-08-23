@@ -1,23 +1,30 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import b64ToBlob from "b64-to-blob";
-import fileSaver from "file-saver";
 import jszip from "jszip";
 
 const DLButton = param => {
-	const [downloading, setDownloading] = useState(false);
+	const [album, setAlbum] = useState([]);
+	const photos = useRef([]);
 
-	const handleDownloadZip = () => {
-		setDownloading(true);
-
+	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}/album`, {
 			credentials: "include"
 		})
 			.then(response => {
-				return response.json();
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(zipAsBase64 => {
+				const blob = b64ToBlob(zipAsBase64, "application/zip");
+				return blob;
 			})
 			.then(arrayBuffer => {
 				jszip.loadAsync(arrayBuffer).then(({files}) => {
-					const jpgs = [];
+					let jpgs = [];
 					const mediaFiles = Object.entries(
 						files
 					).filter(([fileName]) => fileName.endsWith(".jpg"));
@@ -26,29 +33,24 @@ const DLButton = param => {
 						throw new Error("No media files found in archive");
 					}
 
-					mediaFiles.forEach(([, image]) => {
-						image.async("blob").then(blob => {
-							const img = new Image();
-							img.src = URL.createObjectURL(blob);
-							document.body.prepend(img);
-						});
-					});
-
-					return jpgs;
+					setAlbum(mediaFiles);
 				});
 			});
-	};
+	}, []);
+
+	useEffect(() => {
+		album.forEach(([, image], i) => {
+			image.async("blob").then(blob => {
+				photos.current[i] = URL.createObjectURL(blob);
+			});
+		});
+	}, [album]);
 
 	return (
 		<div>
-			<h4 className="mb-5">Zip Downloader</h4>
-			<button
-				className="btn btn-primary"
-				disabled={downloading}
-				onClick={handleDownloadZip}
-			>
-				{downloading ? "Downloading..." : "Download Zip"}
-			</button>
+			{photos.current.map((src, i) => (
+				<img key={i} src={src} />
+			))}
 		</div>
 	);
 };
