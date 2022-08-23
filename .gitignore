@@ -13,3 +13,6 @@ config.*
 dump.rdb
 server/build
 server/dist
+client/assets/album/events/*
+client/assets/thumbnails/events/*
+client/assets/thumbnails/goodies/*

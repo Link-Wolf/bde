@@ -2,9 +2,10 @@ import {NavDropdown} from "react-bootstrap";
 import {useState, useEffect} from "react";
 
 import user_picture from "../assets/placeholders/user_profile.png";
+import tmp_picture from "../assets/placeholders/tmp_profile.png";
 
 const DropdownUser = () => {
-	const [img, setImg] = useState(user_picture);
+	const [img, setImg] = useState(tmp_picture);
 	const [ret, setRet] = useState(
 		<NavDropdown
 			title={
@@ -36,7 +37,9 @@ const DropdownUser = () => {
 					return response.json();
 				})
 				.then(data => {
+					console.log(data);
 					if (data.image_url !== -42) setImg(data.image_url);
+					else setImg(user_picture);
 				})
 				.catch(function(error) {
 					console.log(
@@ -48,29 +51,48 @@ const DropdownUser = () => {
 	}, []);
 
 	useEffect(() => {
-		if (img !== user_picture)
-			setRet(
-				<NavDropdown
-					title={
-						<img
-							alt="ta petite bouille"
-							width="30"
-							height="30"
-							src={img}
-						/>
-					}
-				>
-					{" "}
-					<NavDropdown.Item href="/me">
+		if (img !== tmp_picture) {
+			if (img === user_picture) {
+				setRet(
+					<NavDropdown
+						title={
+							<img
+								alt="placeholder petite bouille"
+								width="30"
+								height="30"
+								src={img}
+							/>
+						}
+					>
+						<NavDropdown.Item href={global.config.intra.redirect}>
+							Login
+						</NavDropdown.Item>
+					</NavDropdown>
+				);
+			} else
+				setRet(
+					<NavDropdown
+						title={
+							<img
+								alt="ta petite bouille"
+								width="30"
+								height="30"
+								src={img}
+							/>
+						}
+					>
 						{" "}
-						Profile{" "}
-					</NavDropdown.Item>{" "}
-					<NavDropdown.Item href="/log">
-						{" "}
-						Logout{" "}
-					</NavDropdown.Item>{" "}
-				</NavDropdown>
-			);
+						<NavDropdown.Item href="/me">
+							{" "}
+							Profile{" "}
+						</NavDropdown.Item>{" "}
+						<NavDropdown.Item href="/log">
+							{" "}
+							Logout{" "}
+						</NavDropdown.Item>{" "}
+					</NavDropdown>
+				);
+		}
 	}, [img]);
 
 	return ret;
