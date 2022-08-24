@@ -215,8 +215,7 @@ const AdminEventToken = param => {
 					});
 				changeThumbnail();
 				param.setUpdate(true);
-				setUpdate(true);
-				setLocked(true);
+				window.location.reload();
 			}
 		};
 		if (locked)
