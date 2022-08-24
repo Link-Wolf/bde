@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef} from "react";
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
-
-const DLButton = param => {
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import {Carousel} from "react-responsive-carousel";
+const EventAlbum = param => {
 	const [album, setAlbum] = useState([]);
 	const photos = useRef([]);
 
@@ -47,12 +48,14 @@ const DLButton = param => {
 	}, [album]);
 
 	return (
-		<div>
+		<Carousel>
 			{photos.current.map((src, i) => (
-				<img key={i} src={src} />
+				<div key={i}>
+					<img src={src} />
+				</div>
 			))}
-		</div>
+		</Carousel>
 	);
 };
 
-export default DLButton;
+export default EventAlbum;

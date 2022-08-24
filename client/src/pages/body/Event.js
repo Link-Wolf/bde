@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import NoPage from "./NoPage";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
-import DLButton from "../../components/DLButton";
+import EventAlbum from "../../components/EventAlbum";
 const Event = () => {
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
@@ -205,7 +205,7 @@ const Event = () => {
 					{button}
 				</CardBody>
 			</Card>
-			<DLButton id={param.id} />
+			<EventAlbum id={param.id} />
 		</>
 	) : (
 		<NoPage /> // TODO: redirect events
