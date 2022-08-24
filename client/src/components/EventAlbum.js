@@ -4,8 +4,9 @@ import jszip from "jszip";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from "react-responsive-carousel";
 const EventAlbum = param => {
-	const [album, setAlbum] = useState([]);
-	const photos = useRef([]);
+	const [update, setUpdate] = useState(false);
+	const [ret, setRet] = useState(<></>);
+	const [photos, setPhotos] = useState([]);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}/album`, {
@@ -25,7 +26,6 @@ const EventAlbum = param => {
 			})
 			.then(arrayBuffer => {
 				jszip.loadAsync(arrayBuffer).then(({files}) => {
-					let jpgs = [];
 					const mediaFiles = Object.entries(
 						files
 					).filter(([fileName]) => fileName.endsWith(".jpg"));
@@ -34,28 +34,36 @@ const EventAlbum = param => {
 						throw new Error("No media files found in archive");
 					}
 
-					setAlbum(mediaFiles);
+					mediaFiles.forEach(([, image], i) => {
+						image
+							.async("blob")
+							.then(blob => {
+								let tmp = photos;
+								tmp[i] = URL.createObjectURL(blob);
+								setPhotos(tmp);
+							})
+							.then(() => {
+								setUpdate(true);
+							});
+					});
 				});
 			});
 	}, []);
 
 	useEffect(() => {
-		album.forEach(([, image], i) => {
-			image.async("blob").then(blob => {
-				photos.current[i] = URL.createObjectURL(blob);
-			});
-		});
-	}, [album]);
+		setUpdate(false);
+		setRet(
+			<Carousel>
+				{photos.map((src, i) => (
+					<div key={i}>
+						<img src={src} />
+					</div>
+				))}
+			</Carousel>
+		);
+	}, [update]);
 
-	return (
-		<Carousel>
-			{photos.current.map((src, i) => (
-				<div key={i}>
-					<img src={src} />
-				</div>
-			))}
-		</Carousel>
-	);
+	return ret;
 };
 
 export default EventAlbum;
