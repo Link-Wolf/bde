@@ -13,7 +13,9 @@ const Event = () => {
 	const [thumbnail, setThumnail] = useState(null);
 	const param = useParams();
 
+	// thumbnail
 	useEffect(() => {
+		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/event/${param.id}/thumbnail`,
 			{
@@ -38,9 +40,11 @@ const Event = () => {
 						error.message
 				);
 			});
-	}, [param.id]);
+	}, [param.id, update]);
 
+	// event info
 	useEffect(() => {
+		setUpdate(false);
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
 			credentials: "include"
 		})
@@ -91,7 +95,7 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [param.id]);
+	}, [param.id, update]);
 
 	const unsub = async () => {
 		await fetch(
@@ -139,6 +143,7 @@ const Event = () => {
 		setUpdate(true);
 	};
 
+	//is subbded
 	useEffect(() => {
 		setUpdate(false);
 		fetch(
