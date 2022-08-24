@@ -74,6 +74,7 @@ export class EventService {
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
 			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
+			this.logger.log(`Successfully got the album of event ${id}`, login);
 
 			return zipAsBase64;
 		} catch (error) {

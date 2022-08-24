@@ -96,7 +96,7 @@ const AdminProductToken = param => {
 						);
 					});
 				changeThumbnail();
-				param.setUpdate(true);
+				window.location.reload();
 			}
 		};
 
@@ -126,6 +126,7 @@ const AdminProductToken = param => {
 	}, [param, update, formState, locked, bodyState]);
 
 	useEffect(() => {
+		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/goodies/${param.data.id}/thumbnail`,
 			{
@@ -150,7 +151,7 @@ const AdminProductToken = param => {
 						error.message
 				);
 			});
-	}, []);
+	}, [update]);
 
 	const changeThumbnail = () => {
 		const data = new FormData();
@@ -171,6 +172,9 @@ const AdminProductToken = param => {
 					 The status is ${response.status}`
 					);
 				}
+			})
+			.then(() => {
+				setUpdate(true);
 			})
 			.catch(function(error) {
 				console.log(
