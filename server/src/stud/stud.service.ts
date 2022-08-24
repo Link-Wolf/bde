@@ -62,11 +62,11 @@ export class StudService {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud)
-				throw new NotFoundException(`Failed to find student ${login}`)
-			// 	this.logger.warn(`Failed to find student with login ${login} : student does not exist`)
+				// throw new NotFoundException(`Failed to find student ${login}`)
+				this.logger.warn(`Failed to find student with login ${login} : student does not exist`, requestMaker)
 			// }
-			// else
-			this.logger.log(`Got student with login ${login}`, requestMaker);
+			else
+				this.logger.log(`Got student with login ${login}`, requestMaker);
 			return stud
 		}
 		catch (error) {
