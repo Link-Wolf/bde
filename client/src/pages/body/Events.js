@@ -14,7 +14,8 @@ const Events = () => {
 		outside: false,
 		sponsorised: false,
 		sort: "begin_date",
-		asc: false
+		asc: false,
+		available_date: true
 	});
 
 	const handleFormChange = event => {
@@ -112,7 +113,8 @@ const Events = () => {
 						sponsorised: false,
 						sort: "begin_date",
 						asc: false,
-						album: true
+						album: true,
+						available_date: true
 					}}
 				/>
 			</div>
