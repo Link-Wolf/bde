@@ -33,7 +33,7 @@ const ProductList = param => {
 						error.message
 				);
 			});
-	});
+	}, []);
 
 	return data.length ? (
 		<div className={style.scroll_container_40vw}>

@@ -6,7 +6,7 @@ import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 
 const Product = () => {
 	const [dataProduct, setDataProduct] = useState(<></>);
-	const [thumbnail, setThumnail] = useState(null);
+	const [thumbnail, setThumbnail] = useState(null);
 	const param = useParams();
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ const Product = () => {
 				return response.blob();
 			})
 			.then(blob => {
-				setThumnail(URL.createObjectURL(blob));
+				setThumbnail(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
 				console.log(
@@ -50,7 +50,6 @@ const Product = () => {
 				return response.json();
 			})
 			.then(d => {
-				console.log(d);
 				setDataProduct(
 					<Card
 						style={{
@@ -61,7 +60,7 @@ const Product = () => {
 						<CardBody>
 							<CardTitle tag="h5"> {d.name}</CardTitle>
 							<CardSubtitle tag="h6">
-								{`Prix : ${dataProduct.cost}`}
+								{`Prix : ${d.cost}`}
 							</CardSubtitle>
 							<CardText>{d.desc}</CardText>
 						</CardBody>
