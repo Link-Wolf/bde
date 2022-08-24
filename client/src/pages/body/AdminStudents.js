@@ -5,7 +5,9 @@ const AdminStudents = () => {
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/stud`, {credentials: "include"})
+		fetch(`http://${global.config.api.authority}/stud`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -43,7 +45,7 @@ const AdminStudents = () => {
 										<li> {user.firstname} </li>
 										<li> {user.lastname} </li>
 										<li>
-											{user.isDirection
+											{user.clearance >= 11
 												? "direction"
 												: "pnj"}
 										</li>
