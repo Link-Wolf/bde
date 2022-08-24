@@ -202,7 +202,12 @@ const Event = () => {
 						{`Durée : ${duration}`}
 					</CardSubtitle>
 					<CardText>{dataEvent.desc}</CardText>
-					{button}
+					{dataEvent.end_date &&
+					new Date(dataEvent.end_date) > new Date(Date.now()) ? (
+						<>{button}</>
+					) : (
+						<></>
+					)}
 				</CardBody>
 			</Card>
 			<EventAlbum id={param.id} />

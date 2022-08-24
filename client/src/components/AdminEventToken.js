@@ -186,7 +186,7 @@ const AdminEventToken = param => {
 					begin_date: bodyState.begin_date,
 					end_date: bodyState.hasEndDate ? bodyState.end_date : null
 				});
-
+				//TODO null pas ouf, pas forcement ici btw
 				var requestOptions = {
 					method: "PATCH",
 					headers: myHeaders,
