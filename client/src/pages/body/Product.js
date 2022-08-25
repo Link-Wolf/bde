@@ -2,6 +2,9 @@ import {useState, useEffect, React} from "react";
 import {useParams, Navigate} from "react-router-dom";
 import NoPage from "./NoPage";
 import Me from "./Me";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 
 const Product = () => {
@@ -56,7 +59,12 @@ const Product = () => {
 							width: "18rem"
 						}}
 					>
-						<img src={thumbnail} />
+						<LazyLoadImage
+							height="auto"
+							src={thumbnail}
+							width="auto"
+							effect="blur"
+						/>
 						<CardBody>
 							<CardTitle tag="h5"> {d.name}</CardTitle>
 							<CardSubtitle tag="h6">

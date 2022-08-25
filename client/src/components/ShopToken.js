@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const ShopToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
@@ -37,7 +39,12 @@ const ShopToken = param => {
 					{param.goodies.name}
 				</a>
 			</h1>
-			<img src={imgSrc} width="150px" />
+			<LazyLoadImage
+				height="150px"
+				src={imgSrc}
+				width="auto"
+				effect="blur"
+			/>
 			<p>
 				{param.goodies.available
 					? `${param.goodies.cost} euros / ${param.goodies.desc}`

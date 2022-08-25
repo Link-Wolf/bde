@@ -2,6 +2,8 @@ import React from "react";
 import {useState, useEffect} from "react";
 import QRCode from "react-qr-code";
 import {Navigate} from "react-router-dom";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import EventToken from "./EventToken";
 
@@ -14,9 +16,19 @@ const UserProfile = options => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [contributionStatus, setContributionStatus] = useState(
 		<div style={{display: "flex"}}>
-			<img height="50px" src={greyStar} />
+			<LazyLoadImage
+				height="50px"
+				src={greyStar}
+				width="auto"
+				effect="blur"
+			/>
 			<p style={{fontSize: "40px"}}>Is just a stud</p>{" "}
-			<img height="50px" src={greyStar} />
+			<LazyLoadImage
+				height="50px"
+				src={greyStar}
+				width="auto"
+				effect="blur"
+			/>
 		</div>
 	);
 	const [nav, setNav] = useState(<></>);
@@ -69,11 +81,21 @@ const UserProfile = options => {
 					) {
 						setContributionStatus(
 							<div style={{display: "flex"}}>
-								<img height="50px" src={yellowStar} />
+								<LazyLoadImage
+									height="50px"
+									src={yellowStar}
+									width="auto"
+									effect="blur"
+								/>
 								<p style={{fontSize: "40px"}}>
 									Is a premium member
-								</p>{" "}
-								<img height="50px" src={yellowStar} />
+								</p>
+								<LazyLoadImage
+									height="50px"
+									src={yellowStar}
+									width="auto"
+									effect="blur"
+								/>
 							</div>
 						);
 					}
@@ -120,9 +142,11 @@ const UserProfile = options => {
 			{nav}
 			<div>
 				<div style={{display: "flex"}}>
-					<img
+					<LazyLoadImage
 						height="100px"
 						src={`https://cdn.intra.42.fr/users/${dataStud.login}.jpg`}
+						width="auto"
+						effect="blur"
 					/>
 					<div>
 						<h1>{dataStud.login}</h1>
