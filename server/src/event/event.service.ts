@@ -143,6 +143,8 @@ export class EventService {
 					match += ` AND "isOutside" = 't'`
 				if (filterDto.sponsorised)
 					match += ` AND "sponsorised" = 't'`
+				if (filterDto.available_date)
+					match += ` AND "available_date" < '${new Date(Date.now())}'`
 			}
 			match += ` ORDER BY ${filterDto.sort} ${
 				filterDto.asc ? "ASC"
