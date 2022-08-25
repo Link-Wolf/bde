@@ -1,6 +1,8 @@
 import {useRef, useState} from "react";
 import {Button, Form} from "react-bootstrap";
 import useConfirm from "./useConfirm";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
@@ -158,7 +160,12 @@ const AdminProductToken = param => {
 						setSrcImg(URL.createObjectURL(event.target.files[0]));
 					}}
 				/>
-				<img src={srcImg} height="150px" />
+				<LazyLoadImage
+					height="150px"
+					src={srcImg}
+					width="auto"
+					effect="blur"
+				/>
 				<Button type="button" defaultValue={-1} onClick={saveProduct}>
 					Save
 				</Button>

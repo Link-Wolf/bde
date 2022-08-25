@@ -3,6 +3,9 @@ import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
 import Placeholder from "react-bootstrap/Placeholder";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
@@ -271,7 +274,12 @@ const AdminProductToken = param => {
 						}}
 						disabled={locked}
 					/>
-					<img src={srcImg} height="150px" />
+					<LazyLoadImage
+						height="150px"
+						src={srcImg}
+						width="auto"
+						effect="blur"
+					/>
 					{button}
 					<Button color="secondary" type="reset" disabled={locked}>
 						Reset

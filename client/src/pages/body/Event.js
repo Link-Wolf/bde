@@ -3,6 +3,8 @@ import {useParams, Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Event = () => {
 	const [ret, setRet] = useState(<></>);
