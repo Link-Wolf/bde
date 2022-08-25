@@ -11,7 +11,20 @@ const EventList = param => {
 	const [data, setData] = useState([]);
 	const [ret, setRet] = useState(
 		<div className={style.scroll_container_40vw}>
-			<br />
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
 			<Placeholder as="h1" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
