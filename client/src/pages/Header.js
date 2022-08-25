@@ -1,5 +1,7 @@
 import {Navbar, Nav, Container} from "react-bootstrap";
 import {useState, useEffect} from "react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import DropdownUser from "../components/DropdownUser";
 
@@ -100,12 +102,12 @@ function Header() {
 		>
 			<Container>
 				<Navbar.Brand href="/home">
-					<img
-						alt="logo bde"
+					<LazyLoadImage
 						height="30"
-						width="30"
-						className="d-inline-block align-top"
 						src={bde_logo}
+						width="30"
+						effect="blur"
+						className="d-inline-block align-top"
 					/>
 					<Navbar.Text> La Fregate</Navbar.Text>
 				</Navbar.Brand>
