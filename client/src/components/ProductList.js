@@ -1,10 +1,36 @@
 import {useState, useEffect, React} from "react";
-
+import {Placeholder} from "react-bootstrap";
 import ShopToken from "./ShopToken";
 
 import style from "../style/ProductList.module.css";
+import grey from "../assets/placeholders/grey.png";
 
-const ProductList = param => {
+const ProductList = () => {
+	const [ret, setRet] = useState(
+		<div className={style.scroll_container_40vw}>
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+		</div>
+	);
 	const [data, setData] = useState([]);
 
 	useEffect(() => {
@@ -18,6 +44,7 @@ const ProductList = param => {
 		fetch(`http://${global.config.api.authority}/goodies`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
+					setRet(<div>No goodies available</div>);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -34,18 +61,19 @@ const ProductList = param => {
 				);
 			});
 	}, []);
+	useEffect(() => {
+		setRet(
+			<div className={style.scroll_container_40vw}>
+				{data.map(item => (
+					<li key={item.id}>
+						<ShopToken goodies={item} />
+					</li>
+				))}
+			</div>
+		);
+	}, [data]);
 
-	return data.length ? (
-		<div className={style.scroll_container_40vw}>
-			{data.map(item => (
-				<li key={item.id}>
-					<ShopToken goodies={item} />
-				</li>
-			))}
-		</div>
-	) : (
-		<div>No goodies available</div>
-	);
+	return ret;
 };
 
 export default ProductList;
