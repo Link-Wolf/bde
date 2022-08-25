@@ -1,5 +1,7 @@
 import {NavDropdown} from "react-bootstrap";
 import {useState, useEffect} from "react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import user_picture from "../assets/placeholders/user_profile.png";
 import tmp_picture from "../assets/placeholders/tmp_profile.png";
@@ -9,12 +11,7 @@ const DropdownUser = () => {
 	const [ret, setRet] = useState(
 		<NavDropdown
 			title={
-				<img
-					alt="placeholder petite bouille"
-					width="30"
-					height="30"
-					src={img}
-				/>
+				<LazyLoadImage height="30" src={img} width="30" effect="blur" />
 			}
 		>
 			<NavDropdown.Item href={global.config.intra.redirect}>
@@ -55,11 +52,11 @@ const DropdownUser = () => {
 				setRet(
 					<NavDropdown
 						title={
-							<img
-								alt="placeholder petite bouille"
-								width="30"
+							<LazyLoadImage
 								height="30"
 								src={img}
+								width="30"
+								effect="blur"
 							/>
 						}
 					>
@@ -72,11 +69,11 @@ const DropdownUser = () => {
 				setRet(
 					<NavDropdown
 						title={
-							<img
-								alt="ta petite bouille"
-								width="30"
+							<LazyLoadImage
 								height="30"
 								src={img}
+								width="30"
+								effect="blur"
 							/>
 						}
 					>

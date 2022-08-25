@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const EventToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
@@ -54,10 +56,17 @@ const EventToken = param => {
 			</h2>
 			{param.type == "event" ? (
 				<>
-					<img src={imgSrc} width="150px" />{" "}
+					<LazyLoadImage
+						height="auto"
+						src={imgSrc}
+						width="150px"
+						effect="blur"
+					/>
 					<p> {param.event.desc} </p>
 				</>
-			) : null}
+			) : (
+				<></>
+			)}
 		</>
 	);
 };

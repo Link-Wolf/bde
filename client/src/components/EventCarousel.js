@@ -1,4 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 import abel from "../assets/placeholders/abel.png";
 import yoyo from "../assets/placeholders/yohan.png";
@@ -13,10 +15,12 @@ const EventCarousel = () => {
 			<Carousel fade>
 				<Carousel.Item>
 					<div className={style.image_div}>
-						<img
-							className="d-block w-100"
-							src={abel}
+						<LazyLoadImage
 							alt="First slide"
+							height="auto"
+							src={abel}
+							width="auto"
+							effect="blur"
 						/>
 					</div>
 					<Carousel.Caption>
@@ -26,10 +30,12 @@ const EventCarousel = () => {
 				</Carousel.Item>
 				<Carousel.Item>
 					<div className={style.image_div}>
-						<img
-							className="d-block w-100"
-							src={yoyo}
+						<LazyLoadImage
 							alt="Second slide"
+							height="auto"
+							src={yoyo}
+							width="auto"
+							effect="blur"
 						/>
 					</div>
 					<Carousel.Caption>
@@ -39,10 +45,12 @@ const EventCarousel = () => {
 				</Carousel.Item>
 				<Carousel.Item>
 					<div className={style.image_div}>
-						<img
-							className="d-block w-100"
-							src={caro}
+						<LazyLoadImage
 							alt="Third slide"
+							height="auto"
+							src={caro}
+							width="auto"
+							effect="blur"
 						/>
 					</div>
 					<Carousel.Caption>
@@ -54,10 +62,12 @@ const EventCarousel = () => {
 				</Carousel.Item>
 				<Carousel.Item>
 					<div className={style.image_div}>
-						<img
-							className="d-block w-100"
+						<LazyLoadImage
+							alt="Fourth slide"
+							height="auto"
 							src={iman}
-							alt="Third slide"
+							width="auto"
+							effect="blur"
 						/>
 					</div>
 					<Carousel.Caption>

@@ -20,6 +20,7 @@
     "react-bootstrap": "^2.4.0",
     "react-client-session": "^0.0.8",
     "react-dom": "^18.2.0",
+    "react-lazy-load-image-component": "^1.5.5",
     "react-native-zip-archive": "^6.0.8",
     "react-notifications": "^1.7.4",
     "react-notifications-component": "^4.0.1",

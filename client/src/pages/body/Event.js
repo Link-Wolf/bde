@@ -4,6 +4,9 @@ import NoPage from "./NoPage";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const Event = () => {
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
@@ -179,7 +182,12 @@ const Event = () => {
 					width: "18rem"
 				}}
 			>
-				<img src={thumbnail} />
+				<LazyLoadImage
+					height="auto"
+					src={thumbnail}
+					width="auto"
+					effect="blur"
+				/>
 				<CardBody>
 					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">

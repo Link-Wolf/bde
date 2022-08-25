@@ -3,6 +3,9 @@ import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from "react-responsive-carousel";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+
 const EventAlbum = param => {
 	const [update, setUpdate] = useState(false);
 	const [ret, setRet] = useState(<></>);
@@ -56,7 +59,12 @@ const EventAlbum = param => {
 			<Carousel>
 				{photos.map((src, i) => (
 					<div key={i}>
-						<img src={src} />
+						<LazyLoadImage
+							height="auto"
+							src={src}
+							width="auto"
+							effect="blur"
+						/>
 					</div>
 				))}
 			</Carousel>
