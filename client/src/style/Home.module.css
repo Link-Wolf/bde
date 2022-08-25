@@ -8,14 +8,6 @@
 	margin: .5%;
 }
 
-.event_show img {
-	margin: 5px;
-	width: 25px;
-	padding: 0;
-	height: auto;
-	object-fit: contain;
-}
-
 .p {
 	text-align: center;
 	margin-bottom: 1px;
