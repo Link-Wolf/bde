@@ -1,10 +1,10 @@
 import {useState, useEffect, React} from "react";
-import {useParams} from "react-router-dom";
-import NoPage from "./NoPage";
+import {useParams, Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
 const Event = () => {
+	const [ret, setRet] = useState(<></>);
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
@@ -70,8 +70,9 @@ const Event = () => {
 			})
 			.catch(function(error) {
 				console.log(
-					`This is a fetch error: The error is ${error.message}`
+					`This is a fetch error: The error is ${error.message}. gotta go back`
 				);
+				setRet(<Navigate to="/events" />);
 			});
 		fetch(
 			`http://${global.config.api.authority}/inscription/event/${param.id}`,
@@ -143,6 +144,50 @@ const Event = () => {
 		setUpdate(true);
 	};
 
+	useEffect(() => {
+		setRet(
+			<>
+				<Card
+					style={{
+						width: "18rem"
+					}}
+				>
+					<img src={thumbnail} />
+					<CardBody>
+						<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
+						<CardSubtitle className="mb-2 text-muted" tag="h6">
+							{`Le ${new Date(
+								dataEvent.begin_date
+							).toLocaleDateString()} à
+					${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
+						</CardSubtitle>
+						<CardSubtitle className="mb-2 text-muted" tag="h6">
+							{dataEvent.nb_places !== -42
+								? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
+								: `Places : ${dataInsc.length} / ∞`}
+						</CardSubtitle>
+						<CardSubtitle className="mb-2 text-muted" tag="h6">
+							{`Lieu : ${dataEvent.place}`}
+						</CardSubtitle>
+						<CardSubtitle className="mb-2 text-muted" tag="h6">
+							{dataEvent.cost !== 0
+								? dataEvent.premium_cost === dataEvent.cost
+									? `Prix : ${dataEvent.cost}€`
+									: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
+								: `Gratuit !`}
+						</CardSubtitle>
+						<CardSubtitle className="mb-2 text-muted" tag="h6">
+							{`Durée : ${duration}`}
+						</CardSubtitle>
+						<CardText>{dataEvent.desc}</CardText>
+						{button}
+					</CardBody>
+				</Card>
+				<EventAlbum id={param.id} />
+			</>
+		);
+	}, [dataEvent, thumbnail]);
+
 	//is subbded
 	useEffect(() => {
 		setUpdate(false);
@@ -172,48 +217,6 @@ const Event = () => {
 			});
 	}, [update]);
 
-	return dataEvent.name ? (
-		<>
-			<Card
-				style={{
-					width: "18rem"
-				}}
-			>
-				<img src={thumbnail} />
-				<CardBody>
-					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
-					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{`Le ${new Date(
-							dataEvent.begin_date
-						).toLocaleDateString()} à
-						${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
-					</CardSubtitle>
-					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{dataEvent.nb_places !== -42
-							? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
-							: `Places : ${dataInsc.length} / ∞`}
-					</CardSubtitle>
-					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{`Lieu : ${dataEvent.place}`}
-					</CardSubtitle>
-					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{dataEvent.cost !== 0
-							? dataEvent.premium_cost === dataEvent.cost
-								? `Prix : ${dataEvent.cost}€`
-								: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
-							: `Gratuit !`}
-					</CardSubtitle>
-					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{`Durée : ${duration}`}
-					</CardSubtitle>
-					<CardText>{dataEvent.desc}</CardText>
-					{button}
-				</CardBody>
-			</Card>
-			<EventAlbum id={param.id} />
-		</>
-	) : (
-		<NoPage /> // TODO: redirect events
-	);
+	return ret;
 };
 export default Event;

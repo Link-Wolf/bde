@@ -47,6 +47,11 @@ const EventAlbum = param => {
 							});
 					});
 				});
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
 			});
 	}, []);
 
