@@ -3,6 +3,7 @@ import {useParams, Navigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
+
 const Event = () => {
 	const [ret, setRet] = useState(<></>);
 	const [update, setUpdate] = useState(false);

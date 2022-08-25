@@ -3,6 +3,7 @@ import {useState, useEffect, React} from "react";
 import EventToken from "./EventToken";
 
 import style from "../style/EventList.module.css";
+import grey from "../assets/placeholders/grey.png";
 
 import {Placeholder, Title} from "react-bootstrap";
 
@@ -11,10 +12,13 @@ const EventList = param => {
 	const [ret, setRet] = useState(
 		<div className={style.scroll_container_40vw}>
 			<br />
-			<Placeholder xs={6} />
-			<br />
-			<img src="https://via.placeholder.com/150" width="150px" /> <br />
-			<Placeholder xs={8} />
+			<Placeholder as="h1" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
+			<img src={grey} width="150px" />
+			<Placeholder as="p" animation="glow">
+				<Placeholder xs={6} />
+			</Placeholder>
 		</div>
 	);
 
@@ -30,7 +34,7 @@ const EventList = param => {
 		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
-					// setRet(<div>No event for the moment ma boi</div>);
+					setRet(<div>No event for the moment ma boi</div>);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -48,17 +52,17 @@ const EventList = param => {
 			});
 	}, [param.filter]);
 
-	// useEffect(() => {
-	// 	setRet(
-	// 		<div className={style.scroll_container_40vw}>
-	// 			{data.map(item => (
-	// 				<li key={item.id}>
-	// 					<EventToken event={item} type="event" />
-	// 				</li>
-	// 			))}
-	// 		</div>
-	// 	);
-	// }, [data]);
+	useEffect(() => {
+		setRet(
+			<div className={style.scroll_container_40vw}>
+				{data.map(item => (
+					<li key={item.id}>
+						<EventToken event={item} type="event" />
+					</li>
+				))}
+			</div>
+		);
+	}, [data]);
 
 	return ret;
 };
