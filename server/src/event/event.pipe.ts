@@ -38,6 +38,8 @@ export class EventDtoPipe implements PipeTransform {
 			value.nb_places = Number(value.nb_places)
 		if ("begin_date" in value)
 			value.begin_date = new Date(value.begin_date)
+		if ("available_date" in value && value.available_date !== null)
+			value.available_date = new Date(value.available_date)
 		if ("end_date" in value && value.end_date !== null)
 			value.end_date = new Date(value.end_date)
 		if ("desc" in value && value.desc === "")
@@ -65,6 +67,10 @@ export class EventFilterDtoPipe implements PipeTransform {
 			value.album = true
 		else
 			value.album = false
+		if ("available_date" in value && value.available_date == 1)
+			value.available_date = true
+		else
+			value.available_date = false
 
 		// if ("subed" in value && value.subed == '1')
 		// 	value.subed = true

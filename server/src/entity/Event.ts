@@ -63,6 +63,13 @@ export class Event {
 	album: boolean
 
 	@Column({
+		type: "timestamptz",
+		nullable: true,
+		default: new Date(Date.now())
+	})
+	available_date: Date
+
+	@Column({
 		type: "bool",
 		nullable: false,
 	})
