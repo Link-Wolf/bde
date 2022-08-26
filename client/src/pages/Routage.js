@@ -188,7 +188,7 @@ const RouteWrapper = params => {
 		<>
 			<ClearanceChecker
 				securityLevel={params.check}
-				unauthorized={<Navigate to="/home"></Navigate>}
+				unauthorized={<NoPage />}
 			>
 				<Header />
 				<NotificationContainer />
