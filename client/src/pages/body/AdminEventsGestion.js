@@ -10,6 +10,7 @@ const AdminEventsGestion = param => {
 	const [openEventId, setOpenEventId] = useState(-42);
 	const [update, setUpdate] = useState(false);
 	const [newEvent, setNewEvent] = useState(<></>);
+	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -56,19 +57,19 @@ const AdminEventsGestion = param => {
 		setOpenEventId(-1);
 	};
 
-	return (
-		<div
-			style={{
-				display: "flex"
-			}}
-		>
-			<AdminNavbar />
-			<div>
-				<Button onClick={createNewEvent}>New</Button>
-				<Accordion>
-					{newEvent}
-					{data.length ? (
-						data.map((item, i) => (
+	useEffect(() => {
+		setRet(
+			<div
+				style={{
+					display: "flex"
+				}}
+			>
+				<AdminNavbar />
+				<div>
+					<Button onClick={createNewEvent}>New</Button>
+					<Accordion>
+						{newEvent}
+						{data.map((item, i) => (
 							<Accordion.Item eventKey={i} key={i}>
 								<AdminEventToken
 									data={item}
@@ -83,14 +84,13 @@ const AdminEventsGestion = param => {
 									}}
 								/>
 							</Accordion.Item>
-						))
-					) : (
-						<div>No event created</div>
-					)}
-				</Accordion>
+						))}
+					</Accordion>
+				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	}, [data]);
 
+	return ret;
+};
 export default AdminEventsGestion;

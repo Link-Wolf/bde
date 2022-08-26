@@ -10,6 +10,7 @@ const AdminShopGestion = param => {
 	const [openProductId, setOpenProductId] = useState(-42);
 	const [update, setUpdate] = useState(false);
 	const [newProduct, setNewProduct] = useState(<></>);
+	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -54,20 +55,19 @@ const AdminShopGestion = param => {
 		);
 		setOpenProductId(-1);
 	};
-
-	return (
-		<div
-			style={{
-				display: "flex"
-			}}
-		>
-			<AdminNavbar />
-			<div>
-				<Button onClick={createNewProduct}>New</Button>
-				<Accordion>
-					{newProduct}
-					{data.length ? (
-						data.map((item, i) => (
+	useEffect(() => {
+		setRet(
+			<div
+				style={{
+					display: "flex"
+				}}
+			>
+				<AdminNavbar />
+				<div>
+					<Button onClick={createNewProduct}>New</Button>
+					<Accordion>
+						{newProduct}
+						{data.map((item, i) => (
 							<Accordion.Item eventKey={i} key={i}>
 								<AdminProductToken
 									data={item}
@@ -79,14 +79,14 @@ const AdminShopGestion = param => {
 									setUpdate={setUpdate}
 								/>
 							</Accordion.Item>
-						))
-					) : (
-						<div>No product created</div>
-					)}
-				</Accordion>
+						))}
+					</Accordion>
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}, [data]);
+
+	return ret;
 };
 
 export default AdminShopGestion;
