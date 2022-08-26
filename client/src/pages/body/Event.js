@@ -155,12 +155,7 @@ const Event = () => {
 						width: "18rem"
 					}}
 				>
-					<LazyLoadImage
-						height="auto"
-						src={thumbnail}
-						width="auto"
-						effect="blur"
-					/>
+					<img height="auto" src={thumbnail} width="auto" />
 					<CardBody>
 						<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
 						<CardSubtitle className="mb-2 text-muted" tag="h6">

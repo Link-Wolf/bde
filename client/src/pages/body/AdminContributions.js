@@ -9,6 +9,8 @@ const AdminContributions = () => {
 	const [data, setData] = useState([]);
 	const [update, setUpdate] = useState(false);
 	const [form, setForm] = useState(<></>);
+	const [ret, setRet] = useState(<></>);
+
 	useEffect(() => {
 		setUpdate(false);
 		const requestOptions = {
@@ -40,33 +42,33 @@ const AdminContributions = () => {
 			});
 	}, [update]);
 
-	return (
-		<div
-			style={{
-				display: "flex"
-			}}
-		>
-			<AdminNavbar />
-			<div>
-				<Button
-					onClick={() => {
-						setForm(<AdminCreateContributionToken />);
-					}}
-				>
-					New
-				</Button>
-				{form}
-				<div></div>
-				{data.length ? (
-					data.map((item, i) => (
+	useEffect(() => {
+		setRet(
+			<div
+				style={{
+					display: "flex"
+				}}
+			>
+				<AdminNavbar />
+				<div>
+					<Button
+						onClick={() => {
+							setForm(<AdminCreateContributionToken />);
+						}}
+					>
+						New
+					</Button>
+					{form}
+					<div></div>
+					{data.map((item, i) => (
 						<AdminContribToken data={item} index={i} key={i} />
-					))
-				) : (
-					<div>No contributions found</div>
-				)}
+					))}
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}, [data]);
+
+	return ret;
 };
 
 export default AdminContributions;
