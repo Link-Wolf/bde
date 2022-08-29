@@ -7,7 +7,6 @@ import {NotificationContainer} from "react-notifications";
 
 // Nos pagis
 import Home from "./body/Home";
-import About from "./body/About";
 import Cgu from "./body/Cgu";
 import Cgv from "./body/Cgv";
 import Shop from "./body/Shop";
@@ -38,10 +37,6 @@ const Routage = () => {
 				<Route
 					path="home"
 					element={<RouteWrapper route={<Home />} />}
-				/>
-				<Route
-					path="about"
-					element={<RouteWrapper route={<About />} />}
 				/>
 				<Route
 					path="dollarthings"
