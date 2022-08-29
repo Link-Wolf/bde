@@ -1,11 +1,14 @@
 import React, {useState, useEffect, useRef} from "react";
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import {Carousel} from "react-responsive-carousel";
+import {Pagination, Navigation} from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import {Swiper, SwiperSlide} from "swiper/react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
+import style from "../style/swiper.module.css";
 const EventAlbum = param => {
 	const [update, setUpdate] = useState(false);
 	const [ret, setRet] = useState(<></>);
@@ -61,18 +64,33 @@ const EventAlbum = param => {
 	useEffect(() => {
 		setUpdate(false);
 		setRet(
-			<Carousel>
+			<Swiper
+				slidesPerView={1}
+				spaceBetween={30}
+				centeredSlides={true}
+				pagination={{
+					clickable: true
+				}}
+				modules={[Pagination, Navigation]}
+				loop
+				pagination={{
+					clickable: true
+				}}
+				navigation={true}
+			>
 				{photos.map((src, i) => (
-					<div key={i}>
-						<LazyLoadImage
-							height="auto"
-							src={src}
-							width="auto"
-							effect="blur"
-						/>
-					</div>
+					<SwiperSlide key={src} virtualIndex={i}>
+						<div className={style.centerbitch}>
+							<img
+								height="auto"
+								src={src}
+								width="auto"
+								effect="blur"
+							/>
+						</div>
+					</SwiperSlide>
 				))}
-			</Carousel>
+			</Swiper>
 		);
 	}, [update]);
 
