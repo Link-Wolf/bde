@@ -16,36 +16,40 @@ import phol from "../assets/placeholders/longPlaceholder.jpg";
 import style from "../style/swiper.module.css";
 const ShowcaseCarousel = () => {
 	return (
-		<Swiper
-			slidesPerView={1}
-			spaceBetween={30}
-			centeredSlides={true}
-			pagination={{
-				clickable: true
-			}}
-			modules={[Pagination, Navigation]}
-			loop
-			navigation={true}
-		>
-			{[
-				{src: abel},
-				{src: yoyo},
-				{src: caro},
-				{src: iman},
-				{src: phol}
-			].map((slideContent, index) => (
-				<SwiperSlide key={index} virtualIndex={index} loop>
-					<div className={style.centerbitch}>
-						<img
-							src={slideContent.src}
-							height="max"
-							effect="blur"
-						/>
-					</div>
+		<>
+			<Swiper
+				slidesPerView={1}
+				spaceBetween={500}
+				centeredSlides={true}
+				pagination={{
+					clickable: true
+				}}
+				modules={[Pagination, Navigation]}
+				loop
+				navigation={true}
+			>
+				{[
+					{src: abel},
+					{src: yoyo},
+					{src: caro},
+					{src: iman},
+					{src: phol}
+				].map((slideContent, index) => (
+					<SwiperSlide key={index} virtualIndex={index} loop>
+						<div className={style.centerbitch}>
+							<img
+								src={slideContent.src}
+								height="max"
+								effect="blur"
+							/>
+						</div>
+					</SwiperSlide>
+				))}
+				<SwiperSlide loop>
+					<div className={style.centerbitch}>Bite</div>
 				</SwiperSlide>
-			))}{" "}
-			<SwiperSlide loop>Bite</SwiperSlide>
-		</Swiper>
+			</Swiper>
+		</>
 	);
 };
 
