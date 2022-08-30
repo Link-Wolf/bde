@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {Form, Button} from "react-bootstrap";
 import emailjs from "@emailjs/browser";
+import {NotificationManager} from "react-notifications";
 
 const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
@@ -26,27 +27,42 @@ const Contact = () => {
 	};
 
 	const sendMail = async () => {
-		emailjs
-			.send(
-				global.config.emailjs.service_id,
-				global.config.emailjs.template_id,
-				formState,
-				global.config.emailjs.public_key
-			)
-			.then(
-				result => {
-					console.log(result.text);
-				},
-				error => {
-					console.log(error.text);
-				}
-			)
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
-				);
-			});
+		if (
+			formState.mail !== "" &&
+			formState.name !== "" &&
+			formState.subject !== "" &&
+			formState.message !== "" &&
+			document.getElementById("emailField").checkValidity()
+		)
+			emailjs
+				.send(
+					global.config.emailjs.service_id,
+					global.config.emailjs.template_id,
+					formState,
+					global.config.emailjs.public_key
+				)
+				.then(
+					result => {
+						console.log(result.text);
+					},
+					error => {
+						console.log(error.text);
+					}
+				)
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération mail: " +
+							error.message
+					);
+				});
+		else {
+			console.log(formState.subject, formState.subject !== "", formState);
+			NotificationManager.error(
+				"Please fill up all fields",
+				"Erreur",
+				3000
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -62,10 +78,10 @@ const Contact = () => {
 				return response.json();
 			})
 			.then(data => {
-				setFormState({
-					mail: data.mail,
-					name: data.firstname
-				});
+				let tmp = formState;
+				tmp.mail = data.mail;
+				tmp.name = data.firstname;
+				setFormState(tmp);
 				if (data.clearance === 0) setIdForm(false);
 			})
 			.catch(function(error) {
@@ -85,6 +101,7 @@ const Contact = () => {
 					value={formState.subject}
 					onChange={handleFormChange}
 					name="subject"
+					required
 				>
 					<option value="" disabled hidden>
 						Sélectionnez le sujet ici..
@@ -105,6 +122,8 @@ const Contact = () => {
 					value={formState.message}
 					onChange={handleFormChange}
 					name="message"
+					required
+					minLength={10}
 				/>
 			</Form.Group>
 			<Form.Group hidden={idForm}>
@@ -115,6 +134,7 @@ const Contact = () => {
 						value={formState.name}
 						onChange={handleFormChange}
 						name="name"
+						required
 					/>
 				</Form.Group>
 				<Form.Group>
@@ -125,6 +145,8 @@ const Contact = () => {
 						value={formState.mail}
 						onChange={handleFormChange}
 						name="mail"
+						id="emailField"
+						required
 					/>
 					<Form.Text className="text-muted">
 						Nous ne partagerons jamais votre mail
