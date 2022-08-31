@@ -47,7 +47,6 @@ const EventList = param => {
 		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
-					setRet(<div>No event for the moment ma boi</div>);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -55,7 +54,9 @@ const EventList = param => {
 				return response.json();
 			})
 			.then(actualData => {
-				setData(actualData);
+				if (!actualData.length)
+					setRet(<div>No event for the moment ma boi</div>);
+				else setData(actualData);
 			})
 			.catch(function(error) {
 				console.log(
