@@ -5,6 +5,7 @@ import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {NotificationManager} from "react-notifications";
 
 const Event = () => {
 	const [ret, setRet] = useState(<></>);
@@ -125,6 +126,14 @@ const Event = () => {
 	};
 
 	const sub = async () => {
+		if (dataInsc.length >= dataEvent.nb_places) {
+			NotificationManager.warning(
+				"Nique ta mere cest full",
+				"Attention",
+				3000
+			);
+			return;
+		}
 		await fetch(
 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
 			{
