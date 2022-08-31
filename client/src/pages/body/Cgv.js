@@ -5,7 +5,6 @@ const Cgv = () => {
 		<>
 			<p>TODO : droit de retractation</p>
 			<p>TODO : check case avant de payer + lien vers pdf des cgv</p>
-
 			<h2>Clause n° 1 : Objet et champ d'application</h2>
 			<p>
 				Les présentes conditions générales de vente (CGV) constituent le
@@ -14,11 +13,13 @@ const Cgv = () => {
 				passer commande. Les conditions générales de vente décrites
 				ci-après détaillent les droits et obligations de l'association
 				BDE 42 Mulhouse et de son client dans le cadre de la vente des
-				marchandises suivantes : Cotisation au BDE. Toute acceptation du
-				devis/bon de commande en ce compris la clause « Je reconnais
-				avoir pris connaissance et j'accepte les conditions générales de
-				vente ci-annexées » implique l'adhésion sans réserve de
-				l'acheteur aux présentes conditions générales de vente.
+				marchandises suivantes, ci après "Produit" : Cotisation au BDE,
+				Hoodie noir 42 Mulhouse, Tee Shirt noir 42 Mulhouse, Casquette
+				noire 42 Mulhouse. Toute acceptation du devis/bon de commande en
+				ce compris la clause « Je reconnais avoir pris connaissance et
+				j'accepte les conditions générales de vente ci-annexées »
+				implique l'adhésion sans réserve de l'acheteur aux présentes
+				conditions générales de vente.
 			</p>
 			<h2>Clause n° 2 : Prix</h2>
 			<p>
@@ -109,7 +110,78 @@ const Cgv = () => {
 				événement extérieur, imprévisible et irrésistible au sens de
 				l'article 1148 du Code civil.
 			</p>
-			<h2>Clause n° 11 : Tribunal compétent</h2>
+			<h2>Clause n° 11 : Principe de rétractation</h2>
+			<p>
+				Le cocontractant du BDE 42 Mulhouse qui garantit avoir la
+				qualité de consommateur telle que définie par le droit et la
+				jurisprudence française, ci après le "Client", dispose par
+				principe du droit de se rétracter en renvoyant ou en restituant
+				le Produit au BDE 42 Mulhouse, sans donner de motif. Pour cela,
+				le Produit devra être renvoyé ou restitué au plus tard dans les
+				quatorze (14) jours suivant la communication de sa décision de
+				se rétracter.
+			</p>
+			<h3>Délai de rétractation</h3>{" "}
+			<p>
+				Le délai de rétractation expire quatorze (14) jours après le
+				jour où le Client prend physiquement possession du bien.
+			</p>
+			<h3>Notification du droit de rétractation</h3>
+			<p>
+				Pour exercer son droit de rétractation, le Client doit notifier
+				sa décision de se rétracter au moyen d’une déclaration dénuée
+				d’ambiguïté (par exemple, lettre envoyée par la poste, demande
+				via{" "}
+				<a href="http://${global.config.api.authority}/contact">
+					formulaire de contact du Site
+				</a>{" "}
+				ou courriel) au : BDE 42 Mulhouse - 30 Rue François Spoerry,
+				68100 Mulhouse. Pour que le délai de rétractation soit respecté,
+				le Client doit transmettre sa communication relative à
+				l’exercice du droit de rétractation avant l’expiration du délai
+				de rétractation.{" "}
+			</p>
+			<h3>Effets de la rétractation</h3>
+			<p>
+				{" "}
+				En cas de rétractation de la part du Client, le BDE 42 Mulhouse
+				s’engage à rembourser la totalité des sommes versées, sans
+				retard injustifié, et au plus tard dans les quatorze (14) jours
+				à compter de la date à laquelle il est informé de la décision du
+				Client de se rétracter (Article L.221-24 du Code de la
+				consommation). Le BDE 42 Mulhouse peut différer le remboursement
+				jusqu’à récupération du Produit. Le BDE 42 Mulhouse procédera au
+				remboursement en utilisant le même moyen de paiement que celui
+				que le Client aura utilisé pour la transaction initiale, sauf
+				accord exprès du Client pour qu’il utilise un autre moyen de
+				paiement et dans la mesure où le remboursement n’occasionnera
+				pas de frais pour le Client.
+			</p>{" "}
+			<h3>Modalités de retour</h3>
+			<p>
+				{" "}
+				Le Client devra en tout état de cause, au plus tard quatorze
+				(14) jours après communication de sa décision de se rétracter au
+				présent contrat, restituer le bien au BDE 42 Mulhouse - 30 Rue
+				François Spoerry, 68100 Mulhouse. Ce délai est réputé respecté
+				si le Client restitue le bien avant l’expiration du délai de
+				quatorze (14) jours.
+			</p>{" "}
+			<h3>Etat du bien retourné</h3>
+			<p>
+				{" "}
+				Le Produit doit être retourné suivant les consignes du BDE 42
+				Mulhouse et comporter notamment tous les accessoires livrés si
+				le Produit en contient. Le Produit ne doit pas être abimé. La
+				responsabilité du Client n’est engagée qu’à l’égard de la
+				dépréciation du bien résultant de manipulations autres que
+				celles nécessaires pour établir la nature, les caractéristiques
+				et le bon fonctionnement de ce Produit. En d’autres termes, le
+				Client dispose de la possibilité de tester le Produit mais sa
+				responsabilité pourra être engagée s’il procède à des
+				manipulations autres que celles qui sont nécessaires.
+			</p>
+			<h2>Clause n° 12 : Tribunal compétent</h2>
 			<p>
 				Tout litige relatif à l'interprétation et à l'exécution des
 				présentes conditions générales de vente est soumis au droit

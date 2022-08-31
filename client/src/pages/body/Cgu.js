@@ -29,8 +29,8 @@ const Cgu = () => {
 			</p>
 			<ul>
 				<li>
-					Directeur de la publication, ci après l'"Editeur" :
-					<b>Allan ?</b>
+					Directeur de la publication, ci après l'"Editeur" : Allan
+					Guemazi
 				</li>
 				<li>Adresse : 30 Rue François Spoerry, 68100 Mulhouse</li>
 				<li>
@@ -42,8 +42,8 @@ const Cgu = () => {
 			<p>
 				L'hébergeur du Site est l'institut de formation 42 Mulhouse à
 				l'adresse suivante : 30 Rue François Spoerry, 68100 Mulhouse,
-				pouvant être contactée au 0642694269 et joint par mail via{" "}
-				<b>[mail de 42]</b>.
+				pouvant être contactée au 0642694269 et joint par mail via
+				contact@42mulhouse.fr.
 			</p>
 			<h2>Nom de domaine</h2>
 			<p>
