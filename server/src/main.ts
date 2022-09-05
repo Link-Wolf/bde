@@ -13,7 +13,12 @@ const { session_secret, url_client } = require('../config.json')
 async function bootstrap() {
 
 	const { createClient } = require("redis")
-	let redisClient = createClient({ legacyMode: true })
+	let redisClient = createClient({
+		legacyMode: true, socket: {
+			port: 6379,
+			host: "redis"
+		}
+	})
 	redisClient.connect().catch(console.error)
 	redisClient.on("error", console.error)
 
@@ -34,7 +39,7 @@ async function bootstrap() {
 				cookie: {
 					maxAge: 600000000,
 					httpOnly: true
-				}
+				},
 			}
 		)
 	)

@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+    app:
+        container_name: fregate_app
+        build:
+            context: .
+            dockerfile: client.dockerfile
+        volumes:
+            - ./client:/app
+        ports:
+            - 3000:3000
+        depends_on:
+            - api
+        networks:
+            - nesjs-network
+
+    api:
+        container_name: fregate_api
+        build:
+            context: .
+            target: development
+            dockerfile: server.dockerfile
+        command: npm run start:dev
+        ports:
+            - 4242:4242
+        networks:
+            - nesjs-network
+        volumes:
+            - ./server:/usr/src/app
+        restart: unless-stopped
+        depends_on:
+            - redis
+            - postgres
+
+    # api:
+    #     container_name: fregate_api_prod
+    #     build:
+    #         context: .
+    #         target: production
+    #         dockerfile: server.dockerfile
+    #     command: npm run start:prod
+    #     ports:
+    #         - 4242:4242
+    #     networks:
+    #         - nesjs-network
+    #     volumes:
+    #         - ./server:/usr/src/app
+    #     restart: unless-stopped
+    #     depends_on:
+    #         - redis
+    #         - postgres
+
+    redis:
+        container_name: fregate_redis
+        image: redis
+        ports:
+            - 6379:6379
+        volumes:
+            - redis:/data
+        networks:
+            - nesjs-network
+
+    postgres:
+        container_name: fregate_psql
+        image: postgres
+        restart: always
+        environment:
+                POSTGRES_DB: ${POSTGRES_DB}
+                POSTGRES_USER: ${POSTGRES_USER}
+                POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        ports:
+          - 5432:5432
+        volumes:
+          - bde:/var/lib/postgresql/data
+        networks:
+            - nesjs-network
+volumes:
+    redis:
+        driver: local
+    bde:
+networks:
+    nesjs-network:

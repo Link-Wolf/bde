@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -18,14 +18,15 @@ import { ConfigModule } from '@nestjs/config';
 import { GoodiesModule } from './goodies/goodies.module';
 //import { JwtAuthGuard } from './auth/jwtAuth.guard';
 //import { APP_GUARD } from '@nestjs/core';
-const { db_password } = require('../config.json')
+import * as redisStore from 'cache-manager-redis-store';
+const { db_password, session_secret } = require('../config.json')
 
 
 @Module({
 	imports: [
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			host: 'localhost',
+			host: 'postgres',
 			port: 5432,
 			username: 'linkar',
 			password: db_password,
@@ -44,6 +45,13 @@ const { db_password } = require('../config.json')
 		LogsModule,
 		LoggerModule,
 		AuthModule,
+		CacheModule.register({
+			isGlobal: true,
+			store: redisStore,
+			host: "redis",
+			port: 6379,
+			password: session_secret
+		}),
 	],
 	controllers: [AppController],
 	providers: [
