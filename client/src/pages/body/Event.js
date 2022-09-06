@@ -5,6 +5,7 @@ import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {NotificationManager} from "react-notifications";
 
 const Event = () => {
 	const [ret, setRet] = useState(<></>);
@@ -14,6 +15,7 @@ const Event = () => {
 	const [button, setButton] = useState(<> </>);
 	const [duration, setDuration] = useState("Never Ending Fun");
 	const [thumbnail, setThumnail] = useState(null);
+	const [locked, setLocked] = useState(false);
 	const param = useParams();
 
 	// thumbnail
@@ -102,6 +104,7 @@ const Event = () => {
 	}, [param.id, update]);
 
 	const unsub = async () => {
+		setLocked(true);
 		await fetch(
 			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
 			{
@@ -121,10 +124,20 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		setLocked(false);
 		setUpdate(true);
 	};
 
 	const sub = async () => {
+		setLocked(true);
+		if (dataInsc.length >= dataEvent.nb_places) {
+			NotificationManager.warning(
+				"Nique ta mere cest full",
+				"Attention",
+				3000
+			);
+			return;
+		}
 		await fetch(
 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
 			{
@@ -144,6 +157,7 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
+		setLocked(false);
 		setUpdate(true);
 	};
 
@@ -210,8 +224,19 @@ const Event = () => {
 			})
 			.then(data => {
 				if (data.isSubbed)
-					setButton(<Button onClick={unsub}> Unsubscribe </Button>);
-				else setButton(<Button onClick={sub}> Subscribe </Button>);
+					setButton(
+						<Button onClick={unsub} disabled={locked}>
+							{" "}
+							Unsubscribe{" "}
+						</Button>
+					);
+				else
+					setButton(
+						<Button onClick={sub} disabled={locked}>
+							{" "}
+							Subscribe{" "}
+						</Button>
+					);
 			})
 			.catch(function(error) {
 				console.log(

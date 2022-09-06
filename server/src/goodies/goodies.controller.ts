@@ -1,6 +1,6 @@
 import {
 	Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
-	Session, UseInterceptors, UploadedFile, Res
+	Session, UseInterceptors, UploadedFile, Res, UseGuards
 } from '@nestjs/common';
 import { GoodiesService } from './goodies.service';
 import { Goodies } from '../entity/Goodies'
@@ -8,6 +8,7 @@ import { GoodiesDto } from './goodies.dto';
 import { GoodiesDtoPipe, FileTypeValidationPipe } from './goodies.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as fs from 'fs';
+import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('goodies/')
 export class GoodiesController {
@@ -33,6 +34,7 @@ export class GoodiesController {
 	}
 
 	@Post('')
+	@UseGuards(new ClearanceGuard(11))
 	create(
 		@Session() session: Record<string, any>,
 		@Body(new GoodiesDtoPipe()) goodies: GoodiesDto) {
@@ -40,6 +42,7 @@ export class GoodiesController {
 	}
 
 	@Post('upload_image/:id')
+	@UseGuards(new ClearanceGuard(11))
 	@UseInterceptors(FileInterceptor('thumbnail'))
 	async uploadImage(
 		@Param('id', ParseIntPipe) id: number,
@@ -49,6 +52,7 @@ export class GoodiesController {
 	}
 
 	@Patch(':id')
+	@UseGuards(new ClearanceGuard(11))
 	update(
 		@Session() session: Record<string, any>, @Param('id') id: number,
 		@Body(new GoodiesDtoPipe()) goodies: GoodiesDto) {
@@ -56,6 +60,7 @@ export class GoodiesController {
 	}
 
 	@Delete(':id')
+	@UseGuards(new ClearanceGuard(11))
 	removeOne(
 		@Session() session: Record<string, any>,
 		@Param('id', ParseIntPipe) id: number) {
@@ -63,6 +68,7 @@ export class GoodiesController {
 	}
 
 	@Delete('')
+	@UseGuards(new ClearanceGuard(11))
 	removeAll(@Session() session: Record<string, any>) {
 		return this.goodiesService.removeAll(session.login);
 	}
