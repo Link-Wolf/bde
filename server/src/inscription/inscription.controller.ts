@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Session } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Session, UseGuards } from '@nestjs/common';
 import { InscriptionService } from './inscription.service';
+import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('inscription')
+@UseGuards(new ClearanceGuard(5))
 export class InscriptionController {
 	constructor(private inscriptionService: InscriptionService) { }
 
@@ -32,6 +34,7 @@ export class InscriptionController {
 	}
 
 	@Post()
+	@UseGuards(new ClearanceGuard(11))
 	async link(@Session() session: Record<string, any>, @Body('id', ParseIntPipe) id: number, @Body('login') login: string) {
 		return this.inscriptionService.link(id, login, session.login);
 	}
@@ -44,11 +47,13 @@ export class InscriptionController {
 	}
 
 	@Delete('event/:id')
+	@UseGuards(new ClearanceGuard(11))
 	removeByEvent(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
 		return this.inscriptionService.removeByEvent(id, session.login);
 	}
 
 	@Delete('stud/:login')
+	@UseGuards(new ClearanceGuard(11))
 	removeByStud(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.inscriptionService.removeByStud(login, session.login);
 	}
@@ -60,16 +65,19 @@ export class InscriptionController {
 	}
 
 	@Delete('/admin/:event/:login')
+	@UseGuards(new ClearanceGuard(11))
 	forceRemove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
 		return this.inscriptionService.forceRemove(event, login, session.login);
 	}
 
 	@Delete(':event/:login')
+	@UseGuards(new ClearanceGuard(11))
 	remove(@Session() session: Record<string, any>, @Param('event', ParseIntPipe) event: number, @Param('login') login: string) {
 		return this.inscriptionService.remove(event, login, session.login);
 	}
 
 	@Delete()
+	@UseGuards(new ClearanceGuard(11))
 	removeAll(@Session() session: Record<string, any>) {
 		return this.inscriptionService.removeAll(session.login);
 	}

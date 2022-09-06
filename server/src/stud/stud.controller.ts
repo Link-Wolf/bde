@@ -1,19 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, Session } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, Session, UseGuards } from '@nestjs/common';
 import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
 import { Request, Response } from 'express';
+import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('stud')
+@UseGuards(new ClearanceGuard(5))
 export class StudController {
 	constructor(private studService: StudService) { }
 
 	@Get()
 	findAll(
-		@Session() session: Record<string, any>,
-		@Res({ passthrough: true }) response: Response,
-		@Req() request: Request): Promise<Stud[]> {
+		@Session() session: Record<string, any>): Promise<Stud[]> {
 		return this.studService.findAll(session.login);
 	}
 
@@ -43,21 +43,26 @@ export class StudController {
 	}
 
 	@Patch('admin/yeet/:login')
+	@UseGuards(new ClearanceGuard(11))
 	removeDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.studService.removeDirection(login, session.login);
 	}
 
 	@Patch('admin/promote/:login')
+	@UseGuards(new ClearanceGuard(11))
 	addDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.studService.addDirection(login, session.login);
 	}
 
 	@Delete(':login')
+	@UseGuards(new ClearanceGuard(11))
 	removeOne(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.studService.removeOne(login, session.login);
 	}
 
 	@Delete()
+	@UseGuards(new ClearanceGuard(11))
+
 	removeAll(@Session() session: Record<string, any>, ) {
 		return this.studService.removeAll(session.login);
 	}
