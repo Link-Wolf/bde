@@ -1,6 +1,6 @@
 import {
 	Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
-	Session, UseInterceptors, UploadedFile, Res
+	Session, UseInterceptors, UploadedFile, Res, UseGuards
 } from '@nestjs/common';
 import { EventService } from './event.service';
 import { Event } from '../entity/Event'
@@ -8,8 +8,10 @@ import { EventDto, EventFilterDto } from './event.dto';
 import { EventDtoPipe, EventFilterDtoPipe, FileTypeValidationPipe } from './event.pipe';
 import { FileInterceptor } from '@nestjs/platform-express';
 import * as fs from 'fs';
+import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('event/')
+@UseGuards(new ClearanceGuard(5))
 export class EventController {
 	constructor(private eventService: EventService) { }
 
@@ -52,6 +54,7 @@ export class EventController {
 	}
 
 	@Post('')
+	@UseGuards(new ClearanceGuard(11))
 	create(
 		@Session() session: Record<string, any>,
 		@Body(new EventDtoPipe()) event: EventDto) {
@@ -67,6 +70,7 @@ export class EventController {
 
 	@Post('upload_image/:id')
 	@UseInterceptors(FileInterceptor('thumbnail'))
+	@UseGuards(new ClearanceGuard(11))
 	async uploadImage(
 		@Param('id', ParseIntPipe) id: number,
 		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File,
@@ -75,6 +79,7 @@ export class EventController {
 	}
 
 	@Patch(':id')
+	@UseGuards(new ClearanceGuard(11))
 	update(
 		@Session() session: Record<string, any>, @Param('id') id: number,
 		@Body(new EventDtoPipe()) event: EventDto) {
@@ -89,6 +94,8 @@ export class EventController {
 	}
 
 	@Patch('admin/:id/inscription')
+	@UseGuards(new ClearanceGuard(11))
+
 	forceSubscribe(
 		@Session() session: Record<string, any>, @Param('id') id: number,
 		@Body('login') login: string) {
@@ -96,6 +103,7 @@ export class EventController {
 	}
 
 	@Delete(':id')
+	@UseGuards(new ClearanceGuard(11))
 	removeOne(
 		@Session() session: Record<string, any>,
 		@Param('id', ParseIntPipe) id: number) {
@@ -103,6 +111,8 @@ export class EventController {
 	}
 
 	@Delete('')
+	@UseGuards(new ClearanceGuard(11))
+
 	removeAll(@Session() session: Record<string, any>) {
 		return this.eventService.removeAll(session.login);
 	}

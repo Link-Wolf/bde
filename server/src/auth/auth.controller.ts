@@ -6,7 +6,6 @@ import { Public } from './public.decorator';
 export class AuthController {
 	constructor(private authService: AuthService) { }
 
-	@Public()
 	@Post()
 	async loginIntra(@Body('code') code: string, @Session() session: Record<string, any>) {
 		let ret = await this.authService.loginIntra(code);
@@ -21,7 +20,6 @@ export class AuthController {
 		};
 	}
 
-	@Public()
 	@Post('logout')
 	async logout(@Session() session: Record<string, any>) {
 		const theme = session.theme;

@@ -1,5 +1,4 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { StudService } from '../stud/stud.service';
 const { intra_uid, intra_secret, url_client } = require("../../config.json")
 
@@ -7,26 +6,10 @@ const { intra_uid, intra_secret, url_client } = require("../../config.json")
 export class AuthService {
 	constructor(
 		private studService: StudService,
-		private jwtService: JwtService,
 		private readonly http: HttpService
 	) { }
 
-	async validateUser(login: string, password: string): Promise<any> {
-		const stud = await this.studService.findOne(login, "42");
-		if (stud && password === "pass")
-			return stud;
-		return null;
-	}
-
-	async login(user: any) {
-		const payload = { user: user };
-		return {
-			access_token: this.jwtService.sign(payload),
-		};
-	}
-
 	async loginIntra(code: string) {
-		let sessionToken: string
 		try {
 			return this.http.post('https://api.intra.42.fr/oauth/token', {
 				redirect_uri: url_client + "/log",
