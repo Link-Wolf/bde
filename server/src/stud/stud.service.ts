@@ -176,6 +176,9 @@ export class StudService {
 			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)
 				user = await this.create(stud, requestMaker)
+			else
+				if (user.clearance <= 7)
+					this.update(user.login, stud, requestMaker)
 			this.logger.log(`Successfully logged student`, requestMaker);
 			return user
 		} catch (error) {

@@ -121,7 +121,7 @@ const Cgv = () => {
 				quatorze (14) jours suivant la communication de sa décision de
 				se rétracter.
 			</p>
-			<h3>Délai de rétractation</h3>{" "}
+			<h3>Délai de rétractation</h3>
 			<p>
 				Le délai de rétractation expire quatorze (14) jours après le
 				jour où le Client prend physiquement possession du bien.
@@ -131,19 +131,18 @@ const Cgv = () => {
 				Pour exercer son droit de rétractation, le Client doit notifier
 				sa décision de se rétracter au moyen d’une déclaration dénuée
 				d’ambiguïté (par exemple, lettre envoyée par la poste, demande
-				via{" "}
+				via
 				<a href="http://${global.config.api.authority}/contact">
 					formulaire de contact du Site
-				</a>{" "}
+				</a>
 				ou courriel) au : BDE 42 Mulhouse - 30 Rue François Spoerry,
 				68100 Mulhouse. Pour que le délai de rétractation soit respecté,
 				le Client doit transmettre sa communication relative à
 				l’exercice du droit de rétractation avant l’expiration du délai
-				de rétractation.{" "}
+				de rétractation.
 			</p>
 			<h3>Effets de la rétractation</h3>
 			<p>
-				{" "}
 				En cas de rétractation de la part du Client, le BDE 42 Mulhouse
 				s’engage à rembourser la totalité des sommes versées, sans
 				retard injustifié, et au plus tard dans les quatorze (14) jours
@@ -156,20 +155,18 @@ const Cgv = () => {
 				accord exprès du Client pour qu’il utilise un autre moyen de
 				paiement et dans la mesure où le remboursement n’occasionnera
 				pas de frais pour le Client.
-			</p>{" "}
+			</p>
 			<h3>Modalités de retour</h3>
 			<p>
-				{" "}
 				Le Client devra en tout état de cause, au plus tard quatorze
 				(14) jours après communication de sa décision de se rétracter au
 				présent contrat, restituer le bien au BDE 42 Mulhouse - 30 Rue
 				François Spoerry, 68100 Mulhouse. Ce délai est réputé respecté
 				si le Client restitue le bien avant l’expiration du délai de
 				quatorze (14) jours.
-			</p>{" "}
+			</p>
 			<h3>Etat du bien retourné</h3>
 			<p>
-				{" "}
 				Le Produit doit être retourné suivant les consignes du BDE 42
 				Mulhouse et comporter notamment tous les accessoires livrés si
 				le Produit en contient. Le Produit ne doit pas être abimé. La
