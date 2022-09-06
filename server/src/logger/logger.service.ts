@@ -12,7 +12,7 @@ export class LoggerService {
 	) { }
 
 	async error(message: string, requestMaker: string) {
-		Logger.error(`${requestMaker} : ${message}`);
+		Logger.error(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
@@ -26,7 +26,7 @@ export class LoggerService {
 	}
 
 	async warn(message: string, requestMaker: string) {
-		Logger.warn(`${requestMaker} : ${message}`);
+		Logger.warn(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
@@ -40,7 +40,7 @@ export class LoggerService {
 	}
 
 	async log(message: string, requestMaker: string) {
-		Logger.log(`${requestMaker} : ${message}`);
+		Logger.log(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
 			this.logfile("log", `(unknown public) : ${message}`)
 		else
@@ -48,7 +48,7 @@ export class LoggerService {
 	}
 
 	async verbose(message: string, requestMaker: string) {
-		Logger.verbose(`${requestMaker} : ${message}`);
+		Logger.verbose(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
 			this.logfile("verbose", `(unknown public) : ${message}`)
 		else
