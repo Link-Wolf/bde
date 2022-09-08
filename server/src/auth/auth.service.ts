@@ -1,32 +1,31 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { StudService } from '../stud/stud.service';
+import axios from 'axios';
 const { intra_uid, intra_secret, url_client } = require("../../config.json")
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private studService: StudService,
-		private readonly http: HttpService
 	) { }
 
 	async loginIntra(code: string) {
 		try {
-			return this.http.post('https://api.intra.42.fr/oauth/token', {
+			return axios.post('https://api.intra.42.fr/oauth/token', {
 				redirect_uri: url_client + "/log",
 				code: code,
 				grant_type: "authorization_code",
 				client_id: intra_uid,
 				client_secret: intra_secret
-			}).toPromise()
-				.then(response => {
+			})
+				.then(async response => {
 					const token = response.data.access_token;
 					const header = {
 						'Authorization': `Bearer ${token}`
 					}
-					return this.http.get(
+					return axios.get(
 						"https://api.intra.42.fr/v2/me",
 						{ headers: header })
-						.toPromise()
 						.then(async response => {
 							let recent = 0;
 							if (response.data.cursus_users.length != 1) {
@@ -40,7 +39,7 @@ export class AuthService {
 										recent = i
 								}
 							}
-							let clear;
+							let clear: number;
 							if (response.data
 								.campus[response.data.campus.length - 1]
 								.city.toLowerCase() != 'mulhouse')
@@ -58,7 +57,6 @@ export class AuthService {
 									: response.data.first_name,
 								lastname: response.data.last_name,
 								isDirection: false,
-								isPremium: false,
 								clearance: clear,
 							}
 							const retStud = await this.studService
