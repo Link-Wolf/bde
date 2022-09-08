@@ -130,14 +130,7 @@ const Event = () => {
 
 	const sub = async () => {
 		setLocked(true);
-		if (dataInsc.length >= dataEvent.nb_places) {
-			NotificationManager.warning(
-				"Nique ta mere cest full",
-				"Attention",
-				3000
-			);
-			return;
-		}
+
 		await fetch(
 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
 			{
@@ -147,6 +140,11 @@ const Event = () => {
 		)
 			.then(response => {
 				if (!response.ok) {
+					NotificationManager.warning(
+						"Nique ta mere cest full",
+						"Attention",
+						3000
+					);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -160,50 +158,6 @@ const Event = () => {
 		setLocked(false);
 		setUpdate(true);
 	};
-
-	useEffect(() => {
-		setRet(
-			<>
-				<Card
-					style={{
-						width: "18rem"
-					}}
-				>
-					<img height="auto" src={thumbnail} width="auto" />
-					<CardBody>
-						<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
-						<CardSubtitle className="mb-2 text-muted" tag="h6">
-							{`Le ${new Date(
-								dataEvent.begin_date
-							).toLocaleDateString()} à
-					${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
-						</CardSubtitle>
-						<CardSubtitle className="mb-2 text-muted" tag="h6">
-							{dataEvent.nb_places !== -42
-								? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
-								: `Places : ${dataInsc.length} / ∞`}
-						</CardSubtitle>
-						<CardSubtitle className="mb-2 text-muted" tag="h6">
-							{`Lieu : ${dataEvent.place}`}
-						</CardSubtitle>
-						<CardSubtitle className="mb-2 text-muted" tag="h6">
-							{dataEvent.cost !== 0
-								? dataEvent.premium_cost === dataEvent.cost
-									? `Prix : ${dataEvent.cost}€`
-									: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
-								: `Gratuit !`}
-						</CardSubtitle>
-						<CardSubtitle className="mb-2 text-muted" tag="h6">
-							{`Durée : ${duration}`}
-						</CardSubtitle>
-						<CardText>{dataEvent.desc}</CardText>
-						{button}
-					</CardBody>
-				</Card>
-				<EventAlbum id={param.id} />
-			</>
-		);
-	}, [dataEvent, thumbnail]);
 
 	//is subbded
 	useEffect(() => {
@@ -226,15 +180,13 @@ const Event = () => {
 				if (data.isSubbed)
 					setButton(
 						<Button onClick={unsub} disabled={locked}>
-							{" "}
-							Unsubscribe{" "}
+							Unsubscribe
 						</Button>
 					);
 				else
 					setButton(
 						<Button onClick={sub} disabled={locked}>
-							{" "}
-							Subscribe{" "}
+							Subscribe
 						</Button>
 					);
 			})
@@ -243,8 +195,48 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [update]);
+	}, [update, locked]);
 
-	return ret;
+	return (
+		<>
+			<Card
+				style={{
+					width: "18rem"
+				}}
+			>
+				<img src={thumbnail} height="auto" width="auto" />
+				<CardBody>
+					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Le ${new Date(
+							dataEvent.begin_date
+						).toLocaleDateString()} à
+			${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{dataEvent.nb_places !== -42
+							? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
+							: `Places : ${dataInsc.length} / ∞`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Lieu : ${dataEvent.place}`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{dataEvent.cost !== 0
+							? dataEvent.premium_cost === dataEvent.cost
+								? `Prix : ${dataEvent.cost}€`
+								: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
+							: `Gratuit !`}
+					</CardSubtitle>
+					<CardSubtitle className="mb-2 text-muted" tag="h6">
+						{`Durée : ${duration}`}
+					</CardSubtitle>
+					<CardText>{dataEvent.desc}</CardText>
+					{button}
+				</CardBody>
+			</Card>
+			<EventAlbum id={param.id} />
+		</>
+	);
 };
 export default Event;
