@@ -1,10 +1,12 @@
 all: docker
 
 docker: clean
-	docker-compose up app
+	@printf "\e[36m\tStarting . . .\e[39m"
+	@docker-compose up app
 
 build: clean
-	docker-compose up app --build
+	@printf "\e[31m\tBuilding . . .\e[39m"
+	@docker-compose up app --build
 
 clean:
 	docker-compose down
