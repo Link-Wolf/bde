@@ -485,10 +485,11 @@ const AdminEventToken = param => {
 						color="secondary"
 						onClick={() => {
 							setFormState(defaultForm);
+							setLocked(true);
 						}}
 						disabled={locked}
 					>
-						Reset
+						Cancel
 					</Button>
 					<Button color="danger" onClick={deleteEvent}>
 						Delete
