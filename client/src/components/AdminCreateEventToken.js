@@ -82,6 +82,7 @@ const AdminCreateEventToken = param => {
 	};
 
 	const saveEvent = async () => {
+		if (!document.getElementById("createEventForm").checkValidity()) return;
 		const confirm = await isConfirmed(`Desire tu creer cet event ?`);
 		if (confirm) {
 			var myHeaders = new Headers();
@@ -165,7 +166,7 @@ const AdminCreateEventToken = param => {
 
 	return (
 		<>
-			<Form>
+			<Form id="createEventForm">
 				<Form.Label>Name : </Form.Label>
 				<Form.Control
 					name="name"
@@ -179,16 +180,18 @@ const AdminCreateEventToken = param => {
 				<Form.Label> Dates : </Form.Label>
 				<Form.Control
 					id="formBeginDate"
-					type="datetime-local"
 					name="begin_date"
+					max={formState.hasEndDate ? formState.end_date : Infinity}
 					value={formState.begin_date}
 					onChange={handleFormChange}
+					type="datetime-local"
 					required
 				/>
 				{" - "}
 				<Form.Control
 					id="formEndDate"
 					name="end_date"
+					min={formState.begin_date}
 					disabled={!formState.hasEndDate}
 					value={formState.end_date}
 					onChange={handleFormChange}

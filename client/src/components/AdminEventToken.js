@@ -168,6 +168,13 @@ const AdminEventToken = param => {
 		setUpdate(false);
 		const saveEvent = async () => {
 			if (
+				!document
+					.getElementById(`updateEventForm${param.key}`)
+					.checkValidity()
+			)
+				return;
+
+			if (
 				await isConfirmed(
 					`Desire tu modifier l'event ${param.data.name}`
 				)
@@ -340,7 +347,7 @@ const AdminEventToken = param => {
 			</Accordion.Header>
 			<Accordion.Body>
 				{" "}
-				<Form>
+				<Form id={`updateEventForm${param.key}`}>
 					<Form.Label>Name : </Form.Label>
 					<Form.Control
 						disabled={locked}
@@ -356,6 +363,9 @@ const AdminEventToken = param => {
 					<Form.Control
 						id="formBeginDate"
 						disabled={locked}
+						max={
+							formState.hasEndDate ? formState.end_date : Infinity
+						}
 						type="datetime-local"
 						name="begin_date"
 						value={formState.begin_date}
@@ -365,6 +375,7 @@ const AdminEventToken = param => {
 					{" - "}
 					<Form.Control
 						id="formEndDate"
+						min={formState.begin_date}
 						disabled={locked || !formState.hasEndDate}
 						name="end_date"
 						value={formState.end_date}

@@ -215,7 +215,7 @@ const AdminContribToken = param => {
 				{" - "}
 				<input
 					id="formEndDate"
-					disabled={locked || !formState.hasEndDate}
+					disabled={locked}
 					name="end_date"
 					value={formState.end_date}
 					onChange={handleFormChange}
