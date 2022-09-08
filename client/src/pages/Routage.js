@@ -23,6 +23,7 @@ import AdminCaptainManagement from "./body/AdminCaptainManagement";
 import AdminStudents from "./body/AdminStudents";
 import Log from "./body/Log";
 import Me from "./body/Me";
+import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
 
@@ -65,6 +66,15 @@ const Routage = () => {
 						<RouteWrapper
 							route={<Product />}
 							check={global.config.clearance.pool}
+						/>
+					}
+				/>
+				<Route
+					path="clubs"
+					element={
+						<RouteWrapper
+							route={<Clubs />}
+							check={global.config.clearance.other_campus}
 						/>
 					}
 				/>
