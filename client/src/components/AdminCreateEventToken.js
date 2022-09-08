@@ -124,7 +124,7 @@ const AdminCreateEventToken = param => {
 				})
 				.then(data => {
 					changeThumbnail(data.id).then(() => {
-						param.setUpdate(true);
+						window.location.reload();
 					});
 				})
 				.catch(function(error) {

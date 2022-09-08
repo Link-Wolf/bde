@@ -57,40 +57,36 @@ const AdminEventsGestion = param => {
 		setOpenEventId(-1);
 	};
 
-	useEffect(() => {
-		setRet(
-			<div
-				style={{
-					display: "flex"
-				}}
-			>
-				<AdminNavbar />
-				<div>
-					<Button onClick={createNewEvent}>New</Button>
-					<Accordion>
-						{newEvent}
-						{data.map((item, i) => (
-							<Accordion.Item eventKey={i} key={i}>
-								<AdminEventToken
-									data={item}
-									index={i}
-									key={i}
-									open={openEventId}
-									onClickRetract={() => setOpenEventId(-42)}
-									onClickDeploy={() => setOpenEventId(i)}
-									setUpdate={d => {
-										setUpdate(d);
-										setOpenEventId(-42); //RETRACT TOI BATAR
-									}}
-								/>
-							</Accordion.Item>
-						))}
-					</Accordion>
-				</div>
+	return (
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
+			<AdminNavbar />
+			<div>
+				<Button onClick={createNewEvent}>New</Button>
+				<Accordion>
+					{newEvent}
+					{data.map((item, i) => (
+						<Accordion.Item eventKey={i} key={i}>
+							<AdminEventToken
+								data={item}
+								index={i}
+								key={i}
+								open={openEventId}
+								onClickRetract={() => setOpenEventId(-42)}
+								onClickDeploy={() => setOpenEventId(i)}
+								setUpdate={d => {
+									setUpdate(d);
+									setOpenEventId(-42); //RETRACT TOI BATAR
+								}}
+							/>
+						</Accordion.Item>
+					))}
+				</Accordion>
 			</div>
-		);
-	}, [data]);
-
-	return ret;
+		</div>
+	);
 };
 export default AdminEventsGestion;
