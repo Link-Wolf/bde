@@ -17,6 +17,7 @@ const AdminNavbar = () => {
 
 	useEffect(() => {
 		const initDb = async () => {
+			// XXX: safeguard batar => window confirm
 			await fetch(`http://${global.config.api.authority}/stud`, {
 				headers: {"Content-Type": "application/json"},
 				method: "POST",
@@ -221,6 +222,7 @@ const AdminNavbar = () => {
 				});
 		};
 		const tiniDb = async () => {
+			// XXX: safeguard batar => window confirm
 			fetch(`http://${global.config.api.authority}/stud`, {
 				credentials: "include",
 				method: "DELETE"
