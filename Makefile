@@ -1,9 +1,10 @@
 all: docker
 
-docker:
-	docker-compose down
+docker: clean
 	docker-compose up app
 
-build:
-	docker-compose down
+build: clean
 	docker-compose up app --build
+
+clean:
+	docker-compose down
