@@ -67,6 +67,7 @@ function Header() {
 						setLeftButton(
 							<Nav className="me-auto">
 								<Nav.Link href="/events">Events</Nav.Link>
+								<Nav.Link href="/clubs">Clubs</Nav.Link>
 								<Nav.Link href="/shop">Shop</Nav.Link>
 								<Nav.Link href="/contact">Contact</Nav.Link>
 								<Nav.Link href="/about">About Us</Nav.Link>
