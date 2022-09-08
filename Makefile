@@ -8,8 +8,5 @@ build: clean
 	@printf "\e[31m\tBuilding . . .\e[39m"
 	@docker-compose up app --build
 
-build: clean
-	docker-compose up app --build
-
 clean:
 	docker-compose down
