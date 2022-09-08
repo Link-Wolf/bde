@@ -3,7 +3,6 @@ import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
 import { StudDtoPipe } from './stud.pipe';
-import { Request, Response } from 'express';
 import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('stud')
