@@ -14,6 +14,7 @@ const AdminEventToken = param => {
 		desc: "",
 		begin_date: "",
 		end_date: "",
+		available_date: "",
 		place: "",
 		nb_places: 0,
 		cost: 0,
@@ -29,6 +30,7 @@ const AdminEventToken = param => {
 		desc: "",
 		begin_date: "",
 		end_date: "",
+		available_date: "",
 		place: "",
 		nb_places: 0,
 		cost: 0,
@@ -77,6 +79,7 @@ const AdminEventToken = param => {
 		tmp[name] = value;
 		let begin_date = new Date(Date.parse(tmp.begin_date));
 		let end_date = new Date(Date.parse(tmp.end_date));
+		let available_date = new Date(Date.parse(tmp.available_date));
 		let tmpBody = {...tmp};
 		tmpBody.end_date =
 			two_digiter(end_date.getFullYear()) +
@@ -98,6 +101,16 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getHours()) +
 			":" +
 			two_digiter(begin_date.getMinutes());
+		tmpBody.available_date =
+			two_digiter(available_date.getFullYear()) +
+			"-" +
+			two_digiter(available_date.getMonth() + 1) +
+			"-" +
+			two_digiter(available_date.getDate()) +
+			"T" +
+			two_digiter(available_date.getHours()) +
+			":" +
+			two_digiter(available_date.getMinutes());
 		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
@@ -134,6 +147,17 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getHours()) +
 			":" +
 			two_digiter(begin_date.getMinutes());
+		let available_date = new Date(Date.parse(tmp.available_date));
+		tmp.available_date =
+			two_digiter(available_date.getFullYear()) +
+			"-" +
+			two_digiter(available_date.getMonth() + 1) +
+			"-" +
+			two_digiter(available_date.getDate()) +
+			"T" +
+			two_digiter(available_date.getHours()) +
+			":" +
+			two_digiter(available_date.getMinutes());
 		tmp.isOutside = param.data.isOutside;
 		tmp.sponso = param.data.sponso;
 		tmp.consos = param.data.consos;
@@ -161,6 +185,16 @@ const AdminEventToken = param => {
 			two_digiter(begin_date.getHours()) +
 			":" +
 			two_digiter(begin_date.getMinutes());
+		tmpBody.available_date =
+			two_digiter(available_date.getFullYear()) +
+			"-" +
+			two_digiter(available_date.getMonth() + 1) +
+			"-" +
+			two_digiter(available_date.getDate()) +
+			"T" +
+			two_digiter(available_date.getHours()) +
+			":" +
+			two_digiter(available_date.getMinutes());
 		setBodyState(tmpBody);
 	}, [param.data, update]);
 
@@ -193,6 +227,7 @@ const AdminEventToken = param => {
 					consos: bodyState.consos,
 					sponso: bodyState.sponso,
 					begin_date: bodyState.begin_date,
+					available_date: bodyState.available_date,
 					end_date: bodyState.hasEndDate ? bodyState.end_date : null
 				});
 				//TODO null pas ouf, pas forcement ici btw
@@ -388,6 +423,15 @@ const AdminEventToken = param => {
 						id="hasEndDate"
 						checked={formState.hasEndDate}
 						onChange={handleFormChange}
+					/>
+					<Form.Label>Date de dispo : </Form.Label>
+					<Form.Control
+						id="formEndDate"
+						disabled={locked}
+						name="available_date"
+						value={formState.available_date}
+						onChange={handleFormChange}
+						type="datetime-local"
 					/>
 					<Form.Label>Description : </Form.Label>
 					<Form.Control
