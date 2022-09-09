@@ -173,7 +173,7 @@ const AdminContribToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState, locked, bodyState]);
+	}, [param, update, formState, locked, bodyState, isConfirmed]);
 
 	return (
 		<>

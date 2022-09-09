@@ -30,27 +30,31 @@ export class EventService {
 		}
 		catch (error) {
 			this.logger.error(`Failed to get all events ${login} subbed to on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to get all events ${login} subbed to on database(${error})`)
+			throw error
 		}
 	}
 	async getThumbnail(id: number, login: any) {
 		try {
-			const thumb_path = (await this.eventRepository.findOneById(id))
-				.thumbnail_filename;
-			if (!thumb_path)
-				// throw new NotFoundException
-				return null
+			const event = await this.eventRepository.findOneById(id);
+			if (event === null)
+				throw new NotFoundException()
+			const thumb_path = event.thumbnail_filename;
+			if (thumb_path === null)
+				throw new NotFoundException()
 			const file = fs.createReadStream(join(process.cwd(), thumb_path));
 			this.logger.log(`Successfully got the thumbnail of event ${id}`, login);
 			return new StreamableFile(file);
 		} catch (error) {
 			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to to get thumbnail of event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
 	async getAlbum(id: number, login: any) {
 		try {
+			const event = await this.eventRepository.findOneById(id);
+			if (event === null)
+				throw new NotFoundException()
 			const addFilesFromDirectoryToZip = (directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
 				const directoryContents = fs.readdirSync(directoryPath, {
 					withFileTypes: true,
@@ -79,7 +83,7 @@ export class EventService {
 			return zipAsBase64;
 		} catch (error) {
 			this.logger.error(`Failed to get album of event ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to to get album of event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -116,7 +120,7 @@ export class EventService {
 			}
 		} catch (error) {
 			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to save thumbnail of event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -158,7 +162,7 @@ export class EventService {
 			return events;
 		} catch (error) {
 			this.logger.error(`Failed to get all filtered events on database(${error})`, requestMaker);
-			throw new InternalServerErrorException(`Could not find filtered events on database(${error})`)
+			throw error
 		}
 	}
 
@@ -174,20 +178,21 @@ export class EventService {
 			return events;
 		} catch (error) {
 			this.logger.error(`Failed to get all current events on database(${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to get all current events on database(${error})`)
+			throw error
 		}
 	}
 
 	async findOne(id: number, requestMaker: string): Promise<Event> {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
-			if (event)
-				this.logger.log(`Got event with id ${id} `, requestMaker);
+			if (!event)
+				throw new NotFoundException(`Failed to find event ${id}`);
+			this.logger.log(`Got event with id ${id} `, requestMaker);
 			return event;
 		} catch (error) {
 			this.logger.error(`Failed to find event
 			${ id} on database(${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to find event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -203,7 +208,7 @@ export class EventService {
 		} catch (error) {
 			this.logger.error(`Failed to update event ${id}
 			on database(${ error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to update event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -228,7 +233,7 @@ export class EventService {
 			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to subscribe student ${login} to event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -251,7 +256,7 @@ export class EventService {
 			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to force subscribe student ${login} to event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -262,7 +267,7 @@ export class EventService {
 			return (ret);
 		} catch (error) {
 			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to create event ${eventDto.name} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -278,7 +283,7 @@ export class EventService {
 				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker);
 		} catch (error) {
 			this.logger.error(`Failed to delete event ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to delete event ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -289,7 +294,7 @@ export class EventService {
 			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all events on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to delete all events on database(${error})`)
+			throw error
 		}
 	}
 
@@ -301,7 +306,7 @@ export class EventService {
 		}
 		catch (error) {
 			this.logger.error(`Failed to get all students subbed in event ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to get all students subbed in event ${id} on database(${error})`)
+			throw error
 		}
 	}
 }
