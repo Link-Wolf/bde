@@ -201,6 +201,34 @@ const AdminEventToken = param => {
 	useEffect(() => {
 		setUpdate(false);
 		const saveEvent = async () => {
+			const changeThumbnail = async () => {
+				const data = new FormData();
+				data.append("thumbnail", img.current);
+				await fetch(
+					`http://${global.config.api.authority}/event/upload_image
+					/${param.data.id}`,
+					{
+						method: "POST",
+						credentials: "include",
+						body: data
+					}
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error:
+							 The status is ${response.status}`
+							);
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+				setUpdate(true);
+			};
 			if (
 				!document
 					.getElementById(`updateEventForm${param.key}`)
@@ -230,7 +258,6 @@ const AdminEventToken = param => {
 					available_date: bodyState.available_date,
 					end_date: bodyState.hasEndDate ? bodyState.end_date : null
 				});
-				//TODO null pas ouf, pas forcement ici btw
 				var requestOptions = {
 					method: "PATCH",
 					headers: myHeaders,
@@ -284,7 +311,7 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState, locked, bodyState]);
+	}, [param, update, formState, locked, bodyState, isConfirmed]);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -312,36 +339,7 @@ const AdminEventToken = param => {
 						error.message
 				);
 			});
-	}, [update]);
-
-	const changeThumbnail = async () => {
-		const data = new FormData();
-		data.append("thumbnail", img.current);
-		await fetch(
-			`http://${global.config.api.authority}/event/upload_image
-			/${param.data.id}`,
-			{
-				method: "POST",
-				credentials: "include",
-				body: data
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error:
-					 The status is ${response.status}`
-					);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-		setUpdate(true);
-	};
+	}, [update, isConfirmed, param]);
 
 	const deleteEvent = async () => {
 		if (

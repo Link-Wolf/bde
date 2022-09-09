@@ -2,13 +2,8 @@ import React, {useState, useEffect} from "react";
 
 const Stud = () => {
 	const [users, setUsers] = useState([]);
-	const [token, setToken] = useState("");
 
 	useEffect(() => {
-		// TODO: check token
-	}, []);
-
-	const getStud = () => {
 		fetch(`http://${global.config.api.authority}/stud`, {
 			credentials: "include"
 		})
@@ -19,11 +14,7 @@ const Stud = () => {
 			.then(data => {
 				setUsers(data);
 			});
-	};
-
-	useEffect(() => {
-		getStud();
-	}, [token]);
+	}, []);
 
 	return (
 		<div>

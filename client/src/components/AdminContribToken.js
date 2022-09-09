@@ -92,7 +92,6 @@ const AdminContribToken = param => {
 			two_digiter(begin_date.getMinutes());
 		setFormState(tmp);
 	}, [param]);
-	//TODO : fixme daddy (or mommy)
 
 	useEffect(() => {
 		const saveContrib = async () => {

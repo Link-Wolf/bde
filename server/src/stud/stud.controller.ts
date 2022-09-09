@@ -55,9 +55,13 @@ export class StudController {
 		return this.studService.addDirection(login, session.login);
 	}
 
-	@Patch('admin/:login/mutiny')// COMBAK
+	@Patch('admin/:login/mutiny')
 	@UseGuards(new ClearanceGuard(21))
-	mutiny() { return null }
+	mutiny(
+		@Session() session: Record<string, any>,
+		@Param('login') login: string) {
+		return this.studService.changeCaptain(login, session.login)
+	}
 
 	@Delete(':login')
 	@UseGuards(new ClearanceGuard(11))
