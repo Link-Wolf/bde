@@ -78,7 +78,6 @@ export class GoodiesService {
 	async findOne(id: number, requestMaker: string): Promise<Goodies> {
 		try {
 			let goodies = await this.goodiesRepository.findOneBy({ id: id });
-			console.log(goodies)
 			if (!goodies)
 				throw new NotFoundException(`Couldn't get goody with id ${id}`);
 			this.logger.log(`Got goody with id ${id}`, requestMaker);
