@@ -1,14 +1,11 @@
 import {useState, useEffect, React} from "react";
-import {useParams, Navigate} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
 import {NotificationManager} from "react-notifications";
 
 const Event = () => {
-	const [ret, setRet] = useState(<></>);
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
@@ -77,90 +74,91 @@ const Event = () => {
 				console.log(
 					`This is a fetch error: The error is ${error.message}. gotta go back`
 				);
-				setRet(<Navigate to="/events" />);
-			});
-		fetch(
-			`http://${global.config.api.authority}/inscription/event/${param.id}`,
-			{
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
+				window.location = "/events";
 			})
-			.then(actualData => {
-				setDataInsc(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
+			.then(() => {
+				fetch(
+					`http://${global.config.api.authority}/inscription/event/${param.id}`,
+					{
+						credentials: "include"
+					}
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ${response.status}`
+							);
+						}
+						return response.json();
+					})
+					.then(actualData => {
+						setDataInsc(actualData);
+					})
+					.catch(function(error) {
+						console.log(
+							`This is a fetch error: The error is ${error.message}`
+						);
+					});
 			});
 	}, [param.id, update]);
 
-	const unsub = async () => {
-		setLocked(true);
-		await fetch(
-			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
-			{
-				method: "DELETE",
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
-			});
-		setLocked(false);
-		setUpdate(true);
-	};
-
-	const sub = async () => {
-		setLocked(true);
-
-		await fetch(
-			`http://${global.config.api.authority}/inscription/me/${param.id}`,
-			{
-				method: "POST",
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					NotificationManager.warning(
-						"Nique ta mere cest full",
-						"Attention",
-						3000
-					);
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
-			});
-		setLocked(false);
-		setUpdate(true);
-	};
-
 	//is subbded
 	useEffect(() => {
+		const unsub = async () => {
+			setLocked(true);
+			await fetch(
+				`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
+				{
+					method: "DELETE",
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						`This is a fetch error: The error is ${error.message}`
+					);
+				});
+			setLocked(false);
+			setUpdate(true);
+		};
+
+		const sub = async () => {
+			setLocked(true);
+
+			await fetch(
+				`http://${global.config.api.authority}/inscription/me/${param.id}`,
+				{
+					method: "POST",
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						NotificationManager.warning(
+							"Nique ta mere cest full",
+							"Attention",
+							3000
+						);
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						`This is a fetch error: The error is ${error.message}`
+					);
+				});
+			setLocked(false);
+			setUpdate(true);
+		};
 		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/inscription/${param.id}/isSubbed`,
@@ -195,8 +193,9 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [update, locked]);
+	}, [update, locked, param]);
 
+	if (dataEvent.length === 0) return <></>;
 	return (
 		<>
 			<Card
@@ -204,7 +203,12 @@ const Event = () => {
 					width: "18rem"
 				}}
 			>
-				<img src={thumbnail} height="auto" width="auto" />
+				<img
+					src={thumbnail}
+					height="auto"
+					width="auto"
+					alt={`Thumbnail of event ${param.id}`}
+				/>
 				<CardBody>
 					<CardTitle tag="h5"> {dataEvent.name}</CardTitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -215,7 +219,8 @@ const Event = () => {
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{dataEvent.nb_places !== -42
-							? `Places : ${dataInsc.length} / ${dataEvent.nb_places}`
+							? `Places : ${dataInsc.length}
+							/ ${dataEvent.nb_places}`
 							: `Places : ${dataInsc.length} / ∞`}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -225,7 +230,8 @@ const Event = () => {
 						{dataEvent.cost !== 0
 							? dataEvent.premium_cost === dataEvent.cost
 								? `Prix : ${dataEvent.cost}€`
-								: `Prix publique : ${dataEvent.cost}€ / Adhérent : ${dataEvent.premium_cost}€`
+								: `Prix publique : ${dataEvent.cost}€
+								/ Adhérent : ${dataEvent.premium_cost}€`
 							: `Gratuit !`}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
