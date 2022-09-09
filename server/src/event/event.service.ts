@@ -53,25 +53,26 @@ export class EventService {
 	async getAlbum(id: number, login: any) {
 		try {
 			const event = await this.eventRepository.findOneById(id);
-			if (event === null)
+			if (event === null || !fs.existsSync(`assets/album/events/${id}`))
 				throw new NotFoundException()
-			const addFilesFromDirectoryToZip = (directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
-				const directoryContents = fs.readdirSync(directoryPath, {
-					withFileTypes: true,
-				});
+			const addFilesFromDirectoryToZip =
+				(directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
+					const directoryContents = fs.readdirSync(directoryPath, {
+						withFileTypes: true,
+					});
 
-				directoryContents.forEach(({ name }) => {
-					const path = `${directoryPath}/${name}`;
+					directoryContents.forEach(({ name }) => {
+						const path = `${directoryPath}/${name}`;
 
-					if (fs.statSync(path).isFile()) {
-						zip.file(`${name}`, fs.readFileSync(path));
-					}
+						if (fs.statSync(path).isFile()) {
+							zip.file(`${name}`, fs.readFileSync(path));
+						}
 
-					if (fs.statSync(path).isDirectory()) {
-						addFilesFromDirectoryToZip(path, zip);
-					}
-				});
-			};
+						if (fs.statSync(path).isDirectory()) {
+							addFilesFromDirectoryToZip(path, zip);
+						}
+					});
+				};
 
 			const directoryPath = `assets/album/events/${id}`
 			const zip = new JSZip();
