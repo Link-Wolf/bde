@@ -56,6 +56,36 @@ const AdminProductToken = param => {
 	}, [param.data]);
 
 	useEffect(() => {
+		const changeThumbnail = () => {
+			const data = new FormData();
+			data.append("thumbnail", img.current);
+			fetch(
+				`http://${global.config.api.authority}/goodies/upload_image
+				/${param.data.id}`,
+				{
+					method: "POST",
+					credentials: "include",
+					body: data
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error:
+						 The status is ${response.status}`
+						);
+					}
+				})
+				.then(() => {
+					setUpdate(true);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+		};
 		const saveProduct = async () => {
 			if (
 				await isConfirmed(
@@ -126,7 +156,7 @@ const AdminProductToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState, locked, bodyState]);
+	}, [param, update, formState, locked, bodyState, isConfirmed]);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -154,38 +184,7 @@ const AdminProductToken = param => {
 						error.message
 				);
 			});
-	}, [update]);
-
-	const changeThumbnail = () => {
-		const data = new FormData();
-		data.append("thumbnail", img.current);
-		fetch(
-			`http://${global.config.api.authority}/goodies/upload_image
-			/${param.data.id}`,
-			{
-				method: "POST",
-				credentials: "include",
-				body: data
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error:
-					 The status is ${response.status}`
-					);
-				}
-			})
-			.then(() => {
-				setUpdate(true);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	};
+	}, [update, param]);
 
 	const deleteProduct = async () => {
 		if (true) {
@@ -294,11 +293,3 @@ const AdminProductToken = param => {
 };
 
 export default AdminProductToken;
-
-// TODO:
-// check si fichier OK
-// delete fichier ref dans evnet
-// save new fichier (en renamant clean)
-// save nouvelle ref
-// :)
-// (debug)

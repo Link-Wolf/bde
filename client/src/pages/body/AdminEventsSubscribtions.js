@@ -14,10 +14,6 @@ const AdminStudents = () => {
 	const [update, setUpdate] = useState(false);
 	const [subForm, setSubForm] = useState(<></>);
 
-	useEffect(() => {
-		// TODO: get token
-	}, []);
-
 	const getStud = id => {
 		fetch(`http://${global.config.api.authority}/inscription/${id}/stud`, {
 			credentials: "include"
@@ -179,7 +175,7 @@ const AdminStudents = () => {
 				</FormGroup>
 			);
 		}
-	}, [selectedEvent, update]);
+	}, [selectedEvent, update, isConfirmed]);
 
 	return (
 		<div

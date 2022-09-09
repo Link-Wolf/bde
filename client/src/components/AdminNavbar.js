@@ -8,8 +8,10 @@ import {
 	CDBSidebarMenu,
 	CDBSidebarMenuItem
 } from "cdbreact";
+import useConfirm from "./useConfirm";
 
 const AdminNavbar = () => {
+	const {isConfirmed} = useConfirm();
 	const [captainLink, setCaptainLink] = useState(<></>);
 	const [initDbButton, setInitDbButton] = useState(<></>);
 	const [headerHeight, setHeaderHeight] = useState(0);
@@ -17,7 +19,10 @@ const AdminNavbar = () => {
 
 	useEffect(() => {
 		const initDb = async () => {
-			// XXX: safeguard batar => window confirm
+			const confirm = await isConfirmed(
+				`Wesh bg, fait pas le con, c'est que pour le debug les gros boutons`
+			);
+			if (!confirm) return;
 			await fetch(`http://${global.config.api.authority}/stud`, {
 				headers: {"Content-Type": "application/json"},
 				method: "POST",
@@ -222,7 +227,10 @@ const AdminNavbar = () => {
 				});
 		};
 		const tiniDb = async () => {
-			// XXX: safeguard batar => window confirm
+			const confirm = await isConfirmed(
+				`T'es archi sur de vouloir enculer la database ???`
+			);
+			if (!confirm) return;
 			fetch(`http://${global.config.api.authority}/stud`, {
 				credentials: "include",
 				method: "DELETE"
@@ -292,7 +300,7 @@ const AdminNavbar = () => {
 						error.message
 				);
 			});
-	}, []);
+	}, [isConfirmed]);
 
 	useEffect(() => {
 		if (document.getElementById("header"))
