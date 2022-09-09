@@ -60,7 +60,6 @@ export class InscriptionController {
 
 	@Delete('minecraft/:id')
 	unsubMe(@Session() session: Record<string, any>, @Param('id', ParseIntPipe) id: number) {
-		console.log(`${id} ettt ${session.login}`)
 		return this.inscriptionService.remove(id, session.login, session.login);
 	}
 
