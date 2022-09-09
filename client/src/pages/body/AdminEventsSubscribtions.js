@@ -12,7 +12,7 @@ const AdminStudents = () => {
 	const [allEvent, setAllEvent] = useState([]);
 	const [selectedEvent, setSelectedEvent] = useState("");
 	const [update, setUpdate] = useState(false);
-	const [subForm, setSubForm] = useState(<></>);
+	const [subForm, setSubForm] = useState(false);
 
 	const getStud = id => {
 		fetch(`http://${global.config.api.authority}/inscription/${id}/stud`, {
@@ -132,50 +132,33 @@ const AdminStudents = () => {
 			});
 	}, []);
 
+	const handleSubButton = async () => {
+		let toSub = document.getElementById("studToAdd").value;
+		let confirm = await isConfirmed(
+			`Tu es certain de vouloir inscrire ${toSub} de force ?`
+		);
+		if (confirm) {
+			if (toSub !== "") {
+				checkStud(selectedEvent, toSub);
+				NotificationManager.success(
+					`Successfully subscribe ${toSub}`,
+					"Validation",
+					3000
+				);
+				toSub = 0;
+			}
+			setUpdate(true);
+		}
+	};
+
 	useEffect(() => {
 		setUpdate(false);
 
-		const handleSubButton = async () => {
-			let toSub = document.getElementById("studToAdd").value;
-			if (
-				await isConfirmed(
-					`Tu es certain de vouloir inscrire ${toSub} de force ?`
-				)
-			) {
-				if (toSub !== "") {
-					checkStud(selectedEvent, toSub);
-					NotificationManager.success(
-						`Successfully subscribe ${toSub}`,
-						"Validation",
-						3000
-					);
-					toSub = 0;
-				}
-				setUpdate(true);
-			}
-		};
-
 		if (selectedEvent !== "") {
 			getStud(selectedEvent);
-			setSubForm(
-				<FormGroup>
-					<Form.Label>
-						Entrez le login du stud a inscrire de force (doit s'etre
-						connecte au moins une fois)
-					</Form.Label>
-					<Form.Control
-						type="text"
-						id="studToAdd"
-						placeholder="yoyostud"
-						autoFocus={true}
-					/>
-					<Button value="button" onClick={handleSubButton}>
-						Inscrire
-					</Button>
-				</FormGroup>
-			);
+			setSubForm(true);
 		}
-	}, [selectedEvent, update, isConfirmed]);
+	}, [selectedEvent, update]);
 
 	return (
 		<div
@@ -206,7 +189,25 @@ const AdminStudents = () => {
 						</Form.Select>
 					</Form>
 
-					{subForm}
+					{subForm ? (
+						<FormGroup>
+							<Form.Label>
+								Entrez le login du stud a inscrire de force
+								(doit s'etre connecte au moins une fois)
+							</Form.Label>
+							<Form.Control
+								type="text"
+								id="studToAdd"
+								placeholder="yoyostud"
+								autoFocus={true}
+							/>
+							<Button value="button" onClick={handleSubButton}>
+								Inscrire
+							</Button>
+						</FormGroup>
+					) : (
+						<></>
+					)}
 
 					{stud.length > 0 && (
 						<ul>
