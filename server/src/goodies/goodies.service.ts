@@ -21,8 +21,10 @@ export class GoodiesService {
 
 	async getThumbnail(id: number, login: any) {
 		try {
-			const thumb_path = (await this.goodiesRepository.findOneById(id))
-				.thumbnail_filename;
+			const event = await this.goodiesRepository.findOneById(id)
+			if (!event)
+				throw new NotFoundException
+			const thumb_path = event.thumbnail_filename;
 			if (!thumb_path)
 				throw new NotFoundException
 			const file = fs.createReadStream(join(process.cwd(), thumb_path));
@@ -30,7 +32,7 @@ export class GoodiesService {
 			return new StreamableFile(file);
 		} catch (error) {
 			this.logger.error(`Failed to get thumbnail of goodies ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to to get thumbnail of goodies ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -56,7 +58,7 @@ export class GoodiesService {
 			return ret
 		} catch (error) {
 			this.logger.error(`Failed to save thumbnail of goodies ${id} on database(${error})`, login);
-			throw new InternalServerErrorException(`Failed to save thumbnail of goodies ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -69,7 +71,7 @@ export class GoodiesService {
 		}
 		catch (error) {
 			this.logger.error(`Failed to get all goodies on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to get all goodies on database (${error})`);
+			throw error
 		}
 	}
 
@@ -83,7 +85,7 @@ export class GoodiesService {
 			return goodies;
 		} catch (error) {
 			this.logger.error(`Failed to find goodies ${id} on database(${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to find goodies ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -98,7 +100,7 @@ export class GoodiesService {
 			return ret
 		} catch (error) {
 			this.logger.error(`Failed to update goodies ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to update goodies ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -109,7 +111,7 @@ export class GoodiesService {
 			return (ret)
 		} catch (error) {
 			this.logger.error(`Failed to create goodies ${goodiesDto.name} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to create goodies ${goodiesDto.name} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -124,7 +126,7 @@ export class GoodiesService {
 				this.logger.warn(`Failed to delete goodies ${id} : goodies does no exist`, requestMaker);
 		} catch (error) {
 			this.logger.error(`Failed to delete goodies ${id} on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to delete goodies ${id} on database(${error})`)
+			throw error
 		}
 	}
 
@@ -135,7 +137,7 @@ export class GoodiesService {
 			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all goodies on database(${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to delete all goodies on database(${error})`)
+			throw error
 		}
 	}
 }
