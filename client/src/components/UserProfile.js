@@ -4,6 +4,7 @@ import QRCode from "react-qr-code";
 import {Navigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {Button} from "reactstrap";
 
 import EventToken from "./EventToken";
 
@@ -14,25 +15,10 @@ const UserProfile = options => {
 	const [dataStud, setDataStud] = useState({});
 	const [dataContrib, setDataContrib] = useState([]);
 	const [dataEvent, setDataEvent] = useState([]);
-	const [contributionStatus, setContributionStatus] = useState(
-		<div style={{display: "flex"}}>
-			<LazyLoadImage
-				height="50px"
-				src={greyStar}
-				width="auto"
-				effect="blur"
-			/>
-			<p style={{fontSize: "40px"}}>Is just a stud</p>{" "}
-			<LazyLoadImage
-				height="50px"
-				src={greyStar}
-				width="auto"
-				effect="blur"
-			/>
-		</div>
-	);
+	const [contributionStatus, setContributionStatus] = useState(false);
 	const [nav, setNav] = useState(<></>);
 
+	//Stud
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/stud/${options.login}`, {
 			credentials: "include"
@@ -57,58 +43,43 @@ const UserProfile = options => {
 			});
 	}, [options]);
 
+	//Contribs
 	useEffect(() => {
-		fetch(
-			`http://${global.config.api.authority}/contribution/${options.login}`,
-			{
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
+		if (options.login !== "")
+			fetch(
+				`http://${global.config.api.authority}/contribution/${options.login}`,
+				{
+					credentials: "include"
 				}
-				return response.json();
-			})
-			.then(data => {
-				setDataContrib(data);
-				data.forEach((item, i) => {
-					if (
-						new Date(item.end_date) > Date.now() &&
-						new Date(item.begin_date) <= Date.now()
-					) {
-						setContributionStatus(
-							<div style={{display: "flex"}}>
-								<LazyLoadImage
-									height="50px"
-									src={yellowStar}
-									width="auto"
-									effect="blur"
-								/>
-								<p style={{fontSize: "40px"}}>
-									Is a premium member
-								</p>
-								<LazyLoadImage
-									height="50px"
-									src={yellowStar}
-									width="auto"
-									effect="blur"
-								/>
-							</div>
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
 						);
 					}
+					return response.json();
+				})
+				.then(data => {
+					setDataContrib(data);
+					data.forEach((item, i) => {
+						if (
+							new Date(item.end_date) > Date.now() &&
+							new Date(item.begin_date) <= Date.now()
+						) {
+							setContributionStatus(true);
+						}
+					});
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
 				});
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
 	}, [options]);
 
+	//Events
 	useEffect(() => {
 		const requestOptions = {
 			method: "get",
@@ -161,7 +132,34 @@ const UserProfile = options => {
 						/>
 					</a>
 				</div>
-				{contributionStatus}
+				<div style={{display: "flex"}}>
+					<LazyLoadImage
+						height="50px"
+						src={contributionStatus ? yellowStar : greyStar}
+						width="auto"
+						effect="blur"
+					/>
+					<p style={{fontSize: "40px"}}>
+						{contributionStatus
+							? "Is a premium member"
+							: "Is just a stud"}
+					</p>
+					<LazyLoadImage
+						height="50px"
+						src={contributionStatus ? yellowStar : greyStar}
+						width="auto"
+						effect="blur"
+					/>
+				</div>
+				<div>
+					{!contributionStatus && options.canSub ? (
+						<Button color="primary" href="/contribute">
+							Contribuer
+						</Button>
+					) : (
+						""
+					)}
+				</div>
 				<div style={{display: "flex"}}>
 					<div>
 						<h3> Historique de contributions</h3>

@@ -1,9 +1,10 @@
 import { Controller, Get, Body, Post, Session } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { StudService } from '../stud/stud.service';
 
 @Controller('auth')
 export class AuthController {
-	constructor(private authService: AuthService) { }
+	constructor(private authService: AuthService, private studService: StudService) { }
 
 	@Post()
 	async loginIntra(@Body('code') code: string, @Session() session: Record<string, any>) {

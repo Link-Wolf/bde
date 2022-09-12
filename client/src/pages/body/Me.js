@@ -5,7 +5,6 @@ import UserProfile from "../../components/UserProfile";
 
 const Me = () => {
 	const [login, setLogin] = useState("");
-	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/session`, {
@@ -30,11 +29,7 @@ const Me = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		setRet(<UserProfile login={login} />);
-	}, [login]);
-
-	return ret;
+	return <UserProfile login={login} canSub />;
 };
 
 export default Me;
