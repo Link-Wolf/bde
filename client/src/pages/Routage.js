@@ -26,6 +26,7 @@ import Me from "./body/Me";
 import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
+import Contribute from "./body/Contribute";
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -102,6 +103,15 @@ const Routage = () => {
 						<RouteWrapper
 							route={<Events />}
 							check={global.config.clearance.pool}
+						/>
+					}
+				/>
+				<Route
+					path="contribute"
+					element={
+						<RouteWrapper
+							route={<Contribute />}
+							check={global.config.clearance.stud}
 						/>
 					}
 				/>
