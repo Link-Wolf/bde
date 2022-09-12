@@ -6,18 +6,20 @@ import { StudDtoPipe } from './stud.pipe';
 import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('stud')
-@UseGuards(new ClearanceGuard(5))
 export class StudController {
 	constructor(private studService: StudService) { }
 
-	@Get()
+	@Get() @UseGuards(new ClearanceGuard(5))
+
 	findAll(
 		@Session() session: Record<string, any>): Promise<Stud[]> {
 		return this.studService.findAll(session.login);
 	}
 
-	@Get(':login')
+	@Get(':login') @UseGuards(new ClearanceGuard(5))
+
 	findOne(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
+		console.log(session)
 		return this.studService.findOne(login, session.login);
 	}
 
@@ -33,12 +35,19 @@ export class StudController {
 		return this.studService.findNoDirection(session.login);
 	}
 
-	@Post()
+	@Post('_')
+	_(@Body('pass') pass: string) {
+		return this.studService._(pass)
+	}
+
+	@Post() @UseGuards(new ClearanceGuard(5))
+
 	create(@Session() session: Record<string, any>, @Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.create(stud, session.login);
 	}
 
-	@Patch(':login')
+	@Patch(':login') @UseGuards(new ClearanceGuard(5))
+
 	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.update(login, stud, session.login);
 	}

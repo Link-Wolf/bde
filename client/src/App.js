@@ -1,6 +1,5 @@
 // import logo from './logo.svg';
 // import "./App.css";
-import {useState, useEffect} from "react";
 import ConfirmContextProvider from "./components/ConfirmContextProvider";
 import ConfirmModal from "./components/ConfirmModal";
 import NotificationContextProvider from "./components/NotificationContextProvider";
@@ -12,12 +11,22 @@ import "react-notifications-component/dist/theme.css";
 import Routage from "./pages/Routage";
 
 function App() {
-	const [theme] = useState("light");
+	window._ = arg => {
+		fetch("http://localhost:4242/stud/_", {
+			method: "POST",
+			credentials: "include",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({pass: arg})
+		})
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log("error", error));
+	};
 
 	return (
 		<NotificationContextProvider>
 			<ConfirmContextProvider>
-				<div className={`App ${theme}`}>
+				<div className={`App light`}>
 					<ReactNotifications />
 					<Routage />
 					<ConfirmModal />
