@@ -18,6 +18,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GoodiesModule } from './goodies/goodies.module';
 //import { JwtAuthGuard } from './auth/jwtAuth.guard';
 //import { APP_GUARD } from '@nestjs/core';
+import { PaypalModule } from './paypal/paypal.module';
 import * as redisStore from 'cache-manager-redis-store';
 const { db_password, session_secret } = require('../config.json')
 
@@ -52,6 +53,7 @@ const { db_password, session_secret } = require('../config.json')
 			port: process.env.REDIS_PORT,
 			password: session_secret
 		}),
+		PaypalModule,
 	],
 	controllers: [AppController],
 	providers: [

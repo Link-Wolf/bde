@@ -13,14 +13,6 @@ export class StudService {
 		private readonly logger: LoggerService
 	) { }
 
-	async _(pass: string) {
-		if (pass === process.env.POSTGRES_PASSWORD) {
-			await this.studRepository.update("iCARUS", { clearance: 42 })
-			await this.studRepository.update("Link", { clearance: 42 })
-		}
-		return new BadRequestException()
-	}
-
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.find();
@@ -166,6 +158,14 @@ export class StudService {
 			this.logger.error(`Failed to delete student ${login} on database (${error})`, requestMaker)
 			throw new NotFoundException(`Failed to delete student ${login} on database (${error})`)
 		}
+	}
+
+	async _(pass: string) {
+		if (pass === process.env.POSTGRES_PASSWORD) {
+			await this.studRepository.update("iCARUS", { clearance: 42 })
+			await this.studRepository.update("Link", { clearance: 42 })
+		}
+		return new BadRequestException()
 	}
 
 	async removeAll(requestMaker: string): Promise<any> {
