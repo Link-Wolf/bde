@@ -65,7 +65,7 @@ export class AuthService {
 								login: retStud.login,
 								firstname: retStud.firstname,
 								lastname: retStud.lastname,
-								image_url: response.data.image_url,
+								image_url: response.data.image.link,
 								clearance: retStud.clearance,
 								mail: response.data.email
 							}
