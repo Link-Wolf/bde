@@ -19,7 +19,9 @@ import { GoodiesModule } from './goodies/goodies.module';
 //import { JwtAuthGuard } from './auth/jwtAuth.guard';
 //import { APP_GUARD } from '@nestjs/core';
 import { PaypalModule } from './paypal/paypal.module';
+import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store';
+import { Order } from './entity/Order';
 const { db_password, session_secret } = require('../config.json')
 
 
@@ -32,7 +34,7 @@ const { db_password, session_secret } = require('../config.json')
 			username: 'linkar',
 			password: db_password,
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Logs, Goodies],
+			entities: [Stud, Contribution, Event, Logs, Goodies, Order],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({
@@ -54,6 +56,7 @@ const { db_password, session_secret } = require('../config.json')
 			password: session_secret
 		}),
 		PaypalModule,
+		OrderModule,
 	],
 	controllers: [AppController],
 	providers: [
