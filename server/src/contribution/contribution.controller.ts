@@ -15,6 +15,11 @@ export class ContributionController {
 		return this.contributionService.findAll(session.login);
 	}
 
+	@Get('price')
+	getPrice(@Session() session: Record<string, any>) {
+		return this.contributionService.getPrice(session.login)
+	}
+
 	@Get(':login/last')
 	findLast(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Contribution> {
 		return this.contributionService.findLast(login, session.login);

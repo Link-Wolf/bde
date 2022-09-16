@@ -16,7 +16,6 @@ export class PaypalService {
 				"Content-Type": "application/json",
 			},
 		});
-		console.log(response)
 		return response.data.client_token;
 	}
 
@@ -31,4 +30,49 @@ export class PaypalService {
 		});
 		return response.data.access_token;
 	}
+
+
+	// create an order
+	async  createOrder(login) {
+		const purchaseAmount = "100.00"; // TODO: pull amount from a database or session
+		const accessToken = await this.generateAccessToken(login);
+		const url = `${process.env.PAYPAL_BASE}/v2/checkout/orders`;
+		const response = await axios(url, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
+			},
+			data: JSON.stringify({
+				intent: "CAPTURE",
+				purchase_units: [
+					{
+						amount: {
+							currency_code: "USD",
+							value: purchaseAmount
+						},
+					},
+				],
+			}),
+		});
+		const data = await response.data();
+		return data;
+	}
+
+	// capture payment for an order
+	async  capturePayment(orderId, login) {
+		const accessToken = await this.generateAccessToken(login);
+		const url = `${process.env.PAYPAL_BASE}/v2/checkout/orders/${orderId}/capture`;
+		const response = await axios(url, {
+			method: "post",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
+			},
+		});
+		const data = await response.data();
+		return data;
+	}
+
+
 }
