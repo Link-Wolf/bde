@@ -13,6 +13,11 @@ export class ContributionService {
 		private logger: LoggerService,
 	) { }
 
+	getPrice(login: string) {
+		this.logger.log(`Got contribution price`, login)
+		return { price: process.env.CONTRIBUTION_PRICE };
+	}
+
 	async findAll(requestMaker: string): Promise<Contribution[]> {
 		try {
 			let contribs = this.contributionRepository.find();
