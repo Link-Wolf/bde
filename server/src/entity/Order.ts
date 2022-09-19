@@ -1,32 +1,35 @@
 import { Stud } from "./Stud";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+const { contributionPrice } = require('../../config.json')
 
 @Entity()
 export class Order {
 	@PrimaryColumn()
 	id: number
 
-	@Column({ type: "text" })
-	studLogin: string
-
-	@CreateDateColumn({ type: 'timestamptz', default: new Date(Date.now()) })
-	begin_date: Date
+	@Column({
+		type: 'timestamptz',
+		default: new Date(Date.now())
+	})
+	date: Date
 
 	@Column()
 	isCompleted: boolean
 
 	@Column({
 		type: "double precision",
-		nullable: true,
-		default: Number(process.env.CONTRIBUTION_PRICE)
+		default: contributionPrice
 	})
 	cost: number
 
-	@ManyToOne(() => Stud, (stud) => stud.contributions,
+	@ManyToOne(() => Stud, (stud) => stud.orders,
 		{
 			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE'
 		})
 	@JoinColumn({ name: "studLogin" })
 	stud: Stud
+
+	@Column({ type: "text" })
+	studLogin: string
 }
