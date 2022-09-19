@@ -1,7 +1,14 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
+import {
+	Column,
+	Entity,
+	ManyToMany,
+	OneToMany,
+	PrimaryColumn
+} from "typeorm";
 import { ContributionService } from "../contribution/contribution.service";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
+import { Order } from "./Order";
 
 @Entity()
 export class Stud {
@@ -35,6 +42,13 @@ export class Stud {
 	})
 	contributions: Contribution[];
 
+	@OneToMany(() => Order, (order) => order.stud, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+		cascade: true
+	})
+	orders: Order[]
+
 	@ManyToMany(() => Event, (inscription) => inscription.studs, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
@@ -43,7 +57,8 @@ export class Stud {
 	inscriptions: Event[]
 
 	async isPremium(): Promise<boolean> {
-		let last_cont = await this.contributionService.findLast(this.login, "42");
+		let last_cont =
+			await this.contributionService.findLast(this.login, "42");
 		return last_cont.end_date >= new Date(Date.now());
 	}
 }
