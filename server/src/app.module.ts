@@ -29,7 +29,6 @@ const { db_password, session_secret } = require('../config.json')
 	imports: [
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			host: process.env.PSQL_HOST,
 			port: parseInt(process.env.PSQL_PORT),
 			username: 'linkar',
 			password: db_password,
@@ -48,6 +47,8 @@ const { db_password, session_secret } = require('../config.json')
 		LogsModule,
 		LoggerModule,
 		AuthModule,
+		PaypalModule,
+		OrderModule,
 		CacheModule.register({
 			isGlobal: true,
 			store: redisStore,
@@ -55,8 +56,6 @@ const { db_password, session_secret } = require('../config.json')
 			port: process.env.REDIS_PORT,
 			password: session_secret
 		}),
-		PaypalModule,
-		OrderModule,
 	],
 	controllers: [AppController],
 	providers: [
