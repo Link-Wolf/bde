@@ -35,6 +35,9 @@ export class Stud {
 	@Column({ default: 0 })
 	clearance: number
 
+	@Column()
+	email: string
+
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
