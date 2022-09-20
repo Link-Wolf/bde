@@ -4,4 +4,5 @@ export class StudDto {
 	lastname: string;
 	isDirection: boolean;
 	clearance: number;
+	email: string;
 }

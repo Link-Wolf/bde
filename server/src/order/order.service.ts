@@ -32,6 +32,8 @@ export class OrderService {
 					`404: order ${id} doesnt exits`, login)
 			else
 				this.logger.log(`Got order ${id}`, login);
+			let stud = await this.studService.findOne(order.studLogin, login)
+			order.stud = stud
 			return order
 		}
 		catch (err) {

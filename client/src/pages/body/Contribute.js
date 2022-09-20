@@ -8,9 +8,10 @@ import {
 const ContributeButtons = () => {
 	const currency = "EUR";
 	const [amount, setAmount] = useState();
-	const [session, setSession] = useState();
+	const [session, setSession] = useState({});
 	const style = {layout: "vertical"};
 	const [{options, isPending}, dispatch] = usePayPalScriptReducer();
+	const [contributionStatus, setContributionStatus] = useState(false);
 
 	useEffect(() => {
 		dispatch({
@@ -56,6 +57,44 @@ const ContributeButtons = () => {
 			});
 	}, []);
 
+	useEffect(() => {
+		if (options.login !== "")
+			fetch(
+				`http://${global.config.api.authority}/contribution/${session.login}`,
+				{
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					data.forEach((item, i) => {
+						if (
+							new Date(item.end_date) > Date.now() &&
+							new Date(item.begin_date) <= Date.now()
+						) {
+							setContributionStatus(true);
+						}
+					});
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+	}, [session]);
+
+	if (contributionStatus) {
+		window.location = "/home";
+		return <></>;
+	}
 	return (
 		<>
 			{isPending && <div className="spinner" />}
