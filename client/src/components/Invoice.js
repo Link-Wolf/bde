@@ -112,6 +112,7 @@ export const Print = React.forwardRef((props, ref) => {
 	return (
 		<>
 			<Invoice
+				{...props}
 				ref={e => {
 					ref = e;
 				}}
