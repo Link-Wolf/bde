@@ -2,10 +2,10 @@ import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
 
 const Receipt = () => {
-	const [session, setSession] = useState();
-	const [loadSession, setLoadSession] = useState();
-	const [order, setOrder] = useState();
-	const [loadOrder, setLoadOrder] = useState();
+	const [session, setSession] = useState({});
+	const [loadSession, setLoadSession] = useState(true);
+	const [order, setOrder] = useState({});
+	const [loadOrder, setLoadOrder] = useState(true);
 
 	const param = useParams();
 
@@ -28,7 +28,24 @@ const Receipt = () => {
 			});
 	}, []);
 
-	console.log(param);
+	useEffect(() => {
+		setLoadOrder(true);
+		fetch(`http://${global.config.api.authority}/order/${param.id}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setOrder(json);
+				setLoadOrder(false);
+			});
+	}, [param]);
 
 	if (loadSession || loadOrder) return <>Loading</>;
 	if (session.login !== order.studLogin) return <Navigate to="/home" />;
