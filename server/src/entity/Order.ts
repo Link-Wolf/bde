@@ -4,8 +4,8 @@ const { contributionPrice } = require('../../config.json')
 
 @Entity()
 export class Order {
-	@PrimaryColumn()
-	id: number
+	@PrimaryColumn({ type: "text" })
+	id: string
 
 	@Column({
 		type: 'timestamptz',
@@ -13,7 +13,7 @@ export class Order {
 	})
 	date: Date
 
-	@Column()
+	@Column({ default: false })
 	isCompleted: boolean
 
 	@Column({
@@ -21,6 +21,9 @@ export class Order {
 		default: contributionPrice
 	})
 	cost: number
+
+	@Column({ type: "text", nullable: true })
+	source: string
 
 	@ManyToOne(() => Stud, (stud) => stud.orders,
 		{

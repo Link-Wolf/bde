@@ -9,6 +9,7 @@ import { LoggerModule } from '../logger/logger.module';
 @Module({
 	imports: [TypeOrmModule.forFeature([Contribution]), StudModule, LoggerModule],
 	providers: [ContributionService],
-	controllers: [ContributionController]
+	controllers: [ContributionController],
+	exports: [ContributionService]
 })
 export class ContributionModule { }

@@ -19,7 +19,6 @@ export class StudController {
 	@Get(':login') @UseGuards(new ClearanceGuard(5))
 
 	findOne(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
-		console.log(session)
 		return this.studService.findOne(login, session.login);
 	}
 

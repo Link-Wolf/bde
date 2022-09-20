@@ -3,26 +3,39 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from '../entity/Order';
 import { Repository } from 'typeorm';
 import { LoggerService } from '../logger/logger.service';
-import { Contribution } from '../entity/Contribution';
+import { ContributionService } from '../contribution/contribution.service';
+import { StudService } from '../stud/stud.service';
+const { contributionTime } = require('../../config.json')
 
 @Injectable()
 export class OrderService {
 	constructor(
-		@InjectRepository(Order) private orderRepository: Repository<Order>,
-		@InjectRepository(Contribution) private contributionRepository: Repository<Order>,
+		@InjectRepository(Order)
+		private orderRepository: Repository<Order>,
+		private contributionService: ContributionService,
+		private studService: StudService,
+
 		private readonly logger: LoggerService
 	) { }
 
+	private static due(): Date {
+		let due = new Date(Date.now())
+		due.setMonth(due.getMonth() + contributionTime)
+		return due;
+	}
+
 	async createOrder(body, login) {
 		try {
-			if (await this.orderRepository.findOne(body.id))
+			if (await this.orderRepository.findOneBy({ id: body.id }))
 				throw new ConflictException
 					(`Failed to create order ${body.id}: already exists`);
 			let ret = await this.orderRepository.save(body);
 			this.logger.log(`Successfully created order ${body.id}`, login)
 			return ret
 		} catch (err) {
+			console.log(body, login);
 			this.logger.error(
+
 				`Failed to create order ${body.id} on database (${err})`,
 				login);
 			throw err
@@ -31,12 +44,23 @@ export class OrderService {
 
 	async captureOrder(body, login) {
 		try {
-			const order = await this.orderRepository.findOne(body.id)
+			console.log(body)
+			const order = await this.orderRepository.findOneBy({ id: body.id })
 			if (!order)
 				throw new NotFoundException
 					(`Failed to capture order ${body.id}: doesn't exist`);
-			this.contributionRepository.create({ stud: order.stud, cost: order.cost });
-			let ret = await this.orderRepository.update(body.id, body);
+			const stud = await this.studService.findOne(order.studLogin, login)
+			const contrib = {
+				stud: stud,
+				cost: order.cost,
+				begin_date: new Date(Date.now()),
+				end_date: OrderService.due()
+			};
+			await this.contributionService
+				.create(contrib, login);
+			order.isCompleted = true
+			console.log(body.id, order)
+			let ret = await this.orderRepository.update(body.id, order);
 			this.logger.log(`Successfully captured order ${body.id}`, login)
 			return ret
 		} catch (err) {
