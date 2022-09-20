@@ -112,8 +112,9 @@ const ContributeButtons = () => {
 									"Content-Type": "application/json"
 								}
 							}
-						);
-						//avertir que OK
+						).then(() => {
+							window.location = `/receipt/${data.orderID}`;
+						});
 					});
 				}}
 				onShippingChange={function(data, actions) {

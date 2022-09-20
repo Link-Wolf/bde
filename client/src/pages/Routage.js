@@ -27,7 +27,7 @@ import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
 import Contribute from "./body/Contribute";
-
+import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -93,6 +93,15 @@ const Routage = () => {
 					element={
 						<RouteWrapper
 							route={<Profile />}
+							check={global.config.clearance.unpaid}
+						/>
+					}
+				/>
+				<Route
+					path="receipt/:id"
+					element={
+						<RouteWrapper
+							route={<Receipt />}
 							check={global.config.clearance.unpaid}
 						/>
 					}

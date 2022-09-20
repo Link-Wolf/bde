@@ -49,6 +49,9 @@ export class OrderService {
 			if (!order)
 				throw new NotFoundException
 					(`Failed to capture order ${body.id}: doesn't exist`);
+			order.isCompleted = true
+			console.log(body.id, order)
+			let ret = await this.orderRepository.update(body.id, order);
 			const stud = await this.studService.findOne(order.studLogin, login)
 			const contrib = {
 				stud: stud,
@@ -58,9 +61,6 @@ export class OrderService {
 			};
 			await this.contributionService
 				.create(contrib, login);
-			order.isCompleted = true
-			console.log(body.id, order)
-			let ret = await this.orderRepository.update(body.id, order);
 			this.logger.log(`Successfully captured order ${body.id}`, login)
 			return ret
 		} catch (err) {
