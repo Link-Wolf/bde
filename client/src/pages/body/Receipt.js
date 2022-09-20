@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
+import Invoice, {Print} from "../../components/Invoice";
 
 const Receipt = () => {
 	const [session, setSession] = useState({});
@@ -49,7 +50,13 @@ const Receipt = () => {
 
 	if (loadSession || loadOrder) return <>Loading</>;
 	if (session.login !== order.studLogin) return <Navigate to="/home" />;
-	return <>Receipt</>;
+	return (
+		<>
+			Receipt :
+			<Print />
+		</>
+	);
+	//passer en param du print : id / date / buyer ("NOM Prenom") / mail / payement_method / item / price
 };
 
 export default Receipt;
