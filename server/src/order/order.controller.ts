@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Session, Body } from '@nestjs/common';
+import { Controller, UseGuards, Post, Session, Body, Param, Get } from '@nestjs/common';
 import { ClearanceGuard } from '../auth/clearance.guard';
 import { OrderDto } from "./order.dto"
 import { OrderService } from './order.service';
@@ -7,6 +7,14 @@ import { OrderService } from './order.service';
 @UseGuards(new ClearanceGuard(7))
 export class OrderController {
 	constructor(private orderService: OrderService) { }
+
+	@Get(':id')
+	findOne(
+		@Session() session: Record<string, any>,
+		@Param('id') id: string
+	) {
+		return this.orderService.findOne(id, session.login)
+	}
 
 	@Post('create')
 	createOrder(

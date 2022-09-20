@@ -24,6 +24,22 @@ export class OrderService {
 		return due;
 	}
 
+	async findOne(id: string, login: any) {
+		try {
+			let order = await this.orderRepository.findOneBy({ id: id });
+			if (!order)
+				this.logger.warn(
+					`404: order ${id} doesnt exits`, login)
+			else
+				this.logger.log(`Got order ${id}`, login);
+			return order
+		}
+		catch (err) {
+			this.logger.error(`Failed to find order ${id} on database (${err})`, login)
+			throw err
+		}
+	}
+
 	async createOrder(body, login) {
 		try {
 			if (await this.orderRepository.findOneBy({ id: body.id }))
