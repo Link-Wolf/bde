@@ -22,11 +22,9 @@ const AdminContribToken = param => {
 	const [button, setButton] = useState(
 		<Placeholder.Button variant="primary" />
 	);
-	const [update, setUpdate] = useState(false);
 
 	const switchLock = () => {
 		setLocked(false);
-		setUpdate(true);
 	};
 
 	const handleFormChange = event => {
@@ -93,86 +91,60 @@ const AdminContribToken = param => {
 		setFormState(tmp);
 	}, [param]);
 
-	useEffect(() => {
-		const saveContrib = async () => {
+	const saveContrib = async () => {
+		if (
+			await isConfirmed(
+				`Desire tu modifier la cotisation de ${param.data.studLogin}`
+			)
+		) {
 			if (
-				await isConfirmed(
-					`Desire tu modifier la cotisation de ${param.data.studLogin}`
-				)
+				new Date(bodyState.end_date) <= new Date(bodyState.begin_date)
 			) {
-				if (
-					new Date(bodyState.end_date) <=
-					new Date(bodyState.begin_date)
-				) {
-					NotificationManager.error(
-						"End_date must be after begin_date",
-						"Erreur",
-						3000
-					);
-				} else {
-					var myHeaders = new Headers();
-					myHeaders.append("Content-Type", "application/json");
+				NotificationManager.error(
+					"End_date must be after begin_date",
+					"Erreur",
+					3000
+				);
+			} else {
+				var myHeaders = new Headers();
+				myHeaders.append("Content-Type", "application/json");
 
-					var raw = JSON.stringify({
-						stud: param.data.studLogin,
-						cost: param.data.cost,
-						begin_date: bodyState.begin_date,
-						end_date: bodyState.end_date
-					});
+				var raw = JSON.stringify({
+					stud: param.data.studLogin,
+					cost: param.data.cost,
+					begin_date: bodyState.begin_date,
+					end_date: bodyState.end_date
+				});
 
-					var requestOptions = {
-						method: "PATCH",
-						headers: myHeaders,
-						body: raw,
-						redirect: "follow",
-						credentials: "include"
-					};
+				var requestOptions = {
+					method: "PATCH",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow",
+					credentials: "include"
+				};
 
-					fetch(
-						`http://${global.config.api.authority}/contribution/admin/${param.data.studLogin}`,
-						requestOptions
-					)
-						.then(response => {
-							if (!response.ok) {
-								throw new Error(
-									`This is an HTTP error: The status is ${response.status}`
-								);
-							}
-						})
-						.catch(function(error) {
-							console.log(
-								"Il y a eu un problème avec l'opération fetch: " +
-									error.message
+				fetch(
+					`http://${global.config.api.authority}/contribution/admin/${param.data.studLogin}`,
+					requestOptions
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ${response.status}`
 							);
-						});
-					setLocked(true);
-					setUpdate(true);
-				}
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+				setLocked(true);
 			}
-		};
-
-		setUpdate(false);
-		if (locked)
-			setButton(
-				<Button
-					type="button"
-					defaultValue={param.index}
-					onClick={switchLock}
-				>
-					Edit
-				</Button>
-			);
-		else
-			setButton(
-				<Button
-					type="button"
-					defaultValue={param.index}
-					onClick={saveContrib}
-				>
-					Save
-				</Button>
-			);
-	}, [param, update, formState, locked, bodyState, isConfirmed]);
+		}
+	};
 
 	return (
 		<>
@@ -222,7 +194,23 @@ const AdminContribToken = param => {
 					required
 					min={formState.begin_date}
 				/>
-				{button}
+				{locked ? (
+					<Button
+						type="button"
+						defaultValue={param.index}
+						onClick={switchLock}
+					>
+						Edit
+					</Button>
+				) : (
+					<Button
+						type="button"
+						defaultValue={param.index}
+						onClick={saveContrib}
+					>
+						Save
+					</Button>
+				)}
 			</form>
 		</>
 	);
