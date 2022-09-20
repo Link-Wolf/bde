@@ -19,7 +19,7 @@ export class OrderController {
 	@Post('capture')
 	captureOrder(
 		@Session() session: Record<string, any>,
-		@Body() order: OrderDto
+		@Body() order: { id: string }
 	) {
 		return this.orderService.captureOrder(order, session.login);
 	}

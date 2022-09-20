@@ -1,7 +1,6 @@
 export class OrderDto {
-	id: number;
+	id: string;
 	studLogin: string;
-	begin_date: Date;
-	isCompleted: boolean;
 	cost: number;
+	source: string
 }
