@@ -44,7 +44,6 @@ const AdminCreateContributionToken = () => {
 			"-" +
 			two_digiter(begin_date.getDate());
 		setBodyState(tmpBody);
-		setBodyState(tmpBody);
 		setFormState(tmp);
 	};
 
