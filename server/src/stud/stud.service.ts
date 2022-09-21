@@ -63,9 +63,11 @@ export class StudService {
 	async findOne(login: string, requestMaker: string): Promise<any> {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
-			if (!stud)
+			if (!stud) {
 				// throw new NotFoundException(`Failed to find student ${login}`)
 				this.logger.warn(`Failed to find student with login ${login} : student does not exist`, requestMaker)
+				return stud
+			}
 			// }
 			else
 				this.logger.log(`Got student with login ${login}`, requestMaker);

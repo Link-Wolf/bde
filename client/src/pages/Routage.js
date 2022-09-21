@@ -102,7 +102,7 @@ const Routage = () => {
 					element={
 						<RouteWrapper
 							route={<Receipt />}
-							check={global.config.clearance.unpaid}
+							check={global.config.clearance.stud}
 						/>
 					}
 				/>
