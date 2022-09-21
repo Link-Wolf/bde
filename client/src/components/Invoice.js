@@ -112,6 +112,13 @@ export const Print = React.forwardRef((props, ref) => {
 	return (
 		<>
 			<Invoice
+				id={props.id}
+				date={props.date}
+				buyer={props.buyer}
+				mail={props.mail}
+				payement_method={props.payement_method}
+				item={props.item}
+				price={props.price}
 				ref={e => {
 					ref = e;
 				}}
