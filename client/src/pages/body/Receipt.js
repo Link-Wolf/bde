@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
-import Invoice, {Print} from "../../components/Invoice";
+import {Print} from "../../components/Invoice";
 
 const Receipt = () => {
 	const [session, setSession] = useState({});
@@ -53,7 +53,17 @@ const Receipt = () => {
 	return (
 		<>
 			Receipt :
-			<Print />
+			<Print
+				id={order.id}
+				date={new Date(order.date).toLocaleDateString()}
+				buyer={`${order.stud.lastname.toUpperCase()} ${
+					order.stud.firstname
+				}`}
+				mail={order.stud.email}
+				payement_method={order.source}
+				price={order.cost}
+				item="Contribution"
+			/>
 		</>
 	);
 	//passer en param du print : id / date / buyer ("NOM Prenom") / mail / payement_method / item / price
