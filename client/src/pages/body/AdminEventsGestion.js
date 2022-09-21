@@ -10,7 +10,6 @@ const AdminEventsGestion = param => {
 	const [openEventId, setOpenEventId] = useState(-42);
 	const [update, setUpdate] = useState(false);
 	const [newEvent, setNewEvent] = useState(<></>);
-	const [ret, setRet] = useState(<></>);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -68,22 +67,23 @@ const AdminEventsGestion = param => {
 				<Button onClick={createNewEvent}>New</Button>
 				<Accordion>
 					{newEvent}
-					{data.map((item, i) => (
-						<Accordion.Item eventKey={i} key={i}>
-							<AdminEventToken
-								data={item}
-								index={i}
-								key={i}
-								open={openEventId}
-								onClickRetract={() => setOpenEventId(-42)}
-								onClickDeploy={() => setOpenEventId(i)}
-								setUpdate={d => {
-									setUpdate(d);
-									setOpenEventId(-42); //RETRACT TOI BATAR
-								}}
-							/>
-						</Accordion.Item>
-					))}
+					{data.map((item, i) => {
+						return (
+							<Accordion.Item eventKey={i} key={i}>
+								<AdminEventToken
+									data={item}
+									index={i}
+									key={i}
+									open={openEventId}
+									onClickRetract={() => setOpenEventId(-42)}
+									onClickDeploy={() => setOpenEventId(i)}
+									setUpdate={d => {
+										setUpdate(d);
+									}}
+								/>
+							</Accordion.Item>
+						);
+					})}
 				</Accordion>
 			</div>
 		</div>
