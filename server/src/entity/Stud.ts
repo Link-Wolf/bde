@@ -5,14 +5,12 @@ import {
 	OneToMany,
 	PrimaryColumn
 } from "typeorm";
-import { ContributionService } from "../contribution/contribution.service";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 import { Order } from "./Order";
 
 @Entity()
 export class Stud {
-	constructor(private contributionService: ContributionService) { }
 	@PrimaryColumn()
 	login: string
 
@@ -58,10 +56,4 @@ export class Stud {
 		cascade: true
 	})
 	inscriptions: Event[]
-
-	async isPremium(): Promise<boolean> {
-		let last_cont =
-			await this.contributionService.findLast(this.login, "42");
-		return last_cont.end_date >= new Date(Date.now());
-	}
 }
