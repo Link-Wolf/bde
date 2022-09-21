@@ -4,7 +4,7 @@ import { Event } from "./Event";
 
 @Entity()
 export class Inscription {
-	@ManyToOne(() => Stud, (stud) => stud.inscriptions,
+	@ManyToOne(() => Stud, (stud) => stud.inscription,
 		{
 			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE'
@@ -15,7 +15,7 @@ export class Inscription {
 	@PrimaryColumn()
 	studLogin: string
 
-	@ManyToOne(() => Event, (event) => event.inscriptions,
+	@ManyToOne(() => Event, (event) => event.inscription,
 		{
 			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE'
