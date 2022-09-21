@@ -1,5 +1,5 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Stud } from './Stud'
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Inscription } from "./Inscription";
 
 @Entity()
 export class Event {
@@ -106,10 +106,9 @@ export class Event {
 	})
 	thumbnail_filename: string
 
-	@ManyToMany(() => Stud, (stud) => stud.inscriptions, {
+	@OneToMany(() => Inscription, (inscription) => inscription.event, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
-	@JoinTable({ name: 'inscriptions' })
-	studs: Stud[]
+	inscriptions: Inscription[]
 }

@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
 import {NotificationManager} from "react-notifications";
-import useConfirm from "./useConfirm";
+import useConfirm from "../../components/useConfirm";
 const Event = () => {
 	const [update, setUpdate] = useState(false);
 	const {isConfirmed} = useConfirm();
