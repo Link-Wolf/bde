@@ -27,11 +27,11 @@ export class InscriptionService {
 	async removeAll(requestMaker: string) {
 		try {
 			let ret = await this.manager.query(`DELETE FROM "inscription"`);
-			this.logger.warn(`Successfully deleted all inscriptions`, requestMaker);
+			this.logger.warn(`Successfully deleted all inscription`, requestMaker);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscriptions on database (${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to delete all inscriptions on database (${error})`);
+			this.logger.error(`Failed to delete all inscription on database (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to delete all inscription on database (${error})`);
 		}
 	}
 
@@ -39,16 +39,16 @@ export class InscriptionService {
 		try {
 			if (this.studService.findOne(login, requestMaker)) {
 				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "studLogin" = '${login}'`);
-				this.logger.warn(`Successfully deleted all inscriptions of student ${login}`, requestMaker);
+				this.logger.warn(`Successfully deleted all inscription of student ${login}`, requestMaker);
 				return ret
 			}
 			else {
-				this.logger.error(`Failed to remove all inscriptions of student ${login} : student does not exist`, requestMaker)
-				throw new NotFoundException(`Failed to remove all inscriptions of student ${login} : student does not exist`);
+				this.logger.error(`Failed to remove all inscription of student ${login} : student does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to remove all inscription of student ${login} : student does not exist`);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscriptions of student ${login} (${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to delete all inscriptions of student ${login} (${error})`);
+			this.logger.error(`Failed to delete all inscription of student ${login} (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to delete all inscription of student ${login} (${error})`);
 		}
 	}
 
@@ -56,15 +56,15 @@ export class InscriptionService {
 		try {
 			if (this.eventService.findOne(id, requestMaker)) {
 				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id}`);
-				this.logger.warn(`Successfully deleted all inscriptions for event ${id}`, requestMaker);
+				this.logger.warn(`Successfully deleted all inscription for event ${id}`, requestMaker);
 				return ret
 			}
 			else {
-				this.logger.error(`Failed to delete all inscriptions for event ${id} : event does not exist`, requestMaker)
-				throw new NotFoundException(`Failed to delete all inscriptions for event ${id} : event does not exist`);
+				this.logger.error(`Failed to delete all inscription for event ${id} : event does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to delete all inscription for event ${id} : event does not exist`);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscriptions for event ${id} on database (${error})`, requestMaker);
+			this.logger.error(`Failed to delete all inscription for event ${id} on database (${error})`, requestMaker);
 		}
 	}
 
@@ -104,13 +104,13 @@ export class InscriptionService {
 		try {
 			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}'`);
 			if (ret.length == 0)
-				this.logger.warn(`Fail to find all inscriptions for student ${login} : student does not have any inscription`, requestMaker);
+				this.logger.warn(`Fail to find all inscription for student ${login} : student does not have any inscription`, requestMaker);
 			else
-				this.logger.log(`Got all inscriptions for student ${login}`, requestMaker);
+				this.logger.log(`Got all inscription for student ${login}`, requestMaker);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to get all inscriptions for student ${login} on database (${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to get all inscriptions for student ${login} on database (${error})`);
+			this.logger.error(`Failed to get all inscription for student ${login} on database (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to get all inscription for student ${login} on database (${error})`);
 		}
 	}
 
@@ -118,13 +118,13 @@ export class InscriptionService {
 		try {
 			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`);
 			if (ret.length == 0)
-				this.logger.warn(`Failed to find all inscriptions for event ${id} : event does not have any inscription`, requestMaker);
+				this.logger.warn(`Failed to find all inscription for event ${id} : event does not have any inscription`, requestMaker);
 			else
-				this.logger.log(`Got all inscriptions for event ${id}`, requestMaker);
+				this.logger.log(`Got all inscription for event ${id}`, requestMaker);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to get all inscriptions for event ${id} on database (${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to get all inscriptions for event ${id} on database (${error})`);
+			this.logger.error(`Failed to get all inscription for event ${id} on database (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to get all inscription for event ${id} on database (${error})`);
 		}
 	}
 
@@ -134,11 +134,11 @@ export class InscriptionService {
 			// if (ret.length == 0)
 			// 	this.logger.warn(`No inscription found`);
 			// else
-			this.logger.log(`Got all inscriptions`, requestMaker);
+			this.logger.log(`Got all inscription`, requestMaker);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to get all inscriptions on database (${error})`, requestMaker);
-			throw new InternalServerErrorException(`Failed to get all inscriptions on database (${error})`);
+			this.logger.error(`Failed to get all inscription on database (${error})`, requestMaker);
+			throw new InternalServerErrorException(`Failed to get all inscription on database (${error})`);
 		}
 	}
 

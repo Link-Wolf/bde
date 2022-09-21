@@ -222,7 +222,7 @@ const AdminStudents = () => {
 								<li key={user.studLogin}>
 									{user.studLogin}
 									<ul>
-										<li>{user.price}</li>
+										<li>{user.price}€</li>
 										<li>{user.date}</li>
 										<Button
 											value={user.login}

@@ -110,5 +110,5 @@ export class Event {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE"
 	})
-	inscriptions: Inscription[]
+	inscription: Inscription[]
 }
