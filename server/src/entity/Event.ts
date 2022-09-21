@@ -39,6 +39,13 @@ export class Event {
 	nb_places: number
 
 	@Column({
+		type: "integer",
+		nullable: true,
+		default: 0
+	})
+	nb_premium_laces: number
+
+	@Column({
 		type: "text",
 		nullable: true,
 	})
