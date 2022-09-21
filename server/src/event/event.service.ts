@@ -24,7 +24,7 @@ export class EventService {
 
 	findEventSubbed(login: string, rm: string): Promise<Event[]> {
 		try {
-			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscriptions WHERE "studLogin" = '${login}');`);
+			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscription WHERE "studLogin" = '${login}');`);
 			this.logger.log(`Successfully got all events ${login} subbed to`, rm)
 			return ret;
 		}
@@ -305,7 +305,7 @@ export class EventService {
 
 	async getStuds(id: number, requestMaker: string): Promise<Stud[]> {
 		try {
-			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN(SELECT \"studLogin" FROM inscriptions insc WHERE "eventId" = '${id}'); `);
+			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN(SELECT \"studLogin" FROM inscription insc WHERE "eventId" = '${id}'); `);
 			this.logger.log(`Successfully got all students subbed in event ${id} `, requestMaker)
 			return a;
 		}

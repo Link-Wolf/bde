@@ -172,6 +172,6 @@ export class LogsService {
 	// }
 	//
 	// async getStuds(id: number): Promise<Stud[]> {
-	// 	return this.logsRepository.query("SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin\" FROM inscriptions insc WHERE \"logsId\" = '" + id + "' );");
+	// 	return this.logsRepository.query("SELECT * FROM stud s WHERE s.login IN (SELECT \"studLogin\" FROM inscription insc WHERE \"logsId\" = '" + id + "' );");
 	// }
 }
