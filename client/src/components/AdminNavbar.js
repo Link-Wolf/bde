@@ -28,6 +28,7 @@ const AdminNavbar = () => {
 				login: "bguyot",
 				firstname: "ikar",
 				lastname: "azphael",
+				email: "",
 				isDirection: true,
 				clearance: 42
 			})
@@ -41,6 +42,7 @@ const AdminNavbar = () => {
 						login: "bdehais",
 						firstname: "bruno",
 						lastname: "dehais",
+						email: "",
 						isDirection: true,
 						clearance: 42
 					})
@@ -55,6 +57,7 @@ const AdminNavbar = () => {
 						login: "yoyostud",
 						firstname: "yohan",
 						lastname: "tollet",
+						email: "",
 						isDirection: false,
 						clearance: 7
 					})
