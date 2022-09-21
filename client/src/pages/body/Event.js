@@ -8,7 +8,6 @@ import {NotificationManager} from "react-notifications";
 const Event = () => {
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
-	const [dataInsc, setDataInsc] = useState([]);
 	const [dataStud, setDataStud] = useState([]);
 	const [button, setButton] = useState(<> </>);
 	const [duration, setDuration] = useState("Never Ending Fun");
@@ -76,30 +75,6 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}. gotta go back`
 				);
 				window.location = "/events";
-			})
-			.then(() => {
-				fetch(
-					`http://${global.config.api.authority}/inscription/event/${param.id}`,
-					{
-						credentials: "include"
-					}
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error: The status is ${response.status}`
-							);
-						}
-						return response.json();
-					})
-					.then(actualData => {
-						setDataInsc(actualData);
-					})
-					.catch(function(error) {
-						console.log(
-							`This is a fetch error: The error is ${error.message}`
-						);
-					});
 			});
 	}, [param.id, update]);
 
@@ -196,6 +171,7 @@ const Event = () => {
 			});
 	}, [update, locked, param]);
 
+	// stud info
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/stud/minecraft/`, {
 			method: "GET",
@@ -210,7 +186,6 @@ const Event = () => {
 				return response.json();
 			})
 			.then(data => {
-				console.log(data);
 				setDataStud(data);
 			})
 			.catch(function(error) {
@@ -219,7 +194,7 @@ const Event = () => {
 				);
 			});
 	}, [update]);
-
+	console.log(dataEvent);
 	if (dataEvent.length === 0) return <></>;
 	return (
 		<>
@@ -243,21 +218,46 @@ const Event = () => {
 			${new Date(dataEvent.begin_date).toLocaleTimeString()}`}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{dataEvent.nb_places !== -42
-							? `Places : ${dataInsc.length}
-							/ ${dataEvent.nb_places - dataStud.isPremium ? 0 : dataEvent.nb_premium_places}`
-							: `Places : ${dataInsc.length} / ∞`}
+						{dataEvent.nb_places === -42 ? (
+							`Places : ${dataEvent.subbed} / ∞`
+						) : 0 === dataEvent.nb_premium_places ||
+						  dataStud.isPremium ? (
+							`Places : ${dataEvent.subbed} / ${dataEvent.nb_places}`
+						) : (
+							<>
+								{`Places : ${dataEvent.subbed -
+									dataEvent.premium_subbed} / ${dataEvent.nb_places -
+									dataEvent.nb_premium_places}`}
+								<div>
+									Octroie la possibilité de t'inscrire dans
+									les {dataEvent.nb_premium_places} places
+									reservées aux membres premiums en{" "}
+									<a href="/contribute">contribuant</a>
+								</div>
+							</>
+						)}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{`Lieu : ${dataEvent.place}`}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
-						{dataEvent.cost !== 0
-							? dataEvent.premium_cost === dataEvent.cost
-								? `Prix : ${dataEvent.cost}€`
-								: `Prix publique : ${dataEvent.cost}€
-								/ Adhérent : ${dataEvent.premium_cost}€`
-							: `Gratuit !`}
+						{dataEvent.cost === 0 ? (
+							`Gratuit !`
+						) : dataEvent.premium_cost === dataEvent.cost ||
+						  dataStud.isPremium ? (
+							`Prix : ${dataEvent.premium_cost}€`
+						) : (
+							<>
+								{`Prix : ${dataEvent.cost}€`}
+								<div>
+									Octroie une réduction de{" "}
+									{dataEvent.cost - dataEvent.premium_cost}
+									{"€ "}
+									reservee aux membres premiums en{" "}
+									<a href="/contribute">contribuant</a>
+								</div>
+							</>
+						)}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{`Durée : ${duration}`}

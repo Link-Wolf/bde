@@ -1,9 +1,8 @@
 import {
-	Injectable, InternalServerErrorException,
-	NotFoundException, StreamableFile
+	Injectable, NotFoundException, StreamableFile
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
+import { IsNull, MoreThanOrEqual, Repository, EntityManager } from 'typeorm';
 import { Event } from '../entity/Event'
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
@@ -20,6 +19,7 @@ export class EventService {
 		private eventRepository: Repository<Event>,
 		private studService: StudService,
 		private logger: LoggerService,
+		private manager: EntityManager
 	) { }
 
 	findEventSubbed(login: string, rm: string): Promise<Event[]> {
@@ -183,13 +183,22 @@ export class EventService {
 		}
 	}
 
-	async findOne(id: number, requestMaker: string): Promise<Event> {
+	async findOne(id: number, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
 			if (!event)
 				throw new NotFoundException(`Failed to find event ${id}`);
 			this.logger.log(`Got event with id ${id} `, requestMaker);
-			return event;
+			let ret = {
+				...event,
+				subbed: (
+					await this.manager.query
+						(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`))
+					.length,
+				premium_subbed: (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length
+			}
+			console.log(ret)
+			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to find event
 			${ id} on database(${error})`, requestMaker);
