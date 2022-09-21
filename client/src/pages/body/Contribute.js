@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import emailjs from "@emailjs/browser";
 import {
 	PayPalScriptProvider,
 	PayPalButtons,
@@ -12,6 +13,35 @@ const ContributeButtons = () => {
 	const style = {layout: "vertical"};
 	const [{options, isPending}, dispatch] = usePayPalScriptReducer();
 	const [contributionStatus, setContributionStatus] = useState(false);
+
+	const sendMail = async (date, commande, timestamp, mail) => {
+		await emailjs
+			.send(
+				global.config.emailjs.service_id,
+				global.config.emailjs.template_paiement,
+				{
+					date: date,
+					commande: commande,
+					timestamp: timestamp,
+					mail: mail
+				},
+				global.config.emailjs.public_key
+			)
+			.then(
+				result => {
+					console.log(result.text);
+				},
+				error => {
+					console.log(error.text);
+				}
+			)
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération mail: " +
+						error.message
+				);
+			});
+	};
 
 	useEffect(() => {
 		dispatch({
@@ -151,9 +181,43 @@ const ContributeButtons = () => {
 									"Content-Type": "application/json"
 								}
 							}
-						).then(() => {
-							window.location = `/receipt/${data.orderID}`;
-						});
+						)
+							.then(response => {
+								if (!response.ok) {
+									throw new Error(
+										`This is an HTTP error: The status is ${response.status}`
+									);
+								}
+								return response.json();
+							})
+							.then(async data => {
+								console.log("Here : ", data.order, data.mail);
+								await sendMail(
+									new Date(Date.now()).toLocaleDateString(
+										"fr-FR",
+										{
+											weekday: "long",
+											year: "numeric",
+											month: "long",
+											day: "numeric"
+										}
+									),
+									data.order.id,
+									new Intl.DateTimeFormat("fr-FR", {
+										day: "numeric",
+										month: "short",
+										year: "numeric",
+										hour: "2-digit",
+										minute: "2-digit",
+										second: "2-digit",
+										timeZoneName: "short"
+									}).format(new Date(data.order.date)),
+									data.mail
+								);
+							})
+							.then(() => {
+								window.location = `/receipt/${data.orderID}`;
+							});
 					});
 				}}
 				onShippingChange={function(data, actions) {
