@@ -8,7 +8,6 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 
 const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
-	const [update, setUpdate] = useState(false);
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -17,6 +16,7 @@ const AdminEventToken = param => {
 		available_date: "",
 		place: "",
 		nb_places: 0,
+		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
@@ -33,6 +33,7 @@ const AdminEventToken = param => {
 		available_date: "",
 		place: "",
 		nb_places: 0,
+		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
@@ -48,6 +49,7 @@ const AdminEventToken = param => {
 		end_date: "",
 		place: "",
 		nb_places: 0,
+		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
@@ -65,7 +67,6 @@ const AdminEventToken = param => {
 
 	const switchLock = () => {
 		setLocked(false);
-		setUpdate(true);
 	};
 
 	const handleFormChange = event => {
@@ -121,7 +122,6 @@ const AdminEventToken = param => {
 	};
 
 	useEffect(() => {
-		setUpdate(false);
 		let tmp = {...param.data};
 		tmp.hasEndDate = param.data.end_date !== null;
 		tmp.end_date = tmp.end_date ? tmp.end_date : null;
@@ -196,10 +196,9 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(available_date.getMinutes());
 		setBodyState(tmpBody);
-	}, [param.data, update]);
+	}, [param.data]);
 
 	useEffect(() => {
-		setUpdate(false);
 		const saveEvent = async () => {
 			const changeThumbnail = async () => {
 				const data = new FormData();
@@ -227,7 +226,6 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
-				setUpdate(true);
 			};
 			if (
 				!document
@@ -285,7 +283,6 @@ const AdminEventToken = param => {
 						);
 					});
 				changeThumbnail();
-				param.setUpdate(true);
 				window.location.reload();
 			}
 		};
@@ -311,10 +308,9 @@ const AdminEventToken = param => {
 					Save
 				</Button>
 			);
-	}, [param, update, formState, locked, bodyState, isConfirmed]);
+	}, [param, formState, locked, bodyState, isConfirmed]);
 
 	useEffect(() => {
-		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
 			{
@@ -339,7 +335,7 @@ const AdminEventToken = param => {
 						error.message
 				);
 			});
-	}, [update, isConfirmed, param]);
+	}, [param]);
 
 	const deleteEvent = async () => {
 		if (
@@ -367,8 +363,6 @@ const AdminEventToken = param => {
 								error.message
 						);
 					});
-				param.setUpdate(true);
-				setUpdate(true);
 			}
 		}
 	};
@@ -380,7 +374,7 @@ const AdminEventToken = param => {
 			</Accordion.Header>
 			<Accordion.Body>
 				{" "}
-				<Form id={`updateEventForm${param.key}`}>
+				<Form id={`updateEventForm${param.eventKey}`}>
 					<Form.Label>Name : </Form.Label>
 					<Form.Control
 						disabled={locked}
@@ -472,6 +466,17 @@ const AdminEventToken = param => {
 						name="nb_places"
 						onChange={handleFormChange}
 						value={formState.nb_places}
+					/>
+					<Form.Label>Places Reservées : </Form.Label>
+					{" ? / "}
+					<Form.Control
+						disabled={locked}
+						type="number"
+						id="formNbPremiumPlaces"
+						min="0"
+						name="nb_premium_places"
+						onChange={handleFormChange}
+						value={formState.nb_premium_places}
 					/>
 					<Form.Label>Lieu : </Form.Label>
 					<Form.Control

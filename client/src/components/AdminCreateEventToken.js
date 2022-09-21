@@ -15,6 +15,7 @@ const AdminCreateEventToken = param => {
 		available_date: new Date(Date.now()),
 		place: "",
 		nb_places: 0,
+		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: false,
@@ -31,6 +32,7 @@ const AdminCreateEventToken = param => {
 		available_date: new Date(Date.now()),
 		place: "",
 		nb_places: 0,
+		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: false,
@@ -262,6 +264,16 @@ const AdminCreateEventToken = param => {
 					name="nb_places"
 					onChange={handleFormChange}
 					value={formState.nb_places}
+				/>
+				<Form.Label>Places Reservées : </Form.Label>
+				{" ? / "}
+				<Form.Control
+					type="number"
+					id="formNbPremiumPlaces"
+					min="0"
+					name="nb_premium_places"
+					onChange={handleFormChange}
+					value={formState.nb_premium_places}
 				/>
 				<Form.Label>Lieu : </Form.Label>
 				<Form.Control
