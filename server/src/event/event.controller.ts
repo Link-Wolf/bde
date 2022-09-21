@@ -89,8 +89,8 @@ export class EventController {
 	@Patch(':id/inscription')
 	subscribe(
 		@Session() session: Record<string, any>, @Param('id') id: number,
-		@Body('login') login: string) {
-		return this.eventService.subscribe(id, login, session.login);
+		@Body('login') login: string, @Body('cost') cost: number) {
+		return this.eventService.subscribe(id, login, cost, session.login);
 	}
 
 	@Patch('admin/:id/inscription')
@@ -98,8 +98,8 @@ export class EventController {
 
 	forceSubscribe(
 		@Session() session: Record<string, any>, @Param('id') id: number,
-		@Body('login') login: string) {
-		return this.eventService.forceSubscribe(id, login, session.login);
+		@Body('login') login: string, @Body('cost') cost: number) {
+		return this.eventService.forceSubscribe(id, login, cost, session.login);
 	}
 
 	@Delete(':id')
