@@ -34,10 +34,10 @@ const Contact = () => {
 			formState.message !== "" &&
 			document.getElementById("emailField").checkValidity()
 		)
-			emailjs
+			await emailjs
 				.send(
 					global.config.emailjs.service_id,
-					global.config.emailjs.template_id,
+					global.config.emailjs.template_contact,
 					formState,
 					global.config.emailjs.public_key
 				)
