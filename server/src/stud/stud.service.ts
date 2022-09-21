@@ -4,12 +4,14 @@ import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
+import { ContributionService } from '../contribution/contribution.service';
 
 @Injectable()
 export class StudService {
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
+		private contributionService: ContributionService,
 		private readonly logger: LoggerService
 	) { }
 
@@ -58,7 +60,7 @@ export class StudService {
 		}
 	}
 
-	async findOne(login: string, requestMaker: string): Promise<Stud> {
+	async findOne(login: string, requestMaker: string): Promise<any> {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud)
@@ -67,7 +69,25 @@ export class StudService {
 			// }
 			else
 				this.logger.log(`Got student with login ${login}`, requestMaker);
-			return stud
+			const ret = {
+				...stud, isPremium:
+					await (async () => {
+						let status = false
+						let data =
+							await this.contributionService.findForUser(stud.login, "42");
+						data.forEach((item) => {
+							if (
+								new Date(item.end_date) > new Date(Date.now()) &&
+								new Date(item.begin_date) <= new Date(Date.now())
+							) {
+								status = true
+							}
+						});
+						return status
+					})()
+			}
+			console.log(ret)
+			return ret
 		}
 		catch (error) {
 			this.logger.error(`Failed to find student ${login} on database (${error})`, requestMaker)

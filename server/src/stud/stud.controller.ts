@@ -16,8 +16,14 @@ export class StudController {
 		return this.studService.findAll(session.login);
 	}
 
-	@Get(':login') @UseGuards(new ClearanceGuard(5))
+	@Get('minecraft')
+	@UseGuards(new ClearanceGuard(5))
+	findMe(@Session() session: Record<string, any>): Promise<Stud> {
+		return this.studService.findOne(session.login, session.login);
+	}
 
+	@Get(':login')
+	@UseGuards(new ClearanceGuard(5))
 	findOne(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
 		return this.studService.findOne(login, session.login);
 	}

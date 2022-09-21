@@ -74,14 +74,23 @@ export class InscriptionService {
 				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`, requestMaker)
 				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`)
 			}
-			if (!await this.studService.findOne(login, requestMaker)) {
+			const stud = await this.studService.findOne(login, requestMaker)
+			if (!stud) {
 				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : student does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to save inscription for student ${login} to event ${id} : student does not exist`)
 			}
-			if (!await this.eventService.findOne(id, requestMaker)) {
+			const event = await this.eventService.findOne(id, requestMaker);
+			if (!event) {
 				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : event does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to save inscription for student ${login} to event ${id} : event does not exist`)
 			}
+			const subbed = (
+				await this.manager.query
+					(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`))
+				.length;
+			const premium_subbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length;
+			if (subbed >= event.nb_places || (stud.isPremium() && subbed - premium_subbed >= event.nb_places - event.nb_premium_places))
+				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : event is full`)
 			let ret = this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
 			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`, requestMaker);
 			return ret
