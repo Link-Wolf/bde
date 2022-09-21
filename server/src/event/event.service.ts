@@ -197,7 +197,6 @@ export class EventService {
 					.length,
 				premium_subbed: (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length
 			}
-			console.log(ret)
 			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to find event
@@ -222,7 +221,7 @@ export class EventService {
 		}
 	}
 
-	async subscribe(id: number, login: string, requestMaker: string): Promise<any> {
+	async subscribe(id: number, login: string, cost: number, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
@@ -230,15 +229,13 @@ export class EventService {
 					, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : event does not exist`)
 			}
-			event.studs = await this.getStuds(id, requestMaker);
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
 				this.logger.error(`Failed to subscribe student ${login} to event ${id} : student does not exist`
 					, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student does not exist`)
 			}
-			event.studs.push(stud);
-			let ret = await this.eventRepository.save(event);
+			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin",price,date) VALUES (${id}, '${login}', ${cost}, NOW())`);
 			this.logger.log(`Successfully subscribe student ${login} to event ${id} `, requestMaker);
 			return ret;
 		} catch (error) {
@@ -247,7 +244,7 @@ export class EventService {
 		}
 	}
 
-	async forceSubscribe(id: number, login: string, requestMaker: string): Promise<any> {
+	async forceSubscribe(id: number, login: string, cost: number, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
@@ -255,13 +252,11 @@ export class EventService {
 					, requestMaker)
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : event does not exist`)
 			}
-			event.studs = await this.getStuds(id, requestMaker);
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
-			event.studs.push(stud);
-			let ret = await this.eventRepository.save(event);
+			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin",price,date) VALUES (${id}, '${login}', ${cost}, NOW())`);
 			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker);
 			return ret;
 		} catch (error) {
