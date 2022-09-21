@@ -4,9 +4,10 @@ import {Button} from "react-bootstrap";
 import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import EventAlbum from "../../components/EventAlbum";
 import {NotificationManager} from "react-notifications";
-
+import useConfirm from "./useConfirm";
 const Event = () => {
 	const [update, setUpdate] = useState(false);
+	const {isConfirmed} = useConfirm();
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataStud, setDataStud] = useState([]);
 	const [button, setButton] = useState(<> </>);
@@ -105,6 +106,22 @@ const Event = () => {
 			setUpdate(true);
 		};
 
+		const callBdeSub = async () => {
+			setLocked(true);
+			await isConfirmed(
+				`Contacte un membre du BDE pour payer et valider ton inscription !`
+			);
+			setLocked(false);
+		};
+
+		const callBdeUnsub = async () => {
+			setLocked(true);
+			await isConfirmed(
+				`Contacte un membre du BDE pour te faire rembourser et retirer ton inscription !`
+			);
+			setLocked(false);
+		};
+
 		const sub = async () => {
 			setLocked(true);
 
@@ -152,15 +169,34 @@ const Event = () => {
 			})
 			.then(data => {
 				if (data.isSubbed)
+					if (
+						(dataEvent.premium_cost == 0 && data.isPremium) ||
+						dataEvent.cost == 0
+					)
+						setButton(
+							<Button onClick={unsub} disabled={locked}>
+								Unsubscribe
+							</Button>
+						);
+					else
+						setButton(
+							<Button onClick={callBdeUnsub} disable={locked}>
+								Unsubscribe
+							</Button>
+						);
+				else if (
+					(dataEvent.premium_cost == 0 && data.isPremium) ||
+					dataEvent.cost == 0
+				)
 					setButton(
-						<Button onClick={unsub} disabled={locked}>
-							Unsubscribe
+						<Button onClick={sub} disabled={locked}>
+							Subscribe
 						</Button>
 					);
 				else
 					setButton(
-						<Button onClick={sub} disabled={locked}>
-							Subscribe
+						<Button onClick={callBdeSub} disable={locked}>
+							Unsubscribe
 						</Button>
 					);
 			})
@@ -229,10 +265,9 @@ const Event = () => {
 									dataEvent.premium_subbed} / ${dataEvent.nb_places -
 									dataEvent.nb_premium_places}`}
 								<div>
-									Octroie la possibilité de t'inscrire dans
-									les {dataEvent.nb_premium_places} places
-									reservées aux membres premiums en{" "}
-									<a href="/contribute">contribuant</a>
+									Dont {dataEvent.nb_premium_places} places
+									reservées aux membres{" "}
+									<a href="/contribute">premiums</a>
 								</div>
 							</>
 						)}
@@ -250,11 +285,10 @@ const Event = () => {
 							<>
 								{`Prix : ${dataEvent.cost}€`}
 								<div>
-									Octroie une réduction de{" "}
-									{dataEvent.cost - dataEvent.premium_cost}
+									Ou {dataEvent.premium_cost}
 									{"€ "}
-									reservee aux membres premiums en{" "}
-									<a href="/contribute">contribuant</a>
+									pour les membres{" "}
+									<a href="/contribute">premiums</a>
 								</div>
 							</>
 						)}

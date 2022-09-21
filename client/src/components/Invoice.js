@@ -1,6 +1,6 @@
 import ReactToPrint from "react-to-print";
 import React from "react";
-import logo from "../assets/logos/bde_logo.jpeg";
+import logo from "../assets/logos/bde_logo_name.png";
 
 import style from "../style/Invoice.module.css";
 
