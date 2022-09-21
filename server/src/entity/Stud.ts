@@ -55,5 +55,5 @@ export class Stud {
 		onUpdate: "CASCADE",
 		cascade: true
 	})
-	inscriptions: Event[]
+	inscription: Event[]
 }

@@ -15,6 +15,7 @@ const UserProfile = options => {
 	const [dataStud, setDataStud] = useState({});
 	const [dataContrib, setDataContrib] = useState([]);
 	const [dataEvent, setDataEvent] = useState([]);
+	const [dataOrder, setDataOrder] = useState([]);
 	const [contributionStatus, setContributionStatus] = useState(false);
 	const [nav, setNav] = useState(<></>);
 
@@ -108,6 +109,34 @@ const UserProfile = options => {
 			});
 	}, [dataStud]);
 
+	useEffect(() => {
+		const requestOptions = {
+			method: "get",
+			credentials: "include"
+		};
+		fetch(
+			`http://${global.config.api.authority}/order/stud/${dataStud.login}`,
+			requestOptions
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(actualData => {
+				setDataOrder(actualData);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [dataStud]);
+
 	return (
 		<>
 			{nav}
@@ -181,6 +210,18 @@ const UserProfile = options => {
 							{dataEvent.map(data => (
 								<li key={data.id}>
 									<EventToken event={data} />
+								</li>
+							))}
+						</ul>
+					</div>
+					<div>
+						<h3> Historique commandes </h3>
+						<ul>
+							{dataOrder.map(data => (
+								<li key={data.id}>
+									<a href={`/receipt/${data.id}`}>
+										{data.id}
+									</a>
 								</li>
 							))}
 						</ul>

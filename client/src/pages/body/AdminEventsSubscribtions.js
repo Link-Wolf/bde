@@ -15,7 +15,7 @@ const AdminStudents = () => {
 	const [subForm, setSubForm] = useState(false);
 
 	const getStud = id => {
-		fetch(`http://${global.config.api.authority}/inscription/${id}/stud`, {
+		fetch(`http://${global.config.api.authority}/inscription/event/${id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -64,14 +64,14 @@ const AdminStudents = () => {
 			});
 	};
 
-	const checkStud = (eventId, login) => {
+	const checkStud = (eventId, login, eventCost) => {
 		const requestOptions = {
 			method: "PATCH",
 			credentials: "include",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({login: login})
+			body: JSON.stringify({login: login, cost: eventCost})
 		};
 		fetch(
 			`http://${global.config.api.authority}/event/admin/${eventId}/inscription`,
@@ -134,12 +134,13 @@ const AdminStudents = () => {
 
 	const handleSubButton = async () => {
 		let toSub = document.getElementById("studToAdd").value;
+		let cost = document.getElementById("cost").value;
 		let confirm = await isConfirmed(
 			`Tu es certain de vouloir inscrire ${toSub} de force ?`
 		);
 		if (confirm) {
 			if (toSub !== "") {
-				checkStud(selectedEvent, toSub);
+				checkStud(selectedEvent, toSub, cost);
 				NotificationManager.success(
 					`Successfully subscribe ${toSub}`,
 					"Validation",
@@ -159,7 +160,7 @@ const AdminStudents = () => {
 			setSubForm(true);
 		}
 	}, [selectedEvent, update]);
-
+	console.log(stud);
 	return (
 		<div
 			style={{
@@ -201,6 +202,12 @@ const AdminStudents = () => {
 								placeholder="yoyostud"
 								autoFocus={true}
 							/>
+							<Form.Control
+								type="number"
+								id="cost"
+								placeholder="0"
+								autoFocus={true}
+							/>
 							<Button value="button" onClick={handleSubButton}>
 								Inscrire
 							</Button>
@@ -212,16 +219,11 @@ const AdminStudents = () => {
 					{stud.length > 0 && (
 						<ul>
 							{stud.map(user => (
-								<li key={user.login}>
-									{user.login}
+								<li key={user.studLogin}>
+									{user.studLogin}
 									<ul>
-										<li>{user.firstname}</li>
-										<li>{user.lastname}</li>
-										<li>
-											{user.isDirection
-												? "direction"
-												: "pnj"}
-										</li>
+										<li>{user.price}€</li>
+										<li>{user.date}</li>
 										<Button
 											value={user.login}
 											onClick={handleRemoveButton}

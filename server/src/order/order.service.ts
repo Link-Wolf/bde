@@ -24,6 +24,21 @@ export class OrderService {
 		return due;
 	}
 
+	async findStud(login: string, maker: any) {
+		try {
+			let order = await this.orderRepository.findBy({ studLogin: login });
+			if (!order)
+				this.logger.warn(
+					`404: order for ${login} doesnt exits`, login)
+			else
+				this.logger.log(`Got orderfor ${login}`, login);
+			return order
+		} catch (err) {
+			this.logger.error(`Failed to find orders of ${login} on database (${err})`, maker)
+			throw err
+		}
+	}
+
 	async findOne(id: string, login: any) {
 		try {
 			let order = await this.orderRepository.findOneBy({ id: id });
