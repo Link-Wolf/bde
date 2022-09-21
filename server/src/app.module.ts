@@ -22,6 +22,7 @@ import { PaypalModule } from './paypal/paypal.module';
 import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
+import { Inscription } from './entity/Inscription';
 const { db_password, session_secret } = require('../config.json')
 
 
@@ -33,7 +34,7 @@ const { db_password, session_secret } = require('../config.json')
 			username: 'linkar',
 			password: db_password,
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Logs, Goodies, Order],
+			entities: [Stud, Contribution, Event, Logs, Goodies, Order, Inscription],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({

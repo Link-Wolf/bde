@@ -15,7 +15,7 @@ export class InscriptionService {
 
 	async getIsSubbed(id: number, login: any) {
 		try {
-			const isSubbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId"=${id} AND "studLogin"='${login}'`)).length > 0
+			const isSubbed = (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId"=${id} AND "studLogin"='${login}'`)).length > 0
 			this.logger.log(`Successfully checked if ${login} is subbed to event ${id}`, login)
 			return { isSubbed: isSubbed }
 		} catch (error) {
@@ -26,7 +26,7 @@ export class InscriptionService {
 
 	async removeAll(requestMaker: string) {
 		try {
-			let ret = await this.manager.query(`DELETE FROM "inscriptions"`);
+			let ret = await this.manager.query(`DELETE FROM "inscription"`);
 			this.logger.warn(`Successfully deleted all inscriptions`, requestMaker);
 			return ret
 		} catch (error) {
@@ -38,7 +38,7 @@ export class InscriptionService {
 	async removeByStud(login: string, requestMaker: string) {
 		try {
 			if (this.studService.findOne(login, requestMaker)) {
-				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "studLogin" = '${login}'`);
+				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "studLogin" = '${login}'`);
 				this.logger.warn(`Successfully deleted all inscriptions of student ${login}`, requestMaker);
 				return ret
 			}
@@ -55,7 +55,7 @@ export class InscriptionService {
 	async removeByEvent(id: number, requestMaker: string) {
 		try {
 			if (this.eventService.findOne(id, requestMaker)) {
-				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id}`);
+				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id}`);
 				this.logger.warn(`Successfully deleted all inscriptions for event ${id}`, requestMaker);
 				return ret
 			}
@@ -70,7 +70,7 @@ export class InscriptionService {
 
 	async link(id: number, login: string, requestMaker: string) {
 		try {
-			if ((await this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}' AND "eventId" = ${id}`)).length != 0) {
+			if ((await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}' AND "eventId" = ${id}`)).length != 0) {
 				this.logger.error(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`, requestMaker)
 				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : inscription already exists`)
 			}
@@ -86,12 +86,12 @@ export class InscriptionService {
 			}
 			const subbed = (
 				await this.manager.query
-					(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`))
+					(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`))
 				.length;
-			const premium_subbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length;
+			const premium_subbed = (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length;
 			if (subbed >= event.nb_places || (stud.isPremium() && subbed - premium_subbed >= event.nb_places - event.nb_premium_places))
 				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : event is full`)
-			let ret = this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
+			let ret = this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId") VALUES('${login}', ${id})`);
 			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`, requestMaker);
 			return ret
 		} catch (error) {
@@ -102,7 +102,7 @@ export class InscriptionService {
 
 	async findByStud(login: string, requestMaker: string) {
 		try {
-			let ret = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "studLogin" = '${login}'`);
+			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}'`);
 			if (ret.length == 0)
 				this.logger.warn(`Fail to find all inscriptions for student ${login} : student does not have any inscription`, requestMaker);
 			else
@@ -116,7 +116,7 @@ export class InscriptionService {
 
 	async findByEvent(id: number, requestMaker: string) {
 		try {
-			let ret = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`);
+			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`);
 			if (ret.length == 0)
 				this.logger.warn(`Failed to find all inscriptions for event ${id} : event does not have any inscription`, requestMaker);
 			else
@@ -130,7 +130,7 @@ export class InscriptionService {
 
 	async findAll(requestMaker: string) {
 		try {
-			let ret = await this.manager.query(`SELECT * FROM "inscriptions"`);
+			let ret = await this.manager.query(`SELECT * FROM "inscription"`);
 			// if (ret.length == 0)
 			// 	this.logger.warn(`No inscription found`);
 			// else
@@ -144,9 +144,9 @@ export class InscriptionService {
 
 	async remove(id: number, login: string, requestMaker: string) {
 		try {
-			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+			let insc = await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			if (insc.length) {
-				let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 				this.logger.log(`Successfully delete inscription for student ${login} and event ${id}`, requestMaker);
 				return ret
 			}
@@ -160,12 +160,12 @@ export class InscriptionService {
 
 	async forceRemove(id: number, login: string, requestMaker: string) {
 		try {
-			let insc = await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+			let insc = await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			if (!insc.lenght) {
 				this.logger.warn(`Failed to force delete inscription for student ${login} and event ${id} : inscription does not exist`, requestMaker)
 				throw new NotFoundException(`inscription does not exist`)
 			}
-			let ret = await this.manager.query(`DELETE FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
+			let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`, requestMaker);
 			return ret
 		} catch (error) {
@@ -176,7 +176,7 @@ export class InscriptionService {
 
 	async getStudByEvent(id: number, requestMaker: string) {
 		try {
-			let insc = await this.manager.query(`SELECT * FROM "stud" WHERE "login" IN (SELECT "studLogin" FROM "inscriptions" WHERE "eventId" = '${id}')`);
+			let insc = await this.manager.query(`SELECT * FROM "stud" WHERE "login" IN (SELECT "studLogin" FROM "inscription" WHERE "eventId" = '${id}')`);
 			if (insc.length)
 				this.logger.log(`Successfully get all students who are subscribed to event ${id}`, requestMaker);
 			return insc;
