@@ -1,13 +1,13 @@
 import {
 	Column,
 	Entity,
-	ManyToMany,
 	OneToMany,
 	PrimaryColumn
 } from "typeorm";
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 import { Order } from "./Order";
+import { Inscription } from "./Inscription";
 
 @Entity()
 export class Stud {
@@ -50,7 +50,7 @@ export class Stud {
 	})
 	orders: Order[]
 
-	@ManyToMany(() => Event, (inscription) => inscription.studs, {
+	@OneToMany(() => Inscription, (inscription) => inscription.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 		cascade: true

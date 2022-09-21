@@ -139,7 +139,7 @@ export class EventService {
 					match += ` AND "cost" = 0`
 				if (filterDto.available)
 					match += ` AND("nb_places" > (SELECT COUNT(*) FROM
-				 "inscriptions" WHERE "eventId" = event.id) OR "nb_places" < 0)`
+				 "inscription" WHERE "eventId" = event.id) OR "nb_places" < 0)`
 				if (filterDto.food)
 					match += ` AND "consos" = 't'`
 				if (filterDto.unlimited)
@@ -193,9 +193,9 @@ export class EventService {
 				...event,
 				subbed: (
 					await this.manager.query
-						(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`))
+						(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`))
 					.length,
-				premium_subbed: (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length
+				premium_subbed: (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length
 			}
 			console.log(ret)
 			return ret;
