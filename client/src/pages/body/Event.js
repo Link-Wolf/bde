@@ -196,7 +196,7 @@ const Event = () => {
 				else
 					setButton(
 						<Button onClick={callBdeSub} disable={locked}>
-							Unsubscribe
+							Subscribe
 						</Button>
 					);
 			})

@@ -94,18 +94,6 @@ class Invoice extends React.Component {
 	}
 }
 
-// <tr className={style.item}>
-// 	<td>Website design</td>
-//
-// 	<td>$300.00</td>
-// </tr>
-//
-// <tr className={style.item}>
-// 	<td>Hosting (3 months)</td>
-//
-// 	<td>$75.00</td>
-// </tr>
-
 export default Invoice;
 
 export const Print = React.forwardRef((props, ref) => {
