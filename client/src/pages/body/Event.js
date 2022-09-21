@@ -9,6 +9,7 @@ const Event = () => {
 	const [update, setUpdate] = useState(false);
 	const [dataEvent, setDataEvent] = useState([]);
 	const [dataInsc, setDataInsc] = useState([]);
+	const [dataStud, setDataStud] = useState([]);
 	const [button, setButton] = useState(<> </>);
 	const [duration, setDuration] = useState("Never Ending Fun");
 	const [thumbnail, setThumnail] = useState(null);
@@ -195,6 +196,30 @@ const Event = () => {
 			});
 	}, [update, locked, param]);
 
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/stud/minecraft/`, {
+			method: "GET",
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				console.log(data);
+				setDataStud(data);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, [update]);
+
 	if (dataEvent.length === 0) return <></>;
 	return (
 		<>
@@ -220,7 +245,7 @@ const Event = () => {
 					<CardSubtitle className="mb-2 text-muted" tag="h6">
 						{dataEvent.nb_places !== -42
 							? `Places : ${dataInsc.length}
-							/ ${dataEvent.nb_places}`
+							/ ${dataEvent.nb_places - dataStud.isPremium ? 0 : dataEvent.nb_premium_places}`
 							: `Places : ${dataInsc.length} / ∞`}
 					</CardSubtitle>
 					<CardSubtitle className="mb-2 text-muted" tag="h6">

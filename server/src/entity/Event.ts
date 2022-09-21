@@ -43,7 +43,7 @@ export class Event {
 		nullable: true,
 		default: 0
 	})
-	nb_premium_laces: number
+	nb_premium_places: number
 
 	@Column({
 		type: "text",

@@ -89,7 +89,7 @@ export class InscriptionService {
 					(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id}`))
 				.length;
 			const premium_subbed = (await this.manager.query(`SELECT * FROM "inscriptions" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length;
-			if (subbed >= event.nb_places || (stud.isPremium() && subbed - premium_subbed >= event.nb_places - event.nb_premium_laces))
+			if (subbed >= event.nb_places || (stud.isPremium() && subbed - premium_subbed >= event.nb_places - event.nb_premium_places))
 				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : event is full`)
 			let ret = this.manager.query(`INSERT INTO "inscriptions" ("studLogin", "eventId") VALUES('${login}', ${id})`);
 			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`, requestMaker);
