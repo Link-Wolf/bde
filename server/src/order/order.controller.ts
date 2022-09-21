@@ -16,6 +16,14 @@ export class OrderController {
 		return this.orderService.findOne(id, session.login)
 	}
 
+	@Get('stud/:login')
+	findStud(
+		@Session() session: Record<string, any>,
+		@Param('login') login: string
+	) {
+		return this.orderService.findStud(login, session.login)
+	}
+
 	@Post('create')
 	createOrder(
 		@Session() session: Record<string, any>,
