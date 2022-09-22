@@ -2,7 +2,6 @@ import {useEffect, useState, useRef} from "react";
 import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
-import Placeholder from "react-bootstrap/Placeholder";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -21,12 +20,9 @@ const AdminProductToken = param => {
 		available: true
 	});
 	const [locked, setLocked] = useState(true);
-	const [button, setButton] = useState(
-		<Placeholder.Button variant="primary" />
-	);
 	const [update, setUpdate] = useState(false);
-	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
+	const img = useRef(null);
 
 	const switchLock = () => {
 		setLocked(false);
@@ -47,37 +43,72 @@ const AdminProductToken = param => {
 		setFormState(tmp);
 	};
 
-	useEffect(() => {
-		let tmp = {...param.data};
-		tmp.available = param.data.available;
-		setFormState(tmp);
-		let tmpBody = {...tmp};
-		setBodyState(tmpBody);
-	}, [param.data]);
-
-	useEffect(() => {
-		const changeThumbnail = () => {
-			const data = new FormData();
-			data.append("thumbnail", img.current);
-			fetch(
-				`http://${global.config.api.authority}/goodies/upload_image
-				/${param.data.id}`,
-				{
-					method: "POST",
-					credentials: "include",
-					body: data
+	const changeThumbnail = () => {
+		const data = new FormData();
+		data.append("thumbnail", img.current);
+		fetch(
+			`http://${global.config.api.authority}/goodies/upload_image
+			/${param.data.id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
 				}
+			})
+			.then(() => {
+				setUpdate(true);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
+	const saveProduct = async () => {
+		if (
+			await isConfirmed(
+				`Desire tu modifier le goodies ${param.data.name} ?`
+			)
+		) {
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+
+			var raw = JSON.stringify({
+				name: bodyState.name,
+				cost: bodyState.cost,
+				desc: bodyState.desc,
+				available: bodyState.available
+			});
+
+			var requestOptions = {
+				method: "PATCH",
+				headers: myHeaders,
+				body: raw,
+				redirect: "follow",
+				credentials: "include"
+			};
+
+			await fetch(
+				`http://${global.config.api.authority}/goodies/${param.data.id}`,
+				requestOptions
 			)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
 							`This is an HTTP error:
-						 The status is ${response.status}`
+							 The status is ${response.status}`
 						);
 					}
-				})
-				.then(() => {
-					setUpdate(true);
 				})
 				.catch(function(error) {
 					console.log(
@@ -85,78 +116,18 @@ const AdminProductToken = param => {
 							error.message
 					);
 				});
-		};
-		const saveProduct = async () => {
-			if (
-				await isConfirmed(
-					`Desire tu modifier le goodies ${param.data.name} ?`
-				)
-			) {
-				var myHeaders = new Headers();
-				myHeaders.append("Content-Type", "application/json");
+			changeThumbnail();
+			window.location.reload();
+		}
+	};
 
-				var raw = JSON.stringify({
-					name: bodyState.name,
-					cost: bodyState.cost,
-					desc: bodyState.desc,
-					available: bodyState.available
-				});
-
-				var requestOptions = {
-					method: "PATCH",
-					headers: myHeaders,
-					body: raw,
-					redirect: "follow",
-					credentials: "include"
-				};
-
-				await fetch(
-					`http://${global.config.api.authority}/goodies/${param.data.id}`,
-					requestOptions
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error:
-								 The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
-						);
-					});
-				changeThumbnail();
-				window.location.reload();
-			}
-		};
-
-		setUpdate(false);
-		if (locked)
-			setButton(
-				<Button
-					type="button"
-					color="primary"
-					defaultValue={param.index}
-					onClick={switchLock}
-				>
-					Edit
-				</Button>
-			);
-		else
-			setButton(
-				<Button
-					type="button"
-					color="primary"
-					defaultValue={param.index}
-					onClick={saveProduct}
-				>
-					Save
-				</Button>
-			);
-	}, [param, update, formState, locked, bodyState, isConfirmed]);
+	useEffect(() => {
+		let tmp = {...param.data};
+		tmp.available = param.data.available;
+		setFormState(tmp);
+		let tmpBody = {...tmp};
+		setBodyState(tmpBody);
+	}, [param.data]);
 
 	useEffect(() => {
 		setUpdate(false);
@@ -279,7 +250,25 @@ const AdminProductToken = param => {
 						width="auto"
 						effect="blur"
 					/>
-					{button}
+					{locked ? (
+						<Button
+							type="button"
+							color="primary"
+							defaultValue={param.index}
+							onClick={switchLock}
+						>
+							Edit
+						</Button>
+					) : (
+						<Button
+							type="button"
+							color="primary"
+							defaultValue={param.index}
+							onClick={saveProduct}
+						>
+							Save
+						</Button>
+					)}
 					<Button color="secondary" type="reset" disabled={locked}>
 						Reset
 					</Button>
