@@ -95,7 +95,10 @@ export class OrderService {
 			await this.contributionService
 				.create(contrib, login);
 			this.logger.log(`Successfully captured order ${body.id}`, login)
-			return ret
+			return {
+				order: order,
+				mail: stud.email
+			}
 		} catch (err) {
 			this.logger.error(
 				`Failed to capture order on database (${err})`,
