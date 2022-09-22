@@ -65,6 +65,36 @@ const AdminEventToken = param => {
 	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
 
+	const deleteEvent = async () => {
+		if (
+			await isConfirmed(`Desire tu supprimer l'event ${param.data.name}`)
+		) {
+			if (true) {
+				await fetch(
+					`http://${global.config.api.authority}/event/${param.data.id}`,
+					{
+						method: "DELETE",
+						credentials: "include"
+					}
+				)
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error:
+					 The status is ${response.status}`
+							);
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+			}
+		}
+	};
+
 	const switchLock = () => {
 		setLocked(false);
 	};
@@ -121,8 +151,96 @@ const AdminEventToken = param => {
 		return nb;
 	};
 
+	const changeThumbnail = async () => {
+		const data = new FormData();
+		data.append("thumbnail", img.current);
+		await fetch(
+			`http://${global.config.api.authority}/event/upload_image
+			/${param.data.id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
+	const saveEvent = async () => {
+		if (
+			!document
+				.getElementById(`updateEventForm${param.key}`)
+				.checkValidity()
+		)
+			return;
+
+		if (
+			await isConfirmed(`Desire tu modifier l'event ${param.data.name}`)
+		) {
+			var myHeaders = new Headers();
+			myHeaders.append("Content-Type", "application/json");
+
+			var raw = JSON.stringify({
+				name: bodyState.name,
+				cost: bodyState.cost,
+				place: bodyState.place,
+				premium_cost: bodyState.premium_cost,
+				nb_places: bodyState.nb_places,
+				desc: bodyState.desc,
+				isOutside: bodyState.isOutside,
+				consos: bodyState.consos,
+				sponso: bodyState.sponso,
+				begin_date: bodyState.begin_date,
+				available_date: bodyState.available_date,
+				end_date: bodyState.hasEndDate ? bodyState.end_date : null
+			});
+			var requestOptions = {
+				method: "PATCH",
+				headers: myHeaders,
+				body: raw,
+				redirect: "follow",
+				credentials: "include"
+			};
+
+			await fetch(
+				`http://${global.config.api.authority}/event/${param.data.id}`,
+				requestOptions
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error:
+							 The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+			changeThumbnail();
+			window.location.reload();
+		}
+	};
+
 	useEffect(() => {
 		let tmp = {...param.data};
+		if (tmp.desc === null) tmp.desc = "";
 		tmp.hasEndDate = param.data.end_date !== null;
 		tmp.end_date = tmp.end_date ? tmp.end_date : null;
 		let end_date = new Date(Date.parse(tmp.end_date));
@@ -199,118 +317,6 @@ const AdminEventToken = param => {
 	}, [param.data]);
 
 	useEffect(() => {
-		const saveEvent = async () => {
-			const changeThumbnail = async () => {
-				const data = new FormData();
-				data.append("thumbnail", img.current);
-				await fetch(
-					`http://${global.config.api.authority}/event/upload_image
-					/${param.data.id}`,
-					{
-						method: "POST",
-						credentials: "include",
-						body: data
-					}
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error:
-							 The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
-						);
-					});
-			};
-			if (
-				!document
-					.getElementById(`updateEventForm${param.key}`)
-					.checkValidity()
-			)
-				return;
-
-			if (
-				await isConfirmed(
-					`Desire tu modifier l'event ${param.data.name}`
-				)
-			) {
-				var myHeaders = new Headers();
-				myHeaders.append("Content-Type", "application/json");
-
-				var raw = JSON.stringify({
-					name: bodyState.name,
-					cost: bodyState.cost,
-					place: bodyState.place,
-					premium_cost: bodyState.premium_cost,
-					nb_places: bodyState.nb_places,
-					desc: bodyState.desc,
-					isOutside: bodyState.isOutside,
-					consos: bodyState.consos,
-					sponso: bodyState.sponso,
-					begin_date: bodyState.begin_date,
-					available_date: bodyState.available_date,
-					end_date: bodyState.hasEndDate ? bodyState.end_date : null
-				});
-				var requestOptions = {
-					method: "PATCH",
-					headers: myHeaders,
-					body: raw,
-					redirect: "follow",
-					credentials: "include"
-				};
-
-				await fetch(
-					`http://${global.config.api.authority}/event/${param.data.id}`,
-					requestOptions
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error:
-								 The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
-						);
-					});
-				changeThumbnail();
-				window.location.reload();
-			}
-		};
-		if (locked)
-			setButton(
-				<Button
-					type="button"
-					color="primary"
-					defaultValue={param.index}
-					onClick={switchLock}
-				>
-					Edit
-				</Button>
-			);
-		else
-			setButton(
-				<Button
-					type="button"
-					color="primary"
-					defaultValue={param.index}
-					onClick={saveEvent}
-				>
-					Save
-				</Button>
-			);
-	}, [param, formState, locked, bodyState, isConfirmed]);
-
-	useEffect(() => {
 		fetch(
 			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
 			{
@@ -336,36 +342,6 @@ const AdminEventToken = param => {
 				);
 			});
 	}, [param]);
-
-	const deleteEvent = async () => {
-		if (
-			await isConfirmed(`Desire tu supprimer l'event ${param.data.name}`)
-		) {
-			if (true) {
-				await fetch(
-					`http://${global.config.api.authority}/event/${param.data.id}`,
-					{
-						method: "DELETE",
-						credentials: "include"
-					}
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error:
-					 The status is ${response.status}`
-							);
-						}
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
-						);
-					});
-			}
-		}
-	};
 
 	return (
 		<>
@@ -538,7 +514,25 @@ const AdminEventToken = param => {
 						width="auto"
 						effect="blur"
 					/>
-					{button}
+					{locked ? (
+						<Button
+							type="button"
+							color="primary"
+							defaultValue={param.index}
+							onClick={switchLock}
+						>
+							Edit
+						</Button>
+					) : (
+						<Button
+							type="button"
+							color="primary"
+							defaultValue={param.index}
+							onClick={saveEvent}
+						>
+							Save
+						</Button>
+					)}
 					<Button
 						color="secondary"
 						onClick={() => {
