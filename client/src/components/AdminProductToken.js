@@ -43,7 +43,7 @@ const AdminProductToken = param => {
 		setFormState(tmp);
 	};
 
-	const changeThumbnail = () => {
+	const changeThumbnail = async () => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
 		fetch(
@@ -116,7 +116,7 @@ const AdminProductToken = param => {
 							error.message
 					);
 				});
-			changeThumbnail();
+			await changeThumbnail();
 			window.location.reload();
 		}
 	};
