@@ -21,51 +21,32 @@ const Login = () => {
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
-						`This is an HTTP error: ` +
-							`The status is ${response.status}`
-					);
-				}
-			})
-			.then(async () => {
-				let loop = true;
-				let breakLoop = () => {
-					loop = false;
-				};
-				while (loop && tries.current < 15) {
-					await fetch(
-						`http://${global.config.api.authority}/session`,
-						{
-							credentials: "include"
-						}
-					)
-						.then(response => {
-							if (!response.ok) {
-								throw new Error(
-									`This is an HTTP error: The status is ` +
-										`${response.status}`
-								);
-							}
-							return response.json();
-						})
-						.then(data => {
-							if (data.clearance !== 0) breakLoop();
-						});
-					console.log(tries.current);
-					tries.current += 1;
-					await new Promise(res => setTimeout(res, 100));
-				}
-				if (tries.current >= 10) {
-					setRet(<Navigate to="/home" replace={true} />);
-					NotificationManager.error(
-						"Error while loggin in, please retry or contact us",
-						"Erreur",
-						3000
+						`This is an HTTP error: The status is ` +
+							`${response.status}`
 					);
 				}
 			})
 			.then(() => {
-				if (tries.current < 10)
-					setRet(<Navigate to={-1} replace={true} />);
+				fetch(`http://${global.config.api.authority}/session`, {
+					credentials: "include"
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error(
+								`This is an HTTP error: The status is ` +
+									`${response.status}`
+							);
+						}
+					})
+					.catch(function(error) {
+						console.log(
+							"Il y a eu un problème avec l'opération fetch: " +
+								error.message
+						);
+					});
+			})
+			.then(() => {
+				setRet(<Navigate to={-1} replace={true} />);
 			})
 			.catch(function(error) {
 				console.log(

@@ -4,8 +4,7 @@ import { HttpExceptionFilter } from './http-exception.filter';
 import helmet from 'helmet';
 //import * as csurf from 'csurf';
 import * as cookieParser from 'cookie-parser'
-import session = require('express-session');
-
+import * as session from 'express-session';
 let RedisStore = require("connect-redis")(session)
 
 const { session_secret, url_client } = require('../config.json')

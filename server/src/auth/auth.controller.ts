@@ -14,10 +14,8 @@ export class AuthController {
 		await (session.image_url = ret.image_url);
 		await (session.mail = ret.mail);
 		await (session.firstname = ret.firstname);
-		await (session.save())
-		return {
-			login: session.login
-		};
+		console.log(session)
+		return session;
 	}
 
 	@Post('logout')
