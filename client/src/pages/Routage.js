@@ -30,6 +30,7 @@ import Contribute from "./body/Contribute";
 import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
+import AdminUnpaidManagement from "./body/AdminUnpaidManagement";
 
 const Routage = () => {
 	return (
@@ -139,6 +140,15 @@ const Routage = () => {
 						<RouteWrapper
 							route={<AdminCaptainManagement />}
 							check={global.config.clearance.bde_director}
+						/>
+					}
+				/>
+				<Route
+					path="admin/unpaidmanagement"
+					element={
+						<RouteWrapper
+							route={<AdminUnpaidManagement />}
+							check={global.config.clearance.admin}
 						/>
 					}
 				/>

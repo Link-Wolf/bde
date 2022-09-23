@@ -6,7 +6,7 @@ import {
 	BadRequestException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not } from 'typeorm';
+import { Repository, Not, LessThanOrEqual, LessThan } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
@@ -56,6 +56,34 @@ export class StudService {
 		try {
 			let studs = await this.studRepository.findBy({
 				isDirection: false,
+			});
+			this.logger.log(`Got all non-direction members`, requestMaker);
+			return studs;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all non-direction members on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to get all non-direction members on database (${error})`);
+		}
+	}
+
+	async findUnpaid(requestMaker: string): Promise<Stud[]> {
+		try {
+			let studs = await this.studRepository.findBy({
+				clearance: 9
+			});
+			this.logger.log(`Got all direction members`, requestMaker);
+			return studs;
+		}
+		catch (error) {
+			this.logger.error(`Failed to get all direction members on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to get all direction members on database (${error})`);
+		}
+	}
+
+	async findNoUnpaid(requestMaker: string): Promise<Stud[]> {
+		try {
+			let studs = await this.studRepository.findBy({
+				clearance: 7
 			});
 			this.logger.log(`Got all non-direction members`, requestMaker);
 			return studs;
@@ -156,6 +184,47 @@ export class StudService {
 		} catch (error) {
 			this.logger.error(`Failed to yeet direction member ${login} on database (${error})`, requestMaker)
 			throw new InternalServerErrorException(`Failed to yeet direction member ${login} on database (${error})`)
+		}
+	}
+
+	async addUnpaid(login: string, requestMaker: string): Promise<any> {
+		try {
+			let user = await this.findOne(login, requestMaker);
+			if (!user) {
+				this.logger.error(`Failed to add unpaid member with login ${login} : stud does not exist`, requestMaker);
+				throw new NotFoundException(`Failed to add unpaid member with login ${login} : stud does not exist`)
+			}
+			if (user.clearance == 9) {
+				this.logger.error(`Failed to add direction member with login ${login} : stud is already a unpaid member`, requestMaker);
+				throw new InternalServerErrorException(`Failed to add unpaid member with login ${login} : stud is already a direction member`)
+			}
+			let updatedOne = `UPDATE stud SET "clearance" = 9 WHERE login = '${login}'`;
+			let ret = await this.studRepository.query(updatedOne);
+			this.logger.warn(`Successfully add direction member ${login}`, requestMaker);
+			return ret
+		} catch (error) {
+			this.logger.error(`Failed to add unpaid member ${login} on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to add unpaid member ${login} on database (${error})`)
+		}
+	}
+
+	async removeUnpaid(login: string, requestMaker: string): Promise<void> {
+		try {
+			let user = await this.findOne(login, requestMaker);
+			if (!user) {
+				this.logger.error(`Failed to yeet unpaid member with login ${login} : unpaid member does not exist`, requestMaker);
+				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
+			} if (user.cleareance < 9) {
+				this.logger.error(`Failed to add unpaid member with login ${login} : stud isn't unpaid member`, requestMaker);
+				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud isn't direction member`)
+			}
+			let updatedOne = `UPDATE stud SET "clearance" = 7 WHERE login = '${login}'`;
+			let ret = await this.studRepository.query(updatedOne);
+			this.logger.warn(`Successfully yeet unpaid member ${login}`, requestMaker);
+			return ret
+		} catch (error) {
+			this.logger.error(`Failed to yeet unpaid member ${login} on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`Failed to yeet unpaid member ${login} on database (${error})`)
 		}
 	}
 

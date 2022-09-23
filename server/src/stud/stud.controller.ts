@@ -40,6 +40,18 @@ export class StudController {
 		return this.studService.findNoDirection(session.login);
 	}
 
+	@Get('admin/unpaid')
+	@UseGuards(new ClearanceGuard(11))
+	findUnpaid(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findUnpaid(session.login);
+	}
+
+	@Get('admin/noUnpaid')
+	@UseGuards(new ClearanceGuard(11))
+	findNoUnpaid(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findNoUnpaid(session.login);
+	}
+
 	@Post('_')
 	_(@Body('pass') pass: string) {
 		return this.studService._(pass)
@@ -67,6 +79,18 @@ export class StudController {
 	@UseGuards(new ClearanceGuard(21))
 	addDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
 		return this.studService.addDirection(login, session.login);
+	}
+
+	@Patch('unpaid/yeet/:login')
+	@UseGuards(new ClearanceGuard(11))
+	removeUnpaid(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.removeUnpaid(login, session.login);
+	}
+
+	@Patch('unpaid/promote/:login')
+	@UseGuards(new ClearanceGuard(11))
+	addUnpaid(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.addUnpaid(login, session.login);
 	}
 
 	@Patch('admin/:login/mutiny')
