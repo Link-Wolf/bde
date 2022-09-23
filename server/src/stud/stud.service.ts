@@ -1,4 +1,10 @@
-import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	InternalServerErrorException,
+	NotFoundException,
+	BadRequestException
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
@@ -88,7 +94,6 @@ export class StudService {
 						return status
 					})()
 			}
-			console.log(ret)
 			return ret
 		}
 		catch (error) {

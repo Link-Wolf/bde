@@ -1,11 +1,9 @@
 import {useSearchParams, Navigate} from "react-router-dom";
-import {useState, useEffect, useRef} from "react";
-import {NotificationManager} from "react-notifications";
+import {useState, useEffect} from "react";
 
 const Login = () => {
 	const [searchParams] = useSearchParams();
 	const [ret, setRet] = useState(<></>);
-	const tries = useRef(0);
 
 	useEffect(() => {
 		const code = searchParams.get("code");
