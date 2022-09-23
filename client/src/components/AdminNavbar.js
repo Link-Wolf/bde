@@ -320,10 +320,15 @@ const AdminNavbar = () => {
 						<Nav.Link href="/admin/logs">
 							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
 						</Nav.Link>
+						<Nav.Link href="/admin/unpaidmanagement">
+							<CDBSidebarMenuItem>
+								Unpaid Management
+							</CDBSidebarMenuItem>
+						</Nav.Link>
 						{session.clearance >= 21 ? (
 							<Nav.Link href="/admin/teammanagement">
 								<CDBSidebarMenuItem>
-									Management
+									Team Management
 								</CDBSidebarMenuItem>
 							</Nav.Link>
 						) : (
