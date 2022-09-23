@@ -41,14 +41,21 @@ const Contact = () => {
 					formState,
 					global.config.emailjs.public_key
 				)
-				.then(
-					result => {
-						console.log(result.text);
-					},
-					error => {
-						console.log(error.text);
-					}
-				)
+				.then(() => {
+					setFormState({
+						name: "",
+						mail: "",
+						subject: "",
+						message: ""
+					});
+				})
+				.then(() => {
+					NotificationManager.success(
+						"Couriel bien envoyé",
+						"Success",
+						3000
+					);
+				})
 				.catch(function(error) {
 					console.log(
 						"Il y a eu un problème avec l'opération mail: " +
