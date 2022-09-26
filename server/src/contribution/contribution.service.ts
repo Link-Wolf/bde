@@ -13,9 +13,9 @@ export class ContributionService {
 		private logger: LoggerService,
 	) { }
 
-	getPrice(login: string) {
-		this.logger.log(`Got contribution price`, login)
-		return { price: process.env.CONTRIBUTION_PRICE };
+	getInfo(login: string) {
+		this.logger.log(`Got contribution infos`, login)
+		return { price: process.env.CONTRIBUTION_PRICE, duration: process.env.CONTRIBUTION_TIME };
 	}
 
 	async findAll(requestMaker: string): Promise<Contribution[]> {
