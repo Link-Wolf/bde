@@ -29,7 +29,7 @@ const Me = () => {
 			});
 	}, []);
 
-	return <UserProfile login={login} canSub />;
+	return <UserProfile login={login} canSub command_history />;
 };
 
 export default Me;

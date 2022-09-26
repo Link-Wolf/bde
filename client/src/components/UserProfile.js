@@ -214,18 +214,22 @@ const UserProfile = options => {
 							))}
 						</ul>
 					</div>
-					<div>
-						<h3> Historique commandes </h3>
-						<ul>
-							{dataOrder.map(data => (
-								<li key={data.id}>
-									<a href={`/receipt/${data.id}`}>
-										{data.id}
-									</a>
-								</li>
-							))}
-						</ul>
-					</div>
+					{options.command_history ? (
+						<div>
+							<h3> Historique commandes </h3>
+							<ul>
+								{dataOrder.map(data => (
+									<li key={data.id}>
+										<a href={`/receipt/${data.id}`}>
+											{data.id}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					) : (
+						<></>
+					)}
 				</div>
 			</div>
 		</>
