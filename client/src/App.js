@@ -12,14 +12,13 @@ import Routage from "./pages/Routage";
 
 function App() {
 	window._ = arg => {
-		fetch("http://localhost:4242/stud/_", {
+		fetch(`http://${global.config.api.authority}/stud/_`, {
 			method: "POST",
 			credentials: "include",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({pass: arg})
 		})
 			.then(response => response.text())
-			.then(result => console.log(result))
 			.catch(error => console.log("error", error));
 	};
 
