@@ -1,12 +1,12 @@
-html {
-	height: 100%;
+body {
+	overflow: hidden;
 }
 
-body {
-	height: 100%;
+.body {
+	height: 100vh;
+	width: 100vw;
 	background: url("https://cdn.discordapp.com/attachments/907303542438629406/1024296461967564920/NoPage.png") no-repeat left top;
 	background-size: cover;
-	overflow: hidden;
 	display: flex;
 	flex-flow: column wrap;
 	justify-content: center;
@@ -14,19 +14,23 @@ body {
 }
 
 .text h1 {
-	color: #011718;
-	margin-top: -100px;
+	color: rgb(173, 118, 64);
+	position: relative;
+	top: -15vh;
 	font-size: 15em;
 	text-align: center;
-	text-shadow: -5px 5px 0px rgba(0, 0, 0, 0.7), -10px 10px 0px rgba(0, 0, 0, 0.4), -15px 15px 0px rgba(0, 0, 0, 0.2);
+	text-shadow: -5px 5px 0px #00C9ADD0, -10px 10px 0px #C3FCF1D5, -15px 15px 0px #4B8077E0;
 	font-family: monospace;
 	font-weight: bold;
 }
 
 .text h2 {
-	color: black;
+	color: rgb(173, 118, 64);
+	;
 	font-size: 5em;
-	text-shadow: -5px 5px 0px rgba(0, 0, 0, 0.7);
+	position: relative;
+	top: 18vh;
+	text-shadow: -5px 5px 0px #00C9ADD0;
 	text-align: center;
 	margin-top: -150px;
 	font-family: monospace;
@@ -34,20 +38,20 @@ body {
 }
 
 .text h3 {
-	color: white;
-	margin-left: 30px;
-	font-size: 2em;
-	text-shadow: -5px 5px 0px rgba(0, 0, 0, 0.7);
-	margin-top: -40px;
+	color: rgb(173, 118, 64);
+	position: relative;
+	top: -6vh;
+	text-shadow: -5px 5px 0px #00C9ADD0;
+	font-size: 4em;
 	font-family: monospace;
 	font-weight: bold;
 }
 
 .torch {
 	margin: -150px 0 0 -150px;
-	width: 200px;
-	height: 200px;
-	box-shadow: 0 0 0 9999em #000000f7;
+	width: 400px;
+	height: 400px;
+	box-shadow: 0 0 0 9999em #000000;
 	opacity: 1;
 	border-radius: 100%;
 	position: fixed;
@@ -61,5 +65,5 @@ body {
 	border-radius: 50%;
 	width: 100%;
 	height: 100%;
-	box-shadow: inset 0 0 40px 2px #000, 0 0 20px 4px rgba(13, 13, 10, 0.2);
+	box-shadow: inset 0 0 40px 15px #000, 0 0 20px 4px rgba(13, 13, 10, 0.2);
 }

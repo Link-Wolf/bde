@@ -1,4 +1,4 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
 import ClearanceChecker from "../components/ClearanceChecker";
@@ -217,7 +217,18 @@ const Routage = () => {
 		</BrowserRouter>
 	);
 };
+
 const RouteWrapper = params => {
+	const [headerHeight, setHeaderHeight] = useState(0);
+	const [footerHeight, setFooterHeight] = useState(0);
+
+	useEffect(() => {
+		if (document.getElementById("header"))
+			setHeaderHeight(document.getElementById("header").offsetHeight);
+		if (document.getElementById("footer"))
+			setFooterHeight(document.getElementById("footer").offsetHeight);
+	}, []);
+
 	return (
 		<>
 			<ClearanceChecker
@@ -226,7 +237,15 @@ const RouteWrapper = params => {
 			>
 				<Header />
 				<NotificationContainer />
-				{params.route}
+				<div
+					style={{
+						overflow: "scroll",
+						width: "100vw",
+						height: `calc(100vh - (${headerHeight}px + ${footerHeight}px))`
+					}}
+				>
+					{params.route}
+				</div>
 				<Footer />
 			</ClearanceChecker>
 		</>
