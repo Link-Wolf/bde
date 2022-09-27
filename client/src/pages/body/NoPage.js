@@ -1,4 +1,4 @@
-import {useRef, React} from "react";
+import {useState, React} from "react";
 import style from "../../style/NoPage.module.css";
 
 const NoPage = () => {
@@ -11,12 +11,12 @@ const NoPage = () => {
 	// 	// });
 	// 	console.log("mouve");
 	// });
-	const mouseX = useRef();
-	const mouseY = useRef();
+	const [mouseX, setMouseX] = useState(0);
+	const [mouseY, setMouseY] = useState(0);
 
 	document.addEventListener("mousemove", e => {
-		mouseY.current = e.pageY;
-		mouseX.current = e.pageX;
+		setMouseY(e.pageY);
+		setMouseX(e.pageX);
 	});
 
 	return (
@@ -31,7 +31,11 @@ const NoPage = () => {
 			</div>
 			<div
 				className={style.torch}
-				style={{top: `${mouseX.current}`, bottom: `${mouseY.current}`}}
+				style={{
+					position: "absolute",
+					left: `${mouseX}px`,
+					top: `${mouseY}px`
+				}}
 			></div>
 		</>
 	);
