@@ -38,16 +38,6 @@ input:invalid {
 	background-color: LightCoral;
 }
 
-.dark {
-	background: black;
-	color: white;
-}
-
-.light {
-	background: white;
-	color: black;
-}
-
 .App {
 	height: 100%;
 	overflow-anchor: none;
