@@ -21,22 +21,21 @@ const NoPage = () => {
 
 	return (
 		<>
-			<div className={style.text}>
-				<h1>404</h1>
-				<h2>Uh, Ohh</h2>
-				<h3>
-					Sorry we cant find what you are looking for 'cuz its so dark
-					in here
-				</h3>
+			<div className={style.body}>
+				<div className={style.text}>
+					<h1>404</h1>
+					<h2>UwUn't</h2>
+					<h3>Tu t'es perdu dans les ombres.</h3>
+				</div>
+				<div
+					className={style.torch}
+					style={{
+						position: "absolute",
+						left: `${mouseX}px`,
+						top: `${mouseY}px`
+					}}
+				></div>
 			</div>
-			<div
-				className={style.torch}
-				style={{
-					position: "absolute",
-					left: `${mouseX}px`,
-					top: `${mouseY}px`
-				}}
-			></div>
 		</>
 	);
 };
