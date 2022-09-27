@@ -209,7 +209,7 @@ const Routage = () => {
 
 				<Route
 					path="admin/*"
-					element={<Navigate to="/admin/students" />}
+					element={<Navigate to="/admin/students" replace />}
 				/>
 
 				<Route path="*" element={<NoPage />} />
