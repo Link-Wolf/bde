@@ -100,70 +100,72 @@ const Contact = () => {
 	}, []);
 
 	return (
-		<Form>
-			<Form.Group>
-				<Form.Label>Sujet</Form.Label>
-				<Form.Select
-					aria-label="Sélectionnez le sujet"
-					value={formState.subject}
-					onChange={handleFormChange}
-					name="subject"
-					required
-				>
-					<option value="" disabled hidden>
-						Sélectionnez le sujet ici..
-					</option>
-					<option value="idea">Suggestion / Idées</option>
-					<option value="sponso">Partenariat</option>
-					<option value="karen">Réclamation</option>
-					<option value="shop">Boutique</option>
-					<option value="feedback">Feedback d'un event</option>
-					<option value="other">Autre</option>
-				</Form.Select>
-			</Form.Group>
-			<Form.Group>
-				<Form.Label>Message</Form.Label>
-				<Form.Control
-					as="textarea"
-					placeholder="Votre messsage"
-					value={formState.message}
-					onChange={handleFormChange}
-					name="message"
-					required
-					minLength={10}
-				/>
-			</Form.Group>
-			<Form.Group hidden={idForm}>
+		<div>
+			<Form>
 				<Form.Group>
-					<Form.Label>Nom</Form.Label>
-					<Form.Control
-						placeholder="Veuillez entrer votre nom"
-						value={formState.name}
+					<Form.Label>Sujet</Form.Label>
+					<Form.Select
+						aria-label="Sélectionnez le sujet"
+						value={formState.subject}
 						onChange={handleFormChange}
-						name="name"
+						name="subject"
 						required
-					/>
+					>
+						<option value="" disabled hidden>
+							Sélectionnez le sujet ici..
+						</option>
+						<option value="idea">Suggestion / Idées</option>
+						<option value="sponso">Partenariat</option>
+						<option value="karen">Réclamation</option>
+						<option value="shop">Boutique</option>
+						<option value="feedback">Feedback d'un event</option>
+						<option value="other">Autre</option>
+					</Form.Select>
 				</Form.Group>
 				<Form.Group>
-					<Form.Label>Email</Form.Label>
+					<Form.Label>Message</Form.Label>
 					<Form.Control
-						type="email"
-						placeholder="Veuillez entrer votre mail afin de vous recontacter"
-						value={formState.mail}
+						as="textarea"
+						placeholder="Votre messsage"
+						value={formState.message}
 						onChange={handleFormChange}
-						name="mail"
-						id="emailField"
+						name="message"
 						required
+						minLength={10}
 					/>
-					<Form.Text className="text-muted">
-						Nous ne partagerons jamais votre mail
-					</Form.Text>
 				</Form.Group>
-			</Form.Group>
-			<Button variant="outline-primary" onClick={sendMail}>
-				Envoyer
-			</Button>
-		</Form>
+				<Form.Group hidden={idForm}>
+					<Form.Group>
+						<Form.Label>Nom</Form.Label>
+						<Form.Control
+							placeholder="Veuillez entrer votre nom"
+							value={formState.name}
+							onChange={handleFormChange}
+							name="name"
+							required
+						/>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							type="email"
+							placeholder="Veuillez entrer votre mail afin de vous recontacter"
+							value={formState.mail}
+							onChange={handleFormChange}
+							name="mail"
+							id="emailField"
+							required
+						/>
+						<Form.Text className="text-muted">
+							Nous ne partagerons jamais votre mail
+						</Form.Text>
+					</Form.Group>
+				</Form.Group>
+				<Button variant="outline-primary" onClick={sendMail}>
+					Envoyer
+				</Button>
+			</Form>
+		</div>
 	);
 };
 export default Contact;
