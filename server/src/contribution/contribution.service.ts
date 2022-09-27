@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Contribution } from '../entity/Contribution';
 import { LoggerService } from '../logger/logger.service';
 import { ContributionDto } from './contribution.dto';
+const { contributionTime, contributionPrice } = require('../../config.json')
 
 @Injectable()
 export class ContributionService {
@@ -14,8 +15,8 @@ export class ContributionService {
 	) { }
 
 	getInfo(login: string) {
-		this.logger.log(`Got contribution infos`, login)
-		return { price: process.env.CONTRIBUTION_PRICE, duration: process.env.CONTRIBUTION_TIME };
+		this.logger.log(`Got contribution price`, login)
+		return { price: contributionPrice, time: contributionTime };
 	}
 
 	async findAll(requestMaker: string): Promise<Contribution[]> {
