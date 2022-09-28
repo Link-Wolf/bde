@@ -1,16 +1,16 @@
-import {Navbar, Nav, Container} from "react-bootstrap";
 import {useState, useEffect} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import DropdownUser from "../components/DropdownUser";
 
+import style from "../style/Header.module.scss";
+
 import bde_logo from "../assets/logos/bde_logo.jpeg";
 
 function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
-
 	const [isShrunk, setShrunk] = useState(false);
 
 	useEffect(() => {
@@ -56,25 +56,39 @@ function Header() {
 				.then(data => {
 					if (data.clearance === global.config.clearance.default) {
 						setLeftButton(
-							<Nav className="me-auto">
-								<Nav.Link href="/shop">Shop</Nav.Link>
-								<Nav.Link href="/contact">Contact</Nav.Link>
-							</Nav>
+							<>
+								<a href="/shop">
+									<h1>Shop</h1>
+								</a>
+								<a href="/contact">
+									<h1>Contact</h1>
+								</a>
+							</>
 						);
 					}
 					if (data.clearance > global.config.clearance.default) {
 						setLeftButton(
-							<Nav className="me-auto">
-								<Nav.Link href="/events">Events</Nav.Link>
-								<Nav.Link href="/clubs">Clubs</Nav.Link>
-								<Nav.Link href="/shop">Shop</Nav.Link>
-								<Nav.Link href="/contact">Contact</Nav.Link>
-							</Nav>
+							<>
+								<a href="/events">
+									<h1>Events</h1>
+								</a>
+								<a href="/clubs">
+									<h1>Clubs</h1>
+								</a>
+								<a href="/shop">
+									<h1>Shop</h1>
+								</a>
+								<a href="/contact">
+									<h1>Contact</h1>
+								</a>
+							</>
 						);
 					}
 					if (data.clearance >= global.config.clearance.admin) {
 						setRightButton(
-							<Nav.Link href="/admin">Admin</Nav.Link>
+							<a href="/admin">
+								<h1>Admin</h1>
+							</a>
 						);
 					}
 				})
@@ -88,35 +102,25 @@ function Header() {
 	}, []);
 
 	return (
-		<Navbar
-			sticky="top"
-			collapseOnSelect
-			bg="dark"
-			variant="dark"
-			id="header"
-			style={{
-				transition: "0.5s"
-			}}
-			className={isShrunk ? "py-2" : "py-5"}
-		>
-			<Container>
-				<Navbar.Brand href="/home">
-					<LazyLoadImage
-						height="30"
-						src={bde_logo}
-						width="30"
-						effect="blur"
-						className="d-inline-block align-top"
-					/>
-					<Navbar.Text> La Fregate</Navbar.Text>
-				</Navbar.Brand>
-				{leftButton}
-				<Nav>
-					{rightButton}
-					<DropdownUser />
-				</Nav>
-			</Container>
-		</Navbar>
+		<header className={style.container}>
+			<div className={style.leftContainer}>
+				<div>
+					<a className={style.logoContainer} href="/home">
+						<LazyLoadImage
+							src={bde_logo}
+							effect="blur"
+							className="d-inline-block align-top"
+						/>
+						<h1>La Fregate</h1>
+					</a>
+				</div>
+				<div className={style.buttonContainer}>{leftButton}</div>
+			</div>
+			<div className={style.rightContainer}>
+				<div>{rightButton}</div>
+				<DropdownUser />
+			</div>
+		</header>
 	);
 }
 

@@ -282,7 +282,7 @@ const AdminNavbar = () => {
 		<div
 			style={{
 				display: "flex",
-				height: `calc(100vh - (${headerHeight}px + ${footerHeight}px))`,
+				height: `80vh`,
 				position: "sticky",
 				top: `${headerHeight}px`
 			}}
