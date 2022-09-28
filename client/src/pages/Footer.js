@@ -1,4 +1,4 @@
-import style from "../style/Footer.module.css";
+import style from "../style/Footer.module.scss";
 
 import twitter_logo from "../assets/logos/twitter.png";
 import discord_logo from "../assets/logos/discord.png";
@@ -10,7 +10,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 function Footer() {
 	return (
 		<footer className={style.footer} id="footer">
-			<div className={style.horizontal_div_footer}>
+			<div>
 				<LazyLoadImage
 					height="auto"
 					src={twitter_logo}
@@ -34,11 +34,11 @@ function Footer() {
 					/>
 				</a>
 			</div>
-			<div className={style.horizontal_div_footer}>
+			<div>
 				<div>CC COPYRIGHT TOUSSA</div>
 				<div> HOSTED BY US </div>
 			</div>
-			<div className={style.horizontal_div_footer}>
+			<div>
 				<a href="/legalthings"> CGU </a>
 				<a href="/dollarthings"> CGV </a>
 				<a href="/contact"> Contact us grand fou</a>

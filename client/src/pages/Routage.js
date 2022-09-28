@@ -219,16 +219,6 @@ const Routage = () => {
 };
 
 const RouteWrapper = params => {
-	const [headerHeight, setHeaderHeight] = useState(0);
-	const [footerHeight, setFooterHeight] = useState(0);
-
-	useEffect(() => {
-		if (document.getElementById("header"))
-			setHeaderHeight(document.getElementById("header").offsetHeight);
-		if (document.getElementById("footer"))
-			setFooterHeight(document.getElementById("footer").offsetHeight);
-	}, []);
-
 	return (
 		<>
 			<ClearanceChecker
@@ -239,9 +229,9 @@ const RouteWrapper = params => {
 				<NotificationContainer />
 				<div
 					style={{
-						overflow: "scroll",
+						overflowY: "scroll",
 						width: "100vw",
-						height: `calc(100vh - (${headerHeight}px + ${footerHeight}px))`
+						height: "80vh"
 					}}
 				>
 					{params.route}
