@@ -6,7 +6,7 @@ import DropdownUser from "../components/DropdownUser";
 
 import style from "../style/Header.module.scss";
 
-import bde_logo from "../assets/logos/bde_logo.jpeg";
+import bde_logo from "../assets/logos/fregate_white.png";
 
 function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
@@ -118,7 +118,9 @@ function Header() {
 			</div>
 			<div className={style.rightContainer}>
 				<div>{rightButton}</div>
-				<DropdownUser />
+				<div className={style.dropdownContainer}>
+					<DropdownUser />
+				</div>
 			</div>
 		</header>
 	);
