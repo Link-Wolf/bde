@@ -9,15 +9,17 @@
 	height: 12vh;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
+	font-size: 1.5vh;
+	padding: 1vh 0;
+	font-family: Futura;
 
 	img {
 		height: 2vh;
 		width: auto;
 	}
 
-	div {
-		text-align: center;
-		display: flex;
-		flex-direction: row;
+	div * {
+		margin: 0 0.1vw;
 	}
 }

@@ -5,7 +5,7 @@ import ConfirmModal from "./components/ConfirmModal";
 import NotificationContextProvider from "./components/NotificationContextProvider";
 import {ReactNotifications} from "react-notifications-component";
 
-import "./style/App.css";
+import "./style/App.scss";
 
 import "react-notifications-component/dist/theme.css";
 import Routage from "./pages/Routage";

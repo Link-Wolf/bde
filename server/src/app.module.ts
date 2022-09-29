@@ -23,7 +23,7 @@ import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
-const { db_password, session_secret } = require('../config.json')
+const { _dbpw, session_secret } = require('../config.json')
 
 
 @Module({
@@ -32,7 +32,7 @@ const { db_password, session_secret } = require('../config.json')
 			type: 'postgres',
 			port: parseInt(process.env.PSQL_PORT),
 			username: 'linkar',
-			password: db_password,
+			password: _dbpw,
 			database: 'bde',
 			entities: [Stud, Contribution, Event, Logs, Goodies, Order, Inscription],
 			synchronize: true
