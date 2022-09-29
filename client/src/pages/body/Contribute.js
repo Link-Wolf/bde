@@ -8,10 +8,8 @@ import {
 
 const ContributeButtons = props => {
 	const currency = "EUR";
-	const [session, setSession] = useState({});
 	const style = {layout: "vertical"};
 	const [{options, isPending}, dispatch] = usePayPalScriptReducer();
-	const [contributionStatus, setContributionStatus] = useState(false);
 
 	const sendMail = async (date, commande, timestamp, mail) => {
 		await emailjs
@@ -52,61 +50,6 @@ const ContributeButtons = props => {
 		});
 	}, [currency]);
 
-	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(json => {
-				setSession(json);
-			});
-	}, []);
-
-	useEffect(() => {
-		if (options.login !== "")
-			fetch(
-				`http://${global.config.api.authority}/contribution/${session.login}`,
-				{
-					credentials: "include"
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					return response.json();
-				})
-				.then(data => {
-					data.forEach((item, i) => {
-						if (
-							new Date(item.end_date) > Date.now() &&
-							new Date(item.begin_date) <= Date.now()
-						) {
-							setContributionStatus(true);
-						}
-					});
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-	}, [session]);
-
-	if (contributionStatus) {
-		window.location = "/home";
-		return <></>;
-	}
 	return (
 		<>
 			{isPending && <div className="spinner" />}
@@ -130,7 +73,7 @@ const ContributeButtons = props => {
 						.then(orderId => {
 							const body = JSON.stringify({
 								id: orderId,
-								studLogin: session.login,
+								studLogin: props.session.login,
 								cost: props.amount,
 								source: data.paymentSource,
 								address: props.address
@@ -213,10 +156,12 @@ const ContributeButtons = props => {
 
 const LegalNote = () => {
 	return (
-		<p>
-			En procedant à la commande vous acceptez les termes de conditions
-			generales d'utilisation et des conditions generales de vente du site
-			de La Fregate.
+		<p style={{fontSize: "smaller", fontStyle: "italic"}}>
+			En validant la commande et en procédant au paiement, vous
+			reconnaissez accepte les termes de{" "}
+			<a href="/legalthings">conditions générales d'utilisation</a> et
+			<a href="/dollarthings">conditions générales de vente</a> du site du
+			BDE 42 Mulhouse.
 		</p>
 	);
 };
@@ -270,12 +215,14 @@ const AddressForm = props => {
 					name="firstname"
 					value={props.state.firstname}
 					onChange={handleChange}
+					disabled
 				/>
 				<input
 					placeholder="Nom"
 					name="lastname"
 					value={props.state.lastname}
 					onChange={handleChange}
+					disabled
 				/>
 			</div>
 			<div>
@@ -284,12 +231,15 @@ const AddressForm = props => {
 					name="address_line_1"
 					value={props.state.address_line_1}
 					onChange={handleChange}
+					disabled={props.validated}
+					required
 				/>
 				<input
 					placeholder="Complement d'addresse (optionel)"
 					name="address_line_2"
 					value={props.state.address_line_2}
 					onChange={handleChange}
+					disabled={props.validated}
 				/>
 			</div>
 			<div>
@@ -298,12 +248,16 @@ const AddressForm = props => {
 					name="city"
 					value={props.state.city}
 					onChange={handleChange}
+					disabled={props.validated}
+					required
 				/>
 				<input
 					placeholder="Code Postal"
 					name="postal_code"
 					value={props.state.postal_code}
 					onChange={handleChange}
+					disabled={props.validated}
+					required
 				/>
 			</div>
 			<div>
@@ -312,6 +266,7 @@ const AddressForm = props => {
 					name="country_code"
 					value={props.state.country_code}
 					onChange={handleChange}
+					disabled={props.validated}
 				>
 					<option value="AF">Afghanistan</option>
 					<option value="AX">Aland Islands</option>
@@ -584,6 +539,7 @@ const AddressForm = props => {
 };
 
 const Contribute = () => {
+	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
 		"client-id": global.config.paypal.id,
 		currency: "EUR",
@@ -591,7 +547,40 @@ const Contribute = () => {
 	});
 	const [time, setTime] = useState();
 	const [amount, setAmount] = useState();
-	const [addressFormState, setAddressFormState] = useState({});
+	const [session, setSession] = useState({});
+	const [validated, setValidated] = useState(false);
+	const [addressFormState, setAddressFormState] = useState({
+		postal_code: "",
+		address_line_1: "",
+		address_line_2: "",
+		city: "",
+		country_code: "FR",
+		firstname: "firstname",
+		lastname: "lastname"
+	});
+
+	useEffect(() => {});
+
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				const tmp = addressFormState;
+				tmp.firstname = json.firstname;
+				tmp.lastname = json.lastname;
+				setAddressFormState(tmp);
+				setSession(json);
+			});
+	}, []);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/paypal/clientToken`, {
@@ -630,6 +619,49 @@ const Contribute = () => {
 			});
 	}, []);
 
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/contribution/${session.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				let tmp = false;
+				console.log(data);
+				data.forEach((item, i) => {
+					if (
+						new Date(item.end_date) > Date.now() &&
+						new Date(item.begin_date) <= Date.now()
+					) {
+						tmp = true;
+					}
+				});
+				setContributionStatus(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [session]);
+
+	if (contributionStatus === undefined) return "Loading";
+
+	if (contributionStatus === true) {
+		window.location = "/home";
+		return <></>;
+	}
+
 	return (
 		<div style={{display: "flex"}}>
 			<div>
@@ -637,18 +669,46 @@ const Contribute = () => {
 					<AddressForm
 						setState={setAddressFormState}
 						state={addressFormState}
+						validated={validated}
 					/>
-					<PayPalScriptProvider options={optionsProvider}>
-						<ContributeButtons
-							amount={amount}
-							address={addressFormState}
-						/>
-					</PayPalScriptProvider>
+					<button
+						disabled={validated}
+						onClick={() => {
+							if (
+								addressFormState.postal_code !== "" &&
+								addressFormState.address_line_1 !== "" &&
+								addressFormState.city !== ""
+							)
+								setValidated(true);
+						}}
+					>
+						Valider
+					</button>
+					{validated ? (
+						<>
+							<button
+								onClick={() => {
+									window.location.reload();
+								}}
+							>
+								Annuler
+							</button>
+							<PayPalScriptProvider options={optionsProvider}>
+								<ContributeButtons
+									amount={amount}
+									session={session}
+									address={addressFormState}
+									setAddress={setAddressFormState}
+								/>
+							</PayPalScriptProvider>
+						</>
+					) : (
+						<></>
+					)}
 					<LegalNote />
 				</div>
 			</div>
 			<div>
-				<LegalNote />
 				<CommandRecap amount={amount} time={time} />
 			</div>
 		</div>

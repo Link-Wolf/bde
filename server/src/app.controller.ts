@@ -10,6 +10,7 @@ export class AppController {
 			login: session.login ? session.login : -42,
 			firstname: session.firstname ? session.firstname : "",
 			mail: session.mail ? session.mail : "",
+			lastname: session.lastname ? session.lastname : "",
 		}
 	}
 }
