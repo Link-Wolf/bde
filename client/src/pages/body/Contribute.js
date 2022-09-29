@@ -214,9 +214,16 @@ const ContributeButtons = props => {
 const LegalNote = () => {
 	return (
 		<p>
-			En procedant à la commande vous acceptez les termes de conditions
-			generales d'utilisation et des conditions generales de vente du site
-			de La Fregate.
+			En validant la commande et en procédant au paiement, vous
+			reconnaissez accepte les termes de{" "}
+			<a href="/legalthings" target="_blank" rel="noopener noreferrer">
+				conditions générales d'utilisation
+			</a>{" "}
+			et
+			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
+				conditions générales de vente
+			</a>{" "}
+			du site du BDE 42 Mulhouse
 		</p>
 	);
 };
@@ -270,12 +277,14 @@ const AddressForm = props => {
 					name="firstname"
 					value={props.state.firstname}
 					onChange={handleChange}
+					locked={true}
 				/>
 				<input
 					placeholder="Nom"
 					name="lastname"
 					value={props.state.lastname}
 					onChange={handleChange}
+					locked={true}
 				/>
 			</div>
 			<div>
@@ -312,6 +321,7 @@ const AddressForm = props => {
 					name="country_code"
 					value={props.state.country_code}
 					onChange={handleChange}
+					defaultValue="FR"
 				>
 					<option value="AF">Afghanistan</option>
 					<option value="AX">Aland Islands</option>
@@ -591,7 +601,9 @@ const Contribute = () => {
 	});
 	const [time, setTime] = useState();
 	const [amount, setAmount] = useState();
-	const [addressFormState, setAddressFormState] = useState({});
+	const [addressFormState, setAddressFormState] = useState({
+		country_code: "FR"
+	});
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/paypal/clientToken`, {
