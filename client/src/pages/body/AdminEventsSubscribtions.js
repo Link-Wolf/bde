@@ -9,6 +9,7 @@ const AdminStudents = () => {
 	const {isConfirmed} = useConfirm();
 
 	const [stud, setStud] = useState([]);
+	const [check, setCheck] = useState(false);
 	const [allEvent, setAllEvent] = useState([]);
 	const [selectedEvent, setSelectedEvent] = useState("");
 	const [update, setUpdate] = useState(false);
@@ -45,6 +46,7 @@ const AdminStudents = () => {
 				"Content-Type": "application/json"
 			}
 		};
+		console.log(`login : ${login}`);
 		fetch(
 			`http://${global.config.api.authority}/inscription/${eventId}/${login}`,
 			requestOptions
@@ -64,7 +66,7 @@ const AdminStudents = () => {
 			});
 	};
 
-	const checkStud = (eventId, login, eventCost) => {
+	const checkStud = async (eventId, login, eventCost) => {
 		const requestOptions = {
 			method: "PATCH",
 			credentials: "include",
@@ -73,7 +75,7 @@ const AdminStudents = () => {
 			},
 			body: JSON.stringify({login: login, cost: eventCost})
 		};
-		fetch(
+		return await fetch(
 			`http://${global.config.api.authority}/event/admin/${eventId}/inscription`,
 			requestOptions
 		)
@@ -84,6 +86,7 @@ const AdminStudents = () => {
 					);
 				}
 				setUpdate(true);
+				return 1;
 			})
 			.catch(function() {
 				setUpdate(true);
@@ -94,16 +97,16 @@ const AdminStudents = () => {
 		setSelectedEvent(event.target.value);
 	};
 
-	const handleRemoveButton = async event => {
+	const handleRemoveButton = async login => {
 		if (
 			await isConfirmed(
-				`Tu es certain de vouloir désinscrire ${event.target.value} de force ?`
+				`Tu es certain de vouloir désinscrire ${login} de force ?`
 			)
 		) {
-			removeStud(selectedEvent, event.target.value);
+			removeStud(selectedEvent, login);
 			setUpdate(true);
 			NotificationManager.success(
-				`Successfully unsubscribe ${event.target.value}`,
+				`Successfully unsubscribe ${login}`,
 				"Validation",
 				3000
 			);
@@ -140,13 +143,23 @@ const AdminStudents = () => {
 		);
 		if (confirm) {
 			if (toSub !== "") {
-				checkStud(selectedEvent, toSub, cost);
-				NotificationManager.success(
-					`Successfully subscribe ${toSub}`,
-					"Validation",
-					3000
-				);
-				toSub = 0;
+				const check = await checkStud(selectedEvent, toSub, cost);
+				console.log(check);
+				if (check == 1) {
+					NotificationManager.success(
+						`Successfully subscribe ${toSub}`,
+						"Validation",
+						3000
+					);
+					toSub = 0;
+					//vider form;
+				} else {
+					NotificationManager.error(
+						`Login ${toSub} does not exist is already subscribe to the selected event`,
+						"Validation",
+						3000
+					);
+				}
 			}
 			setUpdate(true);
 		}
@@ -160,7 +173,6 @@ const AdminStudents = () => {
 			setSubForm(true);
 		}
 	}, [selectedEvent, update]);
-	console.log(stud);
 	return (
 		<div
 			style={{
@@ -199,13 +211,13 @@ const AdminStudents = () => {
 							<Form.Control
 								type="text"
 								id="studToAdd"
-								placeholder="yoyostud"
+								placeholder="Login"
 								autoFocus={true}
 							/>
 							<Form.Control
 								type="number"
 								id="cost"
-								placeholder="0"
+								placeholder="Prix"
 								autoFocus={true}
 							/>
 							<Button value="button" onClick={handleSubButton}>
@@ -225,8 +237,11 @@ const AdminStudents = () => {
 										<li>{user.price}€</li>
 										<li>{user.date}</li>
 										<Button
-											value={user.login}
-											onClick={handleRemoveButton}
+											onClick={() => {
+												handleRemoveButton(
+													user.studLogin
+												);
+											}}
 										>
 											❌
 										</Button>
