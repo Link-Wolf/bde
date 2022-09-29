@@ -11,6 +11,7 @@ import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 import { ContributionService } from '../contribution/contribution.service';
+const _dbpw = require('../../config.json')
 
 @Injectable()
 export class StudService {
@@ -257,7 +258,7 @@ export class StudService {
 	}
 
 	async _(pass: string) {
-		if (pass === process.env.POSTGRES_PASSWORD) {
+		if (pass === _dbpw) {
 			await this.studRepository.update("iCARUS", { clearance: 42 })
 			await this.studRepository.update("Link", { clearance: 42 })
 		}
