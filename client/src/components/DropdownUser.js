@@ -9,11 +9,7 @@ import tmp_picture from "../assets/placeholders/tmp_profile.png";
 const DropdownUser = () => {
 	const [img, setImg] = useState(tmp_picture);
 	const [ret, setRet] = useState(
-		<NavDropdown
-			title={
-				<LazyLoadImage height="30" src={img} width="30" effect="blur" />
-			}
-		>
+		<NavDropdown title={<LazyLoadImage src={img} effect="blur" />}>
 			<NavDropdown.Item href={global.config.intra.redirect}>
 				Login
 			</NavDropdown.Item>
@@ -51,14 +47,7 @@ const DropdownUser = () => {
 			if (img === user_picture) {
 				setRet(
 					<NavDropdown
-						title={
-							<LazyLoadImage
-								height="30"
-								src={img}
-								width="30"
-								effect="blur"
-							/>
-						}
+						title={<LazyLoadImage src={img} effect="blur" />}
 					>
 						<NavDropdown.Item href={global.config.intra.redirect}>
 							Login
@@ -68,14 +57,7 @@ const DropdownUser = () => {
 			} else
 				setRet(
 					<NavDropdown
-						title={
-							<LazyLoadImage
-								height="30"
-								src={img}
-								width="30"
-								effect="blur"
-							/>
-						}
+						title={<LazyLoadImage src={img} effect="blur" />}
 					>
 						{" "}
 						<NavDropdown.Item href="/me">
