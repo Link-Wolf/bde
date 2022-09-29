@@ -5,6 +5,7 @@
 	background-color: #212529;
 	color: #FFFFFE;
 	height: 8vh;
+	font-family: Century;
 
 	a {
 		color: inherit;
@@ -13,9 +14,14 @@
 
 	h1 {
 		color: grey;
-		font-size: 3vh;
+		font-size: 2vh;
 		margin: 0;
-		padding: 1vh 0.5vw;
+		padding: 1.7vh 0.5vw;
+		transition: 0.4s;
+	}
+
+	h1:hover {
+		color: white;
 	}
 }
 
@@ -30,6 +36,11 @@
 		height: 4vh;
 		width: 4vh;
 		margin: 1vh 0.5vw;
+		padding: 0;
+	}
+
+	.dropdownContainer {
+		font-family: Futura;
 	}
 }
 
@@ -48,6 +59,9 @@
 	}
 
 	h1 {
+		font-size: 3vh;
 		color: #FFFFFE;
+		margin: 0;
+		padding: 1vh 0.5vw;
 	}
 }

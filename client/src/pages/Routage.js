@@ -5,6 +5,8 @@ import ClearanceChecker from "../components/ClearanceChecker";
 
 import {NotificationContainer} from "react-notifications";
 
+import style from "../style/Routage.module.scss";
+
 // Nos pagis
 import Home from "./body/Home";
 import Cgu from "./body/Cgu";
@@ -227,15 +229,7 @@ const RouteWrapper = params => {
 			>
 				<Header />
 				<NotificationContainer />
-				<div
-					style={{
-						overflowY: "scroll",
-						width: "100vw",
-						height: "80vh"
-					}}
-				>
-					{params.route}
-				</div>
+				<div className={style.bodyContainer}>{params.route}</div>
 				<Footer />
 			</ClearanceChecker>
 		</>
