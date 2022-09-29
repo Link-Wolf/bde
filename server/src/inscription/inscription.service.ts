@@ -3,6 +3,7 @@ import { EntityManager } from 'typeorm';
 import { EventService } from '../event/event.service';
 import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
+import { ContributionService } from '../contribution/contribution.service';
 
 @Injectable()
 export class InscriptionService {
@@ -11,6 +12,7 @@ export class InscriptionService {
 		private logger: LoggerService,
 		private studService: StudService,
 		private eventService: EventService,
+		private contributionService: ContributionService
 	) { }
 
 	async getIsSubbed(id: number, login: any) {
@@ -89,7 +91,20 @@ export class InscriptionService {
 					(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`))
 				.length;
 			const premium_subbed = (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length;
-			if (subbed >= event.nb_places || (stud.isPremium() && subbed - premium_subbed >= event.nb_places - event.nb_premium_places))
+			if (event.nb_places !== -42 && (subbed >= event.nb_places || (await (async () => {
+				let status = false
+				let data =
+					await this.contributionService.findForUser(stud.login, "42");
+				data.forEach((item) => {
+					if (
+						new Date(item.end_date) > new Date(Date.now()) &&
+						new Date(item.begin_date) <= new Date(Date.now())
+					) {
+						status = true
+					}
+				});
+				return status
+			})() && subbed - premium_subbed >= event.nb_places - event.nb_premium_places)))
 				throw new ConflictException(`Failed to save inscription for student ${login} to event ${id} : event is full`)
 			let ret = this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId") VALUES('${login}', ${id})`);
 			this.logger.log(`Successfully save inscription for student ${login} to event ${id}`, requestMaker);

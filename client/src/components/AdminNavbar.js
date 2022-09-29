@@ -271,20 +271,13 @@ const AdminNavbar = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		if (document.getElementById("header"))
-			setHeaderHeight(document.getElementById("header").offsetHeight);
-		if (document.getElementById("footer"))
-			setFooterHeight(document.getElementById("footer").offsetHeight);
-	}, []);
-
 	return (
 		<div
 			style={{
 				display: "flex",
 				height: `80vh`,
 				position: "sticky",
-				top: `${headerHeight}px`
+				top: `8vh`
 			}}
 		>
 			<CDBSidebar textColor="#fff" backgroundColor="#333">

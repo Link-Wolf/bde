@@ -168,44 +168,48 @@ const Event = () => {
 				return response.json();
 			})
 			.then(data => {
-				if (data.isSubbed)
+				if (data.isSubbed) {
 					if (
-						(dataEvent.premium_cost == 0 && data.isPremium) ||
+						(dataEvent.premium_cost == 0 && dataStud.isPremium) ||
 						dataEvent.cost == 0
-					)
+					) {
 						setButton(
 							<Button onClick={unsub} disabled={locked}>
 								Unsubscribe
 							</Button>
 						);
-					else
+					} else {
 						setButton(
 							<Button onClick={callBdeUnsub} disable={locked}>
 								Unsubscribe
 							</Button>
 						);
-				else if (
-					(dataEvent.premium_cost == 0 && data.isPremium) ||
-					dataEvent.cost == 0
-				)
-					setButton(
-						<Button onClick={sub} disabled={locked}>
-							Subscribe
-						</Button>
-					);
-				else
-					setButton(
-						<Button onClick={callBdeSub} disable={locked}>
-							Subscribe
-						</Button>
-					);
+					}
+				} else {
+					if (
+						(dataEvent.premium_cost == 0 && dataStud.isPremium) ||
+						dataEvent.cost == 0
+					) {
+						setButton(
+							<Button onClick={sub} disabled={locked}>
+								Subscribe
+							</Button>
+						);
+					} else {
+						setButton(
+							<Button onClick={callBdeSub} disable={locked}>
+								Subscribe
+							</Button>
+						);
+					}
+				}
 			})
 			.catch(function(error) {
 				console.log(
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [update, locked, param]);
+	}, [update, locked, param, dataStud]);
 
 	// stud info
 	useEffect(() => {
@@ -229,8 +233,8 @@ const Event = () => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [update]);
-	console.log(dataEvent);
+	}, []);
+
 	if (dataEvent.length === 0) return <></>;
 	return (
 		<>
@@ -305,3 +309,274 @@ const Event = () => {
 	);
 };
 export default Event;
+// import {useState, useEffect, React} from "react";
+// import {useParams} from "react-router-dom";
+// import {Button} from "react-bootstrap";
+// import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
+// import EventAlbum from "../../components/EventAlbum";
+// import {NotificationManager} from "react-notifications";
+// import useConfirm from "../../components/useConfirm";
+//
+// import durationLogo from "../../assets/logos/time.png";
+// import locationLogo from "../../assets/logos/location.png";
+// import nbPlacesLogo from "../../assets/logos/places.png";
+// import inscCostLogo from "../../assets/logos/price.png";
+// import dateTimeLogo from "../../assets/logos/date.png";
+//
+// const Event = () => {
+// 	const [update, setUpdate] = useState(false);
+// 	const {isConfirmed} = useConfirm();
+// 	const [dataEvent, setDataEvent] = useState([]);
+// 	const [dataStud, setDataStud] = useState([]);
+// 	const [duration, setDuration] = useState("Never Ending Fun");
+// 	const [thumbnail, setThumnail] = useState(null);
+// 	const [locked, setLocked] = useState(false);
+//
+// 	const param = useParams();
+//
+// 	const unsub = async () => {
+// 		setLocked(true);
+// 		await fetch(
+// 			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
+// 			{
+// 				method: "DELETE",
+// 				credentials: "include"
+// 			}
+// 		)
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					throw new Error(
+// 						`This is an HTTP error: The status is ${response.status}`
+// 					);
+// 				}
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					`This is a fetch error: The error is ${error.message}`
+// 				);
+// 			});
+// 		setLocked(false);
+// 		setUpdate(true);
+// 	};
+//
+// 	const callBdeSub = async () => {
+// 		setLocked(true);
+// 		await isConfirmed(
+// 			`Contacte un membre du BDE pour payer et valider ton inscription !`
+// 		);
+// 		setLocked(false);
+// 	};
+//
+// 	const callBdeUnsub = async () => {
+// 		setLocked(true);
+// 		await isConfirmed(
+// 			`Contacte un membre du BDE pour te faire rembourser et retirer ton inscription !`
+// 		);
+// 		setLocked(false);
+// 	};
+//
+// 	const sub = async () => {
+// 		setLocked(true);
+//
+// 		await fetch(
+// 			`http://${global.config.api.authority}/inscription/me/${param.id}`,
+// 			{
+// 				method: "POST",
+// 				credentials: "include"
+// 			}
+// 		)
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					NotificationManager.warning(
+// 						"Nique ta mere cest full",
+// 						"Attention",
+// 						3000
+// 					);
+// 					throw new Error(
+// 						`This is an HTTP error: The status is ${response.status}`
+// 					);
+// 				}
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					`This is a fetch error: The error is ${error.message}`
+// 				);
+// 			});
+// 		setLocked(false);
+// 		setUpdate(true);
+// 	};
+//
+// 	const handleButtonClick = () => {
+// 		if (dataStud.isSubbed) {
+// 			if (
+// 				(dataEvent.premium_cost == 0 && dataStud.isPremium) ||
+// 				dataEvent.cost == 0
+// 			)
+// 				unsub();
+// 			else callBdeUnsub();
+// 			console.log("unsubbed");
+// 		} else {
+// 			if (
+// 				(dataEvent.premium_cost == 0 && dataStud.isPremium) ||
+// 				dataEvent.cost == 0
+// 			)
+// 				sub();
+// 			else callBdeSub();
+// 			console.log("subbed");
+// 		}
+// 	};
+//
+// 	// thumbnail
+// 	useEffect(() => {
+// 		setUpdate(false);
+// 		fetch(
+// 			`http://${global.config.api.authority}/event/${param.id}/thumbnail`,
+// 			{
+// 				credentials: "include"
+// 			}
+// 		)
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					throw new Error(
+// 						`This is an HTTP error: The status is` +
+// 							` ${response.status}`
+// 					);
+// 				}
+// 				return response.blob();
+// 			})
+// 			.then(blob => {
+// 				setThumnail(URL.createObjectURL(blob));
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					"Il y a eu un problème avec l'opération fetch: " +
+// 						error.message
+// 				);
+// 			});
+// 	}, [param.id, update]);
+//
+// 	// event info
+// 	useEffect(() => {
+// 		setUpdate(false);
+// 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
+// 			credentials: "include"
+// 		})
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					throw new Error(
+// 						`This is an HTTP error: The status is ${response.status}`
+// 					);
+// 				}
+// 				return response.json();
+// 			})
+// 			.then(actualData => {
+// 				setDataEvent(actualData);
+// 				if (actualData.end_date) {
+// 					const span =
+// 						new Date(actualData.end_date) -
+// 						new Date(actualData.begin_date);
+// 					const span_hour = span / 1000 / 60 / 60;
+// 					const span_days = span_hour / 24;
+// 					if (span_hour >= 24) setDuration(`${span_days} jour(s)`);
+// 					else setDuration(`${span_hour} heure(s)`);
+// 				}
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					`This is a fetch error: The error is ${error.message}. gotta go back`
+// 				);
+// 				window.location = "/events";
+// 			});
+// 	}, [param.id, update]);
+//
+// 	//is subbded
+// 	useEffect(() => {
+// 		setUpdate(false);
+// 		fetch(
+// 			`http://${global.config.api.authority}/inscription/${param.id}/isSubbed`,
+// 			{
+// 				credentials: "include"
+// 			}
+// 		)
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					throw new Error(
+// 						`This is an HTTP error: The status is ${response.status}`
+// 					);
+// 				}
+// 				return response.json();
+// 			})
+// 			.then(data => {
+// 				let tmp = dataStud;
+// 				tmp.isSubbed = data.isSubbed;
+// 				setDataStud(tmp);
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					`This is a fetch error: The error is ${error.message}`
+// 				);
+// 			});
+// 	}, [update, locked, param]);
+//
+// 	// stud info
+// 	useEffect(() => {
+// 		fetch(`http://${global.config.api.authority}/stud/minecraft/`, {
+// 			method: "GET",
+// 			credentials: "include"
+// 		})
+// 			.then(response => {
+// 				if (!response.ok) {
+// 					throw new Error(
+// 						`This is an HTTP error: The status is ${response.status}`
+// 					);
+// 				}
+// 				return response.json();
+// 			})
+// 			.then(data => {
+// 				setDataStud(data);
+// 			})
+// 			.catch(function(error) {
+// 				console.log(
+// 					`This is a fetch error: The error is ${error.message}`
+// 				);
+// 			});
+// 	}, [update]);
+//
+// 	if (dataEvent.length === 0) return <></>;
+// 	return (
+// 		<div>
+// 			<img src={thumbnail} alt={`Thumbnail of event ${param.id}`} />
+// 			<h1>{dataEvent.name}</h1>
+// 			<h2>
+// 				<img src={dateTimeLogo} />
+// 				Date : {new Date(
+// 					dataEvent.begin_date
+// 				).toLocaleDateString()}{" "}
+// 				{new Date(dataEvent.begin_date).toLocaleTimeString()}
+// 			</h2>
+// 			<h2>
+// 				<img src={nbPlacesLogo} />
+// 				Places : {dataEvent.subbed} / {dataEvent.nb_places}
+// 			</h2>
+// 			<h2>
+// 				<img src={locationLogo} />
+// 				Lieu : {dataEvent.place}
+// 			</h2>
+// 			<h2>
+// 				<img src={inscCostLogo} />
+// 				Prix : {dataEvent.cost}
+// 			</h2>
+// 			<h2>
+// 				<img src={durationLogo} />
+// 				Durée : {duration}
+// 			</h2>
+// 			<p>{dataEvent.desc}</p>
+// 			<button onClick={handleButtonClick}>
+// 				{dataStud.isSubbed ? "Désinscription" : "Inscription"}
+// 			</button>
+// 			<EventAlbum id={param.id} />
+// 		</div>
+// 	);
+// };
+//
+// export default Event;
