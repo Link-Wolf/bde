@@ -6,6 +6,8 @@ import NotificationContextProvider from "./components/NotificationContextProvide
 import {ReactNotifications} from "react-notifications-component";
 
 import "./style/App.scss";
+import "swiper/css/bundle";
+import "./style/swiper.css";
 
 import "react-notifications-component/dist/theme.css";
 import Routage from "./pages/Routage";
