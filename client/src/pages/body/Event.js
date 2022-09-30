@@ -135,7 +135,7 @@ const Event = () => {
 				.then(response => {
 					if (!response.ok) {
 						NotificationManager.warning(
-							"Nique ta mere cest full",
+							"L'event est full",
 							"Attention",
 							3000
 						);

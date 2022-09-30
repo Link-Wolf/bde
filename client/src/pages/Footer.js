@@ -35,13 +35,13 @@ function Footer() {
 				</a>
 			</div>
 			<div>
-				<div>CC COPYRIGHT TOUSSA</div>
+				<div>© 2022 BDE 42 Mulhouse, tous droits réservés</div>
 				<div> HOSTED BY US </div>
 			</div>
 			<div>
 				<a href="/legalthings"> CGU </a>
 				<a href="/dollarthings"> CGV </a>
-				<a href="/contact"> Contact us grand fou</a>
+				<a href="/contact"> Contact</a>
 			</div>
 		</footer>
 	);

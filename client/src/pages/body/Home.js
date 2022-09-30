@@ -8,7 +8,7 @@ const Home = () => {
 	return (
 		<div>
 			<p className={style.p}>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+				[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
 				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
 				Etiam sit amet dapibus nisi. Donec bibendum pulvinar augue, vel
@@ -27,12 +27,8 @@ const Home = () => {
 				dictum convallis massa nec luctus. Integer at ipsum sed massa
 				tempus blandit aliquet vel magna. Cras semper malesuada elit,
 				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
-				pulvinar et, accumsan eu lectus. Sed porttitor.
+				pulvinar et, accumsan eu lectus. Sed porttitor.]
 			</p>
-			<p className={style.p}>Ouais salut c'est le BDE</p>
-			<p className={style.p}>Ici on est pas la pour faire des oeufs</p>
-			<p className={style.p}>Alors accroche toi bien a ton iMac</p>
-			<p className={style.p}>Parce qu'on va casser la baraque</p>
 			<div className={style.event_show}>
 				<ShowcaseCarousel />
 				<div className={style.margin5}>
@@ -40,7 +36,7 @@ const Home = () => {
 				</div>
 			</div>
 			<p className={style.p}>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+				[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
 				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
 				Etiam sit amet dapibus nisi. Donec bibendum pulvinar augue, vel
@@ -67,7 +63,7 @@ const Home = () => {
 				dictum convallis massa nec luctus. Integer at ipsum sed massa
 				tempus blandit aliquet vel magna. Cras semper malesuada elit,
 				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
-				pulvinar et, accumsan eu lectus. Sed porttitor.
+				pulvinar et, accumsan eu lectus. Sed porttitor.]
 			</p>
 		</div>
 	);
