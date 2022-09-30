@@ -195,7 +195,7 @@ export class EventService {
 					await this.manager.query
 						(`SELECT * FROM "inscription" WHERE "eventId" = ${id}`))
 					.length,
-				premium_subbed: (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length
+				premium_subbed: Math.max(event.nb_premium_places, (await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" IN (SELECT "studLogin" FROM "contribution" WHERE "begin_date" < NOW() AND "end_date" > NOW())`)).length)
 			}
 			return ret;
 		} catch (error) {
