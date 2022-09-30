@@ -194,7 +194,12 @@ const AdminStudents = () => {
 							</option>
 							{allEvent.map(event => {
 								return (
-									<option key={event.id} value={event.id}>
+									<option
+										key={event.id}
+										value={event.id}
+										id={`event_${event.id}`}
+										event={event}
+									>
 										{`${event.name} (${event.begin_date})`}
 									</option>
 								);
@@ -205,8 +210,9 @@ const AdminStudents = () => {
 					{subForm ? (
 						<FormGroup>
 							<Form.Label>
-								Entrez le login du stud a inscrire de force
-								(doit s'etre connecte au moins une fois)
+								Entrez le login du stud a inscrire de force (iel
+								doit s'etre connecte au moins une fois) et le
+								prix qu'iel a payé.
 							</Form.Label>
 							<Form.Control
 								type="text"
@@ -220,6 +226,23 @@ const AdminStudents = () => {
 								placeholder="Prix"
 								autoFocus={true}
 							/>
+							<p>
+								Il reste{" "}
+								{allEvent.find(event => {
+									return event.id == selectedEvent;
+								}).nb_places !== -42
+									? allEvent.find(event => {
+											return event.id == selectedEvent;
+									  }).nb_places
+									: "∞"}{" "}
+								places normales dont{" "}
+								{
+									allEvent.find(event => {
+										return event.id == selectedEvent;
+									}).nb_premium_places
+								}{" "}
+								places premiums.
+							</p>
 							<Button value="button" onClick={handleSubButton}>
 								Inscrire
 							</Button>
