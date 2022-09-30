@@ -151,8 +151,8 @@ const AdminStudents = () => {
 						"Validation",
 						3000
 					);
-					toSub = 0;
-					//vider form;
+					document.getElementById("studToAdd").value = "";
+					document.getElementById("cost").value = "";
 				} else {
 					NotificationManager.error(
 						`Login ${toSub} does not exist is already subscribe to the selected event`,
