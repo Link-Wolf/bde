@@ -162,7 +162,7 @@ const LegalNote = () => {
 			<a href="/legalthings" target="_blank" rel="noopener noreferrer">
 				conditions générales d'utilisation
 			</a>{" "}
-			et
+			et{" "}
 			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
 				conditions générales de vente
 			</a>{" "}

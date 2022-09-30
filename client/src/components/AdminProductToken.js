@@ -46,7 +46,7 @@ const AdminProductToken = param => {
 	const changeThumbnail = async () => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
-		fetch(
+		await fetch(
 			`http://${global.config.api.authority}/goodies/upload_image
 			/${param.data.id}`,
 			{
