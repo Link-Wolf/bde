@@ -66,7 +66,6 @@ export class OrderService {
 			this.logger.log(`Successfully created order ${body.id}`, login)
 			return ret
 		} catch (err) {
-			console.log(body, login);
 			this.logger.error(
 
 				`Failed to create order ${body.id} on database (${err})`,
@@ -77,13 +76,11 @@ export class OrderService {
 
 	async captureOrder(body, login) {
 		try {
-			console.log(body)
 			const order = await this.orderRepository.findOneBy({ id: body.id })
 			if (!order)
 				throw new NotFoundException
 					(`Failed to capture order ${body.id}: doesn't exist`);
 			order.isCompleted = true
-			console.log(body.id, order)
 			let ret = await this.orderRepository.update(body.id, order);
 			const stud = await this.studService.findOne(order.studLogin, login)
 			const contrib = {

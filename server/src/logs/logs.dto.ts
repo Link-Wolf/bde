@@ -6,6 +6,7 @@ export class LogsDto {
 }
 
 export class LogsFilterDto {
+	isAdmin: boolean;
 	warn: boolean;
 	error: boolean;
 	login: string;
