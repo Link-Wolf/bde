@@ -256,7 +256,7 @@ export class EventService {
 			if (!stud) {
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
-			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin",price,date) VALUES (${id}, '${login}', ${cost}, NOW())`);
+			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin", price, date) VALUES (${id}, '${login}', ${cost}, NOW())`);
 			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker);
 			return ret;
 		} catch (error) {
