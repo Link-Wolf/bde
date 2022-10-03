@@ -45,7 +45,7 @@ const EventAlbums = param => {
 			))}
 		</div>
 	) : (
-		<div>No event has been save with foto</div>
+		<div>Pas d'album photos trouvés pour les filtres sélectionnés</div>
 	);
 };
 
