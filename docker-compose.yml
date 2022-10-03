@@ -53,6 +53,7 @@ services:
 
     redis:
         container_name: fregate_redis
+        command: redis-server --requirepass "xeno1et2"
         image: redis
         ports:
             - 6379:6379

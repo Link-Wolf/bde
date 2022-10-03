@@ -23,7 +23,7 @@ import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
-const { _dbpw, session_secret } = require('../config.json')
+const { _dbpw, _rdpw } = require('../config.json')
 
 
 @Module({
@@ -55,7 +55,7 @@ const { _dbpw, session_secret } = require('../config.json')
 			store: redisStore,
 			host: process.env.REDIS_HOST,
 			port: process.env.REDIS_PORT,
-			password: session_secret
+			password: _rdpw
 		}),
 	],
 	controllers: [AppController],
