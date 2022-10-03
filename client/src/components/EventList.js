@@ -55,7 +55,12 @@ const EventList = param => {
 			})
 			.then(actualData => {
 				if (!actualData.length)
-					setRet(<div>No event for the moment ma boi</div>);
+					setRet(
+						<div>
+							Pas d'évènements trouvés pour les filtres
+							sélectionnés{" "}
+						</div>
+					);
 				else setData(actualData);
 			})
 			.catch(function(error) {

@@ -36,20 +36,16 @@ const EventAlbums = param => {
 			});
 	}, [param.filter]);
 
-	return (
-		<>
-			{data.length ? (
-				<div className={style.scroll_container_40vw}>
-					{data.map(item => (
-						<li key={item.id}>
-							<EventToken event={item} type="album" />
-						</li>
-					))}
-				</div>
-			) : (
-				<div>No event has been save with foto</div>
-			)}
-		</>
+	return data.length ? (
+		<div className={style.scroll_container_40vw}>
+			{data.map(item => (
+				<li key={item.id}>
+					<EventToken event={item} type="album" />
+				</li>
+			))}
+		</div>
+	) : (
+		<div>Pas d'album photos trouvés pour les filtres sélectionnés</div>
 	);
 };
 
