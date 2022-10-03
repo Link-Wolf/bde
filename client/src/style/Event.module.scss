@@ -1,0 +1,77 @@
+.eventContainer {
+	display: flex;
+	justify-content: space-between;
+
+	div div {
+		display: flex;
+	}
+
+	.descriptionContainer {
+		flex-direction: column;
+		justify-content: space-between;
+		width: 30vw;
+
+		img {
+			height: 3vh;
+			vertical-align: top;
+		}
+
+		div {
+			flex-direction: column;
+		}
+
+		h1 {
+			font-family: Century;
+			font-size: 6vh;
+		}
+
+		h2 {
+			font-family: Futura;
+			font-size: 3vh;
+		}
+
+		p {
+			font-size: 2vh;
+		}
+	}
+
+	.buttonContainer {
+		margin: 0.5vh 20vw;
+
+		button {
+			background-color: #212529;
+			border-color: #212529;
+			color: #FFFFFE;
+			width: 20vw;
+			height: 5vh;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			border-radius: 15px;
+
+			&:hover {
+				color: #212529;
+				background-color: #FFFFFE;
+				border-color: #212529;
+				transition: 0.5s;
+			}
+		}
+	}
+
+	.thumbailContainer {
+		img {
+			width: 30vw;
+			height: 60vh;
+			object-fit: cover;
+		}
+	}
+
+	.albumContainer {
+		width: 20vw;
+
+		img {
+			width: 20vw;
+			height: auto;
+		}
+	}
+}
