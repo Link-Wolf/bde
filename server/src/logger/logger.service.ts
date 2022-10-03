@@ -11,12 +11,13 @@ export class LoggerService {
 		private logRepertory: Repository<Logs>
 	) { }
 
-	async error(message: string, requestMaker: string) {
+	async error(message: string, requestMaker: string, isAdmin = false) {
 		Logger.error(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
 			message: `${message}`,
+			isAdmin: isAdmin,
 			type: "error"
 		})
 		if (requestMaker == undefined)
@@ -25,21 +26,25 @@ export class LoggerService {
 			this.logfile("error", `(${requestMaker}) : ${message}`)
 	}
 
-	async warn(message: string, requestMaker: string) {
+	async warn(message: string, requestMaker: string, isAdmin = false) {
+		console.log(isAdmin)
 		Logger.warn(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
-		await this.logRepertory.save({
+		const t = {
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
 			message: `${message}`,
+			isAdmin: isAdmin,
 			type: "warn"
-		})
+		}
+		console.log(t)
+		console.log(await this.logRepertory.save(t))
 		if (requestMaker == undefined)
 			this.logfile("warning", `(unknown public) : ${message}`)
 		else
 			this.logfile("warning", `(${requestMaker}) : ${message}`)
 	}
 
-	async log(message: string, requestMaker: string) {
+	async log(message: string, requestMaker: string, isAdmin = false) {
 		Logger.log(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
 			this.logfile("log", `(unknown public) : ${message}`)
@@ -47,7 +52,7 @@ export class LoggerService {
 			this.logfile("log", `(${requestMaker}) : ${message}`)
 	}
 
-	async verbose(message: string, requestMaker: string) {
+	async verbose(message: string, requestMaker: string, isAdmin = false) {
 		Logger.verbose(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
 			this.logfile("verbose", `(unknown public) : ${message}`)

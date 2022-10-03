@@ -52,12 +52,12 @@ export class GoodiesService {
 						this.goodiesRepository.update(id, {
 							thumbnail_filename: path
 						})
-						this.logger.log(`Successfully saved thumbnail of goodies ${id}`, login)
+						this.logger.log(`Successfully saved thumbnail of goodies ${id}`, login, true)
 					}
 				})
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to save thumbnail of goodies ${id} on database(${error})`, login);
+			this.logger.error(`Failed to save thumbnail of goodies ${id} on database(${error})`, login, true);
 			throw error
 		}
 	}
@@ -91,14 +91,14 @@ export class GoodiesService {
 	async update(id: number, goodiesData: GoodiesDto, requestMaker: string): Promise<any> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
-				this.logger.error(`Failed to update goodies with id ${id} : goodies does not exist`, requestMaker);
+				this.logger.error(`Failed to update goodies with id ${id} : goodies does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to update goodies with id ${id} : goodies does not exist`);
 			}
 			let ret = await this.goodiesRepository.update(id, goodiesData);
-			this.logger.warn(`Successfully updated goodies ${id}`, requestMaker);
+			this.logger.warn(`Successfully updated goodies ${id}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to update goodies ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to update goodies ${id} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -106,10 +106,10 @@ export class GoodiesService {
 	async create(goodiesDto: GoodiesDto, requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.goodiesRepository.save(goodiesDto);
-			this.logger.warn(`Successfully created new goodies ${goodiesDto.name} `, requestMaker);
+			this.logger.warn(`Successfully created new goodies ${goodiesDto.name} `, requestMaker, true);
 			return (ret)
 		} catch (error) {
-			this.logger.error(`Failed to create goodies ${goodiesDto.name} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to create goodies ${goodiesDto.name} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -118,13 +118,13 @@ export class GoodiesService {
 		try {
 			if (await this.findOne(id, requestMaker)) {
 				let ret = await this.goodiesRepository.delete({ id: id });
-				this.logger.warn(`Successfully deleted goodies ${id}`, requestMaker);
+				this.logger.warn(`Successfully deleted goodies ${id}`, requestMaker, true);
 				return ret
 			}
 			else
-				this.logger.warn(`Failed to delete goodies ${id} : goodies does no exist`, requestMaker);
+				this.logger.warn(`Failed to delete goodies ${id} : goodies does no exist`, requestMaker, true);
 		} catch (error) {
-			this.logger.error(`Failed to delete goodies ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to delete goodies ${id} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -135,7 +135,7 @@ export class GoodiesService {
 			this.logger.warn(`Successfully deleted all goodies`, requestMaker);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all goodies on database(${error})`, requestMaker)
+			this.logger.error(`Failed to delete all goodies on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
