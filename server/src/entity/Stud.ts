@@ -56,4 +56,6 @@ export class Stud {
 		cascade: true
 	})
 	inscription: Event[]
+
+	isPremium: boolean;
 }

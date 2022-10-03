@@ -24,11 +24,24 @@ export class StudService {
 
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
-			let studs = await this.studRepository.find();
+			let studs = await this.studRepository.find({ order: { login: "ASC" } });
 			// if (studs.length == 0) {
 			// 	this.logger.warn(`No stud found`)
 			// }
 			// else
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, "42");
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
 			this.logger.log(`Got all students`, requestMaker);
 			return studs;
 		}
@@ -44,6 +57,19 @@ export class StudService {
 				isDirection: true,
 				clearance: Not(21)
 			});
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, "42");
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
 			this.logger.log(`Got all direction members`, requestMaker);
 			return studs;
 		}
@@ -58,6 +84,19 @@ export class StudService {
 			let studs = await this.studRepository.findBy({
 				isDirection: false,
 			});
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, "42");
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
 			this.logger.log(`Got all non-direction members`, requestMaker);
 			return studs;
 		}
@@ -72,6 +111,19 @@ export class StudService {
 			let studs = await this.studRepository.findBy({
 				clearance: 9
 			});
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, "42");
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
 			this.logger.log(`Got all direction members`, requestMaker);
 			return studs;
 		}
@@ -86,6 +138,19 @@ export class StudService {
 			let studs = await this.studRepository.findBy({
 				clearance: 7
 			});
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, "42");
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
 			this.logger.log(`Got all non-direction members`, requestMaker);
 			return studs;
 		}
