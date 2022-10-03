@@ -1,8 +1,12 @@
 import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 
+import yellowStar from "../../assets/logos/yellow_star.svg";
+import greyStar from "../../assets/logos/grey_star.svg";
+
 const AdminStudents = () => {
 	const [data, setData] = useState([]);
+	const [isFiltered, setIsFiltered] = useState(false);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/stud`, {
@@ -17,6 +21,7 @@ const AdminStudents = () => {
 				return response.json();
 			})
 			.then(actualData => {
+				console.log(actualData);
 				setData(actualData);
 			})
 			.catch(function(error) {
@@ -35,23 +40,54 @@ const AdminStudents = () => {
 			<AdminNavbar />
 			<div>
 				<h1> AdminPannel Students part </h1>
+				<button
+					onClick={() => {
+						setIsFiltered(!isFiltered);
+					}}
+				>
+					{isFiltered
+						? "Montrer tout le monde"
+						: "Montrer les premiums"}
+				</button>
 				<div>
 					{data.length > 0 && (
 						<ul>
-							{data.map(user => (
-								<li key={user.login}>
-									{user.login}
-									<ul>
-										<li> {user.firstname} </li>
-										<li> {user.lastname} </li>
-										<li>
-											{user.clearance >= 11
-												? "direction"
-												: "pnj"}
+							{data.map(
+								user =>
+									(!isFiltered || user.isPremium) && (
+										<li key={user.login}>
+											{user.login}
+											<ul>
+												<li>
+													{user.firstname}{" "}
+													{user.lastname}
+												</li>
+												<li>
+													<img
+														src={
+															user.isPremium
+																? yellowStar
+																: greyStar
+														}
+													/>
+												</li>
+												<li>
+													{
+														{
+															[2]: "Autre Campus",
+															[5]: "Piscineux",
+															[7]: "Student",
+															[9]: "Benevole",
+															[11]: "Membre du Bureau",
+															[21]: "President",
+															[42]: "Devlopper"
+														}[user.clearance]
+													}
+												</li>
+											</ul>
 										</li>
-									</ul>
-								</li>
-							))}
+									)
+							)}
 						</ul>
 					)}
 				</div>
