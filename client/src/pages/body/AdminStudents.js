@@ -77,10 +77,10 @@ const AdminStudents = () => {
 															[2]: "Autre Campus",
 															[5]: "Piscineux",
 															[7]: "Student",
-															[9]: "Benevole",
-															[11]: "Membre du Bureau",
-															[21]: "President",
-															[42]: "Devlopper"
+															[9]: "Bénévole",
+															[11]: "Admin",
+															[21]: "Capitaine",
+															[42]: "0uebM@st3r"
 														}[user.clearance]
 													}
 												</li>
