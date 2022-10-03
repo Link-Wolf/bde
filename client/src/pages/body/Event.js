@@ -1,7 +1,5 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
-import {Button} from "react-bootstrap";
-import {Card, CardBody, CardTitle, CardSubtitle, CardText} from "reactstrap";
 import {NotificationManager} from "react-notifications";
 import useConfirm from "../../components/useConfirm";
 import b64ToBlob from "b64-to-blob";
@@ -107,29 +105,32 @@ const Thumbnail = param => {
 const Description = param => {
 	return (
 		<div className={style.descriptionContainer}>
-			<h1>{param.dataEvent.name}</h1>
-			<h2>
-				<img src={dateTimeLogo} />
-				Date :{" "}
-				{new Date(param.dataEvent.begin_date).toLocaleDateString()}{" "}
-				{new Date(param.dataEvent.begin_date).toLocaleTimeString()}
-			</h2>
-			<h2>
-				<img src={nbPlacesLogo} />
-				Places : {param.dataEvent.subbed} / {param.dataEvent.nb_places}
-			</h2>
-			<h2>
-				<img src={locationLogo} />
-				Lieu : {param.dataEvent.place}
-			</h2>
-			<h2>
-				<img src={inscCostLogo} />
-				Prix : {param.dataEvent.cost}
-			</h2>
-			<h2>
-				<img src={durationLogo} />
-				Durée : {param.duration}
-			</h2>
+			<div>
+				<h1>{param.dataEvent.name}</h1>
+				<h2>
+					<img src={dateTimeLogo} />
+					{new Date(
+						param.dataEvent.begin_date
+					).toLocaleDateString()},{" "}
+					{new Date(param.dataEvent.begin_date).toLocaleTimeString()}
+				</h2>
+				<h2>
+					<img src={nbPlacesLogo} />
+					{param.dataEvent.subbed} / {param.dataEvent.nb_places}
+				</h2>
+				<h2>
+					<img src={locationLogo} />
+					{param.dataEvent.place}
+				</h2>
+				<h2>
+					<img src={inscCostLogo} />
+					{param.dataEvent.cost}
+				</h2>
+				<h2>
+					<img src={durationLogo} />
+					{param.duration}
+				</h2>
+			</div>
 			<p>{param.dataEvent.desc}</p>
 		</div>
 	);
@@ -277,13 +278,15 @@ const SubscribeButton = param => {
 	}, [param]);
 
 	return (
-		<button
-			disabled={isSubbed === undefined}
-			onClick={isSubbed ? unsub : sub}
-			className={style.subButton}
-		>
-			{isSubbed ? "Desinscription" : "Inscription"}
-		</button>
+		<div className={style.buttonContainer}>
+			<button
+				disabled={isSubbed === undefined}
+				onClick={isSubbed ? unsub : sub}
+				className={style.subButton}
+			>
+				{isSubbed ? "Desinscription" : "Inscription"}
+			</button>
+		</div>
 	);
 };
 
