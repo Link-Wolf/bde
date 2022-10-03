@@ -70,14 +70,14 @@ export class ContributionService {
 		try {
 			let cont = await this.findLast(studLogin, requestMaker)
 			if (!cont) {
-				await this.logger.error(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`, requestMaker);
+				await this.logger.error(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`, requestMaker, true);
 				throw new NotFoundException(`Failed to update contribution of student ${studLogin} : student does not exist or does not have any contribution`);
 			}
 			let ret = await this.contributionRepository.update(cont.id, contribution);
-			this.logger.warn(`Successfully updated current contribution of student ${studLogin}`, requestMaker)
+			this.logger.warn(`Successfully updated current contribution of student ${studLogin}`, requestMaker, true)
 			return ret
 		} catch (error) {
-			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker);
+			await this.logger.error(`Failed to update contribution of student ${studLogin} on database (${error})`, requestMaker, true);
 			throw new UnprocessableEntityException(`Failed to update contribution of student ${studLogin} on database (${error})`);
 		}
 	}
@@ -97,11 +97,11 @@ export class ContributionService {
 	async forceCreate(contributionData: ContributionDto, requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.contributionRepository.insert(contributionData);
-			this.logger.warn(`Successfully force-created contribution for student ${contributionData.stud.login}`, requestMaker)
+			this.logger.warn(`Successfully force-created contribution for student ${contributionData.stud.login}`, requestMaker, true)
 			return ret
 		}
 		catch (error) {
-			await this.logger.error(`Failed to force-create contribution for student on database (${error})`, requestMaker);
+			await this.logger.error(`Failed to force-create contribution for student on database (${error})`, requestMaker, true);
 			throw new UnprocessableEntityException(`Failed to force-create contribution for student on database (${error})`);
 		}
 	}
@@ -109,14 +109,14 @@ export class ContributionService {
 	async removeOne(studLogin: string, requestMaker: string): Promise<any> {
 		let cont = await this.findLast(studLogin, requestMaker)
 		if (!cont) {
-			await this.logger.warn(`Failed to delete contributions of student ${studLogin} : contribution does not exist`, requestMaker);
+			await this.logger.warn(`Failed to delete contributions of student ${studLogin} : contribution does not exist`, requestMaker, true);
 		}
 		try {
 			let ret = await this.contributionRepository.delete({ studLogin: studLogin });
-			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`, requestMaker)
+			this.logger.log(`Successfully deleted all contributions of student ${studLogin}`, requestMaker, true)
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all contributions of student ${studLogin} on database (${error})`, requestMaker)
+			this.logger.error(`Failed to delete all contributions of student ${studLogin} on database (${error})`, requestMaker, true)
 			throw new UnprocessableEntityException(`Failed to delete contributions of student ${studLogin} on database (${error})`);
 		}
 	}
@@ -124,10 +124,10 @@ export class ContributionService {
 	async removeAll(requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.contributionRepository.delete({});
-			this.logger.log(`Successfully deleted all contributions`, requestMaker)
+			this.logger.log(`Successfully deleted all contributions`, requestMaker, true)
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all contributions on database (${error})`, requestMaker)
+			this.logger.error(`Failed to delete all contributions on database (${error})`, requestMaker, true)
 			throw new UnprocessableEntityException(`Failed to delete all contributions on database (${error})`);
 		}
 	}

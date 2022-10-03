@@ -97,7 +97,7 @@ export class EventService {
 				this.eventRepository.update(id, {
 					thumbnail_filename: path
 				})
-				this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+				this.logger.log(`Successfully saved thumbnail of event ${id}`, login, true)
 			}
 			else {
 				path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
@@ -107,20 +107,20 @@ export class EventService {
 					(err) => {
 						if (err) {
 							this.logger.error(`Error while creating event ${id} thumbnail(${err})`,
-								login);
+								login, true);
 							throw err
 						}
 						else {
 							this.eventRepository.update(id, {
 								thumbnail_filename: path
 							})
-							this.logger.log(`Successfully saved thumbnail of event ${id}`, login)
+							this.logger.log(`Successfully saved thumbnail of event ${id}`, login, true)
 						}
 					})
 				return (ret);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login);
+			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login, true);
 			throw error
 		}
 	}
@@ -208,15 +208,15 @@ export class EventService {
 	async update(id: number, eventData: EventDto, requestMaker: string): Promise<any> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
-				this.logger.error(`Failed to update event with id ${id} : event does not exist`, requestMaker);
+				this.logger.error(`Failed to update event with id ${id} : event does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
 			}
 			let ret = await this.eventRepository.update(id, eventData);
-			this.logger.warn("Successfully updated event " + id, requestMaker);
+			this.logger.warn("Successfully updated event " + id, requestMaker, true);
 			return ret;
 		} catch (error) {
 			this.logger.error(`Failed to update event ${id}
-			on database(${ error})`, requestMaker)
+			on database(${ error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -257,10 +257,10 @@ export class EventService {
 				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
 			}
 			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin", price, date) VALUES (${id}, '${login}', ${cost}, NOW())`);
-			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker);
+			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker, true);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -268,10 +268,10 @@ export class EventService {
 	async create(eventDto: EventDto, requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.eventRepository.save(eventDto);
-			this.logger.warn(`Successfully created new event ${eventDto.name} `, requestMaker);
+			this.logger.warn(`Successfully created new event ${eventDto.name} `, requestMaker, true);
 			return (ret);
 		} catch (error) {
-			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -281,13 +281,13 @@ export class EventService {
 			if (await this.findOne(id, requestMaker)) {
 				let ret = await this.eventRepository.delete({ id: id });
 				this.logger.warn(`Successfully deleted event ${id} `,
-					requestMaker);
+					requestMaker, true);
 				return ret
 			}
 			else
-				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker);
+				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker, true);
 		} catch (error) {
-			this.logger.error(`Failed to delete event ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed to delete event ${id} on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -295,10 +295,10 @@ export class EventService {
 	async removeAll(requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.eventRepository.delete({});
-			this.logger.warn(`Successfully deleted all events`, requestMaker);
+			this.logger.warn(`Successfully deleted all events`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all events on database(${error})`, requestMaker)
+			this.logger.error(`Failed to delete all events on database(${error})`, requestMaker, true)
 			throw error
 		}
 	}

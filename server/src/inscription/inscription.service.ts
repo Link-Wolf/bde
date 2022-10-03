@@ -29,10 +29,10 @@ export class InscriptionService {
 	async removeAll(requestMaker: string) {
 		try {
 			let ret = await this.manager.query(`DELETE FROM "inscription"`);
-			this.logger.warn(`Successfully deleted all inscription`, requestMaker);
+			this.logger.warn(`Successfully deleted all inscription`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscription on database (${error})`, requestMaker);
+			this.logger.error(`Failed to delete all inscription on database (${error})`, requestMaker, true);
 			throw new InternalServerErrorException(`Failed to delete all inscription on database (${error})`);
 		}
 	}
@@ -41,15 +41,15 @@ export class InscriptionService {
 		try {
 			if (this.studService.findOne(login, requestMaker)) {
 				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "studLogin" = '${login}'`);
-				this.logger.warn(`Successfully deleted all inscription of student ${login}`, requestMaker);
+				this.logger.warn(`Successfully deleted all inscription of student ${login}`, requestMaker, true);
 				return ret
 			}
 			else {
-				this.logger.error(`Failed to remove all inscription of student ${login} : student does not exist`, requestMaker)
+				this.logger.error(`Failed to remove all inscription of student ${login} : student does not exist`, requestMaker, true)
 				throw new NotFoundException(`Failed to remove all inscription of student ${login} : student does not exist`);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscription of student ${login} (${error})`, requestMaker);
+			this.logger.error(`Failed to delete all inscription of student ${login} (${error})`, requestMaker, true);
 			throw new InternalServerErrorException(`Failed to delete all inscription of student ${login} (${error})`);
 		}
 	}
@@ -58,15 +58,15 @@ export class InscriptionService {
 		try {
 			if (this.eventService.findOne(id, requestMaker)) {
 				let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id}`);
-				this.logger.warn(`Successfully deleted all inscription for event ${id}`, requestMaker);
+				this.logger.warn(`Successfully deleted all inscription for event ${id}`, requestMaker, true);
 				return ret
 			}
 			else {
-				this.logger.error(`Failed to delete all inscription for event ${id} : event does not exist`, requestMaker)
+				this.logger.error(`Failed to delete all inscription for event ${id} : event does not exist`, requestMaker, true)
 				throw new NotFoundException(`Failed to delete all inscription for event ${id} : event does not exist`);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to delete all inscription for event ${id} on database (${error})`, requestMaker);
+			this.logger.error(`Failed to delete all inscription for event ${id} on database (${error})`, requestMaker, true);
 		}
 	}
 
@@ -177,14 +177,14 @@ export class InscriptionService {
 		try {
 			let insc = await this.manager.query(`SELECT * FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
 			if (!insc.lenght) {
-				this.logger.warn(`Failed to force delete inscription for student ${login} and event ${id} : inscription does not exist`, requestMaker)
+				this.logger.warn(`Failed to force delete inscription for student ${login} and event ${id} : inscription does not exist`, requestMaker, true)
 				throw new NotFoundException(`inscription does not exist`)
 			}
 			let ret = await this.manager.query(`DELETE FROM "inscription" WHERE "eventId" = ${id} AND "studLogin" = '${login}'`);
-			this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`, requestMaker);
+			this.logger.warn(`Successfully force delete inscription for student ${login} and event ${id}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to force delete inscription for student ${login} and event ${id} on database (${error})`, requestMaker);
+			this.logger.error(`Failed to force delete inscription for student ${login} and event ${id} on database (${error})`, requestMaker, true);
 			throw new InternalServerErrorException(`Failed to delete inscription for student ${login} and event ${id} on database (${error})`);
 		}
 	}

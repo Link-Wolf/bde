@@ -8,6 +8,9 @@ export class Logs {
 	@CreateDateColumn({ type: "timestamptz", default: new Date(Date.now()) })
 	date: Date
 
+	@Column({ default: false })
+	isAdmin: boolean
+
 	@Column({ type: "text" })
 	login: string
 
