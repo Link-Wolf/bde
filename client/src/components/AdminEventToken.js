@@ -80,6 +80,7 @@ const AdminEventToken = param => {
 					 The status is ${response.status}`
 							);
 						}
+						window.location.reload();
 					})
 					.catch(function(error) {
 						console.log(
