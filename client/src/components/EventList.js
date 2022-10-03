@@ -66,8 +66,12 @@ const EventList = param => {
 			});
 	}, [param.filter]);
 
-	useEffect(() => {
-		setRet(
+	return (
+		<>
+			<p>
+				{data.length}{" "}
+				{data.length >= 2 ? <>résultats</> : <>résultat</>}
+			</p>
 			<div className={style.scroll_container_40vw}>
 				{data.map(item => (
 					<li key={item.id}>
@@ -75,10 +79,8 @@ const EventList = param => {
 					</li>
 				))}
 			</div>
-		);
-	}, [data]);
-
-	return ret;
+		</>
+	);
 };
 
 export default EventList;
