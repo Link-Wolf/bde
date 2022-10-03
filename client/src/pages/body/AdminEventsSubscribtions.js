@@ -138,6 +138,11 @@ const AdminStudents = () => {
 	const handleSubButton = async () => {
 		let toSub = document.getElementById("studToAdd").value;
 		let cost = document.getElementById("cost").value;
+		if (
+			!document.getElementById("cost").valid ||
+			!document.getElementById("studToAdd").valid
+		)
+			return;
 		let confirm = await isConfirmed(
 			`Tu es certain de vouloir inscrire ${toSub} de force ?`
 		);
@@ -219,12 +224,14 @@ const AdminStudents = () => {
 								id="studToAdd"
 								placeholder="Login"
 								autoFocus={true}
+								required
 							/>
 							<Form.Control
 								type="number"
 								id="cost"
 								placeholder="Prix"
 								autoFocus={true}
+								required
 							/>
 							<p>
 								Il reste{" "}
