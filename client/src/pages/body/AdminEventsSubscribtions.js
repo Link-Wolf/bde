@@ -155,7 +155,7 @@ const AdminStudents = () => {
 					document.getElementById("cost").value = "";
 				} else {
 					NotificationManager.error(
-						`Login ${toSub} does not exist is already subscribe to the selected event`,
+						`Login ${toSub} does not exist or is already subscribe to the selected event`,
 						"Validation",
 						3000
 					);

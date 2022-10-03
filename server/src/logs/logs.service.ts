@@ -31,6 +31,8 @@ export class LogsService {
 				match += ` AND "type" != 'error' AND "type" != 'warn'`
 			if (filterDto.login && filterDto.login != "")
 				match += ` AND "login" = '${filterDto.login}'`
+			if (filterDto.isAdmin)
+				match += ` AND "isAdmin" = 't'`
 			match += ` ORDER BY "date" ${
 				filterDto.asc ? "ASC"
 					: "DESC"
@@ -39,10 +41,10 @@ export class LogsService {
 			let logs = await this.logsRepository.query(match);
 			// if (events.length == 0)			// 	this.logger.warn(`No events found`)
 			// else
-			this.logger.log(`Got all filtered logs`, requestMaker);
+			this.logger.log(`Got all filtered logs`, requestMaker, true);
 			return logs;
 		} catch (error) {
-			this.logger.error(`Failed to get all filtered logs on database(${error})`, requestMaker);
+			this.logger.error(`Failed to get all filtered logs on database(${error})`, requestMaker, true);
 			throw new InternalServerErrorException(`Could not find filtered logs on database(${error})`)
 		}
 	}
