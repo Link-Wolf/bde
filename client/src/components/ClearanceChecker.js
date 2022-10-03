@@ -5,26 +5,48 @@ const ClearanceChecker = data => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
+		if (data.securityLevel < global.config.clearance.unpaid)
+			fetch(`http://${global.config.api.authority}/session`, {
+				credentials: "include"
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.clearance !== -42) setClearance(data.clearance);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
 					);
-				}
-				return response.json();
+				});
+		else
+			fetch(`http://${global.config.api.authority}/session/admin`, {
+				credentials: "include"
 			})
-			.then(data => {
-				if (data.clearance !== -42) setClearance(data.clearance);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.clearance !== -42) setClearance(data.clearance);
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
 	}, []);
 
 	useEffect(() => {
