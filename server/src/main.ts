@@ -7,7 +7,7 @@ import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
 let RedisStore = require("connect-redis")(session)
 
-const { session_secret, url_client } = require('../config.json')
+const { session_secret, url_client, _rdpw } = require('../config.json')
 
 async function bootstrap() {
 
@@ -16,7 +16,7 @@ async function bootstrap() {
 		legacyMode: true, socket: {
 			port: process.env.REDIS_PORT,
 			host: process.env.REDIS_HOST
-		}
+		}, password: _rdpw
 	})
 	redisClient.connect().catch(console.error)
 	redisClient.on("error", console.error)
