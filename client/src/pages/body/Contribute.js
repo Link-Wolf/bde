@@ -9,7 +9,7 @@ import {
 const ContributeButtons = props => {
 	const currency = "EUR";
 	const style = {layout: "vertical"};
-	const [{options, isPending}, dispatch] = usePayPalScriptReducer();
+	const [{options}, dispatch] = usePayPalScriptReducer();
 
 	const sendMail = async (date, commande, timestamp, mail) => {
 		await emailjs
@@ -52,7 +52,6 @@ const ContributeButtons = props => {
 
 	return (
 		<>
-			{isPending && <div className="spinner" />}
 			<PayPalButtons
 				style={style}
 				disabled={false}
@@ -561,8 +560,6 @@ const Contribute = () => {
 		lastname: "lastname"
 	});
 
-	useEffect(() => {});
-
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/session`, {
 			credentials: "include"
@@ -686,27 +683,25 @@ const Contribute = () => {
 					>
 						Valider
 					</button>
-					{validated ? (
-						<>
-							<button
-								onClick={() => {
-									window.location.reload();
-								}}
-							>
-								Annuler
-							</button>
-							<PayPalScriptProvider options={optionsProvider}>
-								<ContributeButtons
-									amount={amount}
-									session={session}
-									address={addressFormState}
-									setAddress={setAddressFormState}
-								/>
-							</PayPalScriptProvider>
-						</>
-					) : (
-						<></>
-					)}
+
+					<button
+						onClick={() => {
+							setValidated(false);
+						}}
+						disabled={!validated}
+					>
+						Annuler
+					</button>
+					<div hidden={!validated}>
+						<PayPalScriptProvider options={optionsProvider}>
+							<ContributeButtons
+								amount={amount}
+								session={session}
+								address={addressFormState}
+								setAddress={setAddressFormState}
+							/>
+						</PayPalScriptProvider>
+					</div>
 					<LegalNote />
 				</div>
 			</div>

@@ -73,10 +73,12 @@ const EventList = param => {
 
 	return (
 		<>
-			<p>
-				{data.length}{" "}
-				{data.length >= 2 ? <>résultats</> : <>résultat</>}
-			</p>
+			{param.showCount && (
+				<p>
+					{data.length}{" "}
+					{data.length >= 2 ? <>résultats</> : <>résultat</>}
+				</p>
+			)}
 			<div className={style.scroll_container_40vw}>
 				{data.map(item => (
 					<li key={item.id}>

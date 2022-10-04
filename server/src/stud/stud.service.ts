@@ -11,7 +11,7 @@ import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 import { ContributionService } from '../contribution/contribution.service';
-const _dbpw = require('../../config.json')
+const { _dbpw } = require('../../config.json')
 
 @Injectable()
 export class StudService {
