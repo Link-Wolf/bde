@@ -139,8 +139,8 @@ const AdminStudents = () => {
 		let toSub = document.getElementById("studToAdd").value;
 		let cost = document.getElementById("cost").value;
 		if (
-			!document.getElementById("cost").valid ||
-			!document.getElementById("studToAdd").valid
+			!document.getElementById("cost").validity.valid ||
+			!document.getElementById("studToAdd").validity.valid
 		)
 			return;
 		let confirm = await isConfirmed(
