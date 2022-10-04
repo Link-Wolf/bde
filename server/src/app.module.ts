@@ -23,6 +23,7 @@ import { OrderModule } from './order/order.module';
 import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
+import { GoogleModule } from './google/google.module';
 const { _dbpw, _rdpw } = require('../config.json')
 
 
@@ -57,6 +58,7 @@ const { _dbpw, _rdpw } = require('../config.json')
 			port: process.env.REDIS_PORT,
 			password: _rdpw
 		}),
+		GoogleModule,
 	],
 	controllers: [AppController],
 	providers: [
