@@ -1,20 +1,15 @@
-import {NavDropdown} from "react-bootstrap";
 import {useState, useEffect} from "react";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
 
-import user_picture from "../assets/placeholders/user_profile.png";
-import tmp_picture from "../assets/placeholders/tmp_profile.png";
+import login from "../assets/logos/login.png";
+import logout from "../assets/logos/logout.png";
+import blank from "../assets/placeholders/tmp_profile.png";
 
 const DropdownUser = () => {
-	const [img, setImg] = useState(tmp_picture);
-	const [ret, setRet] = useState(
-		<NavDropdown title={<LazyLoadImage src={img} effect="blur" />}>
-			<NavDropdown.Item href={global.config.intra.redirect}>
-				Login
-			</NavDropdown.Item>
-		</NavDropdown>
-	);
+	const [img, setImg] = useState({
+		profile: blank,
+		login: blank,
+		logout: blank
+	});
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -30,8 +25,13 @@ const DropdownUser = () => {
 					return response.json();
 				})
 				.then(data => {
-					if (data.image_url !== -42) setImg(data.image_url);
-					else setImg(user_picture);
+					let profile = blank;
+					if (data.image_url !== -42) profile = data.image_url;
+					setImg({
+						profile: profile,
+						login: login,
+						logout: logout
+					});
 				})
 				.catch(function(error) {
 					console.log(
@@ -42,38 +42,22 @@ const DropdownUser = () => {
 		}, 100);
 	}, []);
 
-	useEffect(() => {
-		if (img !== tmp_picture) {
-			if (img === user_picture) {
-				setRet(
-					<NavDropdown
-						title={<LazyLoadImage src={img} effect="blur" />}
-					>
-						<NavDropdown.Item href={global.config.intra.redirect}>
-							Login
-						</NavDropdown.Item>
-					</NavDropdown>
-				);
-			} else
-				setRet(
-					<NavDropdown
-						title={<LazyLoadImage src={img} effect="blur" />}
-					>
-						{" "}
-						<NavDropdown.Item href="/me">
-							{" "}
-							Profile{" "}
-						</NavDropdown.Item>{" "}
-						<NavDropdown.Item href="/log">
-							{" "}
-							Logout{" "}
-						</NavDropdown.Item>{" "}
-					</NavDropdown>
-				);
-		}
-	}, [img]);
-
-	return ret;
+	return (
+		<div>
+			{img.profile !== blank && (
+				<a href="/log">
+					<img src={img.logout} />
+				</a>
+			)}
+			<a
+				href={
+					img.profile === blank ? global.config.intra.redirect : "/me"
+				}
+			>
+				<img src={img.profile !== blank ? img.profile : img.login} />
+			</a>
+		</div>
+	);
 };
 
 export default DropdownUser;
