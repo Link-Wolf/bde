@@ -157,16 +157,12 @@ const ContributeButtons = props => {
 const LegalNote = () => {
 	return (
 		<p>
-			En validant la commande et en procédant au paiement, vous
-			reconnaissez accepte les termes de{" "}
-			<a href="/legalthings" target="_blank" rel="noopener noreferrer">
-				conditions générales d'utilisation
-			</a>{" "}
-			et{" "}
+			En validant la commande et en procédant au paiement, je reconnais
+			avoir pris connaissance et j'accepte les{" "}
 			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
-				conditions générales de vente
+				conditions générales de vente{" "}
 			</a>{" "}
-			du site du BDE 42 Mulhouse
+			ci-annexées du site du BDE 42 Mulhouse
 		</p>
 	);
 };
