@@ -23,6 +23,7 @@
    },
    "dependencies": {
       "3": "^2.1.0",
+      "@google-cloud/local-auth": "^2.1.0",
       "@nestjs/common": "^8.0.0",
       "@nestjs/config": "^2.1.0",
       "@nestjs/core": "^8.0.0",
@@ -40,6 +41,7 @@
       "cookie-parser": "^1.4.6",
       "csurf": "^1.11.0",
       "express-session": "^1.17.3",
+      "googleapis": "^105.0.0",
       "helmet": "^5.1.0",
       "jszip": "^3.10.1",
       "nestjs-cookie-session": "^2.0.1",

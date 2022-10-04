@@ -1,23 +1,18 @@
 import { Injectable } from '@nestjs/common';
 const { google } = require('googleapis');
 const sheets = google.sheets('v4');
-const { authenticate } = require('@google-cloud/local-auth');
-const { google_api } = require('../config.json')
+import { authenticate } from '@google-cloud/local-auth'
+const fs = require('fs').promises;
+const path = require('path');
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
-
+const TOKEN_PATH = path.join(process.cwd(), 'token.json');
+const CREDENTIALS_PATH = path.join(process.cwd(), 'credentials.json');
 
 @Injectable()
-export class GoogleService {// BEFORE RUNNING:
-	// ---------------
-	// 1. If not already done, enable the Google Sheets API
-	//    and check the quota for your project at
-	//    https://console.developers.google.com/apis/api/sheets
-	// 2. Install the Node.js client library by running
-	//    `npm install googleapis --save`
-
+export class GoogleService {
 	async  getStock() {
-		const authClient = await google.auth.fromJSON(google_api.creds);
+		const authClient = await this.authorize();
 		const request = {
 			// The ID of the spreadsheet to retrieve data from.
 			spreadsheetId: '1xSMebaa5ELKAw_XaO02GoM1YFBok0t0yhlXj8nEkZlE',  // TODO: Update placeholder value.
@@ -40,42 +35,47 @@ export class GoogleService {// BEFORE RUNNING:
 
 		try {
 			const response = (await sheets.spreadsheets.values.get(request)).data;
-			// TODO: Change code below to process the `response` object:
-			console.log(JSON.stringify(response, null, 2));
+			console.log(JSON.stringify(response, null, 2));//TODO: return object
 		} catch (err) {
 			console.error(err);
 		}
 	}
 
-	async authorize() {
-		// TODO: Change placeholder below to generate authentication credentials. See
-		// https://developers.google.com/sheets/quickstart/nodejs#step_3_set_up_the_sample
-		//
-		// Authorize using one of the following scopes:
-		//   'https://www.googleapis.com/auth/drive'
-		//   'https://www.googleapis.com/auth/drive.file'
-		//   'https://www.googleapis.com/auth/drive.readonly'
-		//   'https://www.googleapis.com/auth/spreadsheets'
-		//   'https://www.googleapis.com/auth/spreadsheets.readonly'
-		let authClient = await google.auth.fromJSON(google_api.creds);
-		if (authClient) {
-			return authClient;
+	async loadSavedCredentialsIfExist() {
+		try {
+			const content = await fs.readFile(TOKEN_PATH);
+			const credentials = JSON.parse(content);
+			return google.auth.fromJSON(credentials);
+		} catch (err) {
+			return null;
 		}
-		authClient = await authenticate({
+	}
+
+	async saveCredentials(client: any) {
+		const content = await fs.readFile(CREDENTIALS_PATH);
+		const keys = JSON.parse(content);
+		const key = keys.installed || keys.web;
+		const payload = JSON.stringify({
+			type: 'authorized_user',
+			client_id: key.client_id,
+			client_secret: key.client_secret,
+			refresh_token: client.credentials.refresh_token,
+		});
+		await fs.writeFile(TOKEN_PATH, payload);
+	}
+
+	async authorize() {
+		let client = await this.loadSavedCredentialsIfExist();
+		if (client) {
+			return client;
+		}
+		client = await authenticate({
 			scopes: SCOPES,
 			keyfilePath: CREDENTIALS_PATH,
 		});
-		if (authClient.credentials) {
-			await saveCredentials(authClient);
+		if (client.credentials) {
+			await this.saveCredentials(client);
 		}
-		return authClient;
-
-
-
-		if (authClient == null) {
-			throw Error('authentication failed');
-		}
-
-		return authClient;
+		return client;
 	}
 }

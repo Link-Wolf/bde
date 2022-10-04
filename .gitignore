@@ -13,4 +13,5 @@ config.*
 dump.rdb
 server/build
 server/dist
-index.html
+token.json
+credentials.json
