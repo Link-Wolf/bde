@@ -3,9 +3,8 @@ import React from "react";
 const Cgv = () => {
 	return (
 		<>
-			<p>TODO : exceptions retractation</p>
-			<p>TODO : check case avant de payer + lien vers pdf des cgv</p>
-			<h2>Clause n° 1 : Objet et champ d'application</h2>
+			<h2>Conditions générales de ventes</h2>
+			<h3>Clause n° 1 : Objet et champ d'application</h3>
 			<p>
 				Les présentes conditions générales de vente (CGV) constituent le
 				socle de la négociation commerciale et sont systématiquement
@@ -20,7 +19,7 @@ const Cgv = () => {
 				ci-annexées » implique l'adhésion sans réserve de l'acheteur aux
 				"Clauses" des présentes conditions générales de vente.
 			</p>
-			<h2>Clause n° 2 : Prix</h2>
+			<h3>Clause n° 2 : Prix</h3>
 			<p>
 				Les prix des marchandises vendues sont ceux en vigueur au jour
 				de la prise de commande et sont libellés en euros. Ils seront
@@ -30,22 +29,22 @@ const Cgv = () => {
 				facturer les marchandises commandées aux prix indiqués lors de
 				l'enregistrement de la commande.
 			</p>
-			<h2>Clause n° 3 : Rabais et ristournes </h2>
+			<h3>Clause n° 3 : Rabais et ristournes </h3>
 			<p>
 				Les tarifs proposés comprennent les rabais et ristournes que
 				l'association BDE 42 Mulhouse serait amenée à octroyer compte
 				tenu de ses résultats ou de la prise en charge par l'acheteur de
 				certaines prestations.
 			</p>
-			<h2>Clause n° 4 : Escompte</h2>
+			<h3>Clause n° 4 : Escompte</h3>
 			<p>Aucun escompte ne sera consenti en cas de paiement anticipé.</p>
-			<h2>Clause n° 5 : Modalités de paiement</h2>
+			<h3>Clause n° 5 : Modalités de paiement</h3>
 			<p>
 				Le règlement des commandes s'effectue : soit par carte bancaire
 				sans contacts ; soit en espèce. Les règlements seront effectués
 				aux conditions suivantes : Paiement comptant.
 			</p>
-			<h2>Clause n° 6 : Retard de paiement</h2>
+			<h3>Clause n° 6 : Retard de paiement</h3>
 			<p>
 				En cas de défaut de paiement total ou partiel des marchandises
 				livrées à l'échéance, l'acheteur doit verser à l'association BDE
@@ -62,7 +61,7 @@ const Cgv = () => {
 				indemnité forfaitaire de 40 euros due au titre des frais de
 				recouvrement. Articles 441-10 et D. 441-5 du code de commerce.
 			</p>
-			<h2>Clause n° 7 : Clause résolutoire</h2>
+			<h3>Clause n° 7 : Clause résolutoire</h3>
 			<p>
 				Si dans les quinze jours qui suivent la mise en oeuvre de la
 				clause "Retard de paiement", l'acheteur ne s'est pas acquitté
@@ -70,7 +69,7 @@ const Cgv = () => {
 				pourra ouvrir droit à l'allocation de dommages et intérêts au
 				profit de l'association BDE 42 Mulhouse.
 			</p>
-			<h2>Clause n° 8 : Clause de réserve de propriété</h2>
+			<h3>Clause n° 8 : Clause de réserve de propriété</h3>
 			<p>
 				L'association BDE 42 Mulhouse conserve la propriété des biens
 				vendus jusqu'au paiement intégral du prix, en principal et en
@@ -80,7 +79,7 @@ const Cgv = () => {
 				la procédure collective, les marchandises vendues et restées
 				impayées.
 			</p>
-			<h2>Clause n° 9 : Livraison </h2>
+			<h3>Clause n° 9 : Livraison </h3>
 			<p>
 				La livraison est effectuée par la remise directe de la
 				marchandise à l'acheteur si le Produit est physiquement
@@ -98,7 +97,7 @@ const Cgv = () => {
 				confirmées par écrit dans les cinq jours suivant la livraison,
 				par courrier recommandé AR adressé à l'association.
 			</p>
-			<h2>Clause n° 10 : Force majeure</h2>
+			<h3>Clause n° 10 : Force majeure</h3>
 			<p>
 				La responsabilité de l'association BDE 42 Mulhouse ne pourra pas
 				être mise en oeuvre si la non-exécution ou le retard dans
@@ -108,7 +107,7 @@ const Cgv = () => {
 				événement extérieur, imprévisible et irrésistible au sens de
 				l'article 1148 du Code civil.
 			</p>
-			<h2>Clause n° 11 : Principe de rétractation</h2>
+			<h3>Clause n° 11 : Principe de rétractation</h3>
 			<p>
 				Le cocontractant du BDE 42 Mulhouse qui garantit avoir la
 				qualité de consommateur telle que définie par le droit et la
@@ -119,12 +118,12 @@ const Cgv = () => {
 				quatorze (14) jours suivant la communication de sa décision de
 				se rétracter.
 			</p>
-			<h3>Délai de rétractation</h3>
+			<h4>Délai de rétractation</h4>
 			<p>
 				Le délai de rétractation expire quatorze (14) jours après le
 				jour où le Client prend physiquement possession du bien.
 			</p>
-			<h3>Notification du droit de rétractation</h3>
+			<h4>Notification du droit de rétractation</h4>
 			<p>
 				Pour exercer son droit de rétractation, le Client doit notifier
 				sa décision de se rétracter au moyen d’une déclaration dénuée
@@ -139,7 +138,7 @@ const Cgv = () => {
 				l’exercice du droit de rétractation avant l’expiration du délai
 				de rétractation.
 			</p>
-			<h3>Effets de la rétractation</h3>
+			<h4>Effets de la rétractation</h4>
 			<p>
 				En cas de rétractation de la part du Client, le BDE 42 Mulhouse
 				s’engage à rembourser la totalité des sommes versées, sans
@@ -154,7 +153,7 @@ const Cgv = () => {
 				paiement et dans la mesure où le remboursement n’occasionnera
 				pas de frais pour le Client.
 			</p>
-			<h3>Modalités de retour</h3>
+			<h4>Modalités de retour</h4>
 			<p>
 				Le Client devra en tout état de cause, au plus tard quatorze
 				(14) jours après communication de sa décision de se rétracter au
@@ -163,7 +162,7 @@ const Cgv = () => {
 				si le Client restitue le bien avant l’expiration du délai de
 				quatorze (14) jours.
 			</p>
-			<h3>Etat du bien retourné</h3>
+			<h4>Etat du bien retourné</h4>
 			<p>
 				Le Produit doit être retourné suivant les consignes du BDE 42
 				Mulhouse et comporter notamment tous les accessoires livrés si
@@ -176,7 +175,7 @@ const Cgv = () => {
 				responsabilité pourra être engagée s’il procède à des
 				manipulations autres que celles qui sont nécessaires.
 			</p>
-			<h2>Clause n° 12 : Tribunal compétent</h2>
+			<h3>Clause n° 12 : Tribunal compétent</h3>
 			<p>
 				Tout litige relatif à l'interprétation et à l'exécution des
 				présentes conditions générales de vente est soumis au droit

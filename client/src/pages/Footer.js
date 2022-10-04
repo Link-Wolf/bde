@@ -39,8 +39,7 @@ function Footer() {
 				<div> HOSTED BY US </div>
 			</div>
 			<div>
-				<a href="/legalthings"> CGU </a>
-				<a href="/dollarthings"> CGV </a>
+				<a href="/legalthings"> Mentions légales</a>
 				<a href="/contact"> Contact</a>
 			</div>
 		</footer>
