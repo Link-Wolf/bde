@@ -55,6 +55,11 @@ const AdminLogs = () => {
 										label: "Error",
 										name: "error",
 										checked: filter.error
+									},
+									{
+										label: "Admin",
+										name: "isAdmin",
+										checked: filter.isAdmin
 									}
 								]}
 								onChange={handleFormChange}

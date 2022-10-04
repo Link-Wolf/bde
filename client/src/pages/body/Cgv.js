@@ -3,7 +3,7 @@ import React from "react";
 const Cgv = () => {
 	return (
 		<>
-			<p>TODO : droit de retractation</p>
+			<p>TODO : exceptions retractation</p>
 			<p>TODO : check case avant de payer + lien vers pdf des cgv</p>
 			<h2>Clause n° 1 : Objet et champ d'application</h2>
 			<p>
@@ -14,19 +14,17 @@ const Cgv = () => {
 				ci-après détaillent les droits et obligations de l'association
 				BDE 42 Mulhouse et de son client dans le cadre de la vente des
 				marchandises suivantes, ci après "Produit" : Cotisation au BDE,
-				Hoodie noir 42 Mulhouse, Tee Shirt noir 42 Mulhouse, Casquette
-				noire 42 Mulhouse. Toute acceptation du devis/bon de commande en
-				ce compris la clause « Je reconnais avoir pris connaissance et
-				j'accepte les conditions générales de vente ci-annexées »
-				implique l'adhésion sans réserve de l'acheteur aux présentes
-				conditions générales de vente.
+				Inscription à un événement. Toute acceptation du devis/bon de
+				commande en ce compris la clause « Je reconnais avoir pris
+				connaissance et j'accepte les conditions générales de vente
+				ci-annexées » implique l'adhésion sans réserve de l'acheteur aux
+				"Clauses" des présentes conditions générales de vente.
 			</p>
 			<h2>Clause n° 2 : Prix</h2>
 			<p>
 				Les prix des marchandises vendues sont ceux en vigueur au jour
-				de la prise de commande. Ils sont libellés en euros et calculés
-				hors taxes. Par voie de conséquence, ils seront majorés du taux
-				de TVA et des frais de transport applicables au jour de la
+				de la prise de commande et sont libellés en euros. Ils seront
+				majorés des frais de transport applicables au jour de la
 				commande. l'association BDE 42 Mulhouse s'accorde le droit de
 				modifier ses tarifs à tout moment. Toutefois, elle s'engage à
 				facturer les marchandises commandées aux prix indiqués lors de
@@ -84,13 +82,13 @@ const Cgv = () => {
 			</p>
 			<h2>Clause n° 9 : Livraison </h2>
 			<p>
-				La livraison est effectuée : soit par la remise directe de la
-				marchandise à l'acheteur ; soit par le dépôt de la marchandise
-				au lieu indiqué par l'acheteur sur le bon de commande. Le délai
-				de livraison indiqué lors de l'enregistrement de la commande
-				n'est donné qu'à titre indicatif et n'est aucunement garanti.
-				Par voie de conséquence, tout retard raisonnable dans la
-				livraison des produits ne pourra pas donner lieu au profit de
+				La livraison est effectuée par la remise directe de la
+				marchandise à l'acheteur si le Produit est physiquement
+				livrable, c'est à dire qu'il s'agit d'un objet matériel. Le
+				délai de livraison indiqué lors de l'enregistrement de la
+				commande n'est donné qu'à titre indicatif et n'est aucunement
+				garanti. Par voie de conséquence, tout retard raisonnable dans
+				la livraison des produits ne pourra pas donner lieu au profit de
 				l'acheteur à : l'allocation de dommages et intérêts ;
 				l'annulation de la commande. Le risque du transport est supporté
 				en totalité par l'acheteur. En cas de marchandises manquantes ou
@@ -131,10 +129,10 @@ const Cgv = () => {
 				Pour exercer son droit de rétractation, le Client doit notifier
 				sa décision de se rétracter au moyen d’une déclaration dénuée
 				d’ambiguïté (par exemple, lettre envoyée par la poste, demande
-				via
+				via{" "}
 				<a href="http://${global.config.api.authority}/contact">
 					formulaire de contact du Site
-				</a>
+				</a>{" "}
 				ou courriel) au : BDE 42 Mulhouse - 30 Rue François Spoerry,
 				68100 Mulhouse. Pour que le délai de rétractation soit respecté,
 				le Client doit transmettre sa communication relative à
