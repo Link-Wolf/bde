@@ -98,7 +98,7 @@ const Events = () => {
 					<option value="place">Lieu</option>
 				</select>
 				<button onClick={handleButtonChange}>⇃↾</button>
-				<EventList filter={filter} />
+				<EventList filter={filter} showCount />
 			</div>
 			<div>
 				Album
