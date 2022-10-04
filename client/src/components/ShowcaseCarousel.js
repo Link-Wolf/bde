@@ -14,6 +14,8 @@ import iman from "../assets/placeholders/imane.png";
 import phol from "../assets/placeholders/longPlaceholder.jpg";
 
 import style from "../style/swiper.module.css";
+import "../style/swiper.css";
+
 const ShowcaseCarousel = () => {
 	return (
 		<>

@@ -4,6 +4,8 @@ import login from "../assets/logos/login.png";
 import logout from "../assets/logos/logout.png";
 import blank from "../assets/placeholders/tmp_profile.png";
 
+import style from "../style/Header.module.scss";
+
 const DropdownUser = () => {
 	const [img, setImg] = useState({
 		profile: blank,
@@ -42,21 +44,23 @@ const DropdownUser = () => {
 		}, 100);
 	}, []);
 
-	return (
-		<div>
-			{img.profile !== blank && (
+	if (img.profile !== blank)
+		return (
+			<div>
 				<a href="/log">
-					<img src={img.logout} />
+					<img id={style.logout} src={img.logout} height="3vh" />
 				</a>
-			)}
-			<a
-				href={
-					img.profile === blank ? global.config.intra.redirect : "/me"
-				}
-			>
-				<img src={img.profile !== blank ? img.profile : img.login} />
-			</a>
-		</div>
+				<a href={"/me"}>
+					<img
+						src={img.profile !== blank ? img.profile : img.login}
+					/>
+				</a>
+			</div>
+		);
+	return (
+		<a href={global.config.intra.redirect}>
+			<h1>Login</h1>
+		</a>
 	);
 };
 

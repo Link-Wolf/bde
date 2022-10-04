@@ -5,8 +5,8 @@
 	background-color: #212529;
 	color: #FFFFFE;
 	height: 8vh;
-	font-family: Century;
-
+	font-family: Futura;
+	// font-weight: bolder;
 	a {
 		color: inherit;
 		text-decoration: inherit;
@@ -23,45 +23,56 @@
 		color: white;
 		transition: 0.4s;
 	}
-}
 
-.leftContainer {
-	display: flex;
-}
-
-.rightContainer {
-	display: flex;
-
-	img {
-		height: 4vh;
-		width: 4vh;
-		margin: 1vh 0.5vw;
-		padding: 0;
+	.leftContainer {
+		display: flex;
 	}
 
-	.dropdownContainer {
-		font-family: Futura;
+	.rightContainer {
+		display: flex;
+
+		img {
+			height: 4vh;
+			width: 4vh;
+			margin: 1vh 0.5vw;
+			padding: 0;
+		}
+
+		.dropdownContainer {
+			font-family: Futura;
+
+			h1 {
+				color: #FFFFFE;
+			}
+
+			img#logout {
+				height: 2vh;
+				width: 2vh;
+				margin: 1vh 0.5vw;
+				padding: 0;
+			}
+		}
 	}
-}
 
-.buttonContainer {
-	display: flex;
-	gap: 0.1vw;
-}
-
-.logoContainer {
-	display: flex;
-	margin-right: 1vw;
-
-	img {
-		height: 6vh;
-		width: 6vh;
+	.buttonContainer {
+		display: flex;
+		gap: 0.1vw;
 	}
 
-	h1 {
-		font-size: 3vh;
-		color: #FFFFFE;
-		margin: 0;
-		padding: 1vh 0.5vw;
+	.logoContainer {
+		display: flex;
+		margin-right: 1vw;
+
+		img {
+			height: 6vh;
+			width: 6vh;
+		}
+
+		h1 {
+			font-size: 3vh;
+			color: #FFFFFE;
+			margin: 0;
+			padding: 1vh 0.5vw;
+		}
 	}
 }
