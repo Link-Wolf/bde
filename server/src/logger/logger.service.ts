@@ -27,7 +27,6 @@ export class LoggerService {
 	}
 
 	async warn(message: string, requestMaker: string, isAdmin = false) {
-		console.log(isAdmin)
 		Logger.warn(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		const t = {
 			date: new Date(Date.now()),
@@ -36,8 +35,7 @@ export class LoggerService {
 			isAdmin: isAdmin,
 			type: "warn"
 		}
-		console.log(t)
-		console.log(await this.logRepertory.save(t))
+		await this.logRepertory.save(t)
 		if (requestMaker == undefined)
 			this.logfile("warning", `(unknown public) : ${message}`)
 		else

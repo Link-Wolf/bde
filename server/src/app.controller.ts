@@ -1,9 +1,13 @@
 import { Controller, Get, Session } from '@nestjs/common';
 import { StudService } from './stud/stud.service';
+import { LoggerService } from './logger/logger.service';
 
 @Controller()
 export class AppController {
-	constructor(private studService: StudService) { }
+	constructor(
+		private studService: StudService,
+		private logger: LoggerService,
+	) { }
 
 	@Get('session/admin')
 	async getAdminSession(@Session() session: Record<string, any>) {
@@ -18,7 +22,7 @@ export class AppController {
 			};
 		let stud = await this.studService.findOne(session.login, session.login);
 		session.clearance = stud.clearance;
-		console.log(stud)
+		this.logger.warn(`Updated session (admin)`, session.login)
 		return {
 			clearance: stud.clearance ? stud.clearance : 0,
 			image_url: session.image_url ? session.image_url : -42,
