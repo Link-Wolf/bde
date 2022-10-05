@@ -8,10 +8,12 @@ const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
 	const [formState, setFormState] = useState({
 		name: "",
+		login: "",
 		mail: "",
 		subject: "",
 		message: ""
 	});
+	const [lock, setLock] = useState(false);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -30,10 +32,13 @@ const Contact = () => {
 		if (
 			formState.mail !== "" &&
 			formState.name !== "" &&
+			formState.login !== "" &&
 			formState.subject !== "" &&
 			formState.message !== "" &&
 			document.getElementById("emailField").checkValidity()
-		)
+		) {
+			setLock(true);
+			//TODO: loading
 			await emailjs
 				.send(
 					global.config.emailjs.service_id,
@@ -44,6 +49,7 @@ const Contact = () => {
 				.then(() => {
 					setFormState({
 						name: "",
+						login: "",
 						mail: "",
 						subject: "",
 						message: ""
@@ -53,7 +59,7 @@ const Contact = () => {
 					NotificationManager.success(
 						"Couriel bien envoyé",
 						"Success",
-						3000
+						5000
 					);
 				})
 				.catch(function(error) {
@@ -62,7 +68,8 @@ const Contact = () => {
 							error.message
 					);
 				});
-		else {
+			setLock(false);
+		} else {
 			console.log(formState.subject, formState.subject !== "", formState);
 			NotificationManager.error(
 				"Please fill up all fields",
@@ -88,6 +95,7 @@ const Contact = () => {
 				let tmp = formState;
 				tmp.mail = data.mail;
 				tmp.name = data.firstname;
+				tmp.login = data.login;
 				setFormState(tmp);
 				if (data.clearance === 0) setIdForm(false);
 			})
@@ -110,16 +118,19 @@ const Contact = () => {
 						onChange={handleFormChange}
 						name="subject"
 						required
+						disabled={lock}
 					>
 						<option value="" disabled hidden>
 							Sélectionnez le sujet ici..
 						</option>
-						<option value="idea">Suggestion / Idées</option>
-						<option value="sponso">Partenariat</option>
-						<option value="karen">Réclamation</option>
-						<option value="shop">Boutique</option>
-						<option value="feedback">Feedback d'un event</option>
-						<option value="other">Autre</option>
+						<option value="Idées et suggestions">
+							Suggestion / Idées
+						</option>
+						<option value="Partenariat">Partenariat</option>
+						<option value="Réclamation">Réclamation</option>
+						<option value="Boutique">Boutique</option>
+						<option value="Feedback">Feedback d'un event</option>
+						<option value="Autre">Autre</option>
 					</Form.Select>
 				</Form.Group>
 				<Form.Group>
@@ -131,6 +142,7 @@ const Contact = () => {
 						onChange={handleFormChange}
 						name="message"
 						required
+						disabled={lock}
 						minLength={10}
 					/>
 				</Form.Group>
@@ -143,11 +155,13 @@ const Contact = () => {
 							onChange={handleFormChange}
 							name="name"
 							required
+							disabled={lock}
 						/>
 					</Form.Group>
 					<Form.Group>
 						<Form.Label>Email</Form.Label>
 						<Form.Control
+							disabled={lock}
 							type="email"
 							placeholder="Veuillez entrer votre mail afin de vous recontacter"
 							value={formState.mail}
@@ -161,7 +175,11 @@ const Contact = () => {
 						</Form.Text>
 					</Form.Group>
 				</Form.Group>
-				<Button variant="outline-primary" onClick={sendMail}>
+				<Button
+					variant="outline-primary"
+					disabled={lock}
+					onClick={sendMail}
+				>
 					Envoyer
 				</Button>
 			</Form>
