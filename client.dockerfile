@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:13.12.0-alpine
+FROM node:16.12.0-alpine
 
 # set working directory
 WORKDIR /client/app
@@ -16,5 +16,9 @@ RUN npm install react-scripts@3.4.1 -g --silent
 # add app
 COPY ./client ./
 
+# # start app
+# CMD ["npm", "start"]
 # start app
-CMD ["npm", "start"]
+RUN npm run build
+RUN npm i -g serve
+CMD ["serve", "-s", "build"]
