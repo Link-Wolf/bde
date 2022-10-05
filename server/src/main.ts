@@ -14,8 +14,8 @@ async function bootstrap() {
 	const { createClient } = require("redis")
 	let redisClient = createClient({
 		legacyMode: true, socket: {
-			port: process.env.REDIS_PORT,
-			host: process.env.REDIS_HOST
+			host: "redis",
+			port: "6379",
 		}, password: _rdpw
 	})
 	redisClient.connect().catch(console.error)
