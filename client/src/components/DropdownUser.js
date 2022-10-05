@@ -47,13 +47,13 @@ const DropdownUser = () => {
 	if (img.profile !== blank)
 		return (
 			<div>
-				<a href="/log">
-					<img id={style.logout} src={img.logout} height="3vh" />
-				</a>
 				<a href={"/me"}>
 					<img
 						src={img.profile !== blank ? img.profile : img.login}
 					/>
+				</a>
+				<a href="/log">
+					<img id={style.logout} src={img.logout} height="3vh" />
 				</a>
 			</div>
 		);
