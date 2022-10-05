@@ -28,7 +28,7 @@ const AdminNavbar = () => {
 				login: "iCARUS",
 				firstname: "###",
 				lastname: "azphael",
-				email: "",
+				email: "iCARUS@student.42mulhouse.fr",
 				isDirection: true,
 				clearance: 42
 			})
@@ -42,7 +42,7 @@ const AdminNavbar = () => {
 						login: "Link",
 						firstname: "xxxxx",
 						lastname: "xxxxxx",
-						email: "",
+						email: "Link@student.42mulhouse.fr",
 						isDirection: true,
 						clearance: 42
 					})
