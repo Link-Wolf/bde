@@ -3,7 +3,7 @@ import { DataSource } from "typeorm"
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
-	host: "localhost",//NOTE: must be updated when docker ig ?
+	host: process.env.POSTGRES_HOST,//NOTE: must be updated when docker ig ?
 	port: 5432,
 	username: "test",
 	password: "test",
