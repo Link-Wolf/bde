@@ -12,6 +12,7 @@ const ContributeButtons = props => {
 	const [{options}, dispatch] = usePayPalScriptReducer();
 
 	const sendMail = async (date, commande, timestamp, mail) => {
+		console.log(date, commande, timestamp, mail);
 		await emailjs
 			.send(
 				global.config.emailjs.service_id,
@@ -23,14 +24,6 @@ const ContributeButtons = props => {
 					mail: mail
 				},
 				global.config.emailjs.public_key
-			)
-			.then(
-				result => {
-					console.log(result.text);
-				},
-				error => {
-					console.log(error.text);
-				}
 			)
 			.catch(function(error) {
 				console.log(
@@ -116,7 +109,6 @@ const ContributeButtons = props => {
 								return response.json();
 							})
 							.then(async data => {
-								console.log("Here : ", data.order, data.mail);
 								await sendMail(
 									new Date(Date.now()).toLocaleDateString(
 										"fr-FR",

@@ -28,7 +28,7 @@ const AdminNavbar = () => {
 				login: "bguyot",
 				firstname: "ikar",
 				lastname: "azphael",
-				email: "",
+				email: "bguyot@student.42mulhouse.fr",
 				isDirection: true,
 				clearance: 42
 			})
@@ -42,7 +42,7 @@ const AdminNavbar = () => {
 						login: "bdehais",
 						firstname: "bruno",
 						lastname: "dehais",
-						email: "",
+						email: "bdehais@student.42mulhouse.fr",
 						isDirection: true,
 						clearance: 42
 					})
