@@ -13,7 +13,7 @@ services:
         depends_on:
             - api
         networks:
-            - nesjs-network
+            - front_network
 
     api:
         container_name: fregate_api
@@ -25,31 +25,14 @@ services:
         ports:
             - 4242:4242
         networks:
-            - nesjs-network
+            - back_network
+            - front_network
         volumes:
             - ./server:/usr/src/app
         restart: unless-stopped
         depends_on:
             - redis
             - postgres
-
-    # api:
-    #     container_name: fregate_api_prod
-    #     build:
-    #         context: .
-    #         target: production
-    #         dockerfile: server.dockerfile
-    #     command: npm run start:prod
-    #     ports:
-    #         - 4242:4242
-    #     networks:
-    #         - nesjs-network
-    #     volumes:
-    #         - ./server:/usr/src/app
-    #     restart: unless-stopped
-    #     depends_on:
-    #         - redis
-    #         - postgres
 
     redis:
         container_name: fregate_redis
@@ -60,7 +43,7 @@ services:
         volumes:
             - redis:/data
         networks:
-            - nesjs-network
+            - back_network
 
     postgres:
         container_name: fregate_psql
@@ -75,10 +58,13 @@ services:
         volumes:
           - bde:/var/lib/postgresql/data
         networks:
-            - nesjs-network
+            - back_network
 volumes:
     redis:
         driver: local
     bde:
 networks:
-    nesjs-network:
+    back_network:
+        driver: bridge
+    front_network:
+        driver: bridge

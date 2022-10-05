@@ -1,10 +1,14 @@
 all: docker
 
-docker: clean
-	@docker-compose up app
+docker: clean launch
 
-build: clean
-	@docker-compose up app --build
+re: clean build launch
+
+build:
+	@docker-compose up -d --build
+
+launch:
+	@docker-compose up
 
 clean:
 	docker-compose down
