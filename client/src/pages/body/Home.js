@@ -5,8 +5,29 @@ import ShowcaseCarousel from "../../components/ShowcaseCarousel";
 import style from "../../style/Home.module.css";
 
 const Home = () => {
+	const getStock = () => {
+		fetch(`http://${global.config.api.authority}/google`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
 	return (
 		<div>
+			<button onClick={getStock}>Test api google</button>
 			<p className={style.p}>
 				[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
 				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
