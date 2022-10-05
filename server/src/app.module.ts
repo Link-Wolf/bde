@@ -32,7 +32,7 @@ const { _dbpw, _rdpw } = require('../config.json')
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			port: 5432,
-			host: "postgres",
+			host: process.env.POSTGRES_HOST,
 			username: 'linkar',
 			password: _dbpw,
 			database: 'bde',
@@ -55,7 +55,7 @@ const { _dbpw, _rdpw } = require('../config.json')
 		CacheModule.register({
 			isGlobal: true,
 			store: redisStore,
-			host: "redis",
+			host: process.env.REDIS_HOST,
 			port: "6379",
 			password: _rdpw
 		}),
