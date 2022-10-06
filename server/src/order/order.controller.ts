@@ -21,7 +21,7 @@ export class OrderController {
 		@Session() session: Record<string, any>,
 		@Param('login') login: string
 	) {
-		return this.orderService.findStud(login, session.login)
+		return this.orderService.findByStud(login, session.login)
 	}
 
 	@Post('create')

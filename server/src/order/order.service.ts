@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { LoggerService } from '../logger/logger.service';
 import { ContributionService } from '../contribution/contribution.service';
 import { StudService } from '../stud/stud.service';
+import { OrderDto } from './order.dto';
 const { contributionTime } = require('../../config.json')
 
 @Injectable()
@@ -24,17 +25,17 @@ export class OrderService {
 		return due;
 	}
 
-	async findStud(login: string, maker: any) {
+	async findByStud(login: string, maker: any) {
 		try {
 			let order = await this.orderRepository.findBy({ studLogin: login });
 			if (!order)
 				this.logger.warn(
-					`404: order for ${login} doesnt exits`, login)
+					`Failed -> Find orders for student ${login}: orders for ${login} does not exist`, login)
 			else
-				this.logger.log(`Got orderfor ${login}`, login);
+				this.logger.log(`Got orders for student ${login}`, login);
 			return order
 		} catch (err) {
-			this.logger.error(`Failed to find orders of ${login} on database (${err})`, maker)
+			this.logger.error(`Failed -> Find orders for student ${login} on database (${err})`, maker)
 			throw err
 		}
 	}
@@ -44,7 +45,7 @@ export class OrderService {
 			let order = await this.orderRepository.findOneBy({ id: id });
 			if (!order)
 				this.logger.warn(
-					`404: order ${id} doesnt exits`, login)
+					`Failed -> Find order with id ${id}: order ${id} does not exist`, login)
 			else
 				this.logger.log(`Got order ${id}`, login);
 			let stud = await this.studService.findOne(order.studLogin, login)
@@ -52,36 +53,34 @@ export class OrderService {
 			return order
 		}
 		catch (err) {
-			this.logger.error(`Failed to find order ${id} on database (${err})`, login)
+			this.logger.error(`Failed -> Find order ${id} on database (${err})`, login)
 			throw err
 		}
 	}
 
-	async createOrder(body, login) {
+	async createOrder(body: OrderDto, login: string) {
 		try {
 			if (await this.orderRepository.findOneBy({ id: body.id }))
 				throw new ConflictException
-					(`Failed to create order ${body.id}: already exists`);
+					(`Failed -> Create order ${body.id} : order ${body.id} already exists`);
 			let ret = await this.orderRepository.save(body);
-			this.logger.log(`Successfully created order ${body.id}`, login)
+			this.logger.log(`Created order ${body.id}`, login)
 			return ret
 		} catch (err) {
 			this.logger.error(
-
-				`Failed to create order ${body.id} on database (${err})`,
-				login);
+				`Failed -> Create order ${body.id} on database(${err})`, login);
 			throw err
 		}
 	}
 
-	async captureOrder(body, login) {
+	async captureOrder(body: { id: any; }, login: string) {
 		try {
 			const order = await this.orderRepository.findOneBy({ id: body.id })
 			if (!order)
 				throw new NotFoundException
-					(`Failed to capture order ${body.id}: doesn't exist`);
+					(`Failed -> Capture order ${body.id} : order ${body.id} doesn't exist`);
 			order.isCompleted = true
-			let ret = await this.orderRepository.update(body.id, order);
+			await this.orderRepository.update(body.id, order);
 			const stud = await this.studService.findOne(order.studLogin, login)
 			const contrib = {
 				stud: stud,
@@ -91,14 +90,14 @@ export class OrderService {
 			};
 			await this.contributionService
 				.create(contrib, login);
-			this.logger.log(`Successfully captured order ${body.id}`, login)
+			this.logger.log(`Captured order ${body.id}`, login)
 			return {
 				order: order,
 				mail: stud.email
 			}
 		} catch (err) {
 			this.logger.error(
-				`Failed to capture order on database (${err})`,
+				`Failed -> Capture order ${body.id} on database (${err})`,
 				login);
 			throw err
 		}

@@ -17,7 +17,7 @@ export class ContributionController {
 
 	@Get('info')
 	getPrice(@Session() session: Record<string, any>) {
-		return this.contributionService.getInfo(session.login)
+		return this.contributionService.getInfo()
 	}
 
 	@Get(':login/last')
