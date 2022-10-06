@@ -14,6 +14,7 @@ const Contact = () => {
 		message: ""
 	});
 	const [lock, setLock] = useState(false);
+	const [sent, setSent] = useState(false);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -26,6 +27,25 @@ const Contact = () => {
 		const name = target.name;
 		tmp[name] = value;
 		setFormState(tmp);
+	};
+
+	const videMoiLChampLô = async () => {
+		if (formState.login)
+			setFormState({
+				name: formState.name,
+				login: formState.login,
+				mail: formState.mail,
+				subject: "",
+				message: ""
+			});
+		else
+			setFormState({
+				name: "",
+				login: "",
+				mail: "",
+				subject: "",
+				message: ""
+			});
 	};
 
 	const sendMail = async () => {
@@ -46,14 +66,8 @@ const Contact = () => {
 					formState,
 					global.config.emailjs.public_key
 				)
-				.then(() => {
-					setFormState({
-						name: "",
-						login: "",
-						mail: "",
-						subject: "",
-						message: ""
-					});
+				.then(async () => {
+					await videMoiLChampLô();
 				})
 				.then(() => {
 					NotificationManager.success(
@@ -69,6 +83,7 @@ const Contact = () => {
 					);
 				});
 			setLock(false);
+			setSent(true);
 		} else {
 			console.log(formState.subject, formState.subject !== "", formState);
 			NotificationManager.error(
@@ -109,80 +124,96 @@ const Contact = () => {
 
 	return (
 		<div>
-			<Form>
-				<Form.Group>
-					<Form.Label>Sujet</Form.Label>
-					<Form.Select
-						aria-label="Sélectionnez le sujet"
-						value={formState.subject}
-						onChange={handleFormChange}
-						name="subject"
-						required
-						disabled={lock}
+			{sent == true ? (
+				<>
+					<p>Merci pour votre retour !</p>
+					<button
+						onClick={() => {
+							setSent(false);
+						}}
 					>
-						<option value="" disabled hidden>
-							Sélectionnez le sujet ici..
-						</option>
-						<option value="Idées et suggestions">
-							Suggestion / Idées
-						</option>
-						<option value="Partenariat">Partenariat</option>
-						<option value="Réclamation">Réclamation</option>
-						<option value="Boutique">Boutique</option>
-						<option value="Feedback">Feedback d'un event</option>
-						<option value="Autre">Autre</option>
-					</Form.Select>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Message</Form.Label>
-					<Form.Control
-						as="textarea"
-						placeholder="Votre messsage"
-						value={formState.message}
-						onChange={handleFormChange}
-						name="message"
-						required
+						Envoyer un nouveau message
+					</button>
+				</>
+			) : (
+				<Form>
+					<Form.Group>
+						<Form.Label>Sujet</Form.Label>
+						<Form.Select
+							aria-label="Sélectionnez le sujet"
+							value={formState.subject}
+							onChange={handleFormChange}
+							name="subject"
+							required
+							disabled={lock}
+						>
+							<option value="" disabled hidden>
+								Sélectionnez le sujet ici..
+							</option>
+							<option value="Idées et suggestions">
+								Suggestion / Idées
+							</option>
+							<option value="Partenariat">Partenariat</option>
+							<option value="Réclamation">Réclamation</option>
+							<option value="Club">Club</option>
+							<option value="Boutique">Boutique</option>
+							<option value="Feedback">
+								Feedback d'un event
+							</option>
+							<option value="Autre">Autre</option>
+						</Form.Select>
+					</Form.Group>
+					<Form.Group>
+						<Form.Label>Message</Form.Label>
+						<Form.Control
+							as="textarea"
+							placeholder="Votre messsage"
+							value={formState.message}
+							onChange={handleFormChange}
+							name="message"
+							required
+							disabled={lock}
+							minLength={10}
+						/>
+					</Form.Group>
+					<Form.Group hidden={idForm}>
+						<Form.Group>
+							<Form.Label>Nom</Form.Label>
+							<Form.Control
+								placeholder="Veuillez entrer votre nom"
+								value={formState.name}
+								onChange={handleFormChange}
+								name="name"
+								required
+								disabled={lock}
+							/>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>Email</Form.Label>
+							<Form.Control
+								disabled={lock}
+								type="email"
+								placeholder="Veuillez entrer votre mail afin de vous recontacter"
+								value={formState.mail}
+								onChange={handleFormChange}
+								name="mail"
+								id="emailField"
+								required
+							/>
+							<Form.Text className="text-muted">
+								Nous ne partagerons jamais votre mail
+							</Form.Text>
+						</Form.Group>
+					</Form.Group>
+					<Button
+						variant="outline-primary"
 						disabled={lock}
-						minLength={10}
-					/>
-				</Form.Group>
-				<Form.Group hidden={idForm}>
-					<Form.Group>
-						<Form.Label>Nom</Form.Label>
-						<Form.Control
-							placeholder="Veuillez entrer votre nom"
-							value={formState.name}
-							onChange={handleFormChange}
-							name="name"
-							required
-							disabled={lock}
-						/>
-					</Form.Group>
-					<Form.Group>
-						<Form.Label>Email</Form.Label>
-						<Form.Control
-							disabled={lock}
-							type="email"
-							placeholder="Veuillez entrer votre mail afin de vous recontacter"
-							value={formState.mail}
-							onChange={handleFormChange}
-							name="mail"
-							id="emailField"
-							required
-						/>
-						<Form.Text className="text-muted">
-							Nous ne partagerons jamais votre mail
-						</Form.Text>
-					</Form.Group>
-				</Form.Group>
-				<Button
-					variant="outline-primary"
-					disabled={lock}
-					onClick={sendMail}
-				>
-					Envoyer
-				</Button>
-			</Form>
+						onClick={sendMail}
+					>
+						Envoyer
+					</Button>
+				</Form>
+			)}
 		</div>
 	);
 };

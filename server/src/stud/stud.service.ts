@@ -46,8 +46,8 @@ export class StudService {
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all students on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to get all students on database (${error})`);
+			this.logger.error(`Failed -> Get all students on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
@@ -74,8 +74,8 @@ export class StudService {
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to get all direction members on database (${error})`);
+			this.logger.error(`Failed -> Get all direction members on database (${error})`, requestMaker, true)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
@@ -101,8 +101,8 @@ export class StudService {
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all non-direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to get all non-direction members on database (${error})`);
+			this.logger.error(`Failed -> Get all non-direction members on database (${error})`, requestMaker, true)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
@@ -124,12 +124,12 @@ export class StudService {
 					return status;
 				})();
 			}
-			this.logger.log(`Got all direction members`, requestMaker, true);
+			this.logger.log(`Got all volunteers`, requestMaker, true);
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to get all direction members on database (${error})`);
+			this.logger.error(`Failed -> Get all volunteers on database (${error})`, requestMaker, true)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
@@ -151,12 +151,12 @@ export class StudService {
 					return status;
 				})();
 			}
-			this.logger.log(`Got all non-direction members`, requestMaker, true);
+			this.logger.log(`Got all non-volunteers`, requestMaker, true);
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all non-direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to get all non-direction members on database (${error})`);
+			this.logger.error(`Failed -> Get all non-volunteers on database (${error})`, requestMaker, true)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
@@ -165,7 +165,7 @@ export class StudService {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud) {
 				// throw new NotFoundException(`Failed to find student ${login}`)
-				this.logger.warn(`Failed to find student with login ${login} : student does not exist`, requestMaker)
+				this.logger.warn(`Failed -> Find student with login ${login} : student does not exist`, requestMaker)
 				return stud
 			}
 			// }
@@ -191,8 +191,8 @@ export class StudService {
 			return ret
 		}
 		catch (error) {
-			this.logger.error(`Failed to find student ${login} on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to find student ${login} on database (${error})`);
+			this.logger.error(`Failed -> Find student ${login} on database (${error})`, requestMaker)
+			throw new InternalServerErrorException(`${error}`);
 		}
 	}
 
