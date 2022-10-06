@@ -24,7 +24,7 @@ import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
-const { _dbpw, _rdpw } = require('../config.json')
+const { _dbpw, _rdpw, host } = require('../config.json')
 
 
 @Module({
@@ -32,7 +32,7 @@ const { _dbpw, _rdpw } = require('../config.json')
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			port: 5432,
-			host: process.env.POSTGRES_HOST,
+			host: process.env.PWD === "/server/app" ? host.docker.postgres : host.local.postgres,
 			username: 'linkar',
 			password: _dbpw,
 			database: 'bde',
@@ -55,7 +55,7 @@ const { _dbpw, _rdpw } = require('../config.json')
 		CacheModule.register({
 			isGlobal: true,
 			store: redisStore,
-			host: process.env.REDIS_HOST,
+			host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
 			port: "6379",
 			password: _rdpw
 		}),
