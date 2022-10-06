@@ -1,9 +1,12 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 
+const { host } = require('../config.json')
+
+
 export const AppDataSource = new DataSource({
 	type: "postgres",
-	host: process.env.POSTGRES_HOST,//NOTE: must be updated when docker ig ?
+	host: process.env.PWD === "/server/app" ? host.docker.postgres : host.local.postgres,
 	port: 5432,
 	username: "test",
 	password: "test",

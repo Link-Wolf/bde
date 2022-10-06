@@ -7,14 +7,14 @@ import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
 let RedisStore = require("connect-redis")(session)
 
-const { session_secret, url_client, _rdpw } = require('../config.json')
+const { session_secret, url_client, _rdpw, host } = require('../config.json')
 
 async function bootstrap() {
 
 	const { createClient } = require("redis")
 	let redisClient = createClient({
 		legacyMode: true, socket: {
-			host: process.env.REDIS_HOST,
+			host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
 			port: "6379",
 		}, password: _rdpw
 	})
