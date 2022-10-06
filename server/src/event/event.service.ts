@@ -25,27 +25,31 @@ export class EventService {
 	findEventSubbed(login: string, rm: string): Promise<Event[]> {
 		try {
 			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscription WHERE "studLogin" = '${login}');`);
-			this.logger.log(`Successfully got all events ${login} subbed to`, rm)
+			this.logger.log(`Got all events ${login} subbed to`, rm)
 			return ret;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all events ${login} subbed to on database(${error})`, login);
+			this.logger.error(`Failed -> Get all events ${login} subbed to on database (${error})`, rm);
 			throw error
 		}
 	}
 	async getThumbnail(id: number, login: any) {
 		try {
 			const event = await this.eventRepository.findOneById(id);
-			if (event === null)
-				throw new NotFoundException()
+			if (!event) {
+				this.logger.error(`Failed -> Get thumbnail of event ${id} : event doesn't exist`, login);
+				throw new NotFoundException(`Failed to get thumbnail of event ${id} : event doesn't exist`)
+			}
 			const thumb_path = event.thumbnail_filename;
-			if (thumb_path === null)
-				throw new NotFoundException()
+			if (!thumb_path) {
+				this.logger.error(`Failed -> Get thumbnail of event ${id} : event doesn't has any thumbnail`, login);
+				throw new NotFoundException(`Failed to get thumbnail of event ${id} : event doesn't has any thumbnail`)
+			}
 			const file = fs.createReadStream(join(process.cwd(), thumb_path));
-			this.logger.log(`Successfully got the thumbnail of event ${id}`, login);
+			this.logger.log(`Got thumbnail of event ${id}`, login);
 			return new StreamableFile(file);
 		} catch (error) {
-			this.logger.error(`Failed to get thumbnail of event ${id} on database(${error})`, login);
+			this.logger.error(`Failed -> Get thumbnail of event ${id} on database (${error})`, login);
 			throw error
 		}
 	}
@@ -53,8 +57,10 @@ export class EventService {
 	async getAlbum(id: number, login: any) {
 		try {
 			const event = await this.eventRepository.findOneById(id);
-			if (event === null || !fs.existsSync(`assets/album/events/${id}`))
-				throw new NotFoundException()
+			if (!event || !fs.existsSync(`assets/album/events/${id}`)) {
+				this.logger.error(`Failed -> Get album of event ${id} : event doesn't exist`, login);
+				throw new NotFoundException(`Failed to get album of event ${id}`)
+			}
 			const addFilesFromDirectoryToZip =
 				(directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
 					const directoryContents = fs.readdirSync(directoryPath, {
@@ -79,11 +85,11 @@ export class EventService {
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
 			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
-			this.logger.log(`Successfully got the album of event ${id}`, login);
+			this.logger.log(`Got album of event ${id}`, login);
 
 			return zipAsBase64;
 		} catch (error) {
-			this.logger.error(`Failed to get album of event ${id} on database(${error})`, login);
+			this.logger.error(`Failed -> Get album of event ${id} on database (${error})`, login);
 			throw error
 		}
 	}
@@ -97,7 +103,7 @@ export class EventService {
 				this.eventRepository.update(id, {
 					thumbnail_filename: path
 				})
-				this.logger.log(`Successfully saved thumbnail of event ${id}`, login, true)
+				this.logger.log(`Saved thumbnail of event ${id}`, login, true)
 			}
 			else {
 				path = `assets/thumbnails/events/${id}.${file.mimetype.split('/')[1]}`
@@ -106,7 +112,7 @@ export class EventService {
 					file.buffer,
 					(err) => {
 						if (err) {
-							this.logger.error(`Error while creating event ${id} thumbnail(${err})`,
+							this.logger.error(`Failed -> Create event ${id} thumbnail (${err})`,
 								login, true);
 							throw err
 						}
@@ -114,13 +120,13 @@ export class EventService {
 							this.eventRepository.update(id, {
 								thumbnail_filename: path
 							})
-							this.logger.log(`Successfully saved thumbnail of event ${id}`, login, true)
+							this.logger.log(`Saved thumbnail of event ${id}`, login, true)
 						}
 					})
 				return (ret);
 			}
 		} catch (error) {
-			this.logger.error(`Failed to save thumbnail of event ${id} on database(${error})`, login, true);
+			this.logger.error(`Failed -> Save thumbnail of event ${id} on database (${error})`, login, true);
 			throw error
 		}
 	}
@@ -162,7 +168,7 @@ export class EventService {
 			this.logger.log(`Got all filtered events`, requestMaker);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all filtered events on database(${error})`, requestMaker);
+			this.logger.error(`Failed -> Get all filtered events on database (${error})`, requestMaker);
 			throw error
 		}
 	}
@@ -178,7 +184,7 @@ export class EventService {
 			this.logger.log(`Got all current events`, requestMaker);
 			return events;
 		} catch (error) {
-			this.logger.error(`Failed to get all current events on database(${error})`, requestMaker);
+			this.logger.error(`Failed -> Get all current events on database (${error})`, requestMaker);
 			throw error
 		}
 	}
@@ -186,8 +192,10 @@ export class EventService {
 	async findOne(id: number, requestMaker: string): Promise<any> {
 		try {
 			let event = await this.eventRepository.findOneBy({ id: id });
-			if (!event)
-				throw new NotFoundException(`Failed to find event ${id}`);
+			if (!event) {
+				this.logger.error(`Failed -> Get event ${id} : event ${id} doesn't exist`, requestMaker);
+				throw new NotFoundException(`Failed to get event ${id} : event ${id} doesn't exist`);
+			}
 			this.logger.log(`Got event with id ${id} `, requestMaker);
 			let ret = {
 				...event,
@@ -199,8 +207,7 @@ export class EventService {
 			}
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to find event
-			${ id} on database(${error})`, requestMaker);
+			this.logger.error(`Failed -> Find event ${id} on database (${error})`, requestMaker);
 			throw error
 		}
 	}
@@ -208,15 +215,14 @@ export class EventService {
 	async update(id: number, eventData: EventDto, requestMaker: string): Promise<any> {
 		try {
 			if (!await this.findOne(id, requestMaker)) {
-				this.logger.error(`Failed to update event with id ${id} : event does not exist`, requestMaker, true);
-				throw new NotFoundException(`Failed to update event with id ${id} : event does not exist`);
+				this.logger.error(`Failed -> Update event with id ${id} : event ${id} does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to update event with id ${id} : event ${id} does not exist`);
 			}
 			let ret = await this.eventRepository.update(id, eventData);
-			this.logger.warn("Successfully updated event " + id, requestMaker, true);
+			this.logger.warn(`Updated event ${id}`, requestMaker, true);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to update event ${id}
-			on database(${ error})`, requestMaker, true)
+			this.logger.error(`Failed -> Update event ${id} on database (${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -225,21 +231,19 @@ export class EventService {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
-				this.logger.error(`Failed to subscribe student ${login} to event ${id} : event does not exist`
-					, requestMaker)
+				this.logger.error(`Failed -> Subscribe student ${login} to event ${id} : event ${id} does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : event does not exist`)
 			}
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
-				this.logger.error(`Failed to subscribe student ${login} to event ${id} : student does not exist`
-					, requestMaker)
-				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student does not exist`)
+				this.logger.error(`Failed -> Subscribe student ${login} to event ${id} : student ${login} does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student ${login} does not exist`)
 			}
-			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin",price,date) VALUES (${id}, '${login}', ${cost}, NOW())`);
-			this.logger.log(`Successfully subscribe student ${login} to event ${id} `, requestMaker);
+			let ret = await this.eventRepository.query(`INSERT INTO inscription("eventId", "studLogin", price, date) VALUES(${id}, '${login}', ${cost}, NOW())`);
+			this.logger.log(`Subscribed student ${login} to event ${id} `, requestMaker);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to subscribe student ${login} to event ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed -> Subscribe student ${login} to event ${id} on database (${error})`, requestMaker)
 			throw error
 		}
 	}
@@ -248,19 +252,19 @@ export class EventService {
 		try {
 			let event = await this.findOne(id, requestMaker);
 			if (!event) {
-				this.logger.error(`Failed to force subscribe student ${login} to event ${id} : event does not exist`
-					, requestMaker)
-				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : event does not exist`)
+				this.logger.error(`Failed -> Force subscribe student ${login} to event ${id} : event ${id} does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : event ${id} does not exist`)
 			}
 			let stud = await this.studService.findOne(login, requestMaker);
 			if (!stud) {
-				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student does not exist`)
+				this.logger.error(`Failed -> Force subscribe student ${login} to event ${id} : student ${login} does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to force subscribe student ${login} to event ${id} : student ${login} does not exist`)
 			}
-			let ret = await this.eventRepository.query(`INSERT INTO inscription ("eventId", "studLogin", price, date) VALUES (${id}, '${login}', ${cost}, NOW())`);
-			this.logger.warn(`Successfully force subscribe student ${login} to event ${id} `, requestMaker, true);
+			let ret = await this.eventRepository.query(`INSERT INTO inscription("eventId", "studLogin", price, date) VALUES(${id}, '${login}', ${cost}, NOW())`);
+			this.logger.warn(`Force subscribed student ${login} to event ${id} `, requestMaker, true);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to force subscribe student ${login} to event ${id} on database(${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Force subscribe student ${login} to event ${id} on database (${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -268,10 +272,10 @@ export class EventService {
 	async create(eventDto: EventDto, requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.eventRepository.save(eventDto);
-			this.logger.warn(`Successfully created new event ${eventDto.name} `, requestMaker, true);
+			this.logger.warn(`Created new event ${eventDto.name}`, requestMaker, true);
 			return (ret);
 		} catch (error) {
-			this.logger.error(`Failed to create event ${eventDto.name} on database(${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Create event ${eventDto.name} on database (${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -280,14 +284,16 @@ export class EventService {
 		try {
 			if (await this.findOne(id, requestMaker)) {
 				let ret = await this.eventRepository.delete({ id: id });
-				this.logger.warn(`Successfully deleted event ${id} `,
+				this.logger.warn(`Deleted event ${id}`,
 					requestMaker, true);
 				return ret
 			}
-			else
-				this.logger.warn(`Failed to delete event ${id} : event does no exist`, requestMaker, true);
+			else {
+				this.logger.warn(`Failed -> Delete event ${id} : event doesn't exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to delete event ${id} : event doesn't exist`);
+			}
 		} catch (error) {
-			this.logger.error(`Failed to delete event ${id} on database(${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Delete event ${id} on database (${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -295,10 +301,10 @@ export class EventService {
 	async removeAll(requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.eventRepository.delete({});
-			this.logger.warn(`Successfully deleted all events`, requestMaker, true);
+			this.logger.warn(`Deleted all events`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete all events on database(${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Delete all events on database (${error})`, requestMaker, true)
 			throw error
 		}
 	}
@@ -306,11 +312,11 @@ export class EventService {
 	async getStuds(id: number, requestMaker: string): Promise<Stud[]> {
 		try {
 			let a = this.eventRepository.query(`SELECT * FROM stud s WHERE s.login IN(SELECT \"studLogin" FROM inscription insc WHERE "eventId" = '${id}'); `);
-			this.logger.log(`Successfully got all students subbed in event ${id} `, requestMaker)
+			this.logger.log(`Got all students subbed in event ${id} `, requestMaker)
 			return a;
 		}
 		catch (error) {
-			this.logger.error(`Failed to get all students subbed in event ${id} on database(${error})`, requestMaker)
+			this.logger.error(`Failed -> Get all students subbed in event ${id} on database (${error})`, requestMaker)
 			throw error
 		}
 	}

@@ -47,7 +47,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Get all students on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -75,7 +75,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Get all direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -102,7 +102,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Get all non-direction members on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -129,7 +129,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Get all volunteers on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -156,7 +156,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Get all non-volunteers on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -168,7 +168,6 @@ export class StudService {
 				this.logger.warn(`Failed -> Find student with login ${login} : student does not exist`, requestMaker)
 				return stud
 			}
-			// }
 			else
 				this.logger.log(`Got student with login ${login}`, requestMaker);
 			const ret = {
@@ -192,7 +191,7 @@ export class StudService {
 		}
 		catch (error) {
 			this.logger.error(`Failed -> Find student ${login} on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`${error}`);
+			throw error;
 		}
 	}
 
@@ -200,15 +199,15 @@ export class StudService {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed to update student with login ${login} : student does not exist`, requestMaker);
+				this.logger.error(`Failed -> Update student with login ${login} : student does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
 			let ret = await this.studRepository.update(login, studData);
-			this.logger.warn(`Successfully updated student ${login}`, requestMaker);
+			this.logger.warn(`Updated student ${login}`, requestMaker);
 			return ret;
 		} catch (error) {
-			this.logger.error(`Failed to update student ${login} on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to update student ${login} on database (${error})`)
+			this.logger.error(`Failed -> Update student ${login} on database (${error})`, requestMaker)
+			throw error;
 		}
 	}
 
@@ -216,20 +215,20 @@ export class StudService {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed to add direction member with login ${login} : stud does not exist`, requestMaker, true);
+				this.logger.error(`Failed -> Add direction member with login ${login} : stud does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to add direction member with login ${login} : stud does not exist`)
 			}
 			if (user.isDirection) {
-				this.logger.error(`Failed to add direction member with login ${login} : stud is already a direction member`, requestMaker, true);
-				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud is already a direction member`)
+				this.logger.error(`Failed -> Add direction member with login ${login} : stud is already a direction member`, requestMaker, true);
+				throw new ConflictException(`Failed to add direction member with login ${login} : stud is already a direction member`)
 			}
 			let updatedOne = `UPDATE stud SET "isDirection" = 't', "clearance" = 11 WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
-			this.logger.warn(`Successfully add direction member ${login}`, requestMaker, true);
+			this.logger.warn(`Added direction member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to add direction member ${login} on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to add direction member ${login} on database (${error})`)
+			this.logger.error(`Failed -> Add direction member ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 
@@ -237,19 +236,19 @@ export class StudService {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed to yeet direction member with login ${login} : direction member does not exist`, requestMaker, true);
+				this.logger.error(`Failed -> Yeet direction member with login ${login} : direction member does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
 			} if (!user.isDirection) {
-				this.logger.error(`Failed to add direction member with login ${login} : stud isn't direction member`, requestMaker), true;
-				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud isn't direction member`)
+				this.logger.error(`Failed -> Add direction member with login ${login} : stud isn't direction member`, requestMaker), true;
+				throw new ConflictException(`Failed to add direction member with login ${login} : stud isn't direction member`)
 			}
 			let updatedOne = `UPDATE stud SET "isDirection" = 'f', "clearance" = 7 WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
-			this.logger.warn(`Successfully yeet direction member ${login}`, requestMaker, true);
+			this.logger.warn(`Yeeted direction member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to yeet direction member ${login} on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to yeet direction member ${login} on database (${error})`)
+			this.logger.error(`Failed -> Yeet direction member ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 
@@ -257,20 +256,20 @@ export class StudService {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed to add unpaid member with login ${login} : stud does not exist`, requestMaker, true);
-				throw new NotFoundException(`Failed to add unpaid member with login ${login} : stud does not exist`)
+				this.logger.error(`Failed -> Add volunteers with login ${login} : stud does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to add volunteers with login ${login} : stud does not exist`)
 			}
 			if (user.clearance == 9) {
-				this.logger.error(`Failed to add direction member with login ${login} : stud is already a unpaid member`, requestMaker, true);
-				throw new InternalServerErrorException(`Failed to add unpaid member with login ${login} : stud is already a direction member`)
+				this.logger.error(`Failed -> Add volunteers with login ${login} : stud is already a volunteers`, requestMaker, true);
+				throw new ConflictException(`Failed to add volunteers with login ${login} : stud is already a volunteers`)
 			}
 			let updatedOne = `UPDATE stud SET "clearance" = 9 WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
-			this.logger.warn(`Successfully add direction member ${login}`, requestMaker, true);
+			this.logger.warn(`Added volunteers ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to add unpaid member ${login} on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to add unpaid member ${login} on database (${error})`)
+			this.logger.error(`Failed -> Add volunteers ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 
@@ -278,47 +277,50 @@ export class StudService {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed to yeet unpaid member with login ${login} : unpaid member does not exist`, requestMaker, true);
-				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
+				this.logger.error(`Failed -> Yeet volunteers with login ${login} : volunteers does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to yeet volunteers with login ${login} : volunteers does not exist`)
 			} if (user.cleareance < 9) {
-				this.logger.error(`Failed to add unpaid member with login ${login} : stud isn't unpaid member`, requestMaker, true);
-				throw new InternalServerErrorException(`Failed to add direction member with login ${login} : stud isn't direction member`)
+				this.logger.error(`Failed -> Add volunteers with login ${login} : stud isn't volunteers`, requestMaker, true);
+				throw new ConflictException(`Failed to add volunteers with login ${login} : stud isn't volunteers`)
 			}
 			let updatedOne = `UPDATE stud SET "clearance" = 7 WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
-			this.logger.warn(`Successfully yeet unpaid member ${login}`, requestMaker, true);
+			this.logger.warn(`Yeeted volunteers ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to yeet unpaid member ${login} on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to yeet unpaid member ${login} on database (${error})`)
+			this.logger.error(`Failed -> Yeet volunteers ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 
 	async create(studDto: StudDto, requestMaker: string): Promise<any> {
 		try {
 			if (await this.findOne(studDto.login, requestMaker)) {
+				this.logger.error(`Failed -> Create student ${studDto.login} : student already exist`, requestMaker, true);
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
 			let ret = this.studRepository.save(studDto);
-			this.logger.log(`Successfully created new student ${studDto.login}`, requestMaker);
+			this.logger.log(`Created new student ${studDto.login}`, requestMaker);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to create user ${studDto.login} on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to create user ${studDto.login} on database (${error})`)
+			this.logger.error(`Failed -> Create user ${studDto.login} on database (${error})`, requestMaker)
+			throw error;
 		}
 	}
 
 	async removeOne(login: string, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
-			if (!user)
-				throw new NotFoundException(`stud ${login} does not exist`)
+			if (!user) {
+				this.logger.error(`Failed -> Delete student ${login} : student does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to delete student ${login} : student does not exist`)
+			}
 			let ret = await this.studRepository.delete({ login: login });
-			this.logger.warn(`Successfully delete student ${login}`, requestMaker, true);
+			this.logger.warn(`Deleted student ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to delete student ${login} on database (${error})`, requestMaker, true)
-			throw new NotFoundException(`Failed to delete student ${login} on database (${error})`)
+			this.logger.error(`Failed -> Delete student ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 
@@ -333,11 +335,11 @@ export class StudService {
 	async removeAll(requestMaker: string): Promise<any> {
 		try {
 			let ret = await this.studRepository.delete({});
-			this.logger.warn(`Successfully deleted all students`, requestMaker, true);
+			this.logger.warn(`Deleted all students`, requestMaker, true);
 			return ret
 		} catch (error) {
 			this.logger.error(`Failed to delete all students on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to delete all students on database (${error})`)
+			throw error;
 		}
 	}
 
@@ -349,11 +351,11 @@ export class StudService {
 			else
 				if (user.clearance <= 7)
 					this.update(user.login, stud, requestMaker)
-			this.logger.log(`Successfully logged student`, requestMaker);
+			this.logger.log(`Logged student ${user.login}`, requestMaker);
 			return user
 		} catch (error) {
-			this.logger.error(`Failed to log student on database (${error})`, requestMaker)
-			throw new InternalServerErrorException(`Failed to log student on database (${error})`)
+			this.logger.error(`Failed -> Log student on database (${error})`, requestMaker)
+			throw error;
 		}
 	}
 
@@ -362,20 +364,20 @@ export class StudService {
 			let newCaptain = await this.findOne(login, requestMaker);
 			let captain = await this.studRepository.findOneBy({ clearance: 21 })
 			if (!captain) {
-				this.logger.error(`Failed to give the tricorn to ${login} : there is not any current Captain`, requestMaker, true);
+				this.logger.error(`Failed -> Give the tricorn to ${login} : there is not any current Captain`, requestMaker, true);
 				throw new NotFoundException(`Failed to give the tricorn to ${login} : there is not any current Captain`)
 			}
 			if (!newCaptain || !newCaptain.isDirection) {
-				this.logger.error(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`, requestMaker, true);
-				throw new NotFoundException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
+				this.logger.error(`Failed -> Give the tricorn to ${login} : new captain does not exist or isn't a direction member`, requestMaker, true);
+				throw new ConflictException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
 			}
 			await this.studRepository.query(`UPDATE stud SET "clearance" = 11 WHERE login = '${captain.login}'`);
 			let ret = await this.studRepository.query(`UPDATE stud SET "clearance" = 21 WHERE login = '${newCaptain.login}'`);
-			this.logger.warn(`Successfully transfered the captain's tricorn from ${captain.login} to ${newCaptain.login}`, requestMaker, true)
+			this.logger.warn(`Transfered the captain's tricorn from ${captain.login} to ${newCaptain.login}`, requestMaker, true)
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed to give the tricorn to ${login} on database (${error})`, requestMaker, true)
-			throw new InternalServerErrorException(`Failed to give the tricorn to ${login} on database (${error})`)
+			this.logger.error(`Failed -> Give the tricorn to ${login} on database (${error})`, requestMaker, true)
+			throw error;
 		}
 	}
 }

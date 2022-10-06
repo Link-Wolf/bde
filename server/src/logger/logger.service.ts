@@ -50,7 +50,7 @@ export class LoggerService {
 			this.logfile("log", `(${requestMaker}) : ${message}`)
 	}
 
-	async verbose(message: string, requestMaker: string, isAdmin = false) {
+	async verbose(message: string, requestMaker: string) {
 		Logger.verbose(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
 			this.logfile("verbose", `(unknown public) : ${message}`)
