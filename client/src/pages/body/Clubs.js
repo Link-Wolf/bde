@@ -9,7 +9,7 @@ const Clubs = () => {
 					Espace d'innovation sur le thème du soutien à l'autonomie et
 					à l'inclusion sociale
 				</h2>
-				<p>
+				<div>
 					<ul>
 						<li>Gratuit</li>
 						<li>Ouvert à tous</li>
@@ -20,7 +20,7 @@ const Clubs = () => {
 							Arduino ...)
 						</li>
 					</ul>
-				</p>
+				</div>
 				<p>Contact : Jean Michel (jrasser)</p>
 				<p>Site : https://www.labhidouille.fr/</p>
 				<p>
