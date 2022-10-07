@@ -5,6 +5,8 @@ import {Navigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {Button} from "reactstrap";
+import usePagination from "./Pagination";
+import {Pagination} from "@mui/material";
 
 import EventToken from "./EventToken";
 
@@ -12,12 +14,37 @@ import yellowStar from "../assets/logos/yellow_star.svg";
 import greyStar from "../assets/logos/grey_star.svg";
 
 const UserProfile = options => {
+	const PER_PAGE = 6;
 	const [dataStud, setDataStud] = useState({});
 	const [dataContrib, setDataContrib] = useState([]);
+	const [pageContrib, setPageContrib] = useState(1);
+	const [countContrib, setCountContrib] = useState(0);
+	const viewDataContrib = usePagination(dataContrib, PER_PAGE);
 	const [dataEvent, setDataEvent] = useState([]);
+	const [pageEvent, setPageEvent] = useState(1);
+	const [countEvent, setCountEvent] = useState(0);
+	const viewDataEvent = usePagination(dataEvent, PER_PAGE);
 	const [dataOrder, setDataOrder] = useState([]);
+	const [pageOrder, setPageOrder] = useState(1);
+	const [countOrder, setCountOrder] = useState(0);
+	const viewDataOrder = usePagination(dataOrder, PER_PAGE);
 	const [contributionStatus, setContributionStatus] = useState(false);
 	const [nav, setNav] = useState(<></>);
+
+	const handleChangePageContrib = (e, p) => {
+		setPageContrib(p);
+		viewDataContrib.jump(p);
+	};
+
+	const handleChangePageEvent = (e, p) => {
+		setPageEvent(p);
+		viewDataEvent.jump(p);
+	};
+
+	const handleChangePageOrder = (e, p) => {
+		setPageOrder(p);
+		viewDataOrder.jump(p);
+	};
 
 	//Stud
 	useEffect(() => {
@@ -71,6 +98,8 @@ const UserProfile = options => {
 							setContributionStatus(true);
 						}
 					});
+					setCountContrib(Math.ceil(data.length / PER_PAGE));
+					viewDataContrib.updateData(data);
 				})
 				.catch(function(error) {
 					console.log(
@@ -100,6 +129,8 @@ const UserProfile = options => {
 			})
 			.then(actualData => {
 				setDataEvent(actualData);
+				setCountEvent(Math.ceil(actualData.length / PER_PAGE));
+				viewDataEvent.updateData(actualData);
 			})
 			.catch(function(error) {
 				console.log(
@@ -109,6 +140,7 @@ const UserProfile = options => {
 			});
 	}, [dataStud]);
 
+	//Orders
 	useEffect(() => {
 		const requestOptions = {
 			method: "get",
@@ -128,6 +160,8 @@ const UserProfile = options => {
 			})
 			.then(actualData => {
 				setDataOrder(actualData);
+				setCountOrder(Math.ceil(actualData.length / PER_PAGE));
+				viewDataOrder.updateData(actualData);
 			})
 			.catch(function(error) {
 				console.log(
@@ -192,8 +226,13 @@ const UserProfile = options => {
 				<div style={{display: "flex"}}>
 					<div>
 						<h3> Historique de contributions</h3>
+						<Pagination
+							count={countContrib}
+							page={pageContrib}
+							onChange={handleChangePageContrib}
+						/>
 						<ul>
-							{dataContrib.map(data => (
+							{viewDataContrib.currentData().map(data => (
 								<li key={data.id}>
 									{`${new Date(
 										data.begin_date
@@ -203,22 +242,42 @@ const UserProfile = options => {
 								</li>
 							))}
 						</ul>
+						<Pagination
+							count={countContrib}
+							page={pageContrib}
+							onChange={handleChangePageContrib}
+						/>
 					</div>
 					<div>
 						<h3> Events inscrits </h3>
+						<Pagination
+							count={countEvent}
+							page={pageEvent}
+							onChange={handleChangePageEvent}
+						/>
 						<ul>
-							{dataEvent.map(data => (
+							{viewDataEvent.currentData().map(data => (
 								<li key={data.id}>
 									<EventToken event={data} />
 								</li>
 							))}
 						</ul>
+						<Pagination
+							count={countEvent}
+							page={pageEvent}
+							onChange={handleChangePageEvent}
+						/>
 					</div>
 					{options.command_history ? (
 						<div>
 							<h3> Historique commandes </h3>
+							<Pagination
+								count={countOrder}
+								page={pageOrder}
+								onChange={handleChangePageOrder}
+							/>
 							<ul>
-								{dataOrder.map(data => (
+								{viewDataOrder.currentData().map(data => (
 									<li key={data.id}>
 										<a href={`/receipt/${data.id}`}>
 											{data.id}
@@ -226,6 +285,11 @@ const UserProfile = options => {
 									</li>
 								))}
 							</ul>
+							<Pagination
+								count={countOrder}
+								page={pageOrder}
+								onChange={handleChangePageOrder}
+							/>
 						</div>
 					) : (
 						<></>
