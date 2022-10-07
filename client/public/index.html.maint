@@ -12,17 +12,88 @@
 	<title>La Frégate</title>
 	<style>
 		body {
-			background: url(blueprint.png) no-repeat center center fixed;
+			background:
+				linear-gradient(rgba(255, 255, 200, .5), rgba(255, 255, 200, .5)),
+				url(blueprint.png) no-repeat center center fixed;
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
 			background-size: cover;
+			overflow: hidden;
+		}
+
+		.container {
+			margin: 45vh 30vw;
+			background: linear-gradient(90deg,
+					rgba(0, 0, 0, 0) 0%,
+					rgba(255, 240, 200) 45%,
+					rgba(255, 240, 200) 55%,
+					rgba(0, 0, 0, 0) 100%);
+			box-shadow: 1px 31px 22px -23px rgba(0, 0, 0, 0.63), 1px -31px 22px -23px rgba(0, 0, 0, 0.63);
+			height: 10vh;
+			width: 40vw;
+		}
+
+		.container p {
+			text-align: center;
+			padding-top: 3vh;
+			font-size: 3vh;
+			font-family: Futura;
+		}
+
+		img {
+			position: absolute;
+		}
+
+		.big {
+			height: 80vmin;
+			width: auto;
+		}
+
+		.small {
+			height: 30vmin;
+			width: auto;
+		}
+
+		.medium {
+			height: 50vmin;
+			width: auto;
+		}
+
+		.top-left {
+			top: 0;
+			left: 0;
+			transform: translateY(-50%) translateX(-50%);
+		}
+
+		.top-right {
+			top: 0;
+			left: 100%;
+			transform: translateY(-50%) translateX(-50%);
+		}
+
+		.bottom {
+			top: 100%;
+			left: 30%;
+			transform: translateY(-50%) translateX(-50%);
+		}
+
+		.bottom-right {
+			top: 100%;
+			left: 100%;
+			transform: translateY(-50%) translateX(-50%);
 		}
 	</style>
 </head>
 
 <body>
-	<p>On est en maintenance uwu</p>
+	<img class="top-left big" src="gear_clockwise.gif" />
+	<img class="bottom-right big" src="gear_clockwise.gif" />
+	<img class="top-right small" src="gear_anti_clockwise.gif" />
+	<img class="bottom medium" src="gear_anti_clockwise.gif" />
+	<div class="container">
+		<p>On est en maintenance uwu</p>
+	</div>
 	<!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
