@@ -24,10 +24,12 @@
 
 		.container {
 			margin: 45vh 30vw;
-			background: linear-gradient(90deg,
+			background: linear-gradient(45deg,
 					rgba(0, 0, 0, 0) 0%,
+					rgba(0, 0, 0, 0) 10%,
 					rgba(255, 240, 200) 45%,
 					rgba(255, 240, 200) 55%,
+					rgba(0, 0, 0, 0) 90%,
 					rgba(0, 0, 0, 0) 100%);
 			box-shadow: 1px 31px 22px -23px rgba(0, 0, 0, 0.63), 1px -31px 22px -23px rgba(0, 0, 0, 0.63);
 			height: 10vh;
@@ -46,17 +48,17 @@
 		}
 
 		.big {
-			height: 80vmin;
+			height: 60vmin;
 			width: auto;
 		}
 
 		.small {
-			height: 30vmin;
+			height: 20vmin;
 			width: auto;
 		}
 
 		.medium {
-			height: 50vmin;
+			height: 40vmin;
 			width: auto;
 		}
 
@@ -73,7 +75,7 @@
 		}
 
 		.bottom {
-			top: 100%;
+			top: 105%;
 			left: 30%;
 			transform: translateY(-50%) translateX(-50%);
 		}
@@ -92,17 +94,10 @@
 	<img class="top-right small" src="gear_anti_clockwise.gif" />
 	<img class="bottom medium" src="gear_anti_clockwise.gif" />
 	<div class="container">
-		<p>On est en maintenance uwu</p>
+		<p>Le site est actuellement en maintenance</p>
 	</div>
 	<!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
+      This UWU file is wonderful.
     -->
 </body>
 
