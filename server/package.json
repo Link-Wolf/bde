@@ -44,6 +44,7 @@
       "googleapis": "^105.0.0",
       "helmet": "^5.1.0",
       "jszip": "^3.10.1",
+      "nest": "^0.1.6",
       "nestjs-cookie-session": "^2.0.1",
       "nestjs-session": "^2.0.0",
       "node-redis": "^0.1.7",
