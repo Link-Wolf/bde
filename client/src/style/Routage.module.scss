@@ -1,11 +1,15 @@
 .bodyContainer {
-	overflow-y: scroll;
-	width: 100vw;
-	height: 80vh;
 	padding: 2vh 30vw;
+	min-height: 80vh;
 
 	a,
 	p {
 		font-family: Futura;
 	}
+}
+
+.scroll {
+	width: 100vw;
+	height: 92vh;
+	overflow-y: scroll;
 }

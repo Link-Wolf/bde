@@ -7,6 +7,9 @@ re: clean build launch
 build:
 	@docker-compose up -d --build
 
+stop:
+	@docker-compose stop
+
 launch:
 	@docker-compose up
 
