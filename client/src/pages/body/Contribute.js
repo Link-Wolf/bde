@@ -129,8 +129,39 @@ const ContributeButtons = props => {
 										second: "2-digit",
 										timeZoneName: "short"
 									}).format(new Date(data.order.date)),
-									data.mail
+									props.address.mail
 								);
+							})
+							.then(async () => {
+								if (props.needMail)
+									await fetch(
+										`http://${global.config.api.authority}/stud/${props.session.login}`,
+										{
+											credentials: "include",
+											method: "PATCH",
+											body: JSON.stringify({
+												true_email: props.address.mail
+											}),
+											headers: {
+												"Content-Type":
+													"application/json"
+											}
+										}
+									)
+										.then(response => {
+											if (!response.ok) {
+												throw new Error(
+													`This is an HTTP error: The status is ${response.status}`
+												);
+											}
+											props.setNeedMail(false);
+										})
+										.catch(function(error) {
+											console.log(
+												"Il y a eu un problème avec l'opération fetch: " +
+													error.message
+											);
+										});
 							})
 							.then(() => {
 								window.location = `/receipt/${data.orderID}`;
@@ -197,6 +228,36 @@ const AddressForm = props => {
 		const name = target.name;
 		tmp[name] = value;
 		props.setState(tmp);
+	};
+
+	const checkTrueMail = async login => {
+		fetch(`http://${global.config.api.authority}/stud/${login}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				let tmp = props.addressFormState;
+				if (!data.true_email) {
+					props.setNeedMail(true);
+					tmp.mail = "";
+				} else {
+					tmp.mail = data.true_email;
+				}
+				props.setAddressFormState(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	};
 
 	return (
@@ -527,11 +588,22 @@ const AddressForm = props => {
 					<option value="ZW">Zimbabwe</option>
 				</select>
 			</div>
+			<div hidden={!props.needMail}>
+				<input
+					placeholder="Email"
+					name="mail"
+					value={props.state.mail}
+					onChange={handleChange}
+					disabled={props.validated}
+					required
+				/>
+			</div>
 		</form>
 	);
 };
 
 const Contribute = () => {
+	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
 		"client-id": global.config.paypal.id,
@@ -549,7 +621,8 @@ const Contribute = () => {
 		city: "",
 		country_code: "FR",
 		firstname: "firstname",
-		lastname: "lastname"
+		lastname: "lastname",
+		mail: ""
 	});
 
 	useEffect(() => {
@@ -570,6 +643,7 @@ const Contribute = () => {
 				tmp.lastname = json.lastname;
 				setAddressFormState(tmp);
 				setSession(json);
+				if (json.clearance !== 0) checkTrueMail(json.login);
 			});
 	}, []);
 
@@ -646,6 +720,36 @@ const Contribute = () => {
 			});
 	}, [session]);
 
+	const checkTrueMail = async login => {
+		fetch(`http://${global.config.api.authority}/stud/${login}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				let tmp = addressFormState;
+				if (!data.true_email) {
+					setNeedMail(true);
+					tmp.mail = "";
+				} else {
+					tmp.mail = data.true_email;
+				}
+				setAddressFormState(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
 	if (contributionStatus === undefined) return "Loading";
 
 	if (contributionStatus === true) {
@@ -661,6 +765,7 @@ const Contribute = () => {
 						setState={setAddressFormState}
 						state={addressFormState}
 						validated={validated}
+						needMail={needMail}
 					/>
 					<button
 						disabled={validated}
@@ -691,6 +796,8 @@ const Contribute = () => {
 								session={session}
 								address={addressFormState}
 								setAddress={setAddressFormState}
+								setNeedMail={setNeedMail}
+								needMail={needMail}
 							/>
 						</PayPalScriptProvider>
 					</div>

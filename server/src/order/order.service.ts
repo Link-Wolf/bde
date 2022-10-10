@@ -27,7 +27,11 @@ export class OrderService {
 
 	async findByStud(login: string, maker: any) {
 		try {
-			let order = await this.orderRepository.findBy({ studLogin: login });
+			let order = await this.orderRepository.find({
+				where: { studLogin: login },
+				order: { date: "DESC" }
+			});
+			console.log(order)
 			if (!order)
 				this.logger.warn(
 					`Failed -> Find orders for student ${login}: orders for ${login} does not exist`, login)

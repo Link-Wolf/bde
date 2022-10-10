@@ -15,6 +15,7 @@ const Contact = () => {
 	});
 	const [lock, setLock] = useState(false);
 	const [sent, setSent] = useState(false);
+	const [needMail, setNeedMail] = useState(false);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -52,7 +53,6 @@ const Contact = () => {
 		if (
 			formState.mail !== "" &&
 			formState.name !== "" &&
-			formState.login !== "" &&
 			formState.subject !== "" &&
 			formState.message !== "" &&
 			document.getElementById("emailField").checkValidity()
@@ -66,6 +66,36 @@ const Contact = () => {
 					formState,
 					global.config.emailjs.public_key
 				)
+				.then(async () => {
+					if (formState.login !== -42 && needMail)
+						await fetch(
+							`http://${global.config.api.authority}/stud/${formState.login}`,
+							{
+								credentials: "include",
+								method: "PATCH",
+								body: JSON.stringify({
+									true_email: formState.mail
+								}),
+								headers: {
+									"Content-Type": "application/json"
+								}
+							}
+						)
+							.then(response => {
+								if (!response.ok) {
+									throw new Error(
+										`This is an HTTP error: The status is ${response.status}`
+									);
+								}
+								setNeedMail(false);
+							})
+							.catch(function(error) {
+								console.log(
+									"Il y a eu un problème avec l'opération fetch: " +
+										error.message
+								);
+							});
+				})
 				.then(async () => {
 					await videMoiLChampLô();
 				})
@@ -108,11 +138,11 @@ const Contact = () => {
 			})
 			.then(data => {
 				let tmp = formState;
-				tmp.mail = data.mail;
 				tmp.name = data.firstname;
 				tmp.login = data.login;
 				setFormState(tmp);
 				if (data.clearance === 0) setIdForm(false);
+				else checkTrueMail(tmp.login);
 			})
 			.catch(function(error) {
 				console.log(
@@ -121,6 +151,36 @@ const Contact = () => {
 				);
 			});
 	}, []);
+
+	const checkTrueMail = async login => {
+		fetch(`http://${global.config.api.authority}/stud/${login}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				let tmp = formState;
+				if (!data.true_email) {
+					setNeedMail(true);
+					tmp.mail = "";
+				} else {
+					tmp.mail = data.true_email;
+				}
+				setFormState(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
 
 	return (
 		<div>
@@ -177,33 +237,31 @@ const Contact = () => {
 						/>
 					</Form.Group>
 					<Form.Group hidden={idForm}>
-						<Form.Group>
-							<Form.Label>Nom</Form.Label>
-							<Form.Control
-								placeholder="Veuillez entrer votre nom"
-								value={formState.name}
-								onChange={handleFormChange}
-								name="name"
-								required
-								disabled={lock}
-							/>
-						</Form.Group>
-						<Form.Group>
-							<Form.Label>Email</Form.Label>
-							<Form.Control
-								disabled={lock}
-								type="email"
-								placeholder="Veuillez entrer votre mail afin de vous recontacter"
-								value={formState.mail}
-								onChange={handleFormChange}
-								name="mail"
-								id="emailField"
-								required
-							/>
-							<Form.Text className="text-muted">
-								Nous ne partagerons jamais votre mail
-							</Form.Text>
-						</Form.Group>
+						<Form.Label>Nom</Form.Label>
+						<Form.Control
+							placeholder="Veuillez entrer votre nom"
+							value={formState.name}
+							onChange={handleFormChange}
+							name="name"
+							required
+							disabled={lock}
+						/>
+					</Form.Group>
+					<Form.Group hidden={!needMail && idForm}>
+						<Form.Label>Email</Form.Label>
+						<Form.Control
+							disabled={lock}
+							type="email"
+							placeholder="Veuillez entrer votre mail afin de vous recontacter"
+							value={formState.mail}
+							onChange={handleFormChange}
+							name="mail"
+							id="emailField"
+							required
+						/>
+						<Form.Text className="text-muted">
+							Nous ne partagerons jamais votre mail
+						</Form.Text>
 					</Form.Group>
 					<Button
 						variant="outline-primary"
