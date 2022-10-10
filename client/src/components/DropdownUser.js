@@ -14,7 +14,6 @@ const DropdownUser = () => {
 	});
 
 	useEffect(() => {
-		console.log("onmount");
 		fetch(`http://${global.config.api.authority}/session`, {
 			credentials: "include"
 		})
