@@ -9,7 +9,8 @@ services:
         volumes:
             - ./client:/app
         ports:
-            - 8080:3000
+            # - 8080:3000
+            - 3000:3000
         depends_on:
             - api
         networks:
@@ -21,6 +22,8 @@ services:
             context: .
             # target: production
             dockerfile: server.dockerfile
+        ports:
+            - 4242:4242
         networks:
             - back_network
             - front_network
