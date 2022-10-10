@@ -120,7 +120,7 @@ export class InscriptionService {
 
 	async findByStud(login: string, requestMaker: string) {
 		try {
-			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}'`);
+			let ret = await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}' ORDER BY "date" DESC`);
 			this.logger.log(`Got all subscriptions for student ${login}`, requestMaker);
 			return ret
 		} catch (error) {

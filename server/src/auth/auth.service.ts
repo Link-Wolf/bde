@@ -58,7 +58,8 @@ export class AuthService {
 								lastname: response.data.last_name,
 								isDirection: false,
 								clearance: clear,
-								email: response.data.email
+								email: response.data.email,
+								true_email: null
 							}
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");

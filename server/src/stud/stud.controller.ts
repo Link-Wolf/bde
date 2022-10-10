@@ -58,13 +58,11 @@ export class StudController {
 	}
 
 	@Post() @UseGuards(new ClearanceGuard(5))
-
 	create(@Session() session: Record<string, any>, @Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.create(stud, session.login);
 	}
 
 	@Patch(':login') @UseGuards(new ClearanceGuard(5))
-
 	update(@Session() session: Record<string, any>, @Param('login') login: string, @Body(new StudDtoPipe()) stud: StudDto) {
 		return this.studService.update(login, stud, session.login);
 	}

@@ -36,6 +36,12 @@ export class Stud {
 	@Column()
 	email: string
 
+	@Column({
+		nullable: true,
+		default: null
+	})
+	true_email: string
+
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",

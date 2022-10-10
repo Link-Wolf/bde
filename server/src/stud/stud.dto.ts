@@ -5,4 +5,5 @@ export class StudDto {
 	isDirection: boolean;
 	clearance: number;
 	email: string;
+	true_email: string;
 }
