@@ -27,7 +27,7 @@ function App() {
 	return (
 		<NotificationContextProvider>
 			<ConfirmContextProvider>
-				<div className={`App light`}>
+				<div className={`App`}>
 					<ReactNotifications />
 					<Routage />
 					<ConfirmModal />

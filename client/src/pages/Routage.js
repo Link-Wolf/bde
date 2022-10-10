@@ -229,8 +229,10 @@ const RouteWrapper = params => {
 			>
 				<Header />
 				<NotificationContainer />
-				<div className={style.bodyContainer}>{params.route}</div>
-				<Footer />
+				<div className={style.scroll}>
+					<div className={style.bodyContainer}>{params.route}</div>
+					<Footer />
+				</div>
 			</ClearanceChecker>
 		</>
 	);
