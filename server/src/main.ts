@@ -35,9 +35,11 @@ async function bootstrap() {
 				secret: session_secret,
 				resave: false,
 				saveUninitialized: true,
+				proxy: true,
 				cookie: {
 					maxAge: 1000 * 60 * 60 * 42, //42 h
-					httpOnly: true
+					httpOnly: true,
+					sameSite: "lax",
 				},
 			}
 		)
@@ -48,7 +50,7 @@ async function bootstrap() {
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204,
-		"credentials": true
+		"credentials": true,
 	})
 	await app.listen(4242);
 

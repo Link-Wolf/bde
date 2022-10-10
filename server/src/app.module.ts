@@ -52,13 +52,13 @@ const { _dbpw, _rdpw, host } = require('../config.json')
 		AuthModule,
 		PaypalModule,
 		OrderModule,
-		CacheModule.register({
-			isGlobal: true,
-			store: redisStore,
-			host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
-			port: "6379",
-			password: _rdpw
-		}),
+		// CacheModule.register({
+		// 	isGlobal: true,
+		// 	store: redisStore,
+		// 	host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
+		// 	port: "6379",
+		// 	password: _rdpw
+		// }),
 		GoogleModule,
 	],
 	controllers: [AppController],
