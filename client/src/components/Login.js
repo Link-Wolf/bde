@@ -44,7 +44,7 @@ const Login = () => {
 					});
 			})
 			.then(() => {
-				setRet(<Navigate to={-1} replace={true} />);
+				window.location = "/home";
 			})
 			.catch(function(error) {
 				console.log(
