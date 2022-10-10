@@ -63,7 +63,12 @@ const Cgu = () => {
 				ou non ou d'interruption annoncée, temporaire ou définitive, des
 				services. Dans ces cas, l'Editeur ne saurait être tenu
 				responsable de modifications, alterations, interruptions ou
-				suspensions du Site.
+				suspensions du Site. <br />
+				L'Utilisateur est intégralement responsable de l’utilisation et
+				de la conservation de ses Identifiants de Connexion. Il devra
+				aussi informer sans délai le BDE 42 Mulhouse s’il constate une
+				faille de sécurité liée au détournement de ceux-ci ou des
+				services du Site.
 			</p>
 			<h3>Propriété intelectuelle</h3>
 			<p>
