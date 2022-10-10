@@ -276,11 +276,12 @@ const AdminNavbar = () => {
 			style={{
 				display: "flex",
 				height: `80vh`,
-				position: "sticky",
+				position: "absolute",
+				left: 0,
 				top: `8vh`
 			}}
 		>
-			<CDBSidebar textColor="#fff" backgroundColor="#333">
+			<CDBSidebar textColor="#fff" backgroundColor="#151E23">
 				<CDBSidebarHeader>
 					<a
 						href="/admin"

@@ -1,12 +1,18 @@
 import {useState, useEffect, React} from "react";
+import usePagination from "../../components/Pagination";
+import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
 
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
 
 const AdminStudents = () => {
+	const PER_PAGE = 21;
 	const [data, setData] = useState([]);
 	const [isFiltered, setIsFiltered] = useState(false);
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
+	const viewData = usePagination(data, PER_PAGE);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/stud`, {
@@ -21,8 +27,9 @@ const AdminStudents = () => {
 				return response.json();
 			})
 			.then(actualData => {
-				console.log(actualData);
 				setData(actualData);
+				setCount(Math.ceil(actualData.length / PER_PAGE));
+				viewData.updateData(actualData);
 			})
 			.catch(function(error) {
 				console.log(
@@ -30,6 +37,11 @@ const AdminStudents = () => {
 				);
 			});
 	}, []);
+
+	const handleChangePage = (e, p) => {
+		setPage(p);
+		viewData.jump(p);
+	};
 
 	return (
 		<div
@@ -50,9 +62,14 @@ const AdminStudents = () => {
 						: "Montrer les premiums"}
 				</button>
 				<div>
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
 					{data.length > 0 && (
 						<ul>
-							{data.map(
+							{viewData.currentData().map(
 								user =>
 									(!isFiltered || user.isPremium) && (
 										<li key={user.login}>
@@ -90,6 +107,11 @@ const AdminStudents = () => {
 							)}
 						</ul>
 					)}
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
 				</div>
 			</div>
 		</div>
