@@ -72,7 +72,12 @@ const ContributeButtons = props => {
 								address: `${props.address.address_line_1} ${props.address.address_line_2}`,
 								city: `${props.address.postal_code} ${
 									props.address.city
-								}, ${getLabel(props.address.country_code)}`
+								}, ${
+									getLabel(props.address.country_code)
+										.valueMap[
+										props.address.country_code.toLowerCase()
+									]
+								}`
 							});
 							fetch(
 								`http://${global.config.api.authority}/order/create`,

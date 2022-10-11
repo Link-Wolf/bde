@@ -61,6 +61,8 @@ const Receipt = () => {
 				}`}
 				mail={order.stud.true_email}
 				payement_method={order.source}
+				address={order.address}
+				city={order.city}
 				price={order.cost}
 				item="Contribution"
 			/>

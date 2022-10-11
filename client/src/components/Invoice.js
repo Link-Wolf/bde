@@ -51,11 +51,11 @@ class Invoice extends React.Component {
 												<td>
 													{this.props.buyer}
 													<br />
-													{this.props.mail}
-													<br />
 													{this.props.address}
 													<br />
 													{this.props.city}
+													<br />
+													{this.props.mail}
 												</td>
 											</tr>
 										</tbody>
