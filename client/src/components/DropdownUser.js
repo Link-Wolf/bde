@@ -45,7 +45,15 @@ const DropdownUser = () => {
 	if (img.profile !== blank)
 		return (
 			<div>
-				<a href={"/me"}>
+				<a
+					onClick={() => {
+						localStorage.setItem(
+							"toRedirectLogin",
+							window.location
+						);
+					}}
+					href={"/me"}
+				>
 					<img
 						src={img.profile !== blank ? img.profile : img.login}
 					/>
