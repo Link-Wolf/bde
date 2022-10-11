@@ -5,6 +5,7 @@ import {
 	PayPalButtons,
 	usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import getLabel from "react-select-country-list";
 
 const ContributeButtons = props => {
 	const currency = "EUR";
@@ -68,7 +69,10 @@ const ContributeButtons = props => {
 								studLogin: props.session.login,
 								cost: props.amount,
 								source: data.paymentSource,
-								address: props.address
+								address: `${props.address.address_line_1} ${props.address.address_line_2}`,
+								city: `${props.address.postal_code} ${
+									props.address.city
+								}, ${getLabel(props.address.country_code)}`
 							});
 							fetch(
 								`http://${global.config.api.authority}/order/create`,
@@ -228,36 +232,6 @@ const AddressForm = props => {
 		const name = target.name;
 		tmp[name] = value;
 		props.setState(tmp);
-	};
-
-	const checkTrueMail = async login => {
-		fetch(`http://${global.config.api.authority}/stud/${login}`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				let tmp = props.addressFormState;
-				if (!data.true_email) {
-					props.setNeedMail(true);
-					tmp.mail = "";
-				} else {
-					tmp.mail = data.true_email;
-				}
-				props.setAddressFormState(tmp);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
 	};
 
 	return (

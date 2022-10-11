@@ -24,8 +24,11 @@ const NoPage = () => {
 			<div className={style.body}>
 				<div className={style.text}>
 					<h1>404</h1>
-					<h2>UwUn't</h2>
-					<h3>Tu t'es perdu dans les ombres.</h3>
+					<h2>Page not found</h2>
+					<h3>
+						La Frégate ne sait pas s'aventurer par là... tu es sur
+						de ton chemin ?
+					</h3>
 				</div>
 				<div
 					className={style.torch}

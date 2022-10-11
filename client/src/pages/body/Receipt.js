@@ -59,7 +59,7 @@ const Receipt = () => {
 				buyer={`${order.stud.lastname.toUpperCase()} ${
 					order.stud.firstname
 				}`}
-				mail={order.stud.email}
+				mail={order.stud.true_email}
 				payement_method={order.source}
 				price={order.cost}
 				item="Contribution"
