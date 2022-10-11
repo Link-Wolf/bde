@@ -1,20 +1,13 @@
 import React, {useState, useEffect} from "react";
-import {Nav} from "react-bootstrap";
-import {Button} from "reactstrap";
-import {
-	CDBSidebar,
-	CDBSidebarContent,
-	CDBSidebarHeader,
-	CDBSidebarMenu,
-	CDBSidebarMenuItem
-} from "cdbreact";
 import useConfirm from "./useConfirm";
+
+import style from "../style/AdminNavbar.module.scss";
+import burger from "../assets/logos/burger.png";
 
 const AdminNavbar = () => {
 	const [session, setSession] = useState({clearance: 0});
+	const [expended, setExpended] = useState(true);
 	const {isConfirmed} = useConfirm();
-	const [headerHeight, setHeaderHeight] = useState(0);
-	const [footerHeight, setFooterHeight] = useState(0);
 	const initDb = async () => {
 		const confirm = await isConfirmed(
 			`Wesh bg, fait pas le con, c'est que pour le debug les gros boutons`
@@ -272,77 +265,60 @@ const AdminNavbar = () => {
 	}, []);
 
 	return (
-		<div
-			style={{
-				display: "flex",
-				height: `80vh`,
-				position: "absolute",
-				left: 0,
-				top: `8vh`
-			}}
-		>
-			<CDBSidebar textColor="#fff" backgroundColor="#151E23">
-				<CDBSidebarHeader>
-					<a
-						href="/admin"
-						className="text-decoration-none"
-						style={{color: "inherit"}}
-					>
-						Admin pannel
+		<div className={style.adminNavbarContainer}>
+			<a
+				id={style.expendButton}
+				onClick={() => {
+					setExpended(!expended);
+				}}
+			>
+				<img src={burger} />
+			</a>
+			{expended && (
+				<>
+					<a href="/admin">
+						<h2>Admin pannel</h2>
 					</a>
-				</CDBSidebarHeader>
-
-				<CDBSidebarContent className="sidebar-content">
-					<CDBSidebarMenu>
-						<Nav.Link href="/admin/students">
-							<CDBSidebarMenuItem>Students</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/events/gestion">
-							<CDBSidebarMenuItem>Events</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/events/subscribtions">
-							<CDBSidebarMenuItem>
-								Inscriptions
-							</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/contributions">
-							<CDBSidebarMenuItem>Cotisations</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/shop">
-							<CDBSidebarMenuItem>Shop</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/logs">
-							<CDBSidebarMenuItem>Logs</CDBSidebarMenuItem>
-						</Nav.Link>
-						<Nav.Link href="/admin/unpaidmanagement">
-							<CDBSidebarMenuItem>
-								Unpaid Management
-							</CDBSidebarMenuItem>
-						</Nav.Link>
-						{session.clearance >= 21 ? (
-							<Nav.Link href="/admin/teammanagement">
-								<CDBSidebarMenuItem>
-									Team Management
-								</CDBSidebarMenuItem>
-							</Nav.Link>
-						) : (
-							<></>
-						)}
-						{session.clearance >= 42 ? (
-							<>
-								<Button color="warning" onClick={initDb}>
-									Init DB
-								</Button>
-								<Button color="danger" onClick={tiniDb}>
-									Yeet DB
-								</Button>
-							</>
-						) : (
-							<></>
-						)}
-					</CDBSidebarMenu>
-				</CDBSidebarContent>
-			</CDBSidebar>
+					<a href="/admin/students">
+						<h3>Students</h3>
+					</a>
+					<a href="/admin/events/gestion">
+						<h3>Events</h3>
+					</a>
+					<a href="/admin/events/subscribtions">
+						<h3>Inscriptions</h3>
+					</a>
+					<a href="/admin/contributions">
+						<h3>Cotisations</h3>
+					</a>
+					<a href="/admin/shop">
+						<h3>Shop</h3>
+					</a>
+					<a href="/admin/logs">
+						<h3>Logs</h3>
+					</a>
+					<a href="/admin/unpaidmanagement">
+						<h3>Unpaid Management</h3>
+					</a>
+					{session.clearance >= 21 ? (
+						<a href="/admin/teammanagement">
+							<h3>Team Management</h3>
+						</a>
+					) : (
+						<></>
+					)}
+					{session.clearance >= 42 && (
+						<div>
+							<button id={style.bigYellowButton} onClick={initDb}>
+								Init DB
+							</button>
+							<button id={style.bigRedButton} onClick={tiniDb}>
+								Yeet DB
+							</button>
+						</div>
+					)}
+				</>
+			)}
 		</div>
 	);
 };
