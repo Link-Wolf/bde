@@ -67,6 +67,25 @@ export class ContributionService {
 		}
 	}
 
+	async findForUserPremium(studLogin: string, requestMaker: string): Promise<Contribution[]> {
+		try {
+			let cont = await this.contributionRepository.find({
+				where: { studLogin: studLogin },
+				order: { begin_date: "DESC" },
+			});
+			if (!cont) {
+				this.logger.warn(`Failed -> Find all contributions for student ${studLogin} : student does not have any contribution`, requestMaker)
+				throw new NotFoundException(`Failed to find all contribution for student ${studLogin} : student ${studLogin} does not have any contribution`)
+			}
+			else
+				this.logger.log(`Got all contributions of student ${studLogin}`, requestMaker)
+			return cont
+		} catch (error) {
+			await this.logger.error(`Failed -> Find all contributions of student ${studLogin} on database (${error})`, requestMaker);
+			throw error
+		}
+	}
+
 	async update(studLogin: string, contribution: any, requestMaker: string): Promise<any> {
 		try {
 			let cont = await this.findLast(studLogin, requestMaker)
