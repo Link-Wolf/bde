@@ -13,6 +13,18 @@ export class Order {
 	})
 	date: Date
 
+	@Column({
+		type: "text",
+		nullable: false
+	})
+	address: string
+
+	@Column({
+		type: "text",
+		nullable: false
+	})
+	city: string
+
 	@Column({ default: false })
 	isCompleted: boolean
 
