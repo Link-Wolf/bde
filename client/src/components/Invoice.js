@@ -53,6 +53,9 @@ class Invoice extends React.Component {
 													<br />
 													{this.props.mail}
 													<br />
+													{this.props.address}
+													<br />
+													{this.props.city}
 												</td>
 											</tr>
 										</tbody>
@@ -66,7 +69,12 @@ class Invoice extends React.Component {
 							</tr>
 
 							<tr className={style.details}>
-								<td>{this.props.payement_method}</td>
+								<td>
+									{this.props.payement_method
+										.charAt(0)
+										.toUpperCase() +
+										this.props.payement_method.slice(1)}
+								</td>
 								<td></td>
 							</tr>
 
@@ -109,6 +117,7 @@ export const Print = React.forwardRef((props, ref) => {
 				<ReactToPrint
 					content={() => ref}
 					trigger={() => <button>Save</button>}
+					documentTitle={`LaFregate_Invoice_${props.id}`}
 				/>
 			</div>
 		</>
