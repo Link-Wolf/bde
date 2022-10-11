@@ -298,7 +298,6 @@ const AddressForm = props => {
 					name="country_code"
 					value={props.state.country_code}
 					onChange={handleChange}
-					defaultValue="FR"
 					disabled={props.validated}
 				>
 					<option value="AF">Afghanistan</option>
@@ -571,6 +570,7 @@ const AddressForm = props => {
 				<input
 					placeholder="Email"
 					name="mail"
+					id="emailField"
 					value={props.state.mail}
 					onChange={handleChange}
 					disabled={props.validated}
@@ -603,6 +603,7 @@ const Contribute = () => {
 		lastname: "lastname",
 		mail: ""
 	});
+	const [fixedAddress, setFixedAddress] = useState();
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/session`, {
@@ -752,9 +753,20 @@ const Contribute = () => {
 							if (
 								addressFormState.postal_code !== "" &&
 								addressFormState.address_line_1 !== "" &&
-								addressFormState.city !== ""
-							)
+								addressFormState.city !== "" &&
+								!(
+									document
+										.getElementById("emailField")
+										.checkValidity() &&
+									addressFormState.mail
+										.split("@")[1]
+										.split(".")[1]
+										.startsWith("42")
+								)
+							) {
 								setValidated(true);
+								setFixedAddress(addressFormState);
+							}
 						}}
 					>
 						Valider
@@ -762,24 +774,24 @@ const Contribute = () => {
 
 					<button
 						onClick={() => {
-							setValidated(false);
+							window.history.back();
 						}}
-						disabled={!validated}
 					>
 						Annuler
 					</button>
-					<div hidden={!validated}>
-						<PayPalScriptProvider options={optionsProvider}>
-							<ContributeButtons
-								amount={amount}
-								session={session}
-								address={addressFormState}
-								setAddress={setAddressFormState}
-								setNeedMail={setNeedMail}
-								needMail={needMail}
-							/>
-						</PayPalScriptProvider>
-					</div>
+					{validated && (
+						<div hidden={!validated}>
+							<PayPalScriptProvider options={optionsProvider}>
+								<ContributeButtons
+									amount={amount}
+									session={session}
+									address={fixedAddress}
+									setNeedMail={setNeedMail}
+									needMail={needMail}
+								/>
+							</PayPalScriptProvider>
+						</div>
+					)}
 					<LegalNote />
 				</div>
 			</div>
