@@ -44,7 +44,9 @@ const Login = () => {
 					});
 			})
 			.then(() => {
-				window.location = "/home";
+				window.location.replace(
+					localStorage.getItem("toRedirectLogin") || "/home"
+				);
 			})
 			.catch(function(error) {
 				console.log(

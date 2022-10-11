@@ -1,0 +1,80 @@
+.adminNavbarContainer {
+	position: absolute;
+	top: 8vh;
+	height: 92vh;
+	left: 0;
+	background-color: #151E23;
+	color: #FFFFFE;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+	a {
+		color: inherit;
+		text-decoration: inherit;
+
+		&#expendButton {
+			img {
+				height: 3vh;
+				width: auto;
+				min-width: 1vw;
+				min-height: 1vw;
+			}
+			text-align: right;
+			margin: 0 0.5vw;
+		}
+	}
+
+	h2 {
+		text-decoration: none;
+		font-size: 3vh;
+		color: #FFFFFE;
+		margin: 0;
+		padding: 1vh 0.5vw;
+	}
+
+	h3 {
+		color: grey;
+		font-size: 2vh;
+		margin: 0;
+		padding: 1.7vh 0.5vw;
+
+		&:hover {
+			color: white;
+			transition: 0.4s;
+		}
+	}
+
+	button {
+		border: none;
+		width: 5vw;
+		min-height: 3vh;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		border-radius: 15px;
+
+		&:hover {
+			transition: 0.5s;
+		}
+
+		&#bigRedButton {
+			color: #FFFFFF;
+			background-color: red;
+
+			&:hover {
+				background-color: #8B0000;
+			}
+		}
+
+		&#bigYellowButton {
+			color: #000000;
+			background-color: yellow;
+
+			&:hover {
+				background-color: #8B8B00;
+				color: #FFFFFF;
+			}
+		}
+	}
+}
