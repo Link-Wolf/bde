@@ -26,7 +26,9 @@ export class Inscription {
 	@PrimaryColumn()
 	eventId: number
 
-	@Column({ default: new Date(Date.now()) })
+	@Column({
+		type: 'timestamptz',
+	})
 	date: Date
 
 	@Column({ default: 0 })
