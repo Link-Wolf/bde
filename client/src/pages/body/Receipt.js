@@ -11,6 +11,39 @@ const Receipt = () => {
 	const param = useParams();
 
 	useEffect(() => {
+		if (session.login == -42) return;
+		fetch(
+			`http://${global.config.api.authority}/stud/${session.login}/mail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(data => {
+				let tmp = order;
+				if (!data || data == "" || data == undefined) {
+					tmp.stud.true_email = "";
+				} else {
+					tmp.stud.true_email = data;
+				}
+				setOrder(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [session, order]);
+
+	useEffect(() => {
 		setLoadSession(true);
 		fetch(`http://${global.config.api.authority}/session`, {
 			credentials: "include"
