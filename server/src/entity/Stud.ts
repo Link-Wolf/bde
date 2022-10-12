@@ -42,6 +42,11 @@ export class Stud {
 	})
 	true_email: string
 
+	@Column({
+		type: 'timestamptz',
+	})
+	joinDate: Date
+
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",

@@ -299,7 +299,8 @@ export class StudService {
 				this.logger.error(`Failed -> Create student ${studDto.login} : student already exist`, requestMaker, true);
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
-			let ret = this.studRepository.save(studDto);
+			const stud = { ...studDto, joinDate: new Date(Date.now()) }
+			let ret = this.studRepository.save(stud);
 			this.logger.log(`Created new student ${studDto.login}`, requestMaker);
 			return ret
 		} catch (error) {

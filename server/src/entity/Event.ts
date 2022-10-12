@@ -72,7 +72,6 @@ export class Event {
 	@Column({
 		type: "timestamptz",
 		nullable: true,
-		default: new Date(Date.now())
 	})
 	available_date: Date
 

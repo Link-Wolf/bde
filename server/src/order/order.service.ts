@@ -67,7 +67,8 @@ export class OrderService {
 			if (await this.orderRepository.findOneBy({ id: body.id }))
 				throw new ConflictException
 					(`Failed -> Create order ${body.id} : order ${body.id} already exists`);
-			let ret = await this.orderRepository.save(body);
+			const order = { ...body, date: new Date(Date.now()) }
+			let ret = await this.orderRepository.save(order);
 			this.logger.log(`Created order ${body.id}`, login)
 			return ret
 		} catch (err) {

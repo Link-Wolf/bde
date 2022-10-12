@@ -109,7 +109,7 @@ export class InscriptionService {
 				this.logger.error(`Failed to save subscription for student ${login} to event ${id} : event ${id} is full`, requestMaker)
 				throw new ConflictException(`Failed to save subscription for student ${login} to event ${id} : event ${id} is full`)
 			}
-			let ret = this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId") VALUES('${login}', ${id})`);
+			let ret = this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId", "date") VALUES('${login}', ${id}, ${new Date(Date.now())})`);
 			this.logger.log(`Saved subscription for student ${login} to event ${id}`, requestMaker);
 			return ret
 		} catch (error) {
