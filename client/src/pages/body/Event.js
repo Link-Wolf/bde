@@ -12,6 +12,13 @@ import locationLogo from "../../assets/logos/location.png";
 import nbPlacesLogo from "../../assets/logos/places.png";
 import inscCostLogo from "../../assets/logos/price.png";
 import dateTimeLogo from "../../assets/logos/date.png";
+import isOutsideLogo from "../../assets/logos/outside.svg";
+import conso from "../../assets/logos/consos.svg";
+import sponso from "../../assets/logos/sponso.svg";
+import pool from "../../assets/logos/pool.svg";
+import fadedConso from "../../assets/logos/fadedConsos.svg";
+import fadedSponso from "../../assets/logos/fadedSponso.svg";
+import fadedPool from "../../assets/logos/fadedPool.svg";
 
 const Event = () => {
 	const param = useParams();
@@ -53,14 +60,24 @@ const Event = () => {
 
 	return (
 		<div className={style.eventContainer}>
-			<div>
-				<div>
-					<Thumbnail id={param.id} />
-					<Description duration={duration} dataEvent={dataEvent} />
+			<div className={`${style.flex} ${style.row}`}>
+				<Thumbnail id={param.id} />
+				<div
+					id={style.titleDuration}
+					className={`${style.flex} ${style.col}`}
+				>
+					<Title dataEvent={dataEvent} />
+					<DateDuration dataEvent={dataEvent} duration={duration} />
 				</div>
-				<SubscribeButton dataEvent={dataEvent} />
 			</div>
-			<EventAlbum id={param.id} />
+			<div className={`${style.flex} ${style.row}`}>
+				<Details duration={duration} dataEvent={dataEvent} />
+				<Description dataEvent={dataEvent} />
+				<div className={`${style.flex} ${style.col}`} id={style.sub}>
+					<Price dataEvent={dataEvent} />
+					<SubscribeButton dataEvent={dataEvent} />
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -96,42 +113,74 @@ const Thumbnail = param => {
 	}, [param.id]);
 
 	return (
-		<div className={style.thumbailContainer}>
+		<div id={style.thumbnail}>
 			<img src={thumbnail} />
 		</div>
 	);
 };
 
 const Description = param => {
+	return <div id={style.desc}>{param.dataEvent.desc}</div>;
+};
+
+const Title = param => {
+	return <h1>{param.dataEvent.name}</h1>;
+};
+
+const DateDuration = param => {
+	if (!param.dataEvent.begin_date) return;
 	return (
-		<div className={style.descriptionContainer}>
-			<div>
-				<h1>{param.dataEvent.name}</h1>
-				<h2>
-					<img src={dateTimeLogo} />
-					{new Date(
-						param.dataEvent.begin_date
-					).toLocaleDateString()},{" "}
-					{new Date(param.dataEvent.begin_date).toLocaleTimeString()}
-				</h2>
-				<h2>
-					<img src={nbPlacesLogo} />
-					{param.dataEvent.subbed} / {param.dataEvent.nb_places}
-				</h2>
-				<h2>
-					<img src={locationLogo} />
-					{param.dataEvent.place}
-				</h2>
-				<h2>
-					<img src={inscCostLogo} />
-					{param.dataEvent.cost}
-				</h2>
-				<h2>
-					<img src={durationLogo} />
-					{param.duration}
-				</h2>
-			</div>
-			<p>{param.dataEvent.desc}</p>
+		<h2>
+			<img src={dateTimeLogo} />
+			{new Intl.DateTimeFormat("fr-FR", {
+				day: "numeric",
+				month: "short",
+				year: "numeric",
+				hour: "2-digit",
+				minute: "2-digit"
+			}).format(new Date(param.dataEvent.begin_date))}{" "}
+			— <img src={durationLogo} />
+			{param.duration}
+		</h2>
+	);
+};
+
+const Price = param => {
+	return (
+		<h2>
+			<img src={inscCostLogo} />
+			{param.dataEvent.cost}
+		</h2>
+	);
+};
+
+const Details = param => {
+	return (
+		<div id={style.details} className={`${style.flex} ${style.col}`}>
+			<h2>
+				<img src={nbPlacesLogo} />
+				{param.dataEvent.subbed} / {param.dataEvent.nb_places}
+			</h2>
+			<h2>
+				<img src={locationLogo} />
+				{param.dataEvent.place}
+			</h2>
+			<h2>
+				<img src={isOutsideLogo} />
+				{param.dataEvent.isOutside ? "Dehors" : "À l'école"}
+			</h2>
+			<h2>
+				<img src={param.dataEvent.consos ? conso : fadedConso} />
+				{param.dataEvent.consos ? "Consommations" : ""}
+			</h2>
+			<h2>
+				<img src={param.dataEvent.forPool ? pool : fadedPool} />
+				{param.dataEvent.forPool ? "Acceuil des piscineux" : ""}
+			</h2>
+			<h2>
+				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
+				{param.dataEvent.sponso ? "Sponsorisê" : ""}
+			</h2>
 		</div>
 	);
 };
@@ -278,15 +327,13 @@ const SubscribeButton = param => {
 	}, [param]);
 
 	return (
-		<div className={style.buttonContainer}>
-			<button
-				disabled={isSubbed === undefined}
-				onClick={isSubbed ? unsub : sub}
-				className={style.subButton}
-			>
-				{isSubbed ? "Desinscription" : "Inscription"}
-			</button>
-		</div>
+		<button
+			disabled={isSubbed === undefined}
+			onClick={isSubbed ? unsub : sub}
+			className={style.subButton}
+		>
+			{isSubbed ? "Desinscription" : "Inscription"}
+		</button>
 	);
 };
 
