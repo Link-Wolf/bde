@@ -5,7 +5,7 @@ export class Logs {
 	@PrimaryGeneratedColumn({ type: "integer" })
 	id: number
 
-	@CreateDateColumn({ type: "timestamptz", default: new Date(Date.now()) })
+	@CreateDateColumn({ type: "timestamptz" })
 	date: Date
 
 	@Column({ default: false })

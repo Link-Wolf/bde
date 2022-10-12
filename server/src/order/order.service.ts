@@ -90,7 +90,8 @@ export class OrderService {
 				cipher.update(body.address),
 				cipher.final(),
 			]).toJSON().data);
-			let ret = await this.orderRepository.save(tmp);
+			const order = { ...tmp, date: new Date(Date.now()) }
+			let ret = await this.orderRepository.save(order);
 			this.logger.log(`Created order ${body.id}`, login)
 			return ret
 		} catch (err) {
