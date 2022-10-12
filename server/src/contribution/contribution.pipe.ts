@@ -15,9 +15,9 @@ export class ContributionDtoPipe implements PipeTransform {
 		if ("cost" in value)
 			ret.cost = Number(value.cost)
 		if ("studLogin" in value) {
-			ret.stud = await this.studService.findOne(value.studLogin, "42")
+			ret.stud = await this.studService.findOne(value.studLogin, "INTERNAL")
 			if (!ret.stud) {
-				await this.logger.error(`Failed to update contribution, student ${value.studLogin} does not exist`, "42");
+				await this.logger.error(`Failed to update contribution, student ${value.studLogin} does not exist`, "INTERNAL");
 				throw new NotFoundException(`Failed to update contribution, student ${value.studLogin} does not exist`);
 			}
 		}

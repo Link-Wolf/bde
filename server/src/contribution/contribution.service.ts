@@ -73,15 +73,9 @@ export class ContributionService {
 				where: { studLogin: studLogin },
 				order: { begin_date: "DESC" },
 			});
-			if (!cont) {
-				this.logger.warn(`Failed -> Find all contributions for student ${studLogin} : student does not have any contribution`, requestMaker)
-				throw new NotFoundException(`Failed to find all contribution for student ${studLogin} : student ${studLogin} does not have any contribution`)
-			}
-			else
-				this.logger.log(`Got all contributions of student ${studLogin}`, requestMaker)
 			return cont
 		} catch (error) {
-			await this.logger.error(`Failed -> Find all contributions of student ${studLogin} on database (${error})`, requestMaker);
+			await this.logger.error(`Failed -> Find for user premium of student ${studLogin} on database (${error})`, requestMaker);
 			throw error
 		}
 	}

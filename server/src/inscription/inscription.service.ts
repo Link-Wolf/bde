@@ -95,7 +95,7 @@ export class InscriptionService {
 			if (event.nb_places !== -42 && (subbed >= event.nb_places || (await (async () => {
 				let status = false
 				let data =
-					await this.contributionService.findForUser(stud.login, "42");
+					await this.contributionService.findForUser(stud.login, requestMaker);
 				data.forEach((item) => {
 					if (
 						new Date(item.end_date) > new Date(Date.now()) &&
