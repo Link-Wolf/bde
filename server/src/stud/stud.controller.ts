@@ -28,6 +28,12 @@ export class StudController {
 		return this.studService.findOne(login, session.login);
 	}
 
+	@Get(':login/mail')
+	@UseGuards(new ClearanceGuard(5))
+	getMail(@Session() session: Record<string, any>, @Param('login') login: string): Promise<Stud> {
+		return this.studService.getMail(login, session.login);
+	}
+
 	@Get('admin/direction')
 	@UseGuards(new ClearanceGuard(11))
 	findDirection(@Session() session: Record<string, any>): Promise<Stud[]> {

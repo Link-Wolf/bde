@@ -701,7 +701,7 @@ const Contribute = () => {
 	}, [session]);
 
 	const checkTrueMail = async login => {
-		fetch(`http://${global.config.api.authority}/stud/${login}`, {
+		fetch(`http://${global.config.api.authority}/stud/${login}/mail`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -710,15 +710,15 @@ const Contribute = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.json();
+				return response.text();
 			})
 			.then(data => {
 				let tmp = addressFormState;
-				if (!data.true_email) {
+				if (!data || data == "" || data == undefined) {
 					setNeedMail(true);
 					tmp.mail = "";
 				} else {
-					tmp.mail = data.true_email;
+					tmp.mail = data;
 				}
 				setAddressFormState(tmp);
 			})

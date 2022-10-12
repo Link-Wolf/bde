@@ -6,7 +6,8 @@ import { LoggerService } from '../logger/logger.service';
 import { ContributionService } from '../contribution/contribution.service';
 import { StudService } from '../stud/stud.service';
 import { OrderDto } from './order.dto';
-const { contributionTime } = require('../../config.json')
+import { createDecipheriv, createCipheriv } from 'crypto';
+const { contributionTime, _aes } = require('../../config.json')
 
 @Injectable()
 export class OrderService {
@@ -31,7 +32,6 @@ export class OrderService {
 				where: { studLogin: login, isCompleted: true },
 				order: { date: "DESC" }
 			});
-			console.log(order)
 			if (!order)
 				this.logger.warn(
 					`Failed -> Find orders for student ${login}: orders for ${login} does not exist`, login)
@@ -47,13 +47,25 @@ export class OrderService {
 	async findOne(id: string, login: any) {
 		try {
 			let order = await this.orderRepository.findOneBy({ id: id });
-			if (!order)
+			if (!order) {
 				this.logger.warn(
 					`Failed -> Find order with id ${id}: order ${id} does not exist`, login)
+				throw new NotFoundException(`Failed to find order with id ${id}: order ${id} does not exist`)
+			}
 			else
 				this.logger.log(`Got order ${id}`, login);
 			let stud = await this.studService.findOne(order.studLogin, login)
-			order.stud = stud
+			order.stud = stud;
+			let decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			order.address = Buffer.concat([
+				decipher.update(Buffer.from(JSON.parse(order.address))),
+				decipher.final(),
+			]).toString();
+			decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			order.city = Buffer.concat([
+				decipher.update(Buffer.from(JSON.parse(order.city))),
+				decipher.final(),
+			]).toString();
 			return order
 		}
 		catch (err) {
@@ -67,7 +79,18 @@ export class OrderService {
 			if (await this.orderRepository.findOneBy({ id: body.id }))
 				throw new ConflictException
 					(`Failed -> Create order ${body.id} : order ${body.id} already exists`);
-			let ret = await this.orderRepository.save(body);
+			let cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			const tmp = body
+			tmp.city = JSON.stringify(Buffer.concat([
+				cipher.update(body.city),
+				cipher.final(),
+			]).toJSON().data);
+			cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			tmp.address = JSON.stringify(Buffer.concat([
+				cipher.update(body.address),
+				cipher.final(),
+			]).toJSON().data);
+			let ret = await this.orderRepository.save(tmp);
 			this.logger.log(`Created order ${body.id}`, login)
 			return ret
 		} catch (err) {

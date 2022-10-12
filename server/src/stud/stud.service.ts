@@ -11,7 +11,10 @@ import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 import { ContributionService } from '../contribution/contribution.service';
-const { _dbpw } = require('../../config.json')
+const { _dbpw, _aes } = require('../../config.json')
+
+import { createCipheriv, createDecipheriv } from 'crypto';
+import { promisify } from 'util';
 
 @Injectable()
 export class StudService {
@@ -164,7 +167,6 @@ export class StudService {
 		try {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud) {
-				// throw new NotFoundException(`Failed to find student ${login}`)
 				this.logger.warn(`Failed -> Find student with login ${login} : student does not exist`, requestMaker)
 				return stud
 			}
@@ -195,12 +197,45 @@ export class StudService {
 		}
 	}
 
+	async getMail(login: string, requestMaker: string): Promise<any> {
+		try {
+			let stud = await this.studRepository.findOneBy({ login: login });
+			if (!stud) {
+				this.logger.warn(`Failed -> Get mail of student ${login} : student does not exist`, requestMaker)
+				throw new NotFoundException(`Failed to get mail of student ${login} : student does not exist`);
+			}
+			let tmp_mail = stud.true_email;
+			if (!tmp_mail) {
+				this.logger.warn(`Failed -> Get mail of student ${login} : student does not have real mail`, requestMaker)
+				return tmp_mail
+			}
+			this.logger.log(`Got mail of student ${login}`, requestMaker);
+			const decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			const mail = Buffer.concat([
+				decipher.update(Buffer.from(JSON.parse(tmp_mail))),
+				decipher.final(),
+			]);
+			return mail.toString()
+		}
+		catch (error) {
+			this.logger.error(`Failed -> Got mail of student ${login} on database (${error})`, requestMaker)
+			throw error;
+		}
+	}
+
 	async update(login: string, studData: any, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
 				this.logger.error(`Failed -> Update student with login ${login} : student does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
+			}
+			if ("true_email" in studData) {
+				const cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+				studData.true_email = JSON.stringify(Buffer.concat([
+					cipher.update(studData.true_email),
+					cipher.final(),
+				]).toJSON().data);
 			}
 			let ret = await this.studRepository.update(login, studData);
 			this.logger.warn(`Updated student ${login}`, requestMaker);

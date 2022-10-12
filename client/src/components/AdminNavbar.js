@@ -20,8 +20,9 @@ const AdminNavbar = () => {
 			body: JSON.stringify({
 				login: "iCARUS",
 				firstname: "###",
-				lastname: "azphael",
+				lastname: "Azphael",
 				email: "iCARUS@student.42mulhouse.fr",
+				true_email: "###.###@gmail.com",
 				isDirection: true,
 				clearance: 42
 			})
@@ -33,9 +34,10 @@ const AdminNavbar = () => {
 					credentials: "include",
 					body: JSON.stringify({
 						login: "Link",
-						firstname: "xxxxx",
-						lastname: "xxxxxx",
+						firstname: "Xxxxx",
+						lastname: "Xxxxxx",
 						email: "Link@student.42mulhouse.fr",
+						true_email: "pro.xxxxxx.xxxxx@gmail.com",
 						isDirection: true,
 						clearance: 42
 					})
@@ -48,9 +50,10 @@ const AdminNavbar = () => {
 					credentials: "include",
 					body: JSON.stringify({
 						login: "yoyostud",
-						firstname: "yohan",
-						lastname: "tollet",
+						firstname: "Yohan",
+						lastname: "Thollet",
 						email: "",
+						true_email: "",
 						isDirection: false,
 						clearance: 7
 					})
@@ -62,10 +65,10 @@ const AdminNavbar = () => {
 					method: "POST",
 					credentials: "include",
 					body: JSON.stringify({
-						name: "42 Mulhouse Hoodie Premium+",
-						cost: 40,
+						name: "Hoodie Premium+ Noir brodé",
+						cost: 42,
 						desc:
-							"Oui bonjour c'est le sweet ultra premium qu'a l'air sympa",
+							"Hoodie noir doublé avec logo 42 Mulhouse brodé sur le coeur en petit et en grand dans le dos",
 						available: true
 					})
 				});
@@ -76,9 +79,9 @@ const AdminNavbar = () => {
 					method: "POST",
 					credentials: "include",
 					body: JSON.stringify({
-						name: "Casquette noire BDE",
-						cost: 10,
-						desc: "Casquette avec logo 42 mulhouse",
+						name: "Casquette noire brodée",
+						cost: 9.99,
+						desc: "Casquette noire avec logo 42 Mulhouse brodé",
 						available: true
 					})
 				});
@@ -89,10 +92,11 @@ const AdminNavbar = () => {
 					method: "POST",
 					credentials: "include",
 					body: JSON.stringify({
-						name: "42 Mulhouse T Shirt noir",
-						cost: 15,
-						desc: "T shirt noir 42 mulhouse logo coeur + pas dos",
-						available: 0
+						name: "T-shirt noir brodé",
+						cost: 13.99,
+						desc:
+							"T-shirt noir avec logo 42 Mulhouse brodé sur le coeur",
+						available: false
 					})
 				});
 			})
