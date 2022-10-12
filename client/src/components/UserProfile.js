@@ -48,6 +48,7 @@ const UserProfile = options => {
 
 	//Stud
 	useEffect(() => {
+		if (options.login === undefined || options.login === "") return;
 		fetch(`http://${global.config.api.authority}/stud/${options.login}`, {
 			credentials: "include"
 		})
@@ -73,44 +74,45 @@ const UserProfile = options => {
 
 	//Contribs
 	useEffect(() => {
-		if (options.login !== "")
-			fetch(
-				`http://${global.config.api.authority}/contribution/${options.login}`,
-				{
-					credentials: "include"
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					return response.json();
-				})
-				.then(data => {
-					setDataContrib(data);
-					data.forEach((item, i) => {
-						if (
-							new Date(item.end_date) > Date.now() &&
-							new Date(item.begin_date) <= Date.now()
-						) {
-							setContributionStatus(true);
-						}
-					});
-					setCountContrib(Math.ceil(data.length / PER_PAGE));
-					viewDataContrib.updateData(data);
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+		if (options.login === undefined || options.login === "") return;
+		fetch(
+			`http://${global.config.api.authority}/contribution/${options.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setDataContrib(data);
+				data.forEach((item, i) => {
+					if (
+						new Date(item.end_date) > Date.now() &&
+						new Date(item.begin_date) <= Date.now()
+					) {
+						setContributionStatus(true);
+					}
 				});
+				setCountContrib(Math.ceil(data.length / PER_PAGE));
+				viewDataContrib.updateData(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}, [options]);
 
 	//Events
 	useEffect(() => {
+		if (dataStud.login === undefined || dataStud.login === "") return;
 		const requestOptions = {
 			method: "get",
 			credentials: "include"
@@ -142,6 +144,7 @@ const UserProfile = options => {
 
 	//Orders
 	useEffect(() => {
+		if (dataStud.login === undefined || dataStud.login === "") return;
 		const requestOptions = {
 			method: "get",
 			credentials: "include"

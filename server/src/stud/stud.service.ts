@@ -35,7 +35,7 @@ export class StudService {
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
-					let data = await this.contributionService.findForUser(stud.login, "42");
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
 					data.forEach((item) => {
 						if (new Date(item.end_date) > new Date(Date.now()) &&
 							new Date(item.begin_date) <= new Date(Date.now())) {
@@ -63,7 +63,7 @@ export class StudService {
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
-					let data = await this.contributionService.findForUser(stud.login, "42");
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
 					data.forEach((item) => {
 						if (new Date(item.end_date) > new Date(Date.now()) &&
 							new Date(item.begin_date) <= new Date(Date.now())) {
@@ -90,7 +90,7 @@ export class StudService {
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
-					let data = await this.contributionService.findForUser(stud.login, "42");
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
 					data.forEach((item) => {
 						if (new Date(item.end_date) > new Date(Date.now()) &&
 							new Date(item.begin_date) <= new Date(Date.now())) {
@@ -117,7 +117,7 @@ export class StudService {
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
-					let data = await this.contributionService.findForUser(stud.login, "42");
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
 					data.forEach((item) => {
 						if (new Date(item.end_date) > new Date(Date.now()) &&
 							new Date(item.begin_date) <= new Date(Date.now())) {
@@ -144,7 +144,7 @@ export class StudService {
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
-					let data = await this.contributionService.findForUser(stud.login, "42");
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
 					data.forEach((item) => {
 						if (new Date(item.end_date) > new Date(Date.now()) &&
 							new Date(item.begin_date) <= new Date(Date.now())) {
@@ -177,7 +177,7 @@ export class StudService {
 					await (async () => {
 						let status = false
 						let data =
-							await this.contributionService.findForUser(stud.login, "42");
+							await this.contributionService.findForUserPremium(stud.login, requestMaker);
 						data.forEach((item) => {
 							if (
 								new Date(item.end_date) > new Date(Date.now()) &&
@@ -334,7 +334,8 @@ export class StudService {
 				this.logger.error(`Failed -> Create student ${studDto.login} : student already exist`, requestMaker, true);
 				throw new ConflictException(`Failed to create student ${studDto.login} : student already exists`);
 			}
-			let ret = this.studRepository.save(studDto);
+			const stud = { ...studDto, joinDate: new Date(Date.now()) }
+			let ret = this.studRepository.save(stud);
 			this.logger.log(`Created new student ${studDto.login}`, requestMaker);
 			return ret
 		} catch (error) {

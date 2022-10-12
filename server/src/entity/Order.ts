@@ -9,7 +9,6 @@ export class Order {
 
 	@Column({
 		type: 'timestamptz',
-		default: new Date(Date.now())
 	})
 	date: Date
 
