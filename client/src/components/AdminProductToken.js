@@ -161,7 +161,11 @@ const AdminProductToken = param => {
 	}, [update, param]);
 
 	const deleteProduct = async () => {
-		if (true) {
+		if (
+			await isConfirmed(
+				`Desire tu supprimer le goodies ${param.data.name}`
+			)
+		) {
 			await fetch(
 				`http://${global.config.api.authority}/goodies/${param.data.id}`,
 				{

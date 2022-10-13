@@ -65,30 +65,28 @@ const AdminEventToken = param => {
 		if (
 			await isConfirmed(`Desire tu supprimer l'event ${param.data.name}`)
 		) {
-			if (true) {
-				await fetch(
-					`http://${global.config.api.authority}/event/${param.data.id}`,
-					{
-						method: "DELETE",
-						credentials: "include"
-					}
-				)
-					.then(response => {
-						if (!response.ok) {
-							throw new Error(
-								`This is an HTTP error:
+			await fetch(
+				`http://${global.config.api.authority}/event/${param.data.id}`,
+				{
+					method: "DELETE",
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error:
 					 The status is ${response.status}`
-							);
-						}
-						window.location.reload();
-					})
-					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
 						);
-					});
-			}
+					}
+					window.location.reload();
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
 		}
 	};
 
