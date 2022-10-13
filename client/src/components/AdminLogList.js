@@ -8,8 +8,10 @@ const AdminLogList = param => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const viewData = usePagination(data, PER_PAGE);
+	const [load, setLoad] = useState(false);
 
 	useEffect(() => {
+		setLoad(true);
 		fetch(`http://${global.config.api.authority}/admin/logs/get`, {
 			credentials: "include",
 			method: "post",
@@ -30,6 +32,7 @@ const AdminLogList = param => {
 				setData(actualData);
 				setCount(Math.ceil(actualData.length / PER_PAGE));
 				viewData.updateData(actualData);
+				setLoad(false);
 			})
 			.catch(function(error) {
 				console.log(
@@ -43,7 +46,9 @@ const AdminLogList = param => {
 		viewData.jump(p);
 	};
 
-	return data.length ? (
+	return load ? (
+		<div>Chargement ...</div>
+	) : data.length ? (
 		<div>
 			<Pagination count={count} page={page} onChange={handleChangePage} />
 			{data.length > 0 && (
