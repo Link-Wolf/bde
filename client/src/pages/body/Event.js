@@ -66,11 +66,23 @@ const Event = () => {
 					id={style.titleDuration}
 					className={`${style.flex} ${style.col}`}
 				>
-					<Title dataEvent={dataEvent} />
-					<DateDuration dataEvent={dataEvent} duration={duration} />
+					<div id={style.title}>
+						<div />
+						<Title dataEvent={dataEvent} />
+						<div />
+					</div>
+					<div id={style.duration}>
+						<DateDuration
+							dataEvent={dataEvent}
+							duration={duration}
+						/>{" "}
+					</div>
 				</div>
 			</div>
-			<div className={`${style.flex} ${style.row}`}>
+			<div
+				className={`${style.flex} ${style.row}`}
+				id={style.bottomWrapper}
+			>
 				<Details duration={duration} dataEvent={dataEvent} />
 				<Description dataEvent={dataEvent} />
 				<div className={`${style.flex} ${style.col}`} id={style.sub}>
@@ -131,15 +143,17 @@ const DateDuration = param => {
 	if (!param.dataEvent.begin_date) return;
 	return (
 		<h2>
-			<img id={style.test} src={dateTimeLogo} />
-			{new Intl.DateTimeFormat("fr-FR", {
-				day: "numeric",
-				month: "short",
-				year: "numeric",
-				hour: "2-digit",
-				minute: "2-digit"
-			}).format(new Date(param.dataEvent.begin_date))}{" "}
-			— <img src={durationLogo} />
+			<span id={style.dateDurationSeparator}>
+				<img src={dateTimeLogo} />
+				{new Intl.DateTimeFormat("fr-FR", {
+					day: "numeric",
+					month: "short",
+					year: "numeric",
+					hour: "2-digit",
+					minute: "2-digit"
+				}).format(new Date(param.dataEvent.begin_date))}{" "}
+			</span>
+			<img src={durationLogo} />
 			{param.duration}
 		</h2>
 	);
