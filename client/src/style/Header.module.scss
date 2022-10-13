@@ -6,7 +6,7 @@
 	color: #D2D8DA;
 	height: 8vh;
 	font-family: Futura;
-	// font-weight: bolder;
+
 	a {
 		color: inherit;
 		text-decoration: inherit;
@@ -26,6 +26,14 @@
 
 	.leftContainer {
 		display: flex;
+	}
+
+	.admin {
+		display: none;
+	}
+
+	.burger {
+		display: inline;
 	}
 
 	.rightContainer {
@@ -55,8 +63,8 @@
 	}
 
 	.buttonContainer {
-		display: flex;
 		gap: 0.1vw;
+		display: none;
 	}
 
 	.logoContainer {
@@ -73,6 +81,21 @@
 			color: #D2D8DA;
 			margin: 0;
 			padding: 1vh 0.5vw;
+		}
+	}
+}
+@media screen and (min-width: 100vh) {
+	.container {
+		.buttonContainer {
+			display: flex;
+		}
+
+		.admin {
+			display: inline;
+		}
+
+		.burger {
+			display: none;
 		}
 	}
 }
