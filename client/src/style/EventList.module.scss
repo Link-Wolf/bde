@@ -1,0 +1,32 @@
+.scroll_container_40vw {
+	width: 30vw;
+	margin: 10vw;
+	border: red;
+	max-height: 40vw;
+	overflow-y: scroll;
+}
+
+div {
+	&#filter {
+		transition: 0.5s;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: rgba(0,0,0,0.5);
+		backdrop-filter: blur(50px);
+		width: 100vw;
+		height: 100vh;
+		animation: 0.5s linear 0s blurAppear;
+	}
+}
+@keyframes blurAppear {
+	0% {
+		backdrop-filter: blur(0px);
+		background: rgba(0,0,0,0);
+	}
+
+	100% {
+		backdrop-filter: blur(50px);
+		background: rgba(0,0,0,0.5);
+	}
+}

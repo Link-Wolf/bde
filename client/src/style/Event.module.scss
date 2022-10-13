@@ -1,3 +1,18 @@
+.eventContainer {
+	position: absolute;
+	top: 10vh;
+	left: 20vw;
+	animation: 0.5s linear 0s eventAppear;
+}
+@keyframes eventAppear {
+	0% {
+		left: 100vw;
+	}
+
+	100% {
+		left: 20vw;
+	}
+}
 @media screen and (min-width: 100vh) {
 	.eventContainer {
 		--unit-size: 5vmax;
