@@ -106,6 +106,9 @@
 			button {
 				width: calc(var(--unit-size) * 3.5);
 				height: calc(var(--unit-size) * .5);
+				font-size: calc(var(--unit-size) * .3);
+				border: none;
+				padding: none;
 				text-align: center;
 			}
 		}
