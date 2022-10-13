@@ -23,7 +23,6 @@ function Header() {
 				) {
 					return true;
 				}
-
 				if (
 					isShrunk &&
 					document.body.scrollTop < 4 &&
@@ -31,7 +30,6 @@ function Header() {
 				) {
 					return false;
 				}
-
 				return isShrunk;
 			});
 		};

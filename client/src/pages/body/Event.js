@@ -98,6 +98,7 @@ const Thumbnail = param => {
 	const [thumbnail, setThumnail] = useState(null);
 
 	useEffect(() => {
+		if (param.id === undefined || param.id === "" || !param.id) return;
 		fetch(
 			`http://${global.config.api.authority}/event/${param.id}/thumbnail`,
 			{
@@ -316,6 +317,7 @@ const SubscribeButton = param => {
 	}, []);
 
 	useEffect(() => {
+		if (param === undefined || param === "" || !param) return;
 		fetch(
 			`http://${global.config.api.authority}/inscription/${param.dataEvent.id}/isSubbed`,
 			{
@@ -355,6 +357,7 @@ const EventAlbum = param => {
 	const [photos, setPhotos] = useState([]);
 
 	useEffect(() => {
+		if (param.id === undefined || param.id === "" || !param.id) return;
 		fetch(`http://${global.config.api.authority}/event/${param.id}/album`, {
 			credentials: "include"
 		})

@@ -50,6 +50,7 @@ const ClearanceChecker = data => {
 	}, []);
 
 	useEffect(() => {
+		if (data === undefined || data === "" || !data) return;
 		if (clearance !== -42) {
 			if (clearance < data.securityLevel)
 				setRet(<> {data.unauthorized} </>);
