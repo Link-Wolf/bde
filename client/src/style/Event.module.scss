@@ -42,8 +42,7 @@
 
 				h1 {
 					height: calc(var(--unit-size) * 2.5);
-					font-size: calc(var(--unit-size) * 1.5);
-					overflow: scroll;
+					font-size: calc(var(--unit-size) * 1.2);
 				}
 
 				img {
@@ -182,6 +181,7 @@
 			&#details {
 				margin-left: -2vw;
 				background-color: #3B7E9C;
+				color: #D2D8DA;
 				width: 90vw;
 				display: flex;
 				flex-wrap: wrap;
@@ -213,6 +213,7 @@
 				margin-left: -2vw;
 				width: 90vw;
 				margin-bottom: 5vw;
+				font-size: 5vw;
 			}
 
 			&#sub {
