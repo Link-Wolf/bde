@@ -1,5 +1,4 @@
 import {useState, useEffect, React} from "react";
-import {useParams} from "react-router-dom";
 import {NotificationManager} from "react-notifications";
 import useConfirm from "../../components/useConfirm";
 import b64ToBlob from "b64-to-blob";
@@ -20,10 +19,10 @@ import fadedConso from "../../assets/logos/fadedConsos.svg";
 import fadedSponso from "../../assets/logos/fadedSponso.svg";
 import fadedPool from "../../assets/logos/fadedPool.svg";
 
-const Event = () => {
-	const param = useParams();
+const Event = param => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [duration, setDuration] = useState("Never Ending Fun");
+	const [popUpEvent, setPopUpEvent] = useState(-1);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
