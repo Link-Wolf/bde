@@ -11,7 +11,6 @@ const ConfirmModal = () => {
 				proceed();
 			}
 		};
-
 		window.addEventListener("keydown", handleKeydown);
 		return () => window.removeEventListener("keydown", handleKeydown);
 	}, [proceed, isOpen]);
