@@ -3,7 +3,7 @@
 	justify-content: space-between;
 	padding: 1vh 5vw;
 	background-color: #151E23;
-	color: #FFFFFE;
+	color: #D2D8DA;
 	height: 8vh;
 	font-family: Futura;
 	// font-weight: bolder;
@@ -13,14 +13,14 @@
 	}
 
 	h1 {
-		color: grey;
+		color: #B0BABF;
 		font-size: 2vh;
 		margin: 0;
 		padding: 1.7vh 0.5vw;
 	}
 
 	h1:hover {
-		color: white;
+		color: #D2D8DA;
 		transition: 0.4s;
 	}
 
@@ -42,7 +42,7 @@
 			font-family: Futura;
 
 			h1 {
-				color: #FFFFFE;
+				color: #D2D8DA;
 			}
 
 			img#logout {
@@ -70,7 +70,7 @@
 
 		h1 {
 			font-size: 3vh;
-			color: #FFFFFE;
+			color: #D2D8DA;
 			margin: 0;
 			padding: 1vh 0.5vw;
 		}

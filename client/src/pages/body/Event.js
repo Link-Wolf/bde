@@ -7,11 +7,11 @@ import jszip from "jszip";
 
 import style from "../../style/Event.module.scss";
 
-import durationLogo from "../../assets/logos/time.png";
-import locationLogo from "../../assets/logos/location.png";
-import nbPlacesLogo from "../../assets/logos/places.png";
-import inscCostLogo from "../../assets/logos/price.png";
-import dateTimeLogo from "../../assets/logos/date.png";
+import durationLogo from "../../assets/logos/time.svg";
+import locationLogo from "../../assets/logos/location.svg";
+import nbPlacesLogo from "../../assets/logos/places.svg";
+import inscCostLogo from "../../assets/logos/price.svg";
+import dateTimeLogo from "../../assets/logos/date.svg";
 import isOutsideLogo from "../../assets/logos/outside.svg";
 import conso from "../../assets/logos/consos.svg";
 import sponso from "../../assets/logos/sponso.svg";
@@ -131,7 +131,7 @@ const DateDuration = param => {
 	if (!param.dataEvent.begin_date) return;
 	return (
 		<h2>
-			<img src={dateTimeLogo} />
+			<img id={style.test} src={dateTimeLogo} />
 			{new Intl.DateTimeFormat("fr-FR", {
 				day: "numeric",
 				month: "short",

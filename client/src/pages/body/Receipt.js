@@ -7,11 +7,13 @@ const Receipt = () => {
 	const [loadSession, setLoadSession] = useState(true);
 	const [order, setOrder] = useState({});
 	const [loadOrder, setLoadOrder] = useState(true);
+	const [loadMail, setLoadMail] = useState(true);
 
 	const param = useParams();
 
 	useEffect(() => {
-		if (session.login == -42) return;
+		setLoadMail(true);
+		if (session.login == undefined) return;
 		fetch(
 			`http://${global.config.api.authority}/stud/${session.login}/mail`,
 			{
@@ -34,6 +36,7 @@ const Receipt = () => {
 					tmp.stud.true_email = data;
 				}
 				setOrder(tmp);
+				setLoadMail(false);
 			})
 			.catch(function(error) {
 				console.log(
@@ -64,11 +67,13 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadOrder(true);
+		if (session.login == undefined) return;
 		fetch(`http://${global.config.api.authority}/order/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
+					window.location = "/home";
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
@@ -76,12 +81,14 @@ const Receipt = () => {
 				return response.json();
 			})
 			.then(json => {
+				if (json.stud.login !== session.login && !loadSession)
+					window.location = "/home";
 				setOrder(json);
 				setLoadOrder(false);
 			});
-	}, [param]);
+	}, [param, session]);
 
-	if (loadSession || loadOrder) return <>Loading</>;
+	if (loadSession || loadOrder || loadMail) return <>Loading</>;
 	if (session.login !== order.studLogin) return <Navigate to="/home" />;
 	return (
 		<>
@@ -101,7 +108,6 @@ const Receipt = () => {
 			/>
 		</>
 	);
-	//passer en param du print : id / date / buyer ("NOM Prenom") / mail / payement_method / item / price
 };
 
 export default Receipt;
