@@ -45,15 +45,7 @@ const DropdownUser = () => {
 	if (img.profile !== blank)
 		return (
 			<div>
-				<a
-					onClick={() => {
-						localStorage.setItem(
-							"toRedirectLogin",
-							window.location
-						);
-					}}
-					href={"/me"}
-				>
+				<a href={"/me"}>
 					<img
 						src={img.profile !== blank ? img.profile : img.login}
 					/>
@@ -64,7 +56,12 @@ const DropdownUser = () => {
 			</div>
 		);
 	return (
-		<a href={global.config.intra.redirect}>
+		<a
+			href={global.config.intra.redirect}
+			onClick={() => {
+				localStorage.setItem("toRedirectLogin", window.location);
+			}}
+		>
 			<h1>Login</h1>
 		</a>
 	);
