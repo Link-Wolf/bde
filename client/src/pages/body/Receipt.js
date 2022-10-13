@@ -13,7 +13,7 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadMail(true);
-		if (session.login == -42) return;
+		if (session.login == undefined) return;
 		fetch(
 			`http://${global.config.api.authority}/stud/${session.login}/mail`,
 			{
@@ -67,11 +67,13 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadOrder(true);
+		if (session.login == undefined) return;
 		fetch(`http://${global.config.api.authority}/order/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
 				if (!response.ok) {
+					window.location = "/home";
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
