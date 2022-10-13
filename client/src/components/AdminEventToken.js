@@ -236,6 +236,8 @@ const AdminEventToken = param => {
 	};
 
 	useEffect(() => {
+		if (param.data === undefined || param.data === "" || !param.data)
+			return;
 		let tmp = {...param.data};
 		if (tmp.desc === null) tmp.desc = "";
 		tmp.hasEndDate = param.data.end_date !== null;
@@ -314,6 +316,7 @@ const AdminEventToken = param => {
 	}, [param.data]);
 
 	useEffect(() => {
+		if (param === undefined || param === "" || !param) return;
 		fetch(
 			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
 			{

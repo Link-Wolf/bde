@@ -122,6 +122,8 @@ const AdminProductToken = param => {
 	};
 
 	useEffect(() => {
+		if (param.data === undefined || param.data === "" || !param.data)
+			return;
 		let tmp = {...param.data};
 		tmp.available = param.data.available;
 		setFormState(tmp);
@@ -130,6 +132,7 @@ const AdminProductToken = param => {
 	}, [param.data]);
 
 	useEffect(() => {
+		if (param === undefined || param === "" || !param) return;
 		setUpdate(false);
 		fetch(
 			`http://${global.config.api.authority}/goodies/${param.data.id}/thumbnail`,

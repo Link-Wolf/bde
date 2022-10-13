@@ -63,6 +63,7 @@ const AdminContribToken = param => {
 	};
 
 	useEffect(() => {
+		if (param === undefined || param === "" || !param) return;
 		let tmp = {...param.data};
 		tmp.hasEndDate = param.data.end_date !== null;
 		tmp.end_date = tmp.end_date ? tmp.end_date : tmp.begin_date;
