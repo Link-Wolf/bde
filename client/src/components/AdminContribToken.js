@@ -51,8 +51,6 @@ const AdminContribToken = param => {
 			two_digiter(begin_date.getMonth() + 1) +
 			"-" +
 			two_digiter(begin_date.getDate());
-		// console.log(tmpBody.begin_date);
-		// console.log(tmpBody.end_date);
 		setBodyState(tmpBody);
 		setFormState(tmp);
 	};

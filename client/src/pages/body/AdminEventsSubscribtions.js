@@ -46,7 +46,6 @@ const AdminStudents = () => {
 				"Content-Type": "application/json"
 			}
 		};
-		console.log(`login : ${login}`);
 		fetch(
 			`http://${global.config.api.authority}/inscription/${eventId}/${login}`,
 			requestOptions
@@ -149,7 +148,6 @@ const AdminStudents = () => {
 		if (confirm) {
 			if (toSub !== "") {
 				const check = await checkStud(selectedEvent, toSub, cost);
-				console.log(check);
 				if (check == 1) {
 					NotificationManager.success(
 						`Successfully subscribe ${toSub}`,

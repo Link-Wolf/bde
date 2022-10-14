@@ -155,7 +155,6 @@ const AdminProductToken = param => {
 					type="file"
 					id="thumbnail"
 					onChange={event => {
-						console.log("file :", event.target.files[0]);
 						img.current = event.target.files[0];
 						setSrcImg(URL.createObjectURL(event.target.files[0]));
 					}}

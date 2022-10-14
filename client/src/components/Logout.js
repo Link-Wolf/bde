@@ -31,7 +31,6 @@ const Logout = () => {
 							return response.json();
 						})
 						.then(data => {
-							console.log(data);
 							if (data.clearance === 0) breakLoop();
 						});
 					await new Promise(res => setTimeout(res, 200));
