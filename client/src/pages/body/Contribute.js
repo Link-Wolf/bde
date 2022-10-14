@@ -13,7 +13,6 @@ const ContributeButtons = props => {
 	const [{options}, dispatch] = usePayPalScriptReducer();
 
 	const sendMail = async (date, commande, timestamp, mail) => {
-		console.log(date, commande, timestamp, mail);
 		await emailjs
 			.send(
 				global.config.emailjs.service_id,
@@ -681,7 +680,6 @@ const Contribute = () => {
 			})
 			.then(data => {
 				let tmp = false;
-				console.log(data);
 				data.forEach((item, i) => {
 					if (
 						new Date(item.end_date) > Date.now() &&

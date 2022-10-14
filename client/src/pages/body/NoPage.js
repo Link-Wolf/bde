@@ -2,15 +2,6 @@ import {useState, React} from "react";
 import style from "../../style/NoPage.module.css";
 
 const NoPage = () => {
-	// document.mousemove(function(event) {
-	// 	// document.getElementsByClassName(".torch").forEach(item => {
-	// 	// 	item.css({
-	// 	// 		top: event.pageY,
-	// 	// 		left: event.pageX
-	// 	// 	});
-	// 	// });
-	// 	console.log("mouve");
-	// });
 	const [mouseX, setMouseX] = useState(0);
 	const [mouseY, setMouseY] = useState(0);
 

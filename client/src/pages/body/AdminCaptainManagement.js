@@ -13,7 +13,6 @@ const AdminCaptainManagement = () => {
 	const [update, setUpdate] = useState(false);
 
 	useEffect(() => {
-		console.log("new rounf");
 		setUpdate(false);
 		const requestOptions = {
 			method: "get",

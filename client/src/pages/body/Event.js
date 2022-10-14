@@ -154,7 +154,6 @@ const Price = param => {
 };
 
 const Details = param => {
-	console.log(param.dataEvent.for_pool);
 	return (
 		<ul>
 			<li>
