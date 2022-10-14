@@ -38,19 +38,27 @@ const EventToken = param => {
 				{param.type == "album" ? (
 					<>
 						{new Date(param.event.begin_date).toLocaleDateString()}
-						<a href={`/event/${param.event.id}`}>
+						<p
+							onClick={() => {
+								param.setPopUpEvent(param.event.id);
+							}}
+						>
 							{param.event.name}
-						</a>
+						</p>
 					</>
 				) : (
 					<>
-						<a href={`/event/${param.event.id}`}>
+						<p
+							onClick={() => {
+								param.setPopUpEvent(param.event.id);
+							}}
+						>
 							{param.event.id}
 							{new Date(
 								param.event.begin_date
 							).toLocaleDateString()}{" "}
 							{param.event.name}
-						</a>
+						</p>
 					</>
 				)}
 			</h2>

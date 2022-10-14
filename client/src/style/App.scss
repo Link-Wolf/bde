@@ -1,0 +1,38 @@
+@fontface {
+	font-family: Futura;
+	src: url("../assets/fonts/Futura-Medium-01.ttf") format("truetype");
+	font-weight: normal;
+}
+@fontface {
+	font-family: Futura;
+	src: url("../assets/fonts/Futura-MediumItalic-02.ttf") format("truetype");
+	font-weight: normal;
+	font-style: italic;
+}
+@fontface {
+	font-family: Futura;
+	src: url("../assets/fonts/Futura-Bold-03.ttf") format("truetype");
+	font-weight: bold;
+}
+@fontface {
+	font-family: Futura;
+	src: url("../assets/fonts/Futura-CondensedMedium-04.ttf") format("truetype");
+	font-weight: normal;
+	font-stretch: condensed;
+}
+@fontface {
+	font-family: Futura;
+	src: url("../assets/fonts/Futura-CondensedExtraBold-05.ttf") format("truetype");
+	font-weight: bolder;
+	font-stretch: condensed;
+}
+
+html {
+	--white: #E9ECED;
+	--light-grey: #B0BABF;
+	--dark-grey: #7E9099;
+	--black: #151E23;
+	--primary: #3B7E9C;
+	--primary-light: #5CA1C1;
+	--primary-dark: #224759;
+}

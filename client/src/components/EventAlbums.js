@@ -2,7 +2,7 @@ import {useState, useEffect, React} from "react";
 
 import EventToken from "./EventToken";
 
-import style from "../style/EventList.module.css";
+import style from "../style/EventList.module.scss";
 
 const EventAlbums = param => {
 	const [data, setData] = useState([]);
