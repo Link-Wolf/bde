@@ -100,8 +100,9 @@ const EventList = param => {
 						onClick={() => {
 							setPopUpEvent(-1);
 						}}
-					/>
-					<Event id={popUpEvent} />
+					>
+						<Event id={popUpEvent} />
+					</div>
 				</>
 			)}
 		</>

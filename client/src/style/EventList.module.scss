@@ -8,8 +8,8 @@
 
 div {
 	&#filter {
-		transition: 0.5s;
 		position: absolute;
+		overflow: auto;
 		top: 0;
 		left: 0;
 		background: rgba(0,0,0,0.5);
