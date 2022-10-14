@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import burger from "../assets/logos/burger.png";
 
 import DropdownUser from "../components/DropdownUser";
 
@@ -12,6 +13,7 @@ function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
 	const [isShrunk, setShrunk] = useState(false);
+	const [toggleBurger, setToggleBurger] = useState(false);
 
 	useEffect(() => {
 		const handler = () => {
@@ -99,8 +101,21 @@ function Header() {
 		}, 100);
 	}, []);
 
+	const toggleBurgerMenu = () => {
+		setToggleBurger(!toggleBurger);
+	};
+
 	return (
 		<header className={style.container}>
+			{toggleBurger ? (
+				<div className={style.burger}>
+					{leftButton}
+					{rightButton}
+				</div>
+			) : (
+				<></>
+			)}
+
 			<div className={style.leftContainer}>
 				<div>
 					<a className={style.logoContainer} href="/home">
@@ -115,9 +130,12 @@ function Header() {
 				<div className={style.buttonContainer}>{leftButton}</div>
 			</div>
 			<div className={style.rightContainer}>
-				<div>{rightButton}</div>
+				<div className={style.admin}>{rightButton}</div>
 				<div className={style.dropdownContainer}>
 					<DropdownUser />
+				</div>
+				<div className={style.burger}>
+					<img src={burger} onClick={toggleBurgerMenu} />
 				</div>
 			</div>
 		</header>
