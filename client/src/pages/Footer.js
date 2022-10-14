@@ -39,7 +39,7 @@ function Footer() {
 					<div>
 						{" "}
 						Hosted by{" "}
-						<a href="42mulhouse.fr">
+						<a href="https://www.42mulhouse.fr">
 							<b>42 Mulhouse</b>
 						</a>
 					</div>
