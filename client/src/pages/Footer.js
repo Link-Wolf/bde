@@ -39,9 +39,7 @@ function Footer() {
 					<div>
 						{" "}
 						Hosted by{" "}
-						<a href="https://www.42mulhouse.fr">
-							<b>42 Mulhouse</b>
-						</a>
+						<a href="https://www.42mulhouse.fr">42 Mulhouse</a>
 					</div>
 				</div>
 				<div>© 2022 BDE 42 Mulhouse, tous droits réservés</div>
