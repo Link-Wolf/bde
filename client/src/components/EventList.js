@@ -2,8 +2,10 @@ import {useState, useEffect, React} from "react";
 
 import EventToken from "./EventToken";
 
-import style from "../style/EventList.module.css";
+import style from "../style/EventList.module.scss";
 import grey from "../assets/placeholders/grey.png";
+
+import Event from "../pages/body/Event.js";
 
 import {Placeholder, Title} from "react-bootstrap";
 
@@ -34,6 +36,7 @@ const EventList = param => {
 			</Placeholder>
 		</div>
 	);
+	const [popUpEvent, setPopUpEvent] = useState(-1);
 
 	useEffect(() => {
 		const requestOptions = {
@@ -82,10 +85,26 @@ const EventList = param => {
 			<div className={style.scroll_container_40vw}>
 				{data.map(item => (
 					<li key={item.id}>
-						<EventToken event={item} type="event" />
+						<EventToken
+							setPopUpEvent={setPopUpEvent}
+							event={item}
+							type="event"
+						/>
 					</li>
 				))}
 			</div>
+			{popUpEvent !== -1 && (
+				<>
+					<div
+						id={style.filter}
+						onClick={() => {
+							setPopUpEvent(-1);
+						}}
+					>
+						<Event id={popUpEvent} />
+					</div>
+				</>
+			)}
 		</>
 	);
 };

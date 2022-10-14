@@ -1,5 +1,4 @@
 import {useState, useEffect, React} from "react";
-import {useParams} from "react-router-dom";
 import {NotificationManager} from "react-notifications";
 import useConfirm from "../../components/useConfirm";
 import b64ToBlob from "b64-to-blob";
@@ -20,8 +19,7 @@ import fadedConso from "../../assets/logos/fadedConsos.svg";
 import fadedSponso from "../../assets/logos/fadedSponso.svg";
 import fadedPool from "../../assets/logos/fadedPool.svg";
 
-const Event = () => {
-	const param = useParams();
+const Event = param => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [duration, setDuration] = useState("Never Ending Fun");
 
@@ -60,33 +58,21 @@ const Event = () => {
 
 	return (
 		<div className={style.eventContainer}>
-			<div className={`${style.flex} ${style.row}`}>
+			<div className={style.headerEvent}>
 				<Thumbnail id={param.id} />
-				<div
-					id={style.titleDuration}
-					className={`${style.flex} ${style.col}`}
-				>
-					<div id={style.title}>
-						<div />
-						<Title dataEvent={dataEvent} />
-						<div />
-					</div>
-					<div id={style.duration}>
-						<DateDuration
-							dataEvent={dataEvent}
-							duration={duration}
-						/>{" "}
-					</div>
+				<div>
+					<Title dataEvent={dataEvent} />
+					<DateDuration dataEvent={dataEvent} duration={duration} />
+					<Price dataEvent={dataEvent} />
 				</div>
 			</div>
-			<div
-				className={`${style.flex} ${style.row}`}
-				id={style.bottomWrapper}
-			>
+			<div className={style.bodyEvent}>
 				<Details duration={duration} dataEvent={dataEvent} />
-				<Description dataEvent={dataEvent} />
-				<div className={`${style.flex} ${style.col}`} id={style.sub}>
-					<Price dataEvent={dataEvent} />
+				<div>
+					<div>
+						<Description dataEvent={dataEvent} />
+						<hr />
+					</div>
 					<SubscribeButton dataEvent={dataEvent} />
 				</div>
 			</div>
@@ -125,15 +111,11 @@ const Thumbnail = param => {
 			});
 	}, [param.id]);
 
-	return (
-		<div id={style.thumbnail}>
-			<img src={thumbnail} />
-		</div>
-	);
+	return <img src={thumbnail} />;
 };
 
 const Description = param => {
-	return <div id={style.desc}>{param.dataEvent.desc}</div>;
+	return <p>{param.dataEvent.desc}</p>;
 };
 
 const Title = param => {
@@ -143,8 +125,8 @@ const Title = param => {
 const DateDuration = param => {
 	if (!param.dataEvent.begin_date) return;
 	return (
-		<h2>
-			<span id={style.dateDurationSeparator}>
+		<p>
+			<span id={style.dateSpan}>
 				<img src={dateTimeLogo} />
 				{new Intl.DateTimeFormat("fr-FR", {
 					day: "numeric",
@@ -154,49 +136,52 @@ const DateDuration = param => {
 					minute: "2-digit"
 				}).format(new Date(param.dataEvent.begin_date))}{" "}
 			</span>
-			<img src={durationLogo} />
-			{param.duration}
-		</h2>
+			<span>
+				<img src={durationLogo} />
+				{param.duration}
+			</span>
+		</p>
 	);
 };
 
 const Price = param => {
 	return (
-		<h2>
+		<p>
 			<img src={inscCostLogo} />
 			{param.dataEvent.cost}
-		</h2>
+		</p>
 	);
 };
 
 const Details = param => {
+	console.log(param.dataEvent.for_pool);
 	return (
-		<div id={style.details} className={`${style.flex} ${style.col}`}>
-			<h2>
+		<ul>
+			<li>
 				<img src={nbPlacesLogo} />
 				{param.dataEvent.subbed} / {param.dataEvent.nb_places}
-			</h2>
-			<h2>
+			</li>
+			<li>
 				<img src={locationLogo} />
 				{param.dataEvent.place}
-			</h2>
-			<h2>
+			</li>
+			<li>
 				<img src={isOutsideLogo} />
 				{param.dataEvent.isOutside ? "Dehors" : "À l'école"}
-			</h2>
-			<h2>
+			</li>
+			<li>
 				<img src={param.dataEvent.consos ? conso : fadedConso} />
 				{param.dataEvent.consos ? "Consommations" : ""}
-			</h2>
-			<h2>
-				<img src={param.dataEvent.forPool ? pool : fadedPool} />
-				{param.dataEvent.forPool ? "Acceuil des piscineux" : ""}
-			</h2>
-			<h2>
+			</li>
+			<li>
+				<img src={param.dataEvent.for_pool ? pool : fadedPool} />
+				{param.dataEvent.for_pool ? "Piscneux" : ""}
+			</li>
+			<li>
 				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
 				{param.dataEvent.sponso ? "Sponsorisê" : ""}
-			</h2>
-		</div>
+			</li>
+		</ul>
 	);
 };
 
@@ -350,63 +335,6 @@ const SubscribeButton = param => {
 		>
 			{isSubbed ? "Desinscription" : "Inscription"}
 		</button>
-	);
-};
-
-const EventAlbum = param => {
-	const [photos, setPhotos] = useState([]);
-
-	useEffect(() => {
-		if (param.id === undefined || param.id === "" || !param.id) return;
-		fetch(`http://${global.config.api.authority}/event/${param.id}/album`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.text();
-			})
-			.then(zipAsBase64 => {
-				const blob = b64ToBlob(zipAsBase64, "application/zip");
-				return blob;
-			})
-			.then(arrayBuffer => {
-				jszip.loadAsync(arrayBuffer).then(({files}) => {
-					const mediaFiles = Object.entries(
-						files
-					).filter(([fileName]) => fileName.endsWith(".jpg"));
-
-					if (!mediaFiles.length) {
-						throw new Error("No media files found in archive");
-					}
-
-					mediaFiles.forEach(([, image], i) => {
-						image.async("blob").then(blob => {
-							let tmp = photos;
-							tmp[i] = URL.createObjectURL(blob);
-							setPhotos(tmp);
-						});
-					});
-				});
-			})
-			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
-				);
-			});
-	}, [param.id]);
-
-	return photos.length > 0 ? (
-		<div className={style.albumContainer}>
-			{photos.map((photo, i) => (
-				<img key={i} src={photo} />
-			))}
-		</div>
-	) : (
-		<></>
 	);
 };
 
