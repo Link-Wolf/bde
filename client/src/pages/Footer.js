@@ -34,13 +34,20 @@ function Footer() {
 					/>
 				</a>
 			</div>
-			<div>
+			<div className={style.credits}>
+				<div>
+					<div>
+						{" "}
+						Hosted by{" "}
+						<a href="42mulhouse.fr">
+							<b>42 Mulhouse</b>
+						</a>
+					</div>
+				</div>
 				<div>© 2022 BDE 42 Mulhouse, tous droits réservés</div>
-				<div> HOSTED BY US </div>
-			</div>
-			<div>
-				<a href="/legalthings"> Mentions légales</a>
-				<a href="/contact"> Contact</a>
+				<div>
+					<a href="/legalthings"> Mentions légales</a>
+				</div>
 			</div>
 		</footer>
 	);
