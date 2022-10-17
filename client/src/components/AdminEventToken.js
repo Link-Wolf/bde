@@ -200,7 +200,8 @@ const AdminEventToken = param => {
 				sponso: bodyState.sponso,
 				begin_date: bodyState.begin_date,
 				available_date: bodyState.available_date,
-				end_date: bodyState.hasEndDate ? bodyState.end_date : null
+				end_date: bodyState.hasEndDate ? bodyState.end_date : null,
+				for_pool: bodyState.for_pool
 			});
 			var requestOptions = {
 				method: "PATCH",
