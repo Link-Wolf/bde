@@ -6,7 +6,7 @@ import blank from "../assets/placeholders/tmp_profile.png";
 
 import style from "../style/Header.module.scss";
 
-const DropdownUser = () => {
+const DropdownUser = param => {
 	const [img, setImg] = useState({
 		profile: blank,
 		login: blank,
@@ -46,12 +46,23 @@ const DropdownUser = () => {
 		return (
 			<div>
 				<a href={"/me"}>
-					<img
-						src={img.profile !== blank ? img.profile : img.login}
-					/>
+					{param.mobile ? (
+						<h1> Profile </h1>
+					) : (
+						<img
+							src={
+								img.profile !== blank ? img.profile : img.login
+							}
+						/>
+					)}
 				</a>
+
 				<a href="/log">
-					<img id={style.logout} src={img.logout} height="3vh" />
+					{param.mobile ? (
+						<h1> Logout </h1>
+					) : (
+						<img id={style.logout} src={img.logout} height="3vh" />
+					)}
 				</a>
 			</div>
 		);
