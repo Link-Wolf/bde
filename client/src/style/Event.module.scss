@@ -215,7 +215,7 @@
 @media (max-width: 1000px) {
 	.eventContainer {
 		width: 100vw;
-		padding: 0;
+		padding: 0 0 calc(var(--padding));
 
 		.headerEvent {
 			display: flex;
@@ -249,7 +249,7 @@
 			flex-direction: column;
 
 			ul {
-				margin: 0;
+				margin: calc(var(--padding) * 1) 0;
 				padding: 0;
 				width: 100vw;
 				height: auto;
@@ -257,6 +257,7 @@
 				flex-wrap: wrap;
 
 				li {
+					margin: calc(var(--padding) * 1) 0;
 					width: 33vw;
 					text-align: center;
 
@@ -298,6 +299,7 @@
 						}
 
 						a {
+							margin: calc(var(--padding)) 0;
 							background: none;
 							color: var(--black);
 							border-radius: 10px;
