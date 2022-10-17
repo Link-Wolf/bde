@@ -12,33 +12,6 @@ import bde_logo from "../assets/logos/fregate_white.png";
 function Header() {
 	const [leftButton, setLeftButton] = useState(<></>);
 	const [rightButton, setRightButton] = useState(<></>);
-	const [isShrunk, setShrunk] = useState(false);
-	const [toggleBurger, setToggleBurger] = useState(false);
-
-	useEffect(() => {
-		const handler = () => {
-			setShrunk(isShrunk => {
-				if (
-					!isShrunk &&
-					(document.body.scrollTop > 20 ||
-						document.documentElement.scrollTop > 20)
-				) {
-					return true;
-				}
-				if (
-					isShrunk &&
-					document.body.scrollTop < 4 &&
-					document.documentElement.scrollTop < 4
-				) {
-					return false;
-				}
-				return isShrunk;
-			});
-		};
-
-		window.addEventListener("scroll", handler);
-		return () => window.removeEventListener("scroll", handler);
-	}, []);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -102,26 +75,55 @@ function Header() {
 	}, []);
 
 	const toggleBurgerMenu = () => {
-		setToggleBurger(!toggleBurger);
+		if (document.getElementById(style.burgerMenu).style.left === "0px")
+			document.getElementById(style.burgerMenu).style.left = "100vw";
+		else document.getElementById(style.burgerMenu).style.left = "0";
 	};
 
 	return (
 		<header className={style.container}>
-			{toggleBurger ? (
-				<div className={style.burger}>
-					{leftButton}
-					{rightButton}
+			<div className={`${style.burger}`} id={style.burgerMenu}>
+				<div id={style.x}>
+					<a onClick={toggleBurgerMenu}>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 14 14"
+						>
+							<g>
+								<line
+									x1={13.5}
+									y1={0.5}
+									x2={0.5}
+									y2={13.5}
+									fill="none"
+									stroke="var(--white)"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
+								<line
+									x1={0.5}
+									y1={0.5}
+									x2={13.5}
+									y2={13.5}
+									fill="none"
+									stroke="var(--white)"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								/>
+							</g>
+						</svg>
+					</a>
 				</div>
-			) : (
-				<></>
-			)}
+				{leftButton}
+				{rightButton}
+				<DropdownUser mobile />
+			</div>
 
 			<div className={style.leftContainer}>
 				<div>
 					<a className={style.logoContainer} href="/home">
-						<LazyLoadImage
+						<img
 							src={bde_logo}
-							effect="blur"
 							className="d-inline-block align-top"
 						/>
 						<h1>La Fregate</h1>

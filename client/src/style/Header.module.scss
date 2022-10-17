@@ -62,8 +62,11 @@
 		}
 	}
 
+	.dropdownContainer {
+		display: none;
+	}
+
 	.buttonContainer {
-		gap: 0.1vw;
 		display: none;
 	}
 
@@ -83,6 +86,25 @@
 			padding: 1vh 0.5vw;
 		}
 	}
+
+	#burgerMenu {
+		background: var(--black);
+		position: absolute;
+		left: 100vw;
+		height: 100vh;
+		width: 100vw;
+		transition: 0.5s;
+		text-align: center;
+
+		#x {
+			text-align: right;
+			padding: 10px 60px 0;
+		}
+
+		svg {
+			height: 5vw;
+		}
+	}
 }
 @media screen and (min-width: 100vh) {
 	.container {
@@ -91,6 +113,10 @@
 		}
 
 		.admin {
+			display: inline;
+		}
+
+		.dropdownContainer {
 			display: inline;
 		}
 
