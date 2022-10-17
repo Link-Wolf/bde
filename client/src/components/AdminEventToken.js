@@ -412,7 +412,7 @@ const AdminEventToken = param => {
 						disabled={locked}
 						type="number"
 						min="0"
-						step="0.01"
+						step="1"
 						id="formCost"
 						value={formState.cost}
 						name="cost"
@@ -425,7 +425,7 @@ const AdminEventToken = param => {
 						type="number"
 						min="0"
 						id="formPremiumCost"
-						step="0.01"
+						step="1"
 						name="premium_cost"
 						onChange={handleFormChange}
 						value={formState.premium_cost}
