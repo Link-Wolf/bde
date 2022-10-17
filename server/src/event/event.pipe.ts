@@ -89,10 +89,10 @@ export class EventFilterDtoPipe implements PipeTransform {
 			value.outside = true
 		else
 			value.outside = false
-		if ("sponsorised" in value && value.sponsorised == '1')
-			value.sponsorised = true
+		if ("sponso" in value && value.sponso == '1')
+			value.sponso = true
 		else
-			value.sponsorised = false
+			value.sponso = false
 		if ("asc" in value && value.asc == '1')
 			value.asc = true
 		else

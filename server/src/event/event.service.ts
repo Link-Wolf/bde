@@ -152,8 +152,8 @@ export class EventService {
 					match += ` AND "nb_places" = -42`
 				if (filterDto.outside)
 					match += ` AND "isOutside" = 't'`
-				if (filterDto.sponsorised)
-					match += ` AND "sponsorised" = 't'`
+				if (filterDto.sponso)
+					match += ` AND "sponso" = 't'`
 				if (filterDto.available_date)
 					match += ` AND "available_date" < '${new Date(Date.now()).toLocaleString()}'`
 			}
