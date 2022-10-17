@@ -38,7 +38,7 @@ const AdminProductToken = param => {
 
 	const saveProduct = async () => {
 		const confirm = await isConfirmed(
-			`Desire tu creer ce nouveau produit ?`
+			`Désires tu créer ce nouveau produit ?`
 		);
 		if (confirm) {
 			var myHeaders = new Headers();
@@ -115,7 +115,7 @@ const AdminProductToken = param => {
 	return (
 		<>
 			<Form>
-				<Form.Label>Name : </Form.Label>
+				<Form.Label>Nom : </Form.Label>
 				<Form.Control
 					name="name"
 					type="text"
@@ -146,7 +146,7 @@ const AdminProductToken = param => {
 				€
 				<Form.Switch
 					id="formAvailable"
-					label="Est il dispo"
+					label="Est il disponible"
 					name="available"
 					onChange={handleFormChange}
 					value={formState.available}
@@ -166,10 +166,10 @@ const AdminProductToken = param => {
 					effect="blur"
 				/>
 				<Button type="button" defaultValue={-1} onClick={saveProduct}>
-					Save
+					Enregistrer
 				</Button>
 				<Button type="button" defaultValue={-1} onClick={param.cancel}>
-					Cancel
+					Annuler
 				</Button>
 			</Form>
 		</>

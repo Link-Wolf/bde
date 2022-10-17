@@ -214,7 +214,7 @@ const Details = param => {
 			<li>
 				<img src={param.dataEvent.for_pool ? pool : fadedPool} />
 				<br />
-				{param.dataEvent.for_pool ? "Piscneux" : ""}
+				{param.dataEvent.for_pool ? "Piscineux" : ""}
 			</li>
 			<li>
 				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
@@ -292,7 +292,7 @@ const SubscribeButton = param => {
 		}
 		if (price !== 0) {
 			await isConfirmed(
-				`Contacte un membre du BDE pour te faire rembourser et retirer ton inscription !`
+				`Contacte un membre du BDE pour te faire rembourser et compléter ta désinscription !`
 			);
 			setIsSubbed(true);
 			return;
@@ -380,7 +380,7 @@ const SubscribeButton = param => {
 				onClick={isSubbed ? unsub : sub}
 				className={style.subButton}
 			>
-				{isSubbed ? "Desinscription" : "Inscription"}
+				{isSubbed ? "Désinscription" : "Inscription"}
 			</button>
 		</div>
 	);

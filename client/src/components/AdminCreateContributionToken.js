@@ -177,7 +177,7 @@ const AdminCreateContributionToken = () => {
 					required
 					min={formState.begin_date}
 				/>
-				<Button onClick={saveNewContrib}> Save </Button>
+				<Button onClick={saveNewContrib}> Enregistrer </Button>
 			</form>
 		</>
 	);

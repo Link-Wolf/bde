@@ -183,7 +183,7 @@ const AdminCreateEventToken = param => {
 	return (
 		<>
 			<Form id="createEventForm">
-				<Form.Label>Name : </Form.Label>
+				<Form.Label>Nom : </Form.Label>
 				<Form.Control
 					name="name"
 					type="text"
@@ -219,7 +219,7 @@ const AdminCreateEventToken = param => {
 					checked={formState.hasEndDate}
 					onChange={handleFormChange}
 				/>
-				<Form.Label>Date de dispo : </Form.Label>
+				<Form.Label>Date de disponibilité : </Form.Label>
 				<Form.Control
 					id="formEndDate"
 					name="available_date"
@@ -238,7 +238,7 @@ const AdminCreateEventToken = param => {
 				<Form.Control
 					type="number"
 					min="0"
-					step="0.01"
+					step="1"
 					id="formCost"
 					value={formState.cost}
 					name="cost"
@@ -250,12 +250,12 @@ const AdminCreateEventToken = param => {
 					type="number"
 					min="0"
 					id="formPremiumCost"
-					step="0.01"
+					step="1"
 					name="premium_cost"
 					onChange={handleFormChange}
 					value={formState.premium_cost}
 				/>
-				€ )<Form.Label>Places : </Form.Label>
+				€ )<Form.Label>Nombre de places : </Form.Label>
 				{" ? / "}
 				<Form.Control
 					type="number"
@@ -265,7 +265,9 @@ const AdminCreateEventToken = param => {
 					onChange={handleFormChange}
 					value={formState.nb_places}
 				/>
-				<Form.Label>Places Reservées : </Form.Label>
+				<Form.Label>
+					Nombre de places réservées aux cotisés :{" "}
+				</Form.Label>
 				{" ? / "}
 				<Form.Control
 					type="number"
@@ -286,28 +288,28 @@ const AdminCreateEventToken = param => {
 				/>
 				<Form.Switch
 					id="formIsOutside"
-					label="Outside"
+					label="À l'extérieur de 42"
 					name="isOutside"
 					onChange={handleFormChange}
 					value={formState.isOutside}
 				/>
 				<Form.Switch
 					id="formSponso"
-					label="Sponsorised"
+					label="Sponsorisé"
 					name="sponso"
 					onChange={handleFormChange}
 					value={formState.sponso}
 				/>
 				<Form.Switch
 					id="formConsos"
-					label="Consommation"
+					label="Consommations"
 					name="consos"
 					onChange={handleFormChange}
 					value={formState.consos}
 				/>
 				<Form.Switch
 					id="formForPool"
-					label="Pour les piscineux"
+					label="Ouvert aux piscineux"
 					name="for_pool"
 					onChange={handleFormChange}
 					value={formState.for_pool}
@@ -327,10 +329,10 @@ const AdminCreateEventToken = param => {
 					effect="blur"
 				/>
 				<Button type="button" defaultValue={-1} onClick={saveEvent}>
-					Save
+					Enregistrer
 				</Button>
 				<Button type="button" defaultValue={-1} onClick={param.cancel}>
-					Cancel
+					Annuler
 				</Button>
 			</Form>
 		</>

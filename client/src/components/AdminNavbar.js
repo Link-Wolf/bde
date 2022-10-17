@@ -283,13 +283,13 @@ const AdminNavbar = () => {
 			{expended && (
 				<>
 					<a href="/admin">
-						<h2>Admin pannel</h2>
+						<h2>Pannel d'administration</h2>
 					</a>
 					<a href="/admin/students">
 						<h3>Students</h3>
 					</a>
 					<a href="/admin/events/gestion">
-						<h3>Events</h3>
+						<h3>Évènements</h3>
 					</a>
 					<a href="/admin/events/subscribtions">
 						<h3>Inscriptions</h3>
@@ -298,17 +298,17 @@ const AdminNavbar = () => {
 						<h3>Cotisations</h3>
 					</a>
 					<a href="/admin/shop">
-						<h3>Shop</h3>
+						<h3>Produits</h3>
 					</a>
 					<a href="/admin/logs">
 						<h3>Logs</h3>
 					</a>
 					<a href="/admin/unpaidmanagement">
-						<h3>Unpaid Management</h3>
+						<h3>Gestion des volontaires</h3>
 					</a>
 					{session.clearance >= 21 ? (
 						<a href="/admin/teammanagement">
-							<h3>Team Management</h3>
+							<h3>Gestion du bureau</h3>
 						</a>
 					) : (
 						<></>
