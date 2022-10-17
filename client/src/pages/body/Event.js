@@ -22,6 +22,7 @@ import fadedPool from "../../assets/logos/fadedPool.svg";
 const Event = param => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [duration, setDuration] = useState("Never Ending Fun");
+	const [isPremium, setIsPremium] = useState(undefined);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
@@ -63,7 +64,6 @@ const Event = param => {
 				<div>
 					<Title dataEvent={dataEvent} />
 					<DateDuration dataEvent={dataEvent} duration={duration} />
-					<Price dataEvent={dataEvent} />
 				</div>
 			</div>
 			<div className={style.bodyEvent}>
@@ -73,7 +73,13 @@ const Event = param => {
 						<Description dataEvent={dataEvent} />
 						<hr />
 					</div>
-					<SubscribeButton dataEvent={dataEvent} />
+					<div>
+						<Price dataEvent={dataEvent} isPremium={isPremium} />
+						<SubscribeButton
+							dataEvent={dataEvent}
+							setIsPremium={setIsPremium}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -125,8 +131,8 @@ const Title = param => {
 const DateDuration = param => {
 	if (!param.dataEvent.begin_date) return;
 	return (
-		<p>
-			<span id={style.dateSpan}>
+		<div>
+			<div>
 				<img src={dateTimeLogo} />
 				{new Intl.DateTimeFormat("fr-FR", {
 					day: "numeric",
@@ -135,21 +141,46 @@ const DateDuration = param => {
 					hour: "2-digit",
 					minute: "2-digit"
 				}).format(new Date(param.dataEvent.begin_date))}{" "}
-			</span>
-			<span>
+			</div>
+			<div>
 				<img src={durationLogo} />
 				{param.duration}
-			</span>
-		</p>
+			</div>
+		</div>
 	);
 };
 
 const Price = param => {
+	console.log(param);
 	return (
-		<p>
-			<img src={inscCostLogo} />
-			{param.dataEvent.cost}
-		</p>
+		<>
+			<div>
+				{!param.isPremium && (
+					<a>
+						<div>
+							Classique
+							<img src={inscCostLogo} />
+						</div>
+						{param.dataEvent.cost},00
+					</a>
+				)}
+				{(param.isPremium || param.dataEvent.cost !== 0) && (
+					<a
+						className={!param.isPremium ? style.no : style.yes}
+						href="/contribute"
+					>
+						<div>
+							Prilivège
+							<img src={inscCostLogo} />
+						</div>
+
+						{param.dataEvent.premium_cost != 0
+							? param.dataEvent.premium_cost
+							: "Gratuit"}
+					</a>
+				)}
+			</div>
+		</>
 	);
 };
 
@@ -293,6 +324,7 @@ const SubscribeButton = param => {
 			})
 			.then(data => {
 				setStud(data);
+				param.setIsPremium(data.isPremium);
 			})
 			.catch(function(error) {
 				console.log(
@@ -328,13 +360,16 @@ const SubscribeButton = param => {
 	}, [param]);
 
 	return (
-		<button
-			disabled={isSubbed === undefined}
-			onClick={isSubbed ? unsub : sub}
-			className={style.subButton}
-		>
-			{isSubbed ? "Desinscription" : "Inscription"}
-		</button>
+		<div>
+			<div />
+			<button
+				disabled={isSubbed === undefined}
+				onClick={isSubbed ? unsub : sub}
+				className={style.subButton}
+			>
+				{isSubbed ? "Desinscription" : "Inscription"}
+			</button>
+		</div>
 	);
 };
 
