@@ -125,19 +125,41 @@ const Album = param => {
 
 const Description = param => {
 	const [product, setProduct] = useState({
-		name: "Bocal",
-		price: 42.42,
+		name: "█ █ █ █ ",
+		cost: 42,
 		available: true,
-		desc:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies dui vitae orci elementum volutpat. Quisque et nisi efficitur, ullamcorper purus ac, rutrum mi. Morbi dictum pulvinar nibh, non euismod nisl fermentum in. Nulla eros lectus, porta nec orci et, sollicitudin ultrices mi. Maecenas quis erat blandit, rutrum sapien ut, auctor ipsum. Vivamus imperdiet id sapien eget convallis. Nulla accumsan erat lorem, blandit malesuada magna elementum ac. Sed nec libero bibendum, blandit ipsum in, rutrum augue. Donec et dolor dui. Nulla facilisi. Praesent elementum purus vitae enim rutrum, at laoreet lacus ultrices. "
+		desc: "█ █ █ █ "
 	});
+
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/goodies/${param.id}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(d => {
+				console.log(d);
+				setProduct(d);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, [param.id]);
 
 	return (
 		<div className={style.description}>
 			<h1>{product.name}</h1>
 			<p>{product.desc}</p>
 			<ul>
-				<li>Prix: {product.price}</li>
+				<li>Prix: {product.cost.toFixed(2)}</li>
 				<li>
 					{product.available
 						? "Disponible dès maintenant auprès d'un·e membre de la Frégate!"
