@@ -1,16 +1,14 @@
-import {useState, useEffect, React} from "react";
+import {useState, useRef, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 import ProductList from "../../components/ProductList";
 
 import style from "../../style/Product.module.scss";
 
-import placeHolder1 from "../../assets/placeholders/abel.png";
-import placeHolder2 from "../../assets/placeholders/imane.png";
-import placeHolder3 from "../../assets/placeholders/caroline.png";
-import placeHolder4 from "../../assets/placeholders/yohan.png";
+import load from "../../assets/animations/gear_clockwise.gif";
 
 const Product = () => {
 	const params = useParams();
@@ -30,15 +28,12 @@ const Product = () => {
 };
 
 const Album = param => {
-	const [album, setAlbum] = useState([
-		placeHolder1,
-		placeHolder2,
-		placeHolder3,
-		placeHolder4
-	]);
+	const [album, setAlbum] = useState([load]);
 	const [displayedImage, setDisplayedImage] = useState(0);
+	const [refAlbum, setRefAlbum] = useState(0);
 
 	useEffect(() => {
+		if (param.id == undefined || !param.id) return;
 		fetch(
 			`http://${global.config.api.authority}/goodies/${param.id}/album`,
 			{
@@ -57,22 +52,31 @@ const Album = param => {
 				const blob = b64ToBlob(zipAsBase64, "application/zip");
 				return blob;
 			})
-			.then(arrayBuffer => {
-				jszip.loadAsync(arrayBuffer).then(({files}) => {
+			.then(async arrayBuffer => {
+				await jszip.loadAsync(arrayBuffer).then(({files}) => {
 					const mediaFiles = Object.entries(
 						files
-					).filter(([fileName]) => fileName.endsWith(".jpg"));
+					).filter(([fileName]) => fileName.endsWith(""));
+					console.log("media", mediaFiles);
 
 					if (!mediaFiles.length) {
 						throw new Error("No media files found in archive");
 					}
 
-					mediaFiles.forEach(([, image], i) => {
-						image.async("blob").then(blob => {
-							let tmp = album;
-							tmp[i] = URL.createObjectURL(blob);
-							setAlbum(tmp);
-						});
+					mediaFiles.forEach(async ([, image], i) => {
+						await image
+							.async("blob")
+							.then(blob => {
+								let tmp = album;
+								tmp[i] = URL.createObjectURL(blob);
+								console.log("image " + i, tmp[i]);
+
+								setAlbum(tmp);
+							})
+							.then(async () => {
+								await new Promise(res => setTimeout(res, 200));
+								setRefAlbum(refAlbum + 1);
+							});
 					});
 				});
 			})
@@ -81,24 +85,40 @@ const Album = param => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, []);
+	}, [param.id]);
 
 	return (
 		<div className={style.album}>
 			<ul>
-				{album.map((image, i) => (
-					<li key={i}>
-						<a
-							onClick={() => {
-								setDisplayedImage(i);
-							}}
-						>
-							<img className={style.thumbnail} src={image} />
-						</a>
-					</li>
-				))}
+				{album.length && refAlbum ? (
+					album.map((image, i) => (
+						<li key={i}>
+							<a
+								onClick={() => {
+									setDisplayedImage(i);
+								}}
+							>
+								<LazyLoadImage
+									height="auto"
+									className={style.thumbnail}
+									src={image}
+									width="auto"
+									effect="blur"
+								/>
+							</a>
+						</li>
+					))
+				) : (
+					<></>
+				)}
 			</ul>
-			<img className={style.cover} src={album[displayedImage]} />
+			<LazyLoadImage
+				height="auto"
+				className={style.cover}
+				src={album[displayedImage]}
+				width="auto"
+				effect="blur"
+			/>
 		</div>
 	);
 };
