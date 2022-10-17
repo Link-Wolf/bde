@@ -24,9 +24,9 @@ const Mutiny = () => {
 				})
 				.then(() => {
 					NotificationManager.success(
-						`Successfully give the tricorn to ${selectedUser}`,
+						`Passation de pouvoir effectuée vers ${selectedUser}`,
 						"Validation",
-						3000
+						5000
 					);
 				})
 				.catch(function(error) {

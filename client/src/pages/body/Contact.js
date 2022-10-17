@@ -60,9 +60,9 @@ const Contact = () => {
 			!document.getElementById("emailField").checkValidity()
 		) {
 			NotificationManager.error(
-				"Please fill up all fields",
+				"Veuillez remplir tous les champs",
 				"Erreur",
-				3000
+				5000
 			);
 			return;
 		}
@@ -111,7 +111,7 @@ const Contact = () => {
 			})
 			.then(() => {
 				NotificationManager.success(
-					"Couriel bien envoyé",
+					"Votre message a bien été envoyé",
 					"Success",
 					5000
 				);
