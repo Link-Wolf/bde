@@ -76,6 +76,7 @@ const Event = param => {
 					<div>
 						<Price dataEvent={dataEvent} isPremium={isPremium} />
 						<SubscribeButton
+							closeEvent={param.closeEvent}
 							dataEvent={dataEvent}
 							setIsPremium={setIsPremium}
 						/>
@@ -159,6 +160,7 @@ const Price = param => {
 	return (
 		<>
 			<div>
+				<div />
 				{!param.isPremium && (
 					<a>
 						<div>
@@ -183,6 +185,7 @@ const Price = param => {
 							: "Gratuit"}
 					</a>
 				)}
+				<div />
 			</div>
 		</>
 	);
@@ -374,7 +377,7 @@ const SubscribeButton = param => {
 
 	return (
 		<div>
-			<div />
+			<button onClick={param.closeEvent}>Fermer</button>
 			<button
 				disabled={isSubbed === undefined}
 				onClick={isSubbed ? unsub : sub}
