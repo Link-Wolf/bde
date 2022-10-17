@@ -230,11 +230,12 @@
 }
 @media (max-width: 1000px) {
 	.eventContainer {
-		width: 100vw;
+		width: 94vw;
 		padding: 0 0 calc(var(--padding));
 
 		.headerEvent {
 			display: flex;
+			width: 94vw;
 			flex-direction: column;
 			height: auto;
 			padding: 0;
@@ -243,8 +244,8 @@
 			.thumbnail {
 				padding: 0;
 				margin: 0;
-				width: 100vw;
-				height: 100vw;
+				width: 94vw;
+				height: 94vw;
 
 				img {
 					margin: 0;
@@ -254,10 +255,41 @@
 				}
 			}
 
+			div {
+				h1 {
+					left: 0;
+					top: 0;
+				}
+
+				div {
+					padding: 0;
+					left: 0;
+					top: 0;
+
+					div {
+						padding: 0;
+
+						&:nth-of-type(1) {
+							top: 0;
+						}
+
+						&:nth-of-type(2) {
+							top: 0;
+						}
+					}
+				}
+			}
+
 			.titleHeader {
+				h1 {
+					font-size: 25px;
+				}
+				position: static !important;
 				background: rgba(92, 161, 193, .5);
-				margin: -100vw 0 0;
-				padding: 50vw 0 0;
+				margin: -94vw 0 0;
+				padding: 0;
+				height: 94vw;
+				width: 94vw;
 			}
 		}
 
