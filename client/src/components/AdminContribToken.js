@@ -93,7 +93,7 @@ const AdminContribToken = param => {
 	const saveContrib = async () => {
 		if (
 			await isConfirmed(
-				`Desire tu modifier la cotisation de ${param.data.studLogin}`
+				`Désires tu modifier la cotisation de ${param.data.studLogin} ?`
 			)
 		) {
 			if (
@@ -199,7 +199,7 @@ const AdminContribToken = param => {
 						defaultValue={param.index}
 						onClick={switchLock}
 					>
-						Edit
+						Modifier
 					</Button>
 				) : (
 					<Button
@@ -207,7 +207,7 @@ const AdminContribToken = param => {
 						defaultValue={param.index}
 						onClick={saveContrib}
 					>
-						Save
+						Enregistrer
 					</Button>
 				)}
 			</form>

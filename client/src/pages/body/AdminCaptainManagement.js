@@ -136,7 +136,7 @@ const AdminCaptainManagement = () => {
 								</button>
 							</li>
 					  ))
-					: "Le Bureau est vide"}
+					: "Le Bureau de direction est vide"}
 				<Mutiny />
 			</div>
 		</div>

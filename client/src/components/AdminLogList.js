@@ -68,7 +68,9 @@ const AdminLogList = param => {
 			<Pagination count={count} page={page} onChange={handleChangePage} />
 		</div>
 	) : (
-		<div>No logs available for this filters</div>
+		<div>
+			Aucun logs disponibles correspondants aux filtres sélectionnés
+		</div>
 	);
 };
 
