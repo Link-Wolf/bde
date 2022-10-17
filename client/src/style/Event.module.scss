@@ -144,7 +144,6 @@
 				}
 
 				&:nth-of-type(2) {
-					margin: calc(var(--padding) * 1) 0 0;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
@@ -154,6 +153,7 @@
 						display: flex;
 						flex-direction: column;
 						font-family: monospace;
+						justify-content: center;
 
 						&:nth-of-type(1) {
 							width: 350px;
@@ -175,7 +175,7 @@
 								background: var(none);
 								display: inline;
 								padding: 5px 10px;
-								margin: 0 5px 0 0;
+								margin: 0;
 								border-radius: 10px;
 								font-size: calc(var(--details-font-size) / 1);
 
