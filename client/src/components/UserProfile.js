@@ -3,6 +3,7 @@ import {useState, useEffect} from "react";
 import QRCode from "react-qr-code";
 import {Navigate} from "react-router-dom";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {Button} from "reactstrap";
 import usePagination from "./Pagination";
@@ -30,6 +31,7 @@ const UserProfile = options => {
 	const viewDataOrder = usePagination(dataOrder, PER_PAGE);
 	const [contributionStatus, setContributionStatus] = useState(false);
 	const [nav, setNav] = useState(<></>);
+	const [trueMail, setTrueMail] = useState("");
 
 	const handleChangePageContrib = (e, p) => {
 		setPageContrib(p);
@@ -71,6 +73,69 @@ const UserProfile = options => {
 				);
 			});
 	}, [options]);
+
+	useEffect(() => {
+		if (options.login === undefined || options.login === "") return;
+		fetch(
+			`http://${global.config.api.authority}/stud/${options.login}/mail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					setNav(<Navigate to="/home" />);
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(data => {
+				setTrueMail(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [options]);
+
+	const handleMailChange = event => {
+		setTrueMail(event.target.value);
+	};
+
+	const saveMail = async () => {
+		if (trueMail !== "") {
+			await fetch(
+				`http://${global.config.api.authority}/stud/${options.login}`,
+				{
+					credentials: "include",
+					method: "PATCH",
+					body: JSON.stringify({
+						true_email: trueMail
+					}),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+		}
+	};
 
 	//Contribs
 	useEffect(() => {
@@ -181,13 +246,23 @@ const UserProfile = options => {
 				<div style={{display: "flex"}}>
 					<LazyLoadImage
 						height="100px"
-						src={`https://cdn.intra.42.fr/users/${dataStud.login}.jpg`}
+						src={
+							dataStud.login === undefined
+								? ""
+								: `https://cdn.intra.42.fr/users/${dataStud.login}.jpg`
+						}
 						width="auto"
 						effect="blur"
 					/>
 					<div>
-						<h1>{dataStud.login}</h1>
-						<h2>{`${dataStud.firstname} ${dataStud.lastname}`}</h2>
+						<h1>
+							{dataStud.login === undefined ? "" : dataStud.login}
+						</h1>
+						<h2>
+							{dataStud.login === undefined
+								? ""
+								: `${dataStud.firstname} ${dataStud.lastname}`}
+						</h2>
 					</div>
 					<a
 						href={`http://${window.location.host}/profile/${dataStud.login}`}
@@ -224,6 +299,54 @@ const UserProfile = options => {
 						</Button>
 					) : (
 						""
+					)}
+				</div>
+				<div>
+					{!dataStud.true_email ? (
+						<></>
+					) : (
+						<>
+							Mon email :
+							<input
+								type="email"
+								name="trueMail"
+								id="emailField"
+								value={trueMail}
+								onChange={handleMailChange}
+							/>
+							<button
+								onClick={() => {
+									if (
+										!(
+											document
+												.getElementById("emailField")
+												.checkValidity() &&
+											document
+												.getElementById("emailField")
+												.value.split("@")[1]
+												.split(".")[1]
+												.startsWith("42")
+										)
+									) {
+										if (
+											document.getElementById(
+												"emailField"
+											).value !== trueMail
+										)
+											saveMail();
+										else {
+											NotificationManager.warning(
+												"Mail déjà enregistré à cette valeur",
+												"Warning",
+												3000
+											);
+										}
+									}
+								}}
+							>
+								Sauvegarder
+							</button>
+						</>
 					)}
 				</div>
 				<div style={{display: "flex"}}>
