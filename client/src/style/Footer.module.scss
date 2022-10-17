@@ -1,6 +1,6 @@
 .footer {
 	background-color: #151E23;
-	color: #FFFFFE;
+	color: var(--white);
 	width: 100%;
 	text-align: center;
 	height: 12vh;
@@ -18,5 +18,16 @@
 
 	div * {
 		margin: 0 0.1vw;
+	}
+}
+
+.credits {
+	a {
+		text-decoration: inherit;
+		color: var(--primary-light);
+
+		&:hover {
+			color: var(--primary);
+		}
 	}
 }
