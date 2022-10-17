@@ -55,17 +55,17 @@ const AdminCreateContributionToken = () => {
 	const saveNewContrib = async () => {
 		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
 			NotificationManager.error(
-				"End_date must be after begin_date",
+				"La date de début doit précéder la date de fin",
 				"Erreur",
-				3000
+				5000
 			);
 			return;
 		}
 		if (!userList.some(i => i.login.includes(formState.studLogin))) {
 			NotificationManager.error(
-				"Student not in database",
+				`Le student ${formState.studLogin} n'existe pas`,
 				"Erreur",
-				3000
+				5000
 			);
 			return;
 		}
@@ -83,18 +83,18 @@ const AdminCreateContributionToken = () => {
 			.then(response => {
 				if (!response.ok) {
 					NotificationManager.error(
-						"Could not create that contribution, check your inputs",
+						"Impossible de créer la contribution, ERR:30903",
 						"Erreur",
-						3000
+						5000
 					);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
 				NotificationManager.success(
-					"New contribution successfully added",
+					`Nouvelle contributon créée pour ${bodyState.studLogin}`,
 					"Validation",
-					3000
+					5000
 				);
 			})
 			.then(() => {

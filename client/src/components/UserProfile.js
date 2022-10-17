@@ -337,8 +337,8 @@ const UserProfile = options => {
 										else {
 											NotificationManager.warning(
 												"Mail déjà enregistré à cette valeur",
-												"Warning",
-												3000
+												"Attention",
+												5000
 											);
 										}
 									}
