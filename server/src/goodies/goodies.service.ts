@@ -45,8 +45,8 @@ export class GoodiesService {
 		try {
 			const goodies = await this.goodiesRepository.findOneById(id);
 			if (!goodies || !fs.existsSync(`assets/album/goodies/${id}`)) {
-				this.logger.error(`Failed -> Get album of googies ${id} : googies doesn't exist or does not have an album`, login);
-				throw new NotFoundException(`Failed to get album of googies ${id}`)
+				this.logger.error(`Failed -> Get album of goodies ${id} : goodies doesn't exist or does not have an album`, login);
+				throw new NotFoundException(`Failed to get album of goodies ${id}`)
 			}
 			const addFilesFromDirectoryToZip =
 				(directoryPath = `assets/album/goodies/${id}`, zip: JSZip) => {
@@ -67,16 +67,16 @@ export class GoodiesService {
 					});
 				};
 
-			const directoryPath = `assets/album/googies/${id}`
+			const directoryPath = `assets/album/goodies/${id}`
 			const zip = new JSZip();
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
 			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
-			this.logger.log(`Got album of googies ${id}`, login);
+			this.logger.log(`Got album of goodies ${id}`, login);
 
 			return zipAsBase64;
 		} catch (error) {
-			this.logger.error(`Failed -> Get album of googies ${id} on database (${error})`, login);
+			this.logger.error(`Failed -> Get album of goodies ${id} on database (${error})`, login);
 			throw error
 		}
 	}
