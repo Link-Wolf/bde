@@ -108,7 +108,7 @@ const AdminCaptainManagement = () => {
 								</button>
 							</li>
 					  ))
-					: "On a pas de unpaid helpers"}
+					: "Aucun volontaire"}
 			</div>
 		</div>
 	);

@@ -77,7 +77,7 @@ const AdminProductToken = param => {
 	const saveProduct = async () => {
 		if (
 			await isConfirmed(
-				`Desire tu modifier le goodies ${param.data.name} ?`
+				`Désires tu modifier le produit ${param.data.name} ?`
 			)
 		) {
 			var myHeaders = new Headers();
@@ -163,7 +163,7 @@ const AdminProductToken = param => {
 	const deleteProduct = async () => {
 		if (
 			await isConfirmed(
-				`Desire tu supprimer le goodies ${param.data.name}`
+				`Désires tu supprimer le produit ${param.data.name}`
 			)
 		) {
 			await fetch(
@@ -199,7 +199,7 @@ const AdminProductToken = param => {
 			<Accordion.Body>
 				{" "}
 				<Form>
-					<Form.Label>Name : </Form.Label>
+					<Form.Label>Nom : </Form.Label>
 					<Form.Control
 						disabled={locked}
 						name="name"
@@ -234,7 +234,7 @@ const AdminProductToken = param => {
 					<Form.Switch
 						disabled={locked}
 						id="formAvailable"
-						label="Est dispo"
+						label="Disponible"
 						name="available"
 						onChange={handleFormChange}
 						checked={formState.available}
@@ -263,7 +263,7 @@ const AdminProductToken = param => {
 							defaultValue={param.index}
 							onClick={switchLock}
 						>
-							Edit
+							Modifier
 						</Button>
 					) : (
 						<Button
@@ -272,14 +272,14 @@ const AdminProductToken = param => {
 							defaultValue={param.index}
 							onClick={saveProduct}
 						>
-							Save
+							Enregistrer
 						</Button>
 					)}
 					<Button color="secondary" type="reset" disabled={locked}>
-						Reset
+						Réinitialiser
 					</Button>
 					<Button color="danger" onClick={deleteProduct}>
-						Delete
+						Supprimer
 					</Button>
 				</Form>
 			</Accordion.Body>

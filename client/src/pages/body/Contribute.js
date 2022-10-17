@@ -188,7 +188,7 @@ const LegalNote = () => {
 	return (
 		<p>
 			En validant la commande et en procédant au paiement, je reconnais
-			avoir pris connaissance et j'accepte les{" "}
+			avoir pris connaissance et accepté les{" "}
 			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
 				conditions générales de vente{" "}
 			</a>{" "}
@@ -202,7 +202,7 @@ const CommandRecap = props => {
 		<table>
 			<thead>
 				<tr>
-					<th colSpan={3}>Resumé de la commande</th>
+					<th colSpan={3}>Résumé de la commande</th>
 				</tr>
 				<tr>
 					<th colSpan={2}>Produit</th>
@@ -211,7 +211,7 @@ const CommandRecap = props => {
 			</thead>
 			<tbody>
 				<tr>
-					<td colSpan={2}>Contribution de {props.time} mois</td>
+					<td colSpan={2}>Cotisation de {props.time} mois</td>
 					<td>{props.amount}€</td>
 				</tr>
 			</tbody>
@@ -242,14 +242,14 @@ const AddressForm = props => {
 		<form>
 			<div>
 				<input
-					placeholder="Prenom"
+					placeholder="Prénom"
 					name="firstname"
 					value={props.state.firstname}
 					onChange={handleChange}
 					disabled
 				/>
 				<input
-					placeholder="Nom"
+					placeholder="Nom de famille"
 					name="lastname"
 					value={props.state.lastname}
 					onChange={handleChange}
@@ -266,7 +266,7 @@ const AddressForm = props => {
 					required
 				/>
 				<input
-					placeholder="Complement d'addresse (optionel)"
+					placeholder="Complément d'addresse (optionel)"
 					name="address_line_2"
 					value={props.state.address_line_2}
 					onChange={handleChange}
@@ -292,6 +292,7 @@ const AddressForm = props => {
 				/>
 			</div>
 			<div>
+				Pays
 				<select
 					id="country"
 					name="country_code"

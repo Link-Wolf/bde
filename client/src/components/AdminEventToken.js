@@ -63,7 +63,9 @@ const AdminEventToken = param => {
 
 	const deleteEvent = async () => {
 		if (
-			await isConfirmed(`Desire tu supprimer l'event ${param.data.name}`)
+			await isConfirmed(
+				`Désires tu supprimer l'évènement ${param.data.name}`
+			)
 		) {
 			await fetch(
 				`http://${global.config.api.authority}/event/${param.data.id}`,
@@ -183,7 +185,9 @@ const AdminEventToken = param => {
 			return;
 
 		if (
-			await isConfirmed(`Desire tu modifier l'event ${param.data.name}`)
+			await isConfirmed(
+				`Désires tu modifier l'évènement ${param.data.name}`
+			)
 		) {
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
@@ -350,7 +354,7 @@ const AdminEventToken = param => {
 			<Accordion.Body>
 				{" "}
 				<Form id={`updateEventForm${param.eventKey}`}>
-					<Form.Label>Name : </Form.Label>
+					<Form.Label>Nom : </Form.Label>
 					<Form.Control
 						disabled={locked}
 						name="name"
@@ -391,7 +395,7 @@ const AdminEventToken = param => {
 						checked={formState.hasEndDate}
 						onChange={handleFormChange}
 					/>
-					<Form.Label>Date de dispo : </Form.Label>
+					<Form.Label>Date de disponibilité : </Form.Label>
 					<Form.Control
 						id="formEndDate"
 						disabled={locked}
@@ -431,7 +435,7 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						value={formState.premium_cost}
 					/>
-					€ )<Form.Label>Places : </Form.Label>
+					€ )<Form.Label>Nombre de places : </Form.Label>
 					{" ? / "}
 					<Form.Control
 						disabled={locked}
@@ -442,7 +446,9 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						value={formState.nb_places}
 					/>
-					<Form.Label>Places Reservées : </Form.Label>
+					<Form.Label>
+						Nombre de places réservées aux cotisés :{" "}
+					</Form.Label>
 					{" ? / "}
 					<Form.Control
 						disabled={locked}
@@ -466,7 +472,7 @@ const AdminEventToken = param => {
 					<Form.Switch
 						disabled={locked}
 						id="formIsOutside"
-						label="Outside"
+						label="À l'extérieur de 42"
 						name="isOutside"
 						onChange={handleFormChange}
 						checked={formState.isOutside}
@@ -474,7 +480,7 @@ const AdminEventToken = param => {
 					<Form.Switch
 						disabled={locked}
 						id="formSponso"
-						label="Sponsorised"
+						label="Sponsorisé"
 						name="sponso"
 						onChange={handleFormChange}
 						checked={formState.sponso}
@@ -482,7 +488,7 @@ const AdminEventToken = param => {
 					<Form.Switch
 						disabled={locked}
 						id="formConsos"
-						label="Consommation"
+						label="Consommations"
 						name="consos"
 						onChange={handleFormChange}
 						checked={formState.consos}
@@ -490,7 +496,7 @@ const AdminEventToken = param => {
 					<Form.Switch
 						disabled={locked}
 						id="formForPool"
-						label="Pour les piscineux"
+						label="Ouvert aux piscineux"
 						name="for_pool"
 						onChange={handleFormChange}
 						checked={formState.for_pool}
@@ -519,7 +525,7 @@ const AdminEventToken = param => {
 							defaultValue={param.index}
 							onClick={switchLock}
 						>
-							Edit
+							Modifier
 						</Button>
 					) : (
 						<Button
@@ -528,7 +534,7 @@ const AdminEventToken = param => {
 							defaultValue={param.index}
 							onClick={saveEvent}
 						>
-							Save
+							Enregistrer
 						</Button>
 					)}
 					<Button
@@ -539,10 +545,10 @@ const AdminEventToken = param => {
 						}}
 						disabled={locked}
 					>
-						Cancel
+						Annuler
 					</Button>
 					<Button color="danger" onClick={deleteEvent}>
-						Delete
+						Supprimer
 					</Button>
 				</Form>
 			</Accordion.Body>

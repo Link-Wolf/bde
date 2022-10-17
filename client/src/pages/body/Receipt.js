@@ -92,7 +92,7 @@ const Receipt = () => {
 	if (session.login !== order.studLogin) return <Navigate to="/home" />;
 	return (
 		<>
-			Receipt :
+			Facture :
 			<Print
 				id={order.id}
 				date={new Date(order.date).toLocaleDateString()}
