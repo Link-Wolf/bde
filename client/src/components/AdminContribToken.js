@@ -100,9 +100,9 @@ const AdminContribToken = param => {
 				new Date(bodyState.end_date) <= new Date(bodyState.begin_date)
 			) {
 				NotificationManager.error(
-					"End_date must be after begin_date",
+					"La date de début doit précéder la date de fin",
 					"Erreur",
-					3000
+					5000
 				);
 			} else {
 				var myHeaders = new Headers();
