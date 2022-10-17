@@ -213,9 +213,9 @@ const AdminStudents = () => {
 					{subForm ? (
 						<FormGroup>
 							<Form.Label>
-								Entrez le login du stud a inscrire de force (iel
-								doit s'etre connecte au moins une fois) et le
-								prix qu'iel a payé.
+								Entrez le login du student à inscrire de force
+								(iel doit s'être connecté au moins une fois) et
+								le prix qu'iel a payé.
 							</Form.Label>
 							<Form.Control
 								type="text"

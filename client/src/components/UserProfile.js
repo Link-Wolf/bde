@@ -282,8 +282,8 @@ const UserProfile = options => {
 					/>
 					<p style={{fontSize: "40px"}}>
 						{contributionStatus
-							? "Is a premium member"
-							: "Is just a stud"}
+							? "Cotisation active"
+							: "Aucune cotisation en cours"}
 					</p>
 					<LazyLoadImage
 						height="50px"
@@ -295,7 +295,7 @@ const UserProfile = options => {
 				<div>
 					{!contributionStatus && options.canSub ? (
 						<Button color="primary" href="/contribute">
-							Contribuer
+							Cotiser
 						</Button>
 					) : (
 						""
@@ -344,82 +344,85 @@ const UserProfile = options => {
 									}
 								}}
 							>
-								Sauvegarder
+								Enregistrer
 							</button>
 						</>
 					)}
 				</div>
-				<div style={{display: "flex"}}>
-					<div>
-						<h3> Historique de contributions</h3>
-						<Pagination
-							count={countContrib}
-							page={pageContrib}
-							onChange={handleChangePageContrib}
-						/>
-						<ul>
-							{viewDataContrib.currentData().map(data => (
-								<li key={data.id}>
-									{`${new Date(
-										data.begin_date
-									).toLocaleDateString()} - ${new Date(
-										data.end_date
-									).toLocaleDateString()}`}
-								</li>
-							))}
-						</ul>
-						<Pagination
-							count={countContrib}
-							page={pageContrib}
-							onChange={handleChangePageContrib}
-						/>
-					</div>
-					<div>
-						<h3> Events inscrits </h3>
-						<Pagination
-							count={countEvent}
-							page={pageEvent}
-							onChange={handleChangePageEvent}
-						/>
-						<ul>
-							{viewDataEvent.currentData().map(data => (
-								<li key={data.id}>
-									<EventToken event={data} />
-								</li>
-							))}
-						</ul>
-						<Pagination
-							count={countEvent}
-							page={pageEvent}
-							onChange={handleChangePageEvent}
-						/>
-					</div>
-					{options.command_history ? (
+				<div>
+					Historique
+					<div style={{display: "flex"}}>
 						<div>
-							<h3> Historique commandes </h3>
+							<h3> Cotisations</h3>
 							<Pagination
-								count={countOrder}
-								page={pageOrder}
-								onChange={handleChangePageOrder}
+								count={countContrib}
+								page={pageContrib}
+								onChange={handleChangePageContrib}
 							/>
 							<ul>
-								{viewDataOrder.currentData().map(data => (
+								{viewDataContrib.currentData().map(data => (
 									<li key={data.id}>
-										<a href={`/receipt/${data.id}`}>
-											{data.id}
-										</a>
+										{`${new Date(
+											data.begin_date
+										).toLocaleDateString()} - ${new Date(
+											data.end_date
+										).toLocaleDateString()}`}
 									</li>
 								))}
 							</ul>
 							<Pagination
-								count={countOrder}
-								page={pageOrder}
-								onChange={handleChangePageOrder}
+								count={countContrib}
+								page={pageContrib}
+								onChange={handleChangePageContrib}
 							/>
 						</div>
-					) : (
-						<></>
-					)}
+						<div>
+							<h3> Évènements </h3>
+							<Pagination
+								count={countEvent}
+								page={pageEvent}
+								onChange={handleChangePageEvent}
+							/>
+							<ul>
+								{viewDataEvent.currentData().map(data => (
+									<li key={data.id}>
+										<EventToken event={data} />
+									</li>
+								))}
+							</ul>
+							<Pagination
+								count={countEvent}
+								page={pageEvent}
+								onChange={handleChangePageEvent}
+							/>
+						</div>
+						{options.command_history ? (
+							<div>
+								<h3> Commandes </h3>
+								<Pagination
+									count={countOrder}
+									page={pageOrder}
+									onChange={handleChangePageOrder}
+								/>
+								<ul>
+									{viewDataOrder.currentData().map(data => (
+										<li key={data.id}>
+											<a href={`/receipt/${data.id}`}>
+												{data.id}
+											</a>
+										</li>
+									))}
+								</ul>
+								<Pagination
+									count={countOrder}
+									page={pageOrder}
+									onChange={handleChangePageOrder}
+								/>
+							</div>
+						) : (
+							<></>
+						)}
+					</div>
 				</div>
 			</div>
 		</>
