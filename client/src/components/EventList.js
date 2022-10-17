@@ -102,7 +102,12 @@ const EventList = param => {
 								setPopUpEvent(-1);
 							}}
 						></div>
-						<Event id={popUpEvent} />
+						<Event
+							id={popUpEvent}
+							closeEvent={() => {
+								setPopUpEvent(-1);
+							}}
+						/>
 					</div>
 				</>
 			)}
