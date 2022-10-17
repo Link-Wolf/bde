@@ -105,9 +105,9 @@ const AdminStudents = () => {
 			removeStud(selectedEvent, login);
 			setUpdate(true);
 			NotificationManager.success(
-				`Successfully unsubscribe ${login}`,
+				`Désinscription de ${login} à l'évènement`,
 				"Validation",
-				3000
+				5000
 			);
 		}
 	};
@@ -150,17 +150,17 @@ const AdminStudents = () => {
 				const check = await checkStud(selectedEvent, toSub, cost);
 				if (check == 1) {
 					NotificationManager.success(
-						`Successfully subscribe ${toSub}`,
+						`Inscription de ${toSub} à l'évènement`,
 						"Validation",
-						3000
+						5000
 					);
 					document.getElementById("studToAdd").value = "";
 					document.getElementById("cost").value = "";
 				} else {
 					NotificationManager.error(
-						`Login ${toSub} does not exist or is already subscribe to the selected event`,
-						"Validation",
-						3000
+						`Le student ${toSub} n'existe pas ou est déjà inscrit à l'évènement`,
+						"Erreur",
+						5000
 					);
 				}
 			}

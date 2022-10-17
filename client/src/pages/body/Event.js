@@ -244,7 +244,11 @@ const SubscribeButton = param => {
 			subbed = param.dataEvent.subbed - param.dataEvent.premium_subbed;
 		}
 		if (subbed >= nb_places) {
-			NotificationManager.warning("L'event est plein", "Pardon", 3000);
+			NotificationManager.warning(
+				"L'évènement est plein",
+				"Attention",
+				5000
+			);
 			setIsSubbed(false);
 			return;
 		}

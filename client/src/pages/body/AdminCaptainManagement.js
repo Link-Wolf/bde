@@ -72,34 +72,34 @@ const AdminCaptainManagement = () => {
 	const yeetMember = async login => {
 		if (
 			await isConfirmed(
-				`Voulez vous virer ${login} du bureau de direction ?`
+				`Voulez vous exclure ${login} du bureau de direction ?`
 			)
 		) {
 			if (
 				await isConfirmed(
-					`Voulez vous VRAIMENT virer ${login} du bureau de direction ?`
+					`Voulez vous VRAIMENT exclure ${login} du bureau de direction ?`
 				)
 			) {
 				if (
 					await isConfirmed(
-						`Etes vous absolument certain de vouloir virer ${login} du bureau de direction ?`
+						`Êtes vous absolument certain de vouloir exclure ${login} du bureau de direction ? Cette action est réversible`
 					)
 				) {
 					if (
 						await isConfirmed(
-							`Il est encore temps de changer d'avis. Virer ${login} du bureau de direction ?`
+							`Il est encore temps de changer d'avis. Exclure non-définitivement ${login} du bureau de direction ?`
 						)
 					) {
 						if (
 							!(await isConfirmed(
-								`Voulez vous ne pas virer ${login} du bureau de direction et annuler?`
+								`Souhaiteriez vous ne pas exclure ${login} du bureau de direction et annuler l'opération ?`
 							))
 						) {
 							yeetConfirm(login);
 							NotificationManager.success(
-								`Successfully yeet ${login} to direction`,
+								`${login} a bien été exclu du bureau de direction`,
 								"Validation",
-								3000
+								5000
 							);
 						}
 					}

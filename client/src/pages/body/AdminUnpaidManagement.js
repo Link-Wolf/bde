@@ -73,9 +73,9 @@ const AdminCaptainManagement = () => {
 		if (await isConfirmed(`Voulez vous virer ${login} des unpaids ?`)) {
 			yeetConfirm(login);
 			NotificationManager.success(
-				`Successfully yeet ${login} to direction`,
+				`Student ${login} exclu des volontaires`,
 				"Validation",
-				3000
+				5000
 			);
 		}
 	};
