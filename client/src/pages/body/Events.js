@@ -12,7 +12,7 @@ const Events = () => {
 		food: false,
 		unlimited: false,
 		outside: false,
-		sponsorised: false,
+		sponso: false,
 		sort: "begin_date",
 		asc: false,
 		available_date: true
@@ -46,11 +46,6 @@ const Events = () => {
 						<CheckSet
 							set={[
 								{
-									label: "Current",
-									name: "current",
-									checked: filter.current
-								},
-								{
 									label: "Free",
 									name: "free",
 									checked: filter.free
@@ -77,8 +72,8 @@ const Events = () => {
 								},
 								{
 									label: "Sponsorisé",
-									name: "sponsorised",
-									checked: filter.sponsorised
+									name: "sponso",
+									checked: filter.sponso
 								}
 							]}
 							onChange={handleFormChange}
@@ -110,7 +105,7 @@ const Events = () => {
 						food: false,
 						unlimited: false,
 						outside: false,
-						sponsorised: false,
+						sponso: false,
 						sort: "begin_date",
 						asc: false,
 						album: true,
