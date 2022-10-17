@@ -1,5 +1,7 @@
 import {useState, useEffect, React} from "react";
 import {useParams} from "react-router-dom";
+import b64ToBlob from "b64-to-blob";
+import jszip from "jszip";
 
 import ProductList from "../../components/ProductList";
 
@@ -27,7 +29,7 @@ const Product = () => {
 	);
 };
 
-const Album = () => {
+const Album = param => {
 	const [album, setAlbum] = useState([
 		placeHolder1,
 		placeHolder2,
@@ -35,6 +37,51 @@ const Album = () => {
 		placeHolder4
 	]);
 	const [displayedImage, setDisplayedImage] = useState(0);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${param.id}/album`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(zipAsBase64 => {
+				const blob = b64ToBlob(zipAsBase64, "application/zip");
+				return blob;
+			})
+			.then(arrayBuffer => {
+				jszip.loadAsync(arrayBuffer).then(({files}) => {
+					const mediaFiles = Object.entries(
+						files
+					).filter(([fileName]) => fileName.endsWith(".jpg"));
+
+					if (!mediaFiles.length) {
+						throw new Error("No media files found in archive");
+					}
+
+					mediaFiles.forEach(([, image], i) => {
+						image.async("blob").then(blob => {
+							let tmp = album;
+							tmp[i] = URL.createObjectURL(blob);
+							setAlbum(tmp);
+						});
+					});
+				});
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, []);
 
 	return (
 		<div className={style.album}>
@@ -56,7 +103,7 @@ const Album = () => {
 	);
 };
 
-const Description = () => {
+const Description = param => {
 	const [product, setProduct] = useState({
 		name: "Bocal",
 		price: 42.42,
@@ -73,7 +120,7 @@ const Description = () => {
 				<li>Prix: {product.price}</li>
 				<li>
 					{product.available
-						? "Disponible dès maintenant auprès d'un.e membre de la Frégate!"
+						? "Disponible dès maintenant auprès d'un·e membre de la Frégate!"
 						: "Bientôt disponible"}
 				</li>
 			</ul>
