@@ -33,6 +33,13 @@ export class GoodiesController {
 		return this.goodiesService.getThumbnail(id, session.login)
 	}
 
+	@Get(':id/album')
+	async getAlbum(
+		@Param('id', ParseIntPipe) id: number,
+		@Session() session: Record<string, any>) {
+		return this.goodiesService.getAlbum(id, session.login)
+	}
+
 	@Post('')
 	@UseGuards(new ClearanceGuard(11))
 	create(
