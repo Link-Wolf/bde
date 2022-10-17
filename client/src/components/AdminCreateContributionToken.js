@@ -59,48 +59,53 @@ const AdminCreateContributionToken = () => {
 				"Erreur",
 				3000
 			);
-		} else if (userList.some(i => i.login.includes(formState.studLogin))) {
+			return;
+		}
+		if (!userList.some(i => i.login.includes(formState.studLogin))) {
 			NotificationManager.error(
 				"Student not in database",
 				"Erreur",
 				3000
 			);
-		} else {
-			await fetch(
-				`http://${global.config.api.authority}/contribution/admin`,
-				{
-					method: "POST",
-					credentials: "include",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(bodyState)
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						NotificationManager.error(
-							"Could not create that contribution, check your inputs",
-							"Erreur",
-							3000
-						);
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					NotificationManager.success(
-						"New contribution successfully added",
-						"Validation",
+			return;
+		}
+		await fetch(
+			`http://${global.config.api.authority}/contribution/admin`,
+			{
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(bodyState)
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					NotificationManager.error(
+						"Could not create that contribution, check your inputs",
+						"Erreur",
 						3000
 					);
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-		}
+				}
+				NotificationManager.success(
+					"New contribution successfully added",
+					"Validation",
+					3000
+				);
+			})
+			.then(() => {
+				window.location.reload();
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}; //
 
 	useEffect(() => {

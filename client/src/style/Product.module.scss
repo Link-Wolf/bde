@@ -1,0 +1,45 @@
+.productContainer {
+	margin: 0 -20vw;
+	padding: 0 50px;
+	font-family: Futura;
+	color: var(--black);
+
+	.productFile {
+		display: flex;
+
+		.album {
+			display: flex;
+
+			ul {
+				height: 300px;
+				width: 70px;
+				padding: 0;
+				overflow: auto;
+
+				li {
+					margin: 0 0 5px;
+					list-style-type: none;
+
+					.thumbnail {
+						height: 50px;
+						width: 50px;
+						object-fit: cover;
+					}
+				}
+			}
+
+			.cover {
+				height: 700px;
+				width: 400px;
+				padding: 10px;
+				border: var(--black) solid;
+				border-radius: 10px;
+				object-fit: contain;
+			}
+		}
+
+		.description {
+			margin: 0 0 0 60px;
+		}
+	}
+}

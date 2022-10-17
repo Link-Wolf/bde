@@ -42,33 +42,29 @@ const AdminContributions = () => {
 			});
 	}, [update]);
 
-	useEffect(() => {
-		setRet(
-			<div
-				style={{
-					display: "flex"
-				}}
-			>
-				<AdminNavbar />
-				<div>
-					<Button
-						onClick={() => {
-							setForm(<AdminCreateContributionToken />);
-						}}
-					>
-						New
-					</Button>
-					{form}
-					<div></div>
-					{data.map((item, i) => (
-						<AdminContribToken data={item} index={i} key={i} />
-					))}
-				</div>
+	return (
+		<div
+			style={{
+				display: "flex"
+			}}
+		>
+			<AdminNavbar />
+			<div>
+				<Button
+					onClick={() => {
+						setForm(<AdminCreateContributionToken />);
+					}}
+				>
+					New
+				</Button>
+				{form}
+				<div></div>
+				{data.map((item, i) => (
+					<AdminContribToken data={item} index={i} key={i} />
+				))}
 			</div>
-		);
-	}, [data]);
-
-	return ret;
+		</div>
+	);
 };
 
 export default AdminContributions;

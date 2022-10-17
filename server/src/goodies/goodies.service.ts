@@ -9,6 +9,7 @@ import { LoggerService } from '../logger/logger.service';
 import { GoodiesDto } from './goodies.dto';
 import * as fs from 'fs';
 import { join } from 'path';
+import JSZip = require('jszip');
 
 @Injectable()
 export class GoodiesService {
@@ -36,6 +37,46 @@ export class GoodiesService {
 			return new StreamableFile(file);
 		} catch (error) {
 			this.logger.error(`Failed -> Get thumbnail of goodies ${id} on database (${error})`, login);
+			throw error
+		}
+	}
+
+	async getAlbum(id: number, login: any) {
+		try {
+			const goodies = await this.goodiesRepository.findOneById(id);
+			if (!goodies || !fs.existsSync(`assets/album/goodies/${id}`)) {
+				this.logger.error(`Failed -> Get album of googies ${id} : googies doesn't exist or does not have an album`, login);
+				throw new NotFoundException(`Failed to get album of googies ${id}`)
+			}
+			const addFilesFromDirectoryToZip =
+				(directoryPath = `assets/album/goodies/${id}`, zip: JSZip) => {
+					const directoryContents = fs.readdirSync(directoryPath, {
+						withFileTypes: true,
+					});
+
+					directoryContents.forEach(({ name }) => {
+						const path = `${directoryPath}/${name}`;
+
+						if (fs.statSync(path).isFile()) {
+							zip.file(`${name}`, fs.readFileSync(path));
+						}
+
+						if (fs.statSync(path).isDirectory()) {
+							addFilesFromDirectoryToZip(path, zip);
+						}
+					});
+				};
+
+			const directoryPath = `assets/album/googies/${id}`
+			const zip = new JSZip();
+
+			addFilesFromDirectoryToZip(directoryPath, zip);
+			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
+			this.logger.log(`Got album of googies ${id}`, login);
+
+			return zipAsBase64;
+		} catch (error) {
+			this.logger.error(`Failed -> Get album of googies ${id} on database (${error})`, login);
 			throw error
 		}
 	}
