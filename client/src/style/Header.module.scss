@@ -94,6 +94,12 @@
 		height: 100vh;
 		width: 100vw;
 		transition: 0.5s;
+		text-align: center;
+
+		#x {
+			text-align: right;
+			padding: 10px 60px 0;
+		}
 
 		svg {
 			height: 5vw;
