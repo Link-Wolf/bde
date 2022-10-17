@@ -61,7 +61,7 @@ const Event = param => {
 		<div className={style.eventContainer}>
 			<div className={style.headerEvent}>
 				<Thumbnail id={param.id} />
-				<div>
+				<div className={style.titleHeader}>
 					<Title dataEvent={dataEvent} />
 					<DateDuration dataEvent={dataEvent} duration={duration} />
 				</div>
@@ -117,7 +117,11 @@ const Thumbnail = param => {
 			});
 	}, [param.id]);
 
-	return <img src={thumbnail} />;
+	return (
+		<div className={style.thumbnail}>
+			<img src={thumbnail} />
+		</div>
+	);
 };
 
 const Description = param => {
@@ -190,26 +194,32 @@ const Details = param => {
 		<ul>
 			<li>
 				<img src={nbPlacesLogo} />
+				<br />
 				{param.dataEvent.subbed} / {param.dataEvent.nb_places}
 			</li>
 			<li>
 				<img src={locationLogo} />
+				<br />
 				{param.dataEvent.place}
 			</li>
 			<li>
 				<img src={isOutsideLogo} />
+				<br />
 				{param.dataEvent.isOutside ? "Dehors" : "À l'école"}
 			</li>
 			<li>
 				<img src={param.dataEvent.consos ? conso : fadedConso} />
+				<br />
 				{param.dataEvent.consos ? "Consommations" : ""}
 			</li>
 			<li>
 				<img src={param.dataEvent.for_pool ? pool : fadedPool} />
+				<br />
 				{param.dataEvent.for_pool ? "Piscneux" : ""}
 			</li>
 			<li>
 				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
+				<br />
 				{param.dataEvent.sponso ? "Sponsorisê" : ""}
 			</li>
 		</ul>
