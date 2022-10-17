@@ -230,7 +230,7 @@ export class StudService {
 				this.logger.error(`Failed -> Update student with login ${login} : student does not exist`, requestMaker);
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
-			if ("true_email" in studData) {
+			if (studData.true_email !== null && studData.true_email !== undefined) {
 				const cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
 				studData.true_email = JSON.stringify(Buffer.concat([
 					cipher.update(studData.true_email),
