@@ -17,6 +17,13 @@ div {
 		width: 100vw;
 		height: 100vh;
 		animation: 0.2s linear 0s blurAppear;
+
+		#outArea {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			z-index: -1;
+		}
 	}
 }
 @keyframes blurAppear {
