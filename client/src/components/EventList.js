@@ -95,12 +95,13 @@ const EventList = param => {
 			</div>
 			{popUpEvent !== -1 && (
 				<>
-					<div
-						id={style.filter}
-						onClick={() => {
-							setPopUpEvent(-1);
-						}}
-					>
+					<div id={style.filter}>
+						<div
+							id={style.outArea}
+							onClick={() => {
+								setPopUpEvent(-1);
+							}}
+						></div>
 						<Event id={popUpEvent} />
 					</div>
 				</>

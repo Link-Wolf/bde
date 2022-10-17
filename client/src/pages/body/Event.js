@@ -22,6 +22,7 @@ import fadedPool from "../../assets/logos/fadedPool.svg";
 const Event = param => {
 	const [dataEvent, setDataEvent] = useState([]);
 	const [duration, setDuration] = useState("Never Ending Fun");
+	const [isPremium, setIsPremium] = useState(undefined);
 
 	useEffect(() => {
 		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
@@ -60,10 +61,9 @@ const Event = param => {
 		<div className={style.eventContainer}>
 			<div className={style.headerEvent}>
 				<Thumbnail id={param.id} />
-				<div>
+				<div className={style.titleHeader}>
 					<Title dataEvent={dataEvent} />
 					<DateDuration dataEvent={dataEvent} duration={duration} />
-					<Price dataEvent={dataEvent} />
 				</div>
 			</div>
 			<div className={style.bodyEvent}>
@@ -73,7 +73,13 @@ const Event = param => {
 						<Description dataEvent={dataEvent} />
 						<hr />
 					</div>
-					<SubscribeButton dataEvent={dataEvent} />
+					<div>
+						<Price dataEvent={dataEvent} isPremium={isPremium} />
+						<SubscribeButton
+							dataEvent={dataEvent}
+							setIsPremium={setIsPremium}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -111,7 +117,11 @@ const Thumbnail = param => {
 			});
 	}, [param.id]);
 
-	return <img src={thumbnail} />;
+	return (
+		<div className={style.thumbnail}>
+			<img src={thumbnail} />
+		</div>
+	);
 };
 
 const Description = param => {
@@ -125,8 +135,8 @@ const Title = param => {
 const DateDuration = param => {
 	if (!param.dataEvent.begin_date) return;
 	return (
-		<p>
-			<span id={style.dateSpan}>
+		<div>
+			<div>
 				<img src={dateTimeLogo} />
 				{new Intl.DateTimeFormat("fr-FR", {
 					day: "numeric",
@@ -135,21 +145,46 @@ const DateDuration = param => {
 					hour: "2-digit",
 					minute: "2-digit"
 				}).format(new Date(param.dataEvent.begin_date))}{" "}
-			</span>
-			<span>
+			</div>
+			<div>
 				<img src={durationLogo} />
 				{param.duration}
-			</span>
-		</p>
+			</div>
+		</div>
 	);
 };
 
 const Price = param => {
+	console.log(param);
 	return (
-		<p>
-			<img src={inscCostLogo} />
-			{param.dataEvent.cost}
-		</p>
+		<>
+			<div>
+				{!param.isPremium && (
+					<a>
+						<div>
+							Classique
+							<img src={inscCostLogo} />
+						</div>
+						{param.dataEvent.cost},00
+					</a>
+				)}
+				{(param.isPremium || param.dataEvent.cost !== 0) && (
+					<a
+						className={!param.isPremium ? style.no : style.yes}
+						href="/contribute"
+					>
+						<div>
+							Prilivège
+							<img src={inscCostLogo} />
+						</div>
+
+						{param.dataEvent.premium_cost != 0
+							? param.dataEvent.premium_cost
+							: "Gratuit"}
+					</a>
+				)}
+			</div>
+		</>
 	);
 };
 
@@ -158,26 +193,32 @@ const Details = param => {
 		<ul>
 			<li>
 				<img src={nbPlacesLogo} />
+				<br />
 				{param.dataEvent.subbed} / {param.dataEvent.nb_places}
 			</li>
 			<li>
 				<img src={locationLogo} />
+				<br />
 				{param.dataEvent.place}
 			</li>
 			<li>
 				<img src={isOutsideLogo} />
+				<br />
 				{param.dataEvent.isOutside ? "Dehors" : "À l'école"}
 			</li>
 			<li>
 				<img src={param.dataEvent.consos ? conso : fadedConso} />
+				<br />
 				{param.dataEvent.consos ? "Consommations" : ""}
 			</li>
 			<li>
 				<img src={param.dataEvent.for_pool ? pool : fadedPool} />
+				<br />
 				{param.dataEvent.for_pool ? "Piscneux" : ""}
 			</li>
 			<li>
 				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
+				<br />
 				{param.dataEvent.sponso ? "Sponsorisê" : ""}
 			</li>
 		</ul>
@@ -292,6 +333,7 @@ const SubscribeButton = param => {
 			})
 			.then(data => {
 				setStud(data);
+				param.setIsPremium(data.isPremium);
 			})
 			.catch(function(error) {
 				console.log(
@@ -327,13 +369,16 @@ const SubscribeButton = param => {
 	}, [param]);
 
 	return (
-		<button
-			disabled={isSubbed === undefined}
-			onClick={isSubbed ? unsub : sub}
-			className={style.subButton}
-		>
-			{isSubbed ? "Desinscription" : "Inscription"}
-		</button>
+		<div>
+			<div />
+			<button
+				disabled={isSubbed === undefined}
+				onClick={isSubbed ? unsub : sub}
+				className={style.subButton}
+			>
+				{isSubbed ? "Desinscription" : "Inscription"}
+			</button>
+		</div>
 	);
 };
 
