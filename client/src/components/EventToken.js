@@ -1,6 +1,12 @@
 import {useEffect, useState} from "react";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import style from "../style/EventToken.module.scss";
+import conso from "../assets/logos/consos.svg";
+import sponso from "../assets/logos/sponso.svg";
+import pool from "../assets/logos/pool.svg";
+import fadedConso from "../assets/logos/fadedConsos.svg";
+import fadedSponso from "../assets/logos/fadedSponso.svg";
+import fadedPool from "../assets/logos/fadedPool.svg";
+import dateTime from "../assets/logos/date.svg";
 
 const EventToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
@@ -34,47 +40,51 @@ const EventToken = param => {
 
 	return (
 		<>
-			<h2>
-				{param.type == "album" ? (
-					<>
-						{new Date(param.event.begin_date).toLocaleDateString()}
-						<p
-							onClick={() => {
-								param.setPopUpEvent(param.event.id);
-							}}
-						>
-							{param.event.name}
-						</p>
-					</>
-				) : (
-					<>
-						<p
-							onClick={() => {
-								param.setPopUpEvent(param.event.id);
-							}}
-						>
-							{param.event.id}
-							{new Date(
-								param.event.begin_date
-							).toLocaleDateString()}{" "}
-							{param.event.name}
-						</p>
-					</>
-				)}
-			</h2>
-			{param.type == "event" ? (
-				<>
-					<LazyLoadImage
-						height="auto"
-						src={imgSrc}
-						width="150px"
-						effect="blur"
-					/>
-					<p> {param.event.desc} </p>
-				</>
-			) : (
-				<></>
-			)}
+			<a
+				onClick={() => {
+					param.setPopUpEvent(param.event.id);
+				}}
+			>
+				<div className={style.eventTokenContainer}>
+					<img src={imgSrc} />
+					<div>
+						<h1>{param.event.name}</h1>
+						<div>
+							{new Intl.DateTimeFormat("fr-FR", {
+								day: "numeric",
+								month: "short",
+								year: "numeric"
+							}).format(new Date(param.event.begin_date))}
+						</div>
+						<ul>
+							<li>
+								<img
+									src={
+										param.event.consos ? conso : fadedConso
+									}
+								/>
+							</li>
+							<li>
+								<img
+									src={
+										param.event.for_pool ? pool : fadedPool
+									}
+								/>
+							</li>
+							<li>
+								<img
+									src={
+										param.event.sponso
+											? sponso
+											: fadedSponso
+									}
+								/>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<hr />
+			</a>
 		</>
 	);
 };
