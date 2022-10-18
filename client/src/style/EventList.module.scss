@@ -1,20 +1,30 @@
-div {
-	&#filter {
-		position: absolute;
-		overflow: auto;
-		top: 0;
-		left: 0;
-		background: rgba(0,0,0,0.5);
-		backdrop-filter: blur(50px);
+#filter {
+	position: absolute;
+	overflow: auto;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.5);
+	backdrop-filter: blur(50px);
+	width: 100vw;
+	height: 100vh;
+	animation: 0.2s linear 0s blurAppear;
+
+	#outArea {
 		width: 100vw;
 		height: 100vh;
-		animation: 0.2s linear 0s blurAppear;
+		position: absolute;
+		z-index: -1;
+	}
+}
 
-		#outArea {
-			width: 100vw;
-			height: 100vh;
-			position: absolute;
-			z-index: -1;
+.eventList {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+
+	li:nth-last-of-type(1) {
+		hr {
+			display: none;
 		}
 	}
 }
