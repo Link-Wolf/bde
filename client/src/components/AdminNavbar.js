@@ -347,7 +347,7 @@ const AdminNavbar = () => {
 					</svg>
 				</a>
 				<a href="/admin">
-					<h2>Pannel d'administration</h2>
+					<h2>Admin</h2>
 				</a>
 				<a href="/admin/students">
 					<h3>Students</h3>
@@ -361,6 +361,9 @@ const AdminNavbar = () => {
 				<a href="/admin/contributions">
 					<h3>Cotisations</h3>
 				</a>
+				<a href="/admin/clubs">
+					<h3>Clubs</h3>
+				</a>
 				<a href="/admin/shop">
 					<h3>Produits</h3>
 				</a>
@@ -368,11 +371,11 @@ const AdminNavbar = () => {
 					<h3>Logs</h3>
 				</a>
 				<a href="/admin/unpaidmanagement">
-					<h3>Gestion des volontaires</h3>
+					<h3>Gestion volontaires</h3>
 				</a>
 				{session.clearance >= 21 && (
 					<a href="/admin/teammanagement">
-						<h3>Gestion du bureau</h3>
+						<h3>Gestion bureau</h3>
 					</a>
 				)}
 				{session.clearance >= 42 && (

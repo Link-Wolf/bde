@@ -223,7 +223,7 @@ const Details = param => {
 			<li>
 				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
 				<br />
-				{param.dataEvent.sponso ? "Sponsorisê" : ""}
+				{param.dataEvent.sponso ? "Sponsorisé" : ""}
 			</li>
 		</ul>
 	);
