@@ -30,8 +30,19 @@ const AdminLogList = param => {
 			})
 			.then(actualData => {
 				setData(actualData);
-				setCount(Math.ceil(actualData.length / PER_PAGE));
 				viewData.updateData(actualData);
+				let tmp = Math.ceil(actualData.length / PER_PAGE);
+				return tmp;
+			})
+			.then(tmp => {
+				if (tmp < count) {
+					setPage(1);
+					viewData.jump(1);
+				}
+				return tmp;
+			})
+			.then(tmp => {
+				setCount(tmp);
 				setLoad(false);
 			})
 			.catch(function(error) {
