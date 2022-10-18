@@ -156,7 +156,6 @@ const DateDuration = param => {
 };
 
 const Price = param => {
-	console.log(param);
 	return (
 		<>
 			<div>
@@ -263,7 +262,7 @@ const SubscribeButton = param => {
 			return;
 		}
 		await fetch(
-			`http://${global.config.api.authority}/inscription/me/${param.id}`,
+			`http://${global.config.api.authority}/inscription/me/${param.dataEvent.id}`,
 			{
 				method: "POST",
 				credentials: "include"
@@ -301,7 +300,7 @@ const SubscribeButton = param => {
 			return;
 		}
 		await fetch(
-			`http://${global.config.api.authority}/inscription/minecraft/${param.id}`,
+			`http://${global.config.api.authority}/inscription/minecraft/${param.dataEvent.id}`,
 			{
 				method: "DELETE",
 				credentials: "include"
