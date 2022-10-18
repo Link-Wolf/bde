@@ -1,6 +1,5 @@
 import {React} from "react";
 import EventList from "../../components/EventList";
-import ShowcaseCarousel from "../../components/ShowcaseCarousel";
 
 import style from "../../style/Home.module.css";
 
@@ -51,7 +50,6 @@ const Home = () => {
 				pulvinar et, accumsan eu lectus. Sed porttitor.]
 			</p>
 			<div className={style.event_show}>
-				<ShowcaseCarousel />
 				<div className={style.margin5}>
 					<EventList filter={{current: 1}} />
 				</div>

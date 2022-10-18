@@ -72,11 +72,6 @@ export class EventFilterDtoPipe implements PipeTransform {
 			value.available_date = true
 		else
 			value.available_date = false
-
-		// if ("subed" in value && value.subed == '1')
-		// 	value.subed = true
-		// else
-		// 	value.subed = false
 		if ("food" in value && value.food == '1')
 			value.food = true
 		else
