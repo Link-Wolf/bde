@@ -22,7 +22,6 @@ const Home = () => {
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
-			<Presentation />
 			<div className={style.lists}>
 				<div>
 					<Filter filter={filter} setFilter={setFilter} />
@@ -41,6 +40,21 @@ const HeaderHome = () => {
 			<div className={style.color} />
 			<div className={style.text}>
 				<h1>BDE 42 Mulhouse</h1>
+				<span>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						Nulla eget leo sollicitudin, lacinia dui ut, dictum
+						metus.
+					</p>
+					<p>
+						Curabitur laoreet iaculis arcu eget elementum. Donec
+						risus magna, rhoncus quis ipsum in, maximus mattis nibh.{" "}
+					</p>
+					<p>
+						Donec at nunc eu ipsum ultricies sagittis. Aliquam ac
+						mauris lobortis, consequat quam at, luctus lacus.
+					</p>
+				</span>
 			</div>
 		</div>
 	);
@@ -123,18 +137,7 @@ const ProductList = () => {
 };
 
 const Presentation = () => {
-	return (
-		<div className={style.presentation}>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-				eget leo sollicitudin, lacinia dui ut, dictum metus. Curabitur
-				laoreet iaculis arcu eget elementum. Donec risus magna, rhoncus
-				quis ipsum in, maximus mattis nibh. Donec at nunc eu ipsum
-				ultricies sagittis. Aliquam ac mauris lobortis, consequat quam
-				at, luctus lacus.
-			</p>
-		</div>
-	);
+	return <div className={style.presentation}></div>;
 };
 
 export default Home;

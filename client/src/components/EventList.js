@@ -82,7 +82,7 @@ const EventList = param => {
 				) : (
 					<></>
 				)}
-				<ul>
+				<ul className={style.eventList}>
 					{viewData.currentData().map(item => (
 						<li key={item.id}>
 							<EventToken
