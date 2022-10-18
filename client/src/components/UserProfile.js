@@ -8,6 +8,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import {Button} from "reactstrap";
 import usePagination from "./Pagination";
 import {Pagination} from "@mui/material";
+import style from "../style/UserProfile.module.scss";
 
 import EventToken from "./EventToken";
 
@@ -29,7 +30,7 @@ const UserProfile = options => {
 	const [pageOrder, setPageOrder] = useState(1);
 	const [countOrder, setCountOrder] = useState(0);
 	const viewDataOrder = usePagination(dataOrder, PER_PAGE);
-	const [contributionStatus, setContributionStatus] = useState(false);
+	const [contributionStatus, setContributionStatus] = useState(-1);
 	const [nav, setNav] = useState(<></>);
 	const [trueMail, setTrueMail] = useState("");
 
@@ -161,7 +162,13 @@ const UserProfile = options => {
 						new Date(item.end_date) > Date.now() &&
 						new Date(item.begin_date) <= Date.now()
 					) {
-						setContributionStatus(true);
+						setContributionStatus(
+							Math.ceil(
+								(new Date(item.end_date).getTime() -
+									new Date(Date.now()).getTime()) /
+									(1000 * 3600 * 24)
+							)
+						);
 					}
 				});
 				setCountContrib(Math.ceil(data.length / PER_PAGE));
@@ -243,7 +250,7 @@ const UserProfile = options => {
 		<>
 			{nav}
 			<div>
-				<div style={{display: "flex"}}>
+				<div className={style.recap}>
 					<LazyLoadImage
 						height="100px"
 						src={
@@ -254,7 +261,7 @@ const UserProfile = options => {
 						width="auto"
 						effect="blur"
 					/>
-					<div>
+					<div className={style.name}>
 						<h1>
 							{dataStud.login === undefined ? "" : dataStud.login}
 						</h1>
@@ -264,36 +271,38 @@ const UserProfile = options => {
 								: `${dataStud.firstname} ${dataStud.lastname}`}
 						</h2>
 					</div>
-					<a
-						href={`http://${window.location.host}/profile/${dataStud.login}`}
-					>
-						<QRCode
-							value={`http://${window.location.host}/profile/${dataStud.login}`}
-							level="H"
-						/>
-					</a>
+					<div className={style.qr}>
+						<a
+							href={`http://${window.location.host}/profile/${dataStud.login}`}
+						>
+							<QRCode
+								value={`http://${window.location.host}/profile/${dataStud.login}`}
+								level="H"
+							/>
+						</a>
+					</div>
 				</div>
-				<div style={{display: "flex"}}>
+				<div className={style.cotis}>
 					<LazyLoadImage
 						height="50px"
-						src={contributionStatus ? yellowStar : greyStar}
+						src={contributionStatus >= 0 ? yellowStar : greyStar}
 						width="auto"
 						effect="blur"
 					/>
 					<p style={{fontSize: "40px"}}>
-						{contributionStatus
-							? "Cotisation active"
+						{contributionStatus >= 0
+							? `Cotisation active (${contributionStatus} jours restants)`
 							: "Aucune cotisation en cours"}
 					</p>
 					<LazyLoadImage
 						height="50px"
-						src={contributionStatus ? yellowStar : greyStar}
+						src={contributionStatus >= 0 ? yellowStar : greyStar}
 						width="auto"
 						effect="blur"
 					/>
 				</div>
-				<div>
-					{!contributionStatus && options.canSub ? (
+				<div className={style.cotiser}>
+					{!contributionStatus >= 0 && options.canSub ? (
 						<Button color="primary" href="/contribute">
 							Cotiser
 						</Button>
@@ -301,10 +310,10 @@ const UserProfile = options => {
 						""
 					)}
 				</div>
-				<div>
+				<div className={style.mail}>
 					{!dataStud.true_email ? (
 						<></>
-					) : (
+					) : options.command_history ? (
 						<>
 							Mon email :
 							<input
@@ -347,12 +356,14 @@ const UserProfile = options => {
 								Enregistrer
 							</button>
 						</>
+					) : (
+						<></>
 					)}
 				</div>
 				<div>
 					Historique
-					<div style={{display: "flex"}}>
-						<div>
+					<div className={style.histo}>
+						<div className={style.contribs}>
 							<h3> Cotisations</h3>
 							<Pagination
 								count={countContrib}
@@ -376,7 +387,7 @@ const UserProfile = options => {
 								onChange={handleChangePageContrib}
 							/>
 						</div>
-						<div>
+						<div className={style.events}>
 							<h3> Évènements </h3>
 							<Pagination
 								count={countEvent}
@@ -397,7 +408,7 @@ const UserProfile = options => {
 							/>
 						</div>
 						{options.command_history ? (
-							<div>
+							<div className={style.orders}>
 								<h3> Commandes </h3>
 								<Pagination
 									count={countOrder}
