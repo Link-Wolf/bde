@@ -8,6 +8,7 @@ const AdminLogs = () => {
 	const [filter, setFilter] = useState({
 		warn: true,
 		error: true,
+		isAdmin: false,
 		sort: "date",
 		asc: false,
 		login: ""
