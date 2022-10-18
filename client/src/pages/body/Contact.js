@@ -69,7 +69,6 @@ const Contact = () => {
 		}
 		setLock(true);
 		setLoading(true);
-		//TODO: loading
 		await emailjs
 			.send(
 				global.config.emailjs.service_id,
