@@ -23,19 +23,19 @@
 	h2 {
 		text-decoration: none;
 		font-size: 3vh;
-		color: #FFFFFE;
+		color: VAR(--white);
 		margin: 0;
 		padding: 1vh 0.5vw;
 	}
 
 	h3 {
-		color: grey;
+		color: VAR(--light-grey);
 		font-size: 2vh;
 		margin: 0;
 		padding: 1.7vh 0.5vw;
 
 		&:hover {
-			color: white;
+			color: VAR(--white);
 			transition: 0.4s;
 		}
 	}
