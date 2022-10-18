@@ -88,15 +88,6 @@ const Routage = () => {
 					}
 				/>
 				<Route
-					path="events"
-					element={
-						<RouteWrapper
-							route={<Events />}
-							check={global.config.clearance.pool}
-						/>
-					}
-				/>
-				<Route
 					path="contribute"
 					element={
 						<RouteWrapper
