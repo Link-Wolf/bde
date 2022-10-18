@@ -1,4 +1,3 @@
-import {useState, useEffect} from "react";
 import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
 
 import ClearanceChecker from "../components/ClearanceChecker";
@@ -7,16 +6,12 @@ import {NotificationContainer} from "react-notifications";
 
 import style from "../style/Routage.module.scss";
 
-// Nos pagis
+// Nos pages
 import Home from "./body/Home";
 import Cgu from "./body/Cgu";
-import Cgv from "./body/Cgv";
-import Shop from "./body/Shop";
 import Events from "./body/Events";
-import Event from "./body/Event";
 import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
-import Product from "./body/Product";
 import AdminEventsGestion from "./body/AdminEventsGestion";
 import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
 import AdminContributions from "./body/AdminContributions";
@@ -44,10 +39,6 @@ const Routage = () => {
 					element={<RouteWrapper route={<Home />} />}
 				/>
 				<Route
-					path="dollarthings"
-					element={<RouteWrapper route={<Cgv />} />}
-				/>
-				<Route
 					path="legalthings"
 					element={<RouteWrapper route={<Cgu />} />}
 				/>
@@ -59,19 +50,6 @@ const Routage = () => {
 				<Route
 					path="log/redirect"
 					element={<RouteWrapper route={<Log />} />}
-				/>
-				<Route
-					path="shop"
-					element={<RouteWrapper route={<Shop />} />}
-				/>
-				<Route
-					path="product/:id"
-					element={
-						<RouteWrapper
-							route={<Product />}
-							check={global.config.clearance.pool}
-						/>
-					}
 				/>
 				<Route
 					path="clubs"
@@ -124,15 +102,6 @@ const Routage = () => {
 						<RouteWrapper
 							route={<Contribute />}
 							check={global.config.clearance.stud}
-						/>
-					}
-				/>
-				<Route
-					path="event/:id"
-					element={
-						<RouteWrapper
-							route={<Event />}
-							check={global.config.clearance.pool}
 						/>
 					}
 				/>
