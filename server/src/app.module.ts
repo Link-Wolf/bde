@@ -7,7 +7,9 @@ import { Contribution } from './entity/Contribution';
 import { Goodies } from './entity/Goodies';
 import { Event } from './entity/Event';
 import { Stud } from './entity/Stud';
+import { Club } from './entity/Club';
 import { StudModule } from './stud/stud.module';
+import { ClubModule } from './club/club.module';
 import { EventModule } from './event/event.module';
 import { InscriptionModule } from './inscription/inscription.module';
 import { LoggerModule } from './logger/logger.module';
@@ -36,13 +38,14 @@ const { _dbpw, _rdpw, host } = require('../config.json')
 			username: 'linkar',
 			password: _dbpw,
 			database: 'bde',
-			entities: [Stud, Contribution, Event, Logs, Goodies, Order, Inscription],
+			entities: [Stud, Contribution, Event, Logs, Goodies, Club, Order, Inscription],
 			synchronize: true
 		}),
 		ConfigModule.forRoot({
 			isGlobal: true
 		}),
 		StudModule,
+		ClubModule,
 		ContributionModule,
 		EventModule,
 		GoodiesModule,

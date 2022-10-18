@@ -140,6 +140,11 @@ const AdminContribToken = param => {
 								error.message
 						);
 					});
+				NotificationManager.success(
+					"Cotisation mise à jour",
+					"Validation",
+					5000
+				);
 				setLocked(true);
 			}
 		}
