@@ -22,8 +22,14 @@ const Home = () => {
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
-			<Filter filter={filter} setFilter={setFilter} />
-			<EventList filter={filter} showCount />
+			<Presentation />
+			<div className={style.lists}>
+				<div>
+					<Filter filter={filter} setFilter={setFilter} />
+					<EventList filter={filter} className={style.col} />
+				</div>
+				<ProductList />
+			</div>
 		</div>
 	);
 };
@@ -52,7 +58,7 @@ const Filter = param => {
 	};
 
 	return (
-		<div className={style.eventFilter}>
+		<div className={`${style.eventFilter} ${style.col}`}>
 			<button
 				onClick={() => {
 					if (
@@ -108,6 +114,25 @@ const Filter = param => {
 					type="checkbox"
 				/>
 			</div>
+		</div>
+	);
+};
+
+const ProductList = () => {
+	return <div>LES PRODUITS</div>;
+};
+
+const Presentation = () => {
+	return (
+		<div className={style.presentation}>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+				eget leo sollicitudin, lacinia dui ut, dictum metus. Curabitur
+				laoreet iaculis arcu eget elementum. Donec risus magna, rhoncus
+				quis ipsum in, maximus mattis nibh. Donec at nunc eu ipsum
+				ultricies sagittis. Aliquam ac mauris lobortis, consequat quam
+				at, luctus lacus.
+			</p>
 		</div>
 	);
 };

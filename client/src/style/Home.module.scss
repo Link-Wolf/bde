@@ -41,14 +41,33 @@
 		}
 	}
 
-	.eventFilter {
-		position: relative;
+	.presentation {
+		color: var(--black);
+		background: var(--white);
+		padding: 100px 500px;
+	}
 
-		button {}
+	.lists {
+		display: flex;
+		justify-content: center;
+		background: var(--dark-grey);
+		color: var(--white);
+		margin: 0 0 100px;
 
-		#dropdownMenu {
-			display: none;
-			position: absolute;
+		div.col {
+			width: 500px;
+			margin: 0 50px;
+
+			&.eventFilter {
+				position: relative;
+
+				button {}
+
+				#dropdownMenu {
+					display: none;
+					position: absolute;
+				}
+			}
 		}
 	}
 }

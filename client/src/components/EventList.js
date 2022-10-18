@@ -50,7 +50,7 @@ const EventList = param => {
 					{data.length >= 2 ? <>résultats</> : <>résultat</>}
 				</p>
 			)}
-			<div className={style.scroll_container_40vw}>
+			<div className={style.scroll_container_40vw} {...param}>
 				{data.map(item => (
 					<li key={item.id}>
 						<EventToken
