@@ -1,10 +1,5 @@
 .adminNavbarContainer {
-	position: absolute;
-	top: 8vh;
-	height: 92vh;
 	left: 0;
-	background-color: #151E23;
-	color: #FFFFFE;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -14,7 +9,7 @@
 		text-decoration: inherit;
 
 		&#expendButton {
-			img {
+			svg {
 				height: 3vh;
 				width: auto;
 				min-width: 1vw;
@@ -47,7 +42,7 @@
 
 	button {
 		border: none;
-		width: 5vw;
+		width: 25%;
 		min-height: 3vh;
 		text-align: center;
 		text-decoration: none;
@@ -76,5 +71,15 @@
 				color: #FFFFFF;
 			}
 		}
+	}
+
+	#panel {
+		transition: 0.5s;
+		background: var(--black);
+		color: var(--white);
+		position: absolute;
+		height: 80vh;
+		left: -800px;
+		width: 800px;
 	}
 }
