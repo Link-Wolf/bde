@@ -275,56 +275,117 @@ const AdminNavbar = () => {
 			<a
 				id={style.expendButton}
 				onClick={() => {
-					setExpended(!expended);
+					document.getElementById(style.panel).style.left = "0px";
 				}}
 			>
-				<img src={burger} />
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+					<g>
+						<line
+							x1={13.5}
+							y1={2}
+							x2={0.5}
+							y2={2}
+							fill="none"
+							stroke="var(--black)"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+						<line
+							x1={13.5}
+							y1={7}
+							x2={0.5}
+							y2={7}
+							fill="none"
+							stroke="var(--black)"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+						<line
+							x1={13.5}
+							y1={12}
+							x2={0.5}
+							y2={12}
+							fill="none"
+							stroke="var(--black)"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						/>
+					</g>
+				</svg>
 			</a>
-			{expended && (
-				<>
-					<a href="/admin">
-						<h2>Pannel d'administration</h2>
+			<div id={style.panel}>
+				<a
+					id={style.expendButton}
+					onClick={() => {
+						document.getElementById(style.panel).style.left =
+							"-800px";
+					}}
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+						<g>
+							<line
+								x1={13.5}
+								y1={0.5}
+								x2={0.5}
+								y2={13.5}
+								fill="none"
+								stroke="var(--white)"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+							<line
+								x1={0.5}
+								y1={0.5}
+								x2={13.5}
+								y2={13.5}
+								fill="none"
+								stroke="var(--white)"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+						</g>
+					</svg>
+				</a>
+				<a href="/admin">
+					<h2>Pannel d'administration</h2>
+				</a>
+				<a href="/admin/students">
+					<h3>Students</h3>
+				</a>
+				<a href="/admin/events/gestion">
+					<h3>Évènements</h3>
+				</a>
+				<a href="/admin/events/subscribtions">
+					<h3>Inscriptions</h3>
+				</a>
+				<a href="/admin/contributions">
+					<h3>Cotisations</h3>
+				</a>
+				<a href="/admin/shop">
+					<h3>Produits</h3>
+				</a>
+				<a href="/admin/logs">
+					<h3>Logs</h3>
+				</a>
+				<a href="/admin/unpaidmanagement">
+					<h3>Gestion des volontaires</h3>
+				</a>
+				{session.clearance >= 21 && (
+					<a href="/admin/teammanagement">
+						<h3>Gestion du bureau</h3>
 					</a>
-					<a href="/admin/students">
-						<h3>Students</h3>
-					</a>
-					<a href="/admin/events/gestion">
-						<h3>Évènements</h3>
-					</a>
-					<a href="/admin/events/subscribtions">
-						<h3>Inscriptions</h3>
-					</a>
-					<a href="/admin/contributions">
-						<h3>Cotisations</h3>
-					</a>
-					<a href="/admin/shop">
-						<h3>Produits</h3>
-					</a>
-					<a href="/admin/logs">
-						<h3>Logs</h3>
-					</a>
-					<a href="/admin/unpaidmanagement">
-						<h3>Gestion des volontaires</h3>
-					</a>
-					{session.clearance >= 21 ? (
-						<a href="/admin/teammanagement">
-							<h3>Gestion du bureau</h3>
-						</a>
-					) : (
-						<></>
-					)}
-					{session.clearance >= 42 && (
-						<div>
-							<button id={style.bigYellowButton} onClick={initDb}>
-								Init DB
-							</button>
-							<button id={style.bigRedButton} onClick={tiniDb}>
-								Yeet DB
-							</button>
-						</div>
-					)}
-				</>
-			)}
+				)}
+				{session.clearance >= 42 && (
+					<div>
+						<button id={style.bigYellowButton} onClick={initDb}>
+							Init DB
+						</button>
+						<button id={style.bigRedButton} onClick={tiniDb}>
+							Yeet DB
+						</button>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
