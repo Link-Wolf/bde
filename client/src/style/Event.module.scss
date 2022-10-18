@@ -8,6 +8,10 @@
 	}
 }
 
+#niktameredegagedemapagegrossemerde {
+	display: none;
+}
+
 .eventContainer {
 	--width: 1000px;
 	--title-font-size: 50px;
@@ -15,8 +19,8 @@
 	--description-font-size: 20px;
 	--thumbnail-width: 250px;
 	--padding: 20px;
-	--desc-max: 500px;
-	--desc-min: 200px;
+	--desc-max: 200px;
+	--desc-min: 100px;
 	animation: 0.2s linear 0s eventAppear;
 	margin: 50px auto;
 	align-content: center;
@@ -104,7 +108,7 @@
 		ul {
 			list-style: none;
 			font-size: var(--details-font-size);
-			height: calc(var(--desc-min) * 1.5);
+			height: 300px;
 			padding: 0 0 calc(var(--padding) * 4);
 			display: flex;
 			flex-direction: column;
@@ -132,14 +136,19 @@
 
 			div {
 				&:nth-of-type(1) {
-					padding: 0 calc(var(--padding));
+					padding: 0 calc(var(--padding)) 0 0;
 					margin: 0;
 
 					p {
+						padding: 0 calc(var(--padding));
 						max-height: var(--desc-max);
 						min-height: var(--desc-min);
 						overflow: auto;
 						font-size: var(--description-font-size);
+					}
+
+					hr {
+						margin: 40px 0;
 					}
 				}
 
@@ -154,6 +163,7 @@
 						flex-direction: column;
 						font-family: monospace;
 						justify-content: center;
+						padding: 0;
 
 						&:nth-of-type(1) {
 							width: 350px;
@@ -218,6 +228,16 @@
 						font-size: var(--description-font-size);
 						border-style: none;
 						border-radius: 10px;
+						margin: 5px 0;
+
+						&:nth-of-type(1) {
+							color: var(--black);
+							background: var(--light-grey);
+
+							&:hover {
+								background: var(--dark-grey);
+							}
+						}
 
 						&:hover {
 							background: var(--secondary-dark);
@@ -229,6 +249,45 @@
 	}
 }
 @media (max-width: 1000px) {
+	#niktameredegagedemapagegrossemerde {
+		display: block;
+	}
+
+	* hr {
+		margin: 20px 0 !important;
+	}
+
+	* p {
+		font-size: 14px !important;
+		min-height: 50px !important;
+		max-height: 95px !important;
+	}
+
+	* div.buttons {
+		flex-direction: row !important;
+
+		button {
+			margin: 10px 20%;
+			height: 40px;
+			font-size: 14px;
+			padding: 5px !important;
+
+			&:nth-of-type(1) {
+				// position: relative !important;
+				// // top: 36px !important;
+				// // right: calc(94vw * 0.28) !important;
+				// width: 109px !important;
+			}
+
+			&:nth-of-type(2) {
+				// position: relative !important;
+				// // top: -24px !important;
+				// // left: calc(94vw * 0.28) !important;
+				// width: 120px !important;
+			}
+		}
+	}
+
 	.eventContainer {
 		width: 94vw;
 		padding: 0 0 calc(var(--padding));
@@ -245,7 +304,7 @@
 				padding: 0;
 				margin: 0;
 				width: 94vw;
-				height: 94vw;
+				height: 47vw;
 
 				img {
 					margin: 0;
@@ -281,15 +340,16 @@
 			}
 
 			.titleHeader {
-				h1 {
-					font-size: 25px;
-				}
 				position: static !important;
-				background: rgba(92, 161, 193, .5);
-				margin: -94vw 0 0;
-				padding: 0;
-				height: 94vw;
+				background: rgba(92, 161, 193, .8);
+				margin: -47vw 0 0;
+				padding: 15px;
+				height: 47vw;
 				width: 94vw;
+
+				h1 {
+					font-size: 30px;
+				}
 			}
 		}
 
@@ -299,14 +359,15 @@
 			ul {
 				margin: calc(var(--padding) * 1) 0;
 				padding: 0;
-				width: 100vw;
+				width: 94vw;
 				height: auto;
 				flex-direction: row;
 				flex-wrap: wrap;
 
 				li {
-					margin: calc(var(--padding) * 1) 0;
-					width: 33vw;
+					margin: calc(var(--padding) * .3) 0;
+					font-size: 10px;
+					width: 30%;
 					text-align: center;
 
 					br {
@@ -317,7 +378,7 @@
 
 			div {
 				padding: 0;
-				width: 100vw;
+				width: 94vw;
 
 				&:nth-of-type(2) {
 					margin: 0 !important;
@@ -327,18 +388,27 @@
 					justify-content: space-between;
 
 					div {
-						margin: 0;
+						margin: 0 15% !important;
 						display: flex;
-						flex-direction: row !important;
+						// flex-direction: column !important;
+						width: 70% !important;
 						font-family: monospace;
 
 						&:nth-of-type(1) {
-							width: 100vw !important;
+							width: 70% !important;
 							justify-content: space-around;
+							font-size: 12px;
+
+							img {
+								height: 10.4px;
+							}
+
+							a {
+								min-width: 45%;
+							}
 						}
 
 						&:nth-of-type(2) {
-							width: 100vw !important;
 							justify-content: space-around;
 
 							div {
@@ -347,7 +417,7 @@
 						}
 
 						a {
-							margin: calc(var(--padding)) 0;
+							margin: 0;
 							background: none;
 							color: var(--black);
 							border-radius: 10px;

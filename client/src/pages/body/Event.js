@@ -70,6 +70,8 @@ const Event = param => {
 				<Details duration={duration} dataEvent={dataEvent} />
 				<div>
 					<div>
+						<hr id={style.niktameredegagedemapagegrossemerde} />
+
 						<Description dataEvent={dataEvent} />
 						<hr />
 					</div>
@@ -158,7 +160,7 @@ const DateDuration = param => {
 const Price = param => {
 	return (
 		<>
-			<div>
+			<div className={style.price}>
 				<div />
 				{!param.isPremium && (
 					<a>
@@ -375,7 +377,7 @@ const SubscribeButton = param => {
 	}, [param]);
 
 	return (
-		<div>
+		<div className={style.buttons}>
 			<button onClick={param.closeEvent}>Fermer</button>
 			<button
 				disabled={isSubbed === undefined}
