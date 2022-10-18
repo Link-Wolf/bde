@@ -5,14 +5,33 @@ import useConfirm from "./useConfirm";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+const parseDate = date => {
+	return (
+		two_digiter(date.getFullYear()) +
+		"-" +
+		two_digiter(date.getMonth() + 1) +
+		"-" +
+		two_digiter(date.getDate()) +
+		"T" +
+		two_digiter(date.getHours()) +
+		":" +
+		two_digiter(date.getMinutes())
+	);
+};
+
+const two_digiter = nb => {
+	if (nb < 10) return "0" + nb;
+	return nb;
+};
+
 const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
-		begin_date: "",
-		end_date: "",
-		available_date: "",
+		begin_date: parseDate(new Date(Date.now())),
+		end_date: parseDate(new Date(Date.now())),
+		available_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
@@ -44,8 +63,9 @@ const AdminEventToken = param => {
 	const [bodyState, setBodyState] = useState({
 		name: "",
 		desc: "",
-		begin_date: "",
-		end_date: "",
+		begin_date: parseDate(new Date(Date.now())),
+		end_date: parseDate(new Date(Date.now())),
+		available_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
@@ -140,12 +160,6 @@ const AdminEventToken = param => {
 			":" +
 			two_digiter(available_date.getMinutes());
 		setBodyState(tmpBody);
-		setFormState(tmp);
-	};
-
-	const two_digiter = nb => {
-		if (nb < 10) return "0" + nb;
-		return nb;
 	};
 
 	const changeThumbnail = async () => {
