@@ -52,6 +52,7 @@ const Contact = () => {
 	};
 
 	const sendMail = async () => {
+		console.log(formState);
 		if (
 			formState.mail === "" ||
 			formState.name === "" ||
@@ -154,6 +155,40 @@ const Contact = () => {
 				);
 			});
 	}, []);
+
+	useEffect(() => {
+		if (
+			!formState.login ||
+			formState.login == undefined ||
+			formState.login == ""
+		)
+			return;
+		fetch(
+			`http://${global.config.api.authority}/stud/${formState.login}/mail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(data => {
+				let tmp = formState;
+				tmp.mail = data;
+				setFormState(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [formState.login]);
 
 	const checkTrueMail = async login => {
 		fetch(`http://${global.config.api.authority}/stud/${login}`, {

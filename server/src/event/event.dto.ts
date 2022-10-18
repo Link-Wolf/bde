@@ -23,7 +23,7 @@ export class EventFilterDto {
 	food: boolean; //ya du miam miam ou du glou glou
 	unlimited: boolean;//pouvoir illimité
 	outside: boolean;// pas a 42
-	sponsorised: boolean;// thunas
+	sponso: boolean;// thunas
 	asc: boolean;// tri order (default desc)
 	sort: string;//tri selon (default date)
 	album: boolean;
