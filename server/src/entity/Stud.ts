@@ -7,6 +7,7 @@ import {
 import { Contribution } from "./Contribution";
 import { Event } from "./Event";
 import { Order } from "./Order";
+import { Club } from "./Club";
 import { Inscription } from "./Inscription";
 
 @Entity()
@@ -60,6 +61,13 @@ export class Stud {
 		cascade: true
 	})
 	orders: Order[]
+
+	@OneToMany(() => Club, (club) => club.contact, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+		cascade: true
+	})
+	clubs: Club[]
 
 	@OneToMany(() => Inscription, (inscription) => inscription.stud, {
 		onDelete: "CASCADE",
