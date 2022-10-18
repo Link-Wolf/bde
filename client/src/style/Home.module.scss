@@ -27,12 +27,18 @@
 				top: -800px;
 				color: var(--white);
 				text-align: center;
-				display: table;
-				text-transform: uppercase;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				padding: 20px 0;
+
+				p {
+					line-height: 0.8;
+				}
 
 				h1 {
+					transform: skew(-15deg);
 					font-size: 120px;
-					display: table-cell;
 					vertical-align: middle;
 					font-family: Futura;
 					font-weight: bold;
@@ -50,9 +56,10 @@
 	.lists {
 		display: flex;
 		justify-content: center;
-		background: var(--dark-grey);
-		color: var(--white);
-		margin: 0 0 100px;
+		background: var(--white);
+		color: var(--black);
+		margin: 0 0 500px;
+		height: 800px;
 
 		div.col {
 			width: 500px;

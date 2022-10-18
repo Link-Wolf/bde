@@ -145,7 +145,7 @@ const DateDuration = param => {
 					year: "numeric",
 					hour: "2-digit",
 					minute: "2-digit"
-				}).format(new Date(param.dataEvent.begin_date))}{" "}
+				}).format(new Date(param.dataEvent.begin_date))}
 			</div>
 			<div>
 				<img src={durationLogo} />
