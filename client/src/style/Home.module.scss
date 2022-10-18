@@ -1,0 +1,33 @@
+.homeContainer {
+	.frontImage {
+		width: 100vw;
+		height: 500px;
+
+		img {
+			width: 100vw;
+			height: 500px;
+			object-fit: cover;
+		}
+
+		div {
+			position: relative;
+			top: -500px;
+			left: 0;
+			width: 100vw;
+			height: 500px;
+			background-color: var(--primary);
+			color: var(--white);
+			font-style: italic;
+			padding: 0 0 0 20px;
+			opacity: 0.7;
+			text-align: center;
+			display: table;
+
+			h1 {
+				font-size: 120px;
+				display: table-cell;
+				vertical-align: middle;
+			}
+		}
+	}
+}
