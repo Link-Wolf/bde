@@ -7,16 +7,6 @@ import {
 } from "typeorm";
 import { Stud } from "./Stud";
 
-/*Nom
-Desc courte
-Prix
-Conditions d'acces
-But
-Contact 42
-Liens
-Zone libre
-*/
-
 @Entity()
 export class Club {
 	@PrimaryGeneratedColumn()
@@ -54,7 +44,7 @@ export class Club {
 			onDelete: 'CASCADE',
 			onUpdate: 'CASCADE'
 		})
-	@JoinColumn({ name: "contact" })
+	@JoinColumn({ name: "login" })
 	contact: Stud
 
 	@Column({

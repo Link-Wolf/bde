@@ -22,6 +22,7 @@ export class ClubService {
 		try {
 			let clubs = await this.clubRepository.find()
 			this.logger.log(`Got all clubs`, requestMaker);
+			console.log(clubs)
 			return clubs;
 		} catch (error) {
 			this.logger.error(`Failed -> Get all club on database (${error})`, requestMaker);
