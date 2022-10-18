@@ -52,44 +52,62 @@ const Filter = param => {
 	};
 
 	return (
-		<div className={style.events}>
-			<CheckSet
-				hidden
-				set={[
-					{
-						label: "Free",
-						name: "free",
-						checked: param.filter.free
-					},
-					{
-						label: "Available",
-						name: "available",
-						checked: param.filter.available
-					},
-					{
-						label: "Miammiam glouglou",
-						name: "food",
-						checked: param.filter.food
-					},
-					{
-						label: "Dehors",
-						name: "outside",
-						checked: param.filter.outside
-					},
-					{
-						label: "Places illimitées",
-						name: "unlimited",
-						checked: param.filter.unlimited
-					},
-					{
-						label: "Sponsorisé",
-						name: "sponso",
-						checked: param.filter.sponso
-					}
-				]}
-				onChange={handleFormChange}
-				type="checkbox"
-			/>
+		<div className={style.eventFilter}>
+			<button
+				onClick={() => {
+					if (
+						document.getElementById(style.dropdownMenu).style
+							.display == "block"
+					)
+						document.getElementById(
+							style.dropdownMenu
+						).style.display = "none";
+					else
+						document.getElementById(
+							style.dropdownMenu
+						).style.display = "block";
+				}}
+			>
+				Filtrer
+			</button>
+			<div id={style.dropdownMenu}>
+				<CheckSet
+					set={[
+						{
+							label: "Free",
+							name: "free",
+							checked: param.filter.free
+						},
+						{
+							label: "Available",
+							name: "available",
+							checked: param.filter.available
+						},
+						{
+							label: "Miammiam glouglou",
+							name: "food",
+							checked: param.filter.food
+						},
+						{
+							label: "Dehors",
+							name: "outside",
+							checked: param.filter.outside
+						},
+						{
+							label: "Places illimitées",
+							name: "unlimited",
+							checked: param.filter.unlimited
+						},
+						{
+							label: "Sponsorisé",
+							name: "sponso",
+							checked: param.filter.sponso
+						}
+					]}
+					onChange={handleFormChange}
+					type="checkbox"
+				/>
+			</div>
 		</div>
 	);
 };
