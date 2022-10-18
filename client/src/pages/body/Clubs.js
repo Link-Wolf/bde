@@ -53,3 +53,13 @@ const Clubs = () => {
 };
 
 export default Clubs;
+
+/*Nom
+Desc courte
+Prix
+Conditions d'acces
+But
+Contact 42
+Liens
+Zone libre
+*/
