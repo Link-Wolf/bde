@@ -42,14 +42,8 @@ function Header() {
 					if (data.clearance > global.config.clearance.default) {
 						setLeftButton(
 							<>
-								<a href="/events">
-									<h1>Events</h1>
-								</a>
 								<a href="/clubs">
 									<h1>Clubs</h1>
-								</a>
-								<a href="/shop">
-									<h1>Shop</h1>
 								</a>
 								<a href="/contact">
 									<h1>Contact</h1>
