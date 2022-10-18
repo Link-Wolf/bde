@@ -41,5 +41,14 @@
 		}
 	}
 
-	.events {}
+	.eventFilter {
+		position: relative;
+
+		button {}
+
+		#dropdownMenu {
+			display: none;
+			position: absolute;
+		}
+	}
 }
