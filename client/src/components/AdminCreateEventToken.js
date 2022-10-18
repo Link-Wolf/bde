@@ -4,15 +4,34 @@ import useConfirm from "./useConfirm";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+const parseDate = date => {
+	return (
+		two_digiter(date.getFullYear()) +
+		"-" +
+		two_digiter(date.getMonth() + 1) +
+		"-" +
+		two_digiter(date.getDate()) +
+		"T" +
+		two_digiter(date.getHours()) +
+		":" +
+		two_digiter(date.getMinutes())
+	);
+};
+
+const two_digiter = nb => {
+	if (nb < 10) return "0" + nb;
+	return nb;
+};
+
 const AdminCreateEventToken = param => {
 	const {isConfirmed} = useConfirm();
 
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
-		begin_date: "",
-		end_date: "",
-		available_date: new Date(Date.now()),
+		begin_date: parseDate(new Date(Date.now())),
+		end_date: parseDate(new Date(Date.now())),
+		available_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
@@ -27,9 +46,9 @@ const AdminCreateEventToken = param => {
 	const [bodyState, setBodyState] = useState({
 		name: "",
 		desc: "",
-		begin_date: "",
-		end_date: "",
-		available_date: new Date(Date.now()),
+		begin_date: parseDate(new Date(Date.now())),
+		end_date: parseDate(new Date(Date.now())),
+		available_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
@@ -52,48 +71,47 @@ const AdminCreateEventToken = param => {
 				? target.checked
 				: target.value;
 		const name = target.name;
-		tmp[name] = value;
-		let begin_date = new Date(Date.parse(tmp.begin_date));
-		let end_date = new Date(Date.parse(tmp.end_date));
-		let available_date = new Date(Date.parse(tmp.available_date));
-		let tmpBody = {...tmp};
-		tmpBody.end_date =
-			two_digiter(end_date.getFullYear()) +
-			"-" +
-			two_digiter(end_date.getMonth() + 1) +
-			"-" +
-			two_digiter(end_date.getDate()) +
-			"T" +
-			two_digiter(end_date.getHours()) +
-			":" +
-			two_digiter(end_date.getMinutes());
-		tmpBody.begin_date =
-			two_digiter(begin_date.getFullYear()) +
-			"-" +
-			two_digiter(begin_date.getMonth() + 1) +
-			"-" +
-			two_digiter(begin_date.getDate()) +
-			"T" +
-			two_digiter(begin_date.getHours()) +
-			":" +
-			two_digiter(begin_date.getMinutes());
-		tmpBody.available_date =
-			two_digiter(available_date.getFullYear()) +
-			"-" +
-			two_digiter(available_date.getMonth() + 1) +
-			"-" +
-			two_digiter(available_date.getDate()) +
-			"T" +
-			two_digiter(available_date.getHours()) +
-			":" +
-			two_digiter(available_date.getMinutes());
-		setBodyState(tmpBody);
-		setFormState(tmp);
-	};
 
-	const two_digiter = nb => {
-		if (nb < 10) return "0" + nb;
-		return nb;
+		tmp[name] = value;
+		// console.log(tmp);
+
+		// let begin_date = new Date(Date.parse(tmp.begin_date));
+		// let end_date = new Date(Date.parse(tmp.end_date));
+		// let available_date = new Date(Date.parse(tmp.available_date));
+		// let tmpBody = {...tmp};
+		// console.log(tmp.begin_date);
+		// tmpBody.end_date =
+		// 	two_digiter(end_date.getFullYear()) +
+		// 	"-" +
+		// 	two_digiter(end_date.getMonth() + 1) +
+		// 	"-" +
+		// 	two_digiter(end_date.getDate()) +
+		// 	"T" +
+		// 	two_digiter(end_date.getHours()) +
+		// 	":" +
+		// 	two_digiter(end_date.getMinutes());
+		// tmpBody.begin_date =
+		// 	two_digiter(begin_date.getFullYear()) +
+		// 	"-" +
+		// 	two_digiter(begin_date.getMonth() + 1) +
+		// 	"-" +
+		// 	two_digiter(begin_date.getDate()) +
+		// 	"T" +
+		// 	two_digiter(begin_date.getHours()) +
+		// 	":" +
+		// 	two_digiter(begin_date.getMinutes());
+		// tmpBody.available_date =
+		// 	two_digiter(available_date.getFullYear()) +
+		// 	"-" +
+		// 	two_digiter(available_date.getMonth() + 1) +
+		// 	"-" +
+		// 	two_digiter(available_date.getDate()) +
+		// 	"T" +
+		// 	two_digiter(available_date.getHours()) +
+		// 	":" +
+		// 	two_digiter(available_date.getMinutes());
+		setBodyState(tmp);
+		setFormState(tmp);
 	};
 
 	const saveEvent = async () => {

@@ -1,91 +1,117 @@
-import {React} from "react";
+import {React, useState} from "react";
 import EventList from "../../components/EventList";
+import CheckSet from "../../components/CheckSet";
 
-import style from "../../style/Home.module.css";
+import style from "../../style/Home.module.scss";
+import frontImage from "../../assets/images/front.jpg";
 
 const Home = () => {
-	const getStock = () => {
-		fetch(`http://${global.config.api.authority}/google`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is` +
-							` ${response.status}`
-					);
-				}
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
+	const [filter, setFilter] = useState({
+		current: true,
+		free: false,
+		available: false,
+		food: false,
+		unlimited: false,
+		outside: false,
+		sponso: false,
+		sort: "begin_date",
+		asc: false,
+		available_date: true
+	});
+
+	return (
+		<div className={style.homeContainer}>
+			<HeaderHome />
+			<Filter filter={filter} setFilter={setFilter} />
+			<EventList filter={filter} showCount />
+		</div>
+	);
+};
+
+const HeaderHome = () => {
+	return (
+		<div className={style.frontImage}>
+			<img src={frontImage} />
+			<div className={style.color} />
+			<div className={style.text}>
+				<h1>BDE 42 Mulhouse</h1>
+			</div>
+		</div>
+	);
+};
+
+const Filter = param => {
+	const handleFormChange = event => {
+		let tempFilter = {...param.filter};
+		const target = event.target;
+		const value =
+			target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		tempFilter[name] = value;
+		param.setFilter(tempFilter);
 	};
 
 	return (
-		<div>
-			<button onClick={getStock}>Test api google</button>
-			<p className={style.p}>
-				[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
-				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
-				Etiam sit amet dapibus nisi. Donec bibendum pulvinar augue, vel
-				varius elit efficitur sit amet. Pellentesque vel massa et leo
-				sagittis dignissim nec sed massa. In congue luctus nunc vel
-				tincidunt. Suspendisse a lobortis nisi, tincidunt varius odio.
-				Sed accumsan blandit libero non euismod. Donec vehicula orci sit
-				aliquam lacus sit amet odio mattis fringilla. Donec aliquam
-				vulputate ex a posuere. Etiam in mi ut risus venenatis mollis eu
-				quis nibh. Proin ultrices enim interdum dui sollicitudin
-				sagittis. Nam a faucibus leo, vitae fringilla odio. Maecenas vel
-				ipsum ullamcorper, euismod erat pulvinar, mollis lacus. Nulla in
-				fermentum felis. Vivamus ornare nisi mollis purus blandit, nec
-				fermentum nibh finibus. Nulla sit amet venenatis augue. Cras ac
-				lorem vitae sem rutrum dapibus. In vel facilisis velit. Nam
-				dictum convallis massa nec luctus. Integer at ipsum sed massa
-				tempus blandit aliquet vel magna. Cras semper malesuada elit,
-				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
-				pulvinar et, accumsan eu lectus. Sed porttitor.]
-			</p>
-			<div className={style.event_show}>
-				<div className={style.margin5}>
-					<EventList filter={{current: 1}} />
-				</div>
-			</div>
-			<p className={style.p}>
-				[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-				et ante sit amet diam venenatis laoreet nec dictum risus. Ut
-				sagittis sem ac dui scelerisque, vel commodo nunc pellentesque.
-				Etiam sit amet dapibus nisi. Donec bibendum pulvinar augue, vel
-				varius elit efficitur sit amet. Pellentesque vel massa et leo
-				sagittis dignissim nec sed massa. In congue luctus nunc vel
-				quam. Integer aliquam neque at pellentesque condimentum. Quisque
-				a vulputate odio. Etiam eu luctus ante. Pellentesque et ex enim.
-				Maecenas fermentum diam sed tincidunt tristique. Sed ac mollis
-				metus, in dapibus nibh. Quisque venenatis facilisis ex sed
-				dapibus. Duis ac diam non orci facilisis fringilla. Maecenas
-				imperdiet convallis tortor non ullamcorper. Cras eros arcu,
-				dignissim at eros et, euismod eleifend neque. Maecenas suscipit
-				semper quam, ut congue risus dictum ac. In a dignissim nunc.
-				Curabitur hendrerit vel mi vel facilisis. Nunc sollicitudin
-				ullamcorper ante, viverra vulputate enim sollicitudin nec. Nunc
-				aliquam lacus sit amet odio mattis fringilla. Donec aliquam
-				vulputate ex a posuere. Etiam in mi ut risus venenatis mollis eu
-				quis nibh. Proin ultrices enim interdum dui sollicitudin
-				sagittis. Nam a faucibus leo, vitae fringilla odio. Maecenas vel
-				ipsum ullamcorper, euismod erat pulvinar, mollis lacus. Nulla in
-				fermentum felis. Vivamus ornare nisi mollis purus blandit, nec
-				fermentum nibh finibus. Nulla sit amet venenatis augue. Cras ac
-				lorem vitae sem rutrum dapibus. In vel facilisis velit. Nam
-				dictum convallis massa nec luctus. Integer at ipsum sed massa
-				tempus blandit aliquet vel magna. Cras semper malesuada elit,
-				quis rhoncus diam ornare vitae. Nam purus metus, pellentesque id
-				pulvinar et, accumsan eu lectus. Sed porttitor.]
-			</p>
+		<div className={style.events}>
+			<CheckSet
+				hidden
+				set={[
+					{
+						label: "Free",
+						name: "free",
+						checked: param.filter.free
+					},
+					{
+						label: "Available",
+						name: "available",
+						checked: param.filter.available
+					},
+					{
+						label: "Miammiam glouglou",
+						name: "food",
+						checked: param.filter.food
+					},
+					{
+						label: "Dehors",
+						name: "outside",
+						checked: param.filter.outside
+					},
+					{
+						label: "Places illimitées",
+						name: "unlimited",
+						checked: param.filter.unlimited
+					},
+					{
+						label: "Sponsorisé",
+						name: "sponso",
+						checked: param.filter.sponso
+					}
+				]}
+				onChange={handleFormChange}
+				type="checkbox"
+			/>
 		</div>
 	);
 };
 
 export default Home;
+
+// const getStock = () => {
+// 	fetch(`http://${global.config.api.authority}/google`, {
+// 		credentials: "include"
+// 	})
+// 		.then(response => {
+// 			if (!response.ok) {
+// 				throw new Error(
+// 					`This is an HTTP error: The status is` +
+// 						` ${response.status}`
+// 				);
+// 			}
+// 		})
+// 		.catch(function(error) {
+// 			console.log(
+// 				"Il y a eu un problème avec l'opération fetch: " +
+// 					error.message
+// 			);
+// 		});
+// };

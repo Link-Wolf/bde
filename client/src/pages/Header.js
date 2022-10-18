@@ -75,9 +75,13 @@ function Header() {
 	}, []);
 
 	const toggleBurgerMenu = () => {
-		if (document.getElementById(style.burgerMenu).style.left === "0px")
+		if (document.getElementById(style.burgerMenu).style.left === "0px") {
+			document.getElementById(style.burgerMenu).style.width = "0";
 			document.getElementById(style.burgerMenu).style.left = "100vw";
-		else document.getElementById(style.burgerMenu).style.left = "0";
+		} else {
+			document.getElementById(style.burgerMenu).style.left = "0";
+			document.getElementById(style.burgerMenu).style.width = "100vw";
+		}
 	};
 
 	return (

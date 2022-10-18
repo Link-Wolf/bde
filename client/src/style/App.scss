@@ -1,12 +1,10 @@
 @fontface {
 	font-family: Futura;
 	src: url("../assets/fonts/Futura-Medium-01.ttf") format("truetype");
-	font-weight: normal;
 }
 @fontface {
 	font-family: Futura;
 	src: url("../assets/fonts/Futura-MediumItalic-02.ttf") format("truetype");
-	font-weight: normal;
 	font-style: italic;
 }
 @fontface {
@@ -17,13 +15,12 @@
 @fontface {
 	font-family: Futura;
 	src: url("../assets/fonts/Futura-CondensedMedium-04.ttf") format("truetype");
-	font-weight: normal;
 	font-stretch: condensed;
 }
 @fontface {
 	font-family: Futura;
 	src: url("../assets/fonts/Futura-CondensedExtraBold-05.ttf") format("truetype");
-	font-weight: bolder;
+	font-weight: bold;
 	font-stretch: condensed;
 }
 

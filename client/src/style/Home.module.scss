@@ -1,0 +1,45 @@
+.homeContainer {
+	.frontImage {
+		width: 100vw;
+		height: 400px;
+		overflow: hidden;
+
+		img {
+			width: 100vw;
+			height: 400px;
+			object-fit: cover;
+		}
+
+		div {
+			position: relative;
+			top: -400px;
+			left: 0;
+			width: 100vw;
+			height: 400px;
+
+			&.color {
+				background-color: var(--primary);
+				padding: 0 0 0 20px;
+				opacity: 0.8;
+			}
+
+			&.text {
+				top: -800px;
+				color: var(--white);
+				text-align: center;
+				display: table;
+				text-transform: uppercase;
+
+				h1 {
+					font-size: 120px;
+					display: table-cell;
+					vertical-align: middle;
+					font-family: Futura;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.events {}
+}
