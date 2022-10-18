@@ -6,6 +6,7 @@ import {
 	usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
 import getLabel from "react-select-country-list";
+import style from "../../style/Contribute.module.scss";
 
 const ContributeButtons = props => {
 	const currency = "EUR";
@@ -737,9 +738,9 @@ const Contribute = () => {
 	}
 
 	return (
-		<div style={{display: "flex"}}>
+		<div className={style.contribute}>
 			<div>
-				<div>
+				<div className={style.address}>
 					<AddressForm
 						setState={setAddressFormState}
 						state={addressFormState}
@@ -779,7 +780,7 @@ const Contribute = () => {
 						Annuler
 					</button>
 					{validated && (
-						<div hidden={!validated}>
+						<div hidden={!validated} className={style.paypal}>
 							<PayPalScriptProvider options={optionsProvider}>
 								<ContributeButtons
 									amount={amount}
@@ -794,7 +795,7 @@ const Contribute = () => {
 					<LegalNote />
 				</div>
 			</div>
-			<div>
+			<div className={style.recap}>
 				<CommandRecap amount={amount} time={time} />
 			</div>
 		</div>
