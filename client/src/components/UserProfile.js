@@ -304,7 +304,7 @@ const UserProfile = options => {
 				<div>
 					{!dataStud.true_email ? (
 						<></>
-					) : (
+					) : options.command_history ? (
 						<>
 							Mon email :
 							<input
@@ -347,6 +347,8 @@ const UserProfile = options => {
 								Enregistrer
 							</button>
 						</>
+					) : (
+						<></>
 					)}
 				</div>
 				<div>
