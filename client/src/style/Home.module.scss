@@ -1,4 +1,6 @@
 .homeContainer {
+	--colWidth: 400px;
+
 	.frontImage {
 		width: 100vw;
 		height: 400px;
@@ -104,8 +106,29 @@
 		}
 
 		.ProductListContainer {
-			width: 500px;
-			background: var(--secondary);
+			--margin: 10px;
+			--padding: 5px;
+			width: var(--colWidth);
+
+			.thumbnailsContainer {
+				margin: var(--margin);
+				width: calc(var(--colWidth) - 2 * var(--margin));
+				display: flex;
+
+				img {
+					padding: var(--padding);
+					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
+					height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
+					object-fit: cover;
+				}
+
+				.miniThumbnailsContainer {
+					img {
+						width: calc((var(--colWidth) - 2 * var(--margin)) / 3);
+						height: calc((var(--colWidth) - 2 * var(--margin)) / 3);
+					}
+				}
+			}
 		}
 	}
 }

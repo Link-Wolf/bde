@@ -18,7 +18,7 @@
 }
 
 .eventListContainer {
-	width: 30vw;
+	width: var(--colWidth);
 	margin: 50px 0;
 
 	ul {
