@@ -97,7 +97,7 @@ const Clubs = () => {
 		<>
 			<div>Aucun club actuellement disponibles</div>
 			<div>
-				Mais pas d'inquie2tude ! Venez créer le votre dès maintenant en
+				Mais pas d'inquiétude ! Venez créer le votre dès maintenant en
 				nous <a href="/contact">contactant</a>
 			</div>
 		</>
