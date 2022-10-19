@@ -124,7 +124,7 @@ function Header() {
 							src={bde_logo}
 							className="d-inline-block align-top"
 						/>
-						<h1>La Fregate</h1>
+						<h1>La Frégate</h1>
 					</a>
 				</div>
 				<div className={style.buttonContainer}>{leftButton}</div>

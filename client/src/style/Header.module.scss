@@ -13,9 +13,10 @@
 	}
 
 	h1 {
+		text-transform: uppercase;
 		color: #B0BABF;
 		font-size: 2vh;
-		margin: 0;
+		margin: 0 0 0 20px;
 		padding: 1.7vh 0.5vw;
 	}
 
@@ -80,6 +81,7 @@
 		}
 
 		h1 {
+			text-transform: none;
 			font-size: 3vh;
 			color: #D2D8DA;
 			margin: 0;

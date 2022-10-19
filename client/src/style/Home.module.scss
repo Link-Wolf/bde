@@ -1,21 +1,21 @@
 .homeContainer {
 	.frontImage {
 		width: 100vw;
-		height: 400px;
+		height: 520px;
 		overflow: hidden;
 
 		img {
 			width: 100vw;
-			height: 400px;
+			height: 520px;
 			object-fit: cover;
 		}
 
 		div {
 			position: relative;
-			top: -400px;
+			top: -520px;
 			left: 0;
 			width: 100vw;
-			height: 400px;
+			height: 520px;
 
 			&.color {
 				background-color: var(--primary);
@@ -24,12 +24,12 @@
 			}
 
 			&.text {
-				top: -800px;
+				top: -1040px;
 				color: var(--white);
 				text-align: center;
 				display: flex;
 				flex-direction: column;
-				justify-content: space-between;
+				justify-content: center;
 				padding: 20px 0;
 
 				p {
@@ -65,6 +65,7 @@
 			margin: 0;
 			text-transform: uppercase;
 			font-weight: bold;
+			text-align: center;
 		}
 
 		h2 + hr {
@@ -83,7 +84,7 @@
 					border: solid var(--secondary-dark) 1px;
 					background: var(--secondary);
 
-					&:hover {
+					color:var(--white) &:hover {
 						background: var(--secondary-dark);
 					}
 
@@ -104,8 +105,30 @@
 		}
 
 		.ProductListContainer {
-			width: 500px;
-			background: var(--secondary);
+			--colWidth: 550px;
+			--margin: 10px;
+			--padding: 5px;
+			width: var(--colWidth);
+
+			.thumbnailsContainer {
+				margin: var(--margin);
+				width: calc(var(--colWidth) - 2 * var(--margin));
+				display: flex;
+
+				img {
+					padding: var(--padding);
+					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
+					height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
+					object-fit: cover;
+				}
+
+				.miniThumbnailsContainer {
+					img {
+						width: calc((var(--colWidth) - 2 * var(--margin)) / 3);
+						height: calc((var(--colWidth) - 2 * var(--margin)) / 3);
+					}
+				}
+			}
 		}
 	}
 }
