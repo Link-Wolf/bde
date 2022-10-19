@@ -17,6 +17,8 @@ const EventList = param => {
 	const viewData = usePagination(data, PER_PAGE);
 	const [popUpEvent, setPopUpEvent] = useState(-1);
 
+	const telephone = window.innerWidth < window.innerHeight;
+
 	useEffect(() => {
 		const requestOptions = {
 			method: "post",
@@ -72,18 +74,16 @@ const EventList = param => {
 					{data.length >= 2 ? <>résultats</> : <>résultat</>}
 				</p>
 			)}
-			<div className={style.scroll_container_40vw}>
-				{data.length > 3 ? (
+			<div className={style.eventListContainer}>
+				{data.length > 3 && !telephone && (
 					<Pagination
 						count={count}
 						page={page}
 						onChange={handleChangePage}
 					/>
-				) : (
-					<></>
 				)}
 				<ul className={style.eventList}>
-					{viewData.currentData().map(item => (
+					{(telephone ? data : viewData.currentData()).map(item => (
 						<li key={item.id}>
 							<EventToken
 								setPopUpEvent={setPopUpEvent}
@@ -93,14 +93,12 @@ const EventList = param => {
 						</li>
 					))}
 				</ul>
-				{data.length > 3 ? (
+				{data.length > 3 && !telephone && (
 					<Pagination
 						count={count}
 						page={page}
 						onChange={handleChangePage}
 					/>
-				) : (
-					<></>
 				)}
 			</div>
 			{popUpEvent !== -1 && (

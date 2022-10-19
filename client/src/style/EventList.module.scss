@@ -28,6 +28,24 @@
 		}
 	}
 }
+@media (max-width: 100vh) {
+	.eventListContainer {
+		width: 94vw;
+		margin: 0 3vw;
+
+		.eventList {
+			display: flex;
+
+			li {
+				hr {
+					display: none;
+				}
+			}
+			// display: inline;
+			overflow: scroll;
+		}
+	}
+}
 @keyframes blurAppear {
 	0% {
 		backdrop-filter: blur(0px);

@@ -57,3 +57,29 @@
 	// 	display: none;
 	// }
 }
+@media (max-width: 100vh) {
+	.eventTokenContainer {
+		border: solid var(--light-grey) 1px;
+		width: 200px;
+		height: 90%;
+		flex-direction: column;
+		padding: 5px;
+		margin: 5% 10px;
+
+		img {
+			width: 190px;
+		}
+
+		div {
+			padding: 0;
+			justify-content: space-between;
+			width: 190px;
+			height: 100%;
+
+			h1 {
+				width: 190px;
+				font-size: 20px;
+			}
+		}
+	}
+}
