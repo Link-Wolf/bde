@@ -69,10 +69,12 @@
 				position: relative;
 
 				#dropdownButton {
+					margin: 10px;
 					border: solid var(--light-grey) 1px;
 				}
 
 				#dropdownMenu {
+					padding: 10px;
 					border: solid var(--light-grey) 1px;
 					z-index: 9999;
 					display: none;
