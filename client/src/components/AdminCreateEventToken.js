@@ -25,7 +25,6 @@ const two_digiter = nb => {
 
 const AdminCreateEventToken = param => {
 	const {isConfirmed} = useConfirm();
-
 	const [formState, setFormState] = useState({
 		name: "",
 		desc: "",
@@ -116,7 +115,7 @@ const AdminCreateEventToken = param => {
 
 	const saveEvent = async () => {
 		if (!document.getElementById("createEventForm").checkValidity()) return;
-		const confirm = await isConfirmed(`Desire tu creer cet event ?`);
+		const confirm = await isConfirmed(`Désires tu créer cet évènement ?`);
 		if (confirm) {
 			var myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
