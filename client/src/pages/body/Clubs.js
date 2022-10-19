@@ -58,32 +58,49 @@ const Clubs = () => {
 	return load ? (
 		<div>Chargement ...</div>
 	) : clubs.length ? (
-		<div>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
-			{clubs.length > 0 && (
-				<ul>
-					{viewData.currentData().map(club => (
-						<li key={club.id}>
-							<ul>
-								<li>{club.name}</li>
-								<li>{club.desc}</li>
-								<li>{club.cost}</li>
-								<li>{club.access}</li>
-								<li>{club.goal}</li>
-								<li>{club.link}</li>
-								<li>{club.details}</li>
-								<li>{club.login}</li>
-							</ul>
-						</li>
-					))}
-				</ul>
-			)}
-			<Pagination count={count} page={page} onChange={handleChangePage} />
-		</div>
+		<>
+			<div>
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+				{clubs.length > 0 && (
+					<ul>
+						{viewData.currentData().map(club => (
+							<li key={club.id}>
+								<ul>
+									<li>{club.name}</li>
+									<li>{club.desc}</li>
+									<li>{club.cost}</li>
+									<li>{club.access}</li>
+									<li>{club.goal}</li>
+									<li>{club.link}</li>
+									<li>{club.details}</li>
+									<li>{club.login}</li>
+								</ul>
+							</li>
+						))}
+					</ul>
+				)}
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			</div>
+			<div>
+				Envie de créer un club ? <a href="/contact">Dites le nous</a>
+			</div>
+		</>
 	) : (
-		<div>
-			Aucun logs disponibles correspondants aux filtres sélectionnés
-		</div>
+		<>
+			<div>Aucun club actuellement disponibles</div>
+			<div>
+				Mais pas d'inquie2tude ! Venez créer le votre dès maintenant en
+				nous <a href="/contact">contactant</a>
+			</div>
+		</>
 		// <div>
 		// 	<div>
 		// 		<h1>Club DIY (LabHidouille)</h1>
