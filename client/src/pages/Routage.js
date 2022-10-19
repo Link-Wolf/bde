@@ -18,6 +18,7 @@ import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
 import AdminCaptainManagement from "./body/AdminCaptainManagement";
 import AdminStudents from "./body/AdminStudents";
+import AdminClubs from "./body/AdminClubs";
 import Log from "./body/Log";
 import Me from "./body/Me";
 import Clubs from "./body/Clubs";
@@ -119,6 +120,15 @@ const Routage = () => {
 					element={
 						<RouteWrapper
 							route={<AdminShopGestion />}
+							check={global.config.clearance.admin}
+						/>
+					}
+				/>
+				<Route
+					path="admin/clubs"
+					element={
+						<RouteWrapper
+							route={<AdminClubs />}
 							check={global.config.clearance.admin}
 						/>
 					}

@@ -20,9 +20,8 @@ export class ClubService {
 
 	async findAll(requestMaker: string): Promise<Club[]> {
 		try {
-			let clubs = await this.clubRepository.find()
+			let clubs = await this.manager.query(`SELECT * FROM "club"`);
 			this.logger.log(`Got all clubs`, requestMaker);
-			console.log(clubs)
 			return clubs;
 		} catch (error) {
 			this.logger.error(`Failed -> Get all club on database (${error})`, requestMaker);

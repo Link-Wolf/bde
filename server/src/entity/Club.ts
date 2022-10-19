@@ -48,7 +48,7 @@ export class Club {
 	contact: Stud
 
 	@Column({
-		nullable: false
+		nullable: true
 	})
 	link: string
 

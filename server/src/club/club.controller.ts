@@ -1,10 +1,12 @@
 import {
 	Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
-	Session, UseGuards
+	Session, UseGuards, Body
 } from '@nestjs/common';
 import { ClubService } from './club.service';
 import { Club } from '../entity/Club'
 import { ClubDto } from './club.dto';
+import { ClubDtoPipe } from './club.pipe';
+
 import { ClearanceGuard } from '../auth/clearance.guard';
 
 @Controller('club/')
@@ -26,14 +28,15 @@ export class ClubController {
 	@Post('')
 	@UseGuards(new ClearanceGuard(11))
 	create(
-		@Session() session: Record<string, any>, club: ClubDto) {
+		@Session() session: Record<string, any>, @Body(ClubDtoPipe) club: ClubDto) {
+		console.log("controller", club)
 		return this.clubService.create(club, session.login);
 	}
 
 	@Patch(':id')
 	@UseGuards(new ClearanceGuard(11))
 	update(
-		@Session() session: Record<string, any>, @Param('id') id: number, club: ClubDto) {
+		@Session() session: Record<string, any>, @Param('id') id: number, @Body(ClubDtoPipe) club: ClubDto) {
 		return this.clubService.update(id, club, session.login);
 	}
 
