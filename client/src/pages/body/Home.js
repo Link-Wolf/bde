@@ -26,8 +26,8 @@ const Home = () => {
 				<div>
 					<h2>Nos Evenements</h2> {/*TODO: text here*/}
 					<hr />
+					<EventList filter={filter} className={style.col} />{" "}
 					<Filter filter={filter} setFilter={setFilter} />
-					<EventList filter={filter} className={style.col} />
 				</div>
 				<ProductList />
 			</div>

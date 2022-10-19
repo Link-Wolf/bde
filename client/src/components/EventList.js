@@ -83,13 +83,15 @@ const EventList = param => {
 				</p>
 			)}
 			<div className={style.eventListContainer}>
-				{data.length > 3 && !telephone && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
+				<div className={style.paginationContainer}>
+					{data.length > 3 && !telephone && (
+						<Pagination
+							count={count}
+							page={page}
+							onChange={handleChangePage}
+						/>
+					)}
+				</div>
 				<ul className={style.eventList}>
 					{(telephone ? data : viewData.currentData()).map(item => (
 						<li key={item.id}>
@@ -101,13 +103,15 @@ const EventList = param => {
 						</li>
 					))}
 				</ul>
-				{data.length > 3 && !telephone && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
+				<div className={style.paginationContainer}>
+					{data.length > 3 && !telephone && (
+						<Pagination
+							count={count}
+							page={page}
+							onChange={handleChangePage}
+						/>
+					)}
+				</div>
 			</div>
 			{popUpEvent !== -1 && (
 				<>
