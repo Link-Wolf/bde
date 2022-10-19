@@ -19,19 +19,29 @@
 
 .eventListContainer {
 	width: 400px;
-	margin: 50px 0;
+	height: 510px;
+	margin: 0;
 
 	ul {
+		width: 400px;
 		justify-content: center;
+	}
+
+	.paginationContainer {
+		height: 32px;
 	}
 
 	.eventList {
 		padding: 0;
 		margin: 0;
 		list-style-type: none;
+		width: 400px;
 
 		li:nth-last-of-type(1) {
+			width: 400px;
+
 			hr {
+				width: 400px;
 				display: none;
 			}
 		}

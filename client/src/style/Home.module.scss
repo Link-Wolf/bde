@@ -31,9 +31,14 @@
 				flex-direction: column;
 				justify-content: center;
 				padding: 20px 0;
+				margin: 50px 0 0;
 
 				p {
 					line-height: 0.8;
+				}
+
+				span {
+					margin: 120px 0 0;
 				}
 
 				h1 {
@@ -62,7 +67,7 @@
 		height: 800px;
 
 		h2 {
-			margin: 0;
+			margin: 70px 0;
 			text-transform: uppercase;
 			font-weight: bold;
 			text-align: center;
@@ -77,14 +82,17 @@
 
 			&.eventFilter {
 				position: relative;
+				width: 400px;
 
 				#dropdownButton {
 					padding: 5px 15px;
-					margin: 10px 0 0;
+					width: 80px;
+					margin: 30px 160px 0;
 					border: solid var(--secondary-dark) 1px;
 					background: var(--secondary);
+					color: var(--white);
 
-					color:var(--white) &:hover {
+					&:hover {
 						background: var(--secondary-dark);
 					}
 
@@ -95,11 +103,18 @@
 
 				#dropdownMenu {
 					padding: 10px;
-					border: solid var(--light-grey) 1px;
+					border: solid var(--dark-grey) 1px;
+					width: 200px;
 					z-index: 9999;
 					display: none;
 					position: absolute;
-					background: var(--white);
+					background: var(--light-grey);
+					top: -137px;
+					left: 160px;
+
+					input {
+						margin: 5px;
+					}
 				}
 			}
 		}
