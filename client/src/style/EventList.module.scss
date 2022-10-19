@@ -30,8 +30,8 @@
 }
 @media (max-width: 100vh) {
 	.eventListContainer {
-		width: 94vw;
-		margin: 0 3vw;
+		width: 90vw;
+		margin: 0 5vw;
 
 		.eventList {
 			display: flex;
@@ -42,7 +42,8 @@
 				}
 			}
 			// display: inline;
-			overflow: scroll;
+			overflow-x: scroll;
+			overflow-y: hidden;
 		}
 	}
 }
