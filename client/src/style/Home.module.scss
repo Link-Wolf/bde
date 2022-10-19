@@ -78,3 +78,10 @@
 		}
 	}
 }
+@media (max-width: 100vh) {
+	.homeContainer {
+		.lists {
+			display: block;
+		}
+	}
+}
