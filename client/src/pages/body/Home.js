@@ -151,11 +151,123 @@ const Filter = param => {
 };
 
 const ProductList = () => {
-	return <div>LES PRODUITS</div>;
-};
+	const [products, setProducts] = useState([{id: 0}, {id: 1}, {id: 2}]);
+	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
+	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
+	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
 
-const Presentation = () => {
-	return <div className={style.presentation}></div>;
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[2].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailCap(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[0].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailHoodies(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[1].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailTshirt(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/goodies`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setProducts(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
+
+	return (
+		<div className={style.ProductListContainer}>
+			<h2>NOS PRODUITS</h2>
+			<img src={thumbnailHoodies} />
+			<img src={thumbnailTshirt} />
+			<img src={thumbnailCap} />
+		</div>
+	);
 };
 
 export default Home;

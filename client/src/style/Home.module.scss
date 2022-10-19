@@ -55,7 +55,7 @@
 
 	.lists {
 		display: flex;
-		justify-content: center;
+		justify-content: space-around;
 		background: var(--white);
 		color: var(--black);
 		margin: 0 0 500px;
@@ -63,6 +63,7 @@
 
 		h2 {
 			margin: 0;
+			text-transform: uppercase;
 			font-weight: bold;
 		}
 
@@ -79,15 +80,15 @@
 				#dropdownButton {
 					padding: 5px 15px;
 					margin: 10px 0 0;
-					border: solid var(--light-grey) 1px;
-					background: var(--white);
+					border: solid var(--secondary-dark) 1px;
+					background: var(--secondary);
 
 					&:hover {
-						background: var(--light-grey);
+						background: var(--secondary-dark);
 					}
 
 					&:active {
-						background: var(--dark-grey);
+						background: var(--secondary-dark);
 					}
 				}
 
@@ -100,6 +101,11 @@
 					background: var(--white);
 				}
 			}
+		}
+
+		.ProductListContainer {
+			width: 500px;
+			background: var(--secondary);
 		}
 	}
 }
