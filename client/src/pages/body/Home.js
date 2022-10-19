@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
 
@@ -71,23 +71,39 @@ const Filter = param => {
 		param.setFilter(tempFilter);
 	};
 
+	const filterHanddler = () => {
+		if (
+			document.getElementById(style.dropdownMenu).style.display == "block"
+		)
+			document.getElementById(style.dropdownMenu).style.display = "none";
+		else
+			document.getElementById(style.dropdownMenu).style.display = "block";
+	};
+
+	useEffect(() => {
+		function handleClick(e) {
+			if (
+				document.getElementById(style.dropdownMenu) !== e.target &&
+				!document
+					.getElementById(style.dropdownMenu)
+					.contains(e.target) &&
+				document.getElementById(style.dropdownMenu).style.display ==
+					"block" &&
+				document.getElementById(style.dropdownButton) !== e.target &&
+				!document
+					.getElementById(style.dropdownButton)
+					.contains(e.target)
+			) {
+				filterHanddler();
+			}
+		}
+		window.addEventListener("click", handleClick);
+		return () => window.removeEventListener("click", handleClick);
+	}, []);
+
 	return (
 		<div className={`${style.eventFilter} ${style.col}`}>
-			<button
-				onClick={() => {
-					if (
-						document.getElementById(style.dropdownMenu).style
-							.display == "block"
-					)
-						document.getElementById(
-							style.dropdownMenu
-						).style.display = "none";
-					else
-						document.getElementById(
-							style.dropdownMenu
-						).style.display = "block";
-				}}
-			>
+			<button onClick={filterHanddler} id={style.dropdownButton}>
 				Filtrer
 			</button>
 			<div id={style.dropdownMenu}>

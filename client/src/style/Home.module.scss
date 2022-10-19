@@ -68,11 +68,16 @@
 			&.eventFilter {
 				position: relative;
 
-				button {}
+				#dropdownButton {
+					border: solid var(--light-grey) 1px;
+				}
 
 				#dropdownMenu {
+					border: solid var(--light-grey) 1px;
+					z-index: 9999;
 					display: none;
 					position: absolute;
+					background: var(--white);
 				}
 			}
 		}
