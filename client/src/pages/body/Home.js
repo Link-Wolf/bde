@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
 
@@ -24,6 +24,8 @@ const Home = () => {
 			<HeaderHome />
 			<div className={style.lists}>
 				<div>
+					<h2>Nos Evenements</h2> {/*TODO: text here*/}
+					<hr />
 					<Filter filter={filter} setFilter={setFilter} />
 					<EventList filter={filter} className={style.col} />
 				</div>
@@ -71,23 +73,39 @@ const Filter = param => {
 		param.setFilter(tempFilter);
 	};
 
+	const filterHanddler = () => {
+		if (
+			document.getElementById(style.dropdownMenu).style.display == "block"
+		)
+			document.getElementById(style.dropdownMenu).style.display = "none";
+		else
+			document.getElementById(style.dropdownMenu).style.display = "block";
+	};
+
+	useEffect(() => {
+		function handleClick(e) {
+			if (
+				document.getElementById(style.dropdownMenu) !== e.target &&
+				!document
+					.getElementById(style.dropdownMenu)
+					.contains(e.target) &&
+				document.getElementById(style.dropdownMenu).style.display ==
+					"block" &&
+				document.getElementById(style.dropdownButton) !== e.target &&
+				!document
+					.getElementById(style.dropdownButton)
+					.contains(e.target)
+			) {
+				filterHanddler();
+			}
+		}
+		window.addEventListener("click", handleClick);
+		return () => window.removeEventListener("click", handleClick);
+	}, []);
+
 	return (
 		<div className={`${style.eventFilter} ${style.col}`}>
-			<button
-				onClick={() => {
-					if (
-						document.getElementById(style.dropdownMenu).style
-							.display == "block"
-					)
-						document.getElementById(
-							style.dropdownMenu
-						).style.display = "none";
-					else
-						document.getElementById(
-							style.dropdownMenu
-						).style.display = "block";
-				}}
-			>
+			<button onClick={filterHanddler} id={style.dropdownButton}>
 				Filtrer
 			</button>
 			<div id={style.dropdownMenu}>
@@ -133,11 +151,123 @@ const Filter = param => {
 };
 
 const ProductList = () => {
-	return <div>LES PRODUITS</div>;
-};
+	const [products, setProducts] = useState([{id: 0}, {id: 1}, {id: 2}]);
+	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
+	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
+	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
 
-const Presentation = () => {
-	return <div className={style.presentation}></div>;
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[2].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailCap(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[0].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailHoodies(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/goodies/${products[1].id}/thumbnail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is` +
+							` ${response.status}`
+					);
+				}
+				return response.blob();
+			})
+			.then(blob => {
+				setThumbnailTshirt(URL.createObjectURL(blob));
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [products]);
+
+	useEffect(() => {
+		fetch(`http://${global.config.api.authority}/goodies`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setProducts(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, []);
+
+	return (
+		<div className={style.ProductListContainer}>
+			<h2>NOS PRODUITS</h2>
+			<img src={thumbnailHoodies} />
+			<img src={thumbnailTshirt} />
+			<img src={thumbnailCap} />
+		</div>
+	);
 };
 
 export default Home;

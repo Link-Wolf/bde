@@ -14,8 +14,9 @@ const EventList = param => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
+	const [telephone, setTelephone] = useState(undefined);
 	const [popUpEvent, setPopUpEvent] = useState(-1);
+	const viewData = usePagination(data, PER_PAGE);
 
 	useEffect(() => {
 		const requestOptions = {
@@ -59,6 +60,15 @@ const EventList = param => {
 			});
 	}, [param.filter]);
 
+	useEffect(() => {
+		function handleResize() {
+			setTelephone(window.innerWidth < window.innerHeight);
+		}
+		window.addEventListener("resize", handleResize);
+		handleResize();
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
 	const handleChangePage = (e, p) => {
 		setPage(p);
 		viewData.jump(p);
@@ -72,18 +82,16 @@ const EventList = param => {
 					{data.length >= 2 ? <>résultats</> : <>résultat</>}
 				</p>
 			)}
-			<div className={style.scroll_container_40vw}>
-				{data.length > 3 ? (
+			<div className={style.eventListContainer}>
+				{data.length > 3 && !telephone && (
 					<Pagination
 						count={count}
 						page={page}
 						onChange={handleChangePage}
 					/>
-				) : (
-					<></>
 				)}
 				<ul className={style.eventList}>
-					{viewData.currentData().map(item => (
+					{(telephone ? data : viewData.currentData()).map(item => (
 						<li key={item.id}>
 							<EventToken
 								setPopUpEvent={setPopUpEvent}
@@ -93,14 +101,12 @@ const EventList = param => {
 						</li>
 					))}
 				</ul>
-				{data.length > 3 ? (
+				{data.length > 3 && !telephone && (
 					<Pagination
 						count={count}
 						page={page}
 						onChange={handleChangePage}
 					/>
-				) : (
-					<></>
 				)}
 			</div>
 			{popUpEvent !== -1 && (
