@@ -14,10 +14,9 @@ const EventList = param => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
+	const [telephone, setTelephone] = useState(undefined);
 	const [popUpEvent, setPopUpEvent] = useState(-1);
-
-	const telephone = window.innerWidth < window.innerHeight;
+	const viewData = usePagination(data, PER_PAGE);
 
 	useEffect(() => {
 		const requestOptions = {
@@ -60,6 +59,15 @@ const EventList = param => {
 				);
 			});
 	}, [param.filter]);
+
+	useEffect(() => {
+		function handleResize() {
+			setTelephone(window.innerWidth < window.innerHeight);
+		}
+		window.addEventListener("resize", handleResize);
+		handleResize();
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
