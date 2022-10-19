@@ -263,9 +263,13 @@ const ProductList = () => {
 	return (
 		<div className={style.ProductListContainer}>
 			<h2>NOS PRODUITS</h2>
-			<img src={thumbnailHoodies} />
-			<img src={thumbnailTshirt} />
-			<img src={thumbnailCap} />
+			<div className={style.thumbnailsContainer}>
+				<img src={thumbnailHoodies} />
+				<div className={style.miniThumbnailsContainer}>
+					<img src={thumbnailTshirt} />
+					<img src={thumbnailCap} />
+				</div>
+			</div>
 		</div>
 	);
 };
