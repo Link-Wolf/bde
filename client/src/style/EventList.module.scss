@@ -17,14 +17,23 @@
 	}
 }
 
-.eventList {
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
+.eventListContainer {
+	width: 30vw;
+	margin: 50px 0;
 
-	li:nth-last-of-type(1) {
-		hr {
-			display: none;
+	ul {
+		justify-content: center;
+	}
+
+	.eventList {
+		padding: 0;
+		margin: 0;
+		list-style-type: none;
+
+		li:nth-last-of-type(1) {
+			hr {
+				display: none;
+			}
 		}
 	}
 }
