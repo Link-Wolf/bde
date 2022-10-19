@@ -30,9 +30,6 @@ function Header() {
 					if (data.clearance === global.config.clearance.default) {
 						setLeftButton(
 							<>
-								<a href="/shop">
-									<h1>Shop</h1>
-								</a>
 								<a href="/contact">
 									<h1>Contact</h1>
 								</a>
@@ -53,7 +50,8 @@ function Header() {
 					}
 					if (data.clearance >= global.config.clearance.admin) {
 						setRightButton(
-							<a href="/admin">
+							<a href="/admin" className={style.hrbefore}>
+								<hr />
 								<h1>Admin</h1>
 							</a>
 						);
@@ -114,6 +112,8 @@ function Header() {
 				</div>
 				{leftButton}
 				{rightButton}
+				<hr />
+
 				<DropdownUser mobile />
 			</div>
 
@@ -131,7 +131,7 @@ function Header() {
 			</div>
 			<div className={style.rightContainer}>
 				<div className={style.admin}>{rightButton}</div>
-				<div className={style.dropdownContainer}>
+				<div className={`${style.dropdownContainer}`}>
 					<DropdownUser />
 				</div>
 				<div className={style.burger}>

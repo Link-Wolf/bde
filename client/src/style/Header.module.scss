@@ -1,4 +1,7 @@
 .container {
+	hr {
+		display: none;
+	}
 	display: flex;
 	justify-content: space-between;
 	padding: 1vh 5vw;
@@ -98,15 +101,31 @@
 		width: 0;
 		overflow: hidden;
 		transition: 0.5s;
-		text-align: center;
+		text-align: left;
+		padding: 0 0 0 40px;
+		z-index: 9999;
+
+		a {
+			h1 {
+				margin: 0;
+				font-size: 25px;
+			}
+		}
+
+		hr {
+			display: block;
+			margin: 5px 0 5px -20px;
+			width: calc(100vw - 40px);
+		}
 
 		#x {
 			text-align: right;
-			padding: 10px 60px 0;
+			padding: 2vh 5.5vw 0 calc(100vw - 4vh - 5.5vw - 40px);
 			margin-bottom: 20px;
 
 			svg {
-				height: 50px;
+				height: 4vh;
+				width: 4vh;
 			}
 		}
 	}
