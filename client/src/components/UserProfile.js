@@ -61,15 +61,24 @@ const UserProfile = props => {
 /*
  *	props:
  *		stud:	object, db data of the student
- */
-const ProfilePicture = props => {
+ */ const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
 			<img
 				src={`https://cdn.intra.42.fr/users/${props.stud.login}.jpg`}
+				className={props.stud.isPremium && style.premium}
 			/>
-			<svg></svg>
-			<img src={crownLayer} />
+			{props.stud.isPremium && (
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+					<path
+						d="M13.5,4l-3,3L7,2,3.5,7,.5,4v6.5A1.5,1.5,0,0,0,2,12H12a1.5,1.5,0,0,0,1.5-1.5Z"
+						fill="none"
+						stroke="var(--premium-gold-logo)"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			)}
 		</div>
 	);
 };
