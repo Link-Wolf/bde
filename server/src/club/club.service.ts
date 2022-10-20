@@ -45,6 +45,7 @@ export class ClubService {
 	}
 
 	async update(id: number, clubData: ClubDto, requestMaker: string): Promise<any> {
+		console.log(clubData)
 		try {
 			if (!await this.findOne(id, requestMaker)) {
 				this.logger.error(`Failed -> Update club with id ${id} : club ${id} does not exist`, requestMaker, true);

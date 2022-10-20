@@ -9,10 +9,9 @@ export class ClubDtoPipe implements PipeTransform {
 	constructor(
 		private logger: LoggerService,
 		private studService: StudService
-	) { console.log("hey") }
+	) { }
 	async transform(value: any, _metadata: ArgumentMetadata) {
-		let ret = value;
-		console.log("ret", ret)
+		let { login, ...ret } = value;
 		if ("cost" in value)
 			ret.cost = Number(value.cost)
 		if ("login" in value) {

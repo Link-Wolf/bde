@@ -82,8 +82,8 @@ const AdminClubToken = param => {
 				: target.value;
 		const name = target.name;
 		tmp[name] = value;
-		let tmpBody = {...tmp};
-		setBodyState(tmpBody);
+		setFormState(tmp);
+		setBodyState(tmp);
 	};
 
 	const checkStud = async () => {
@@ -130,7 +130,7 @@ const AdminClubToken = param => {
 					credentials: "include"
 				};
 				await fetch(
-					`http://${global.config.api.authority}/club`,
+					`http://${global.config.api.authority}/club/${param.data.id}`,
 					requestOptions
 				)
 					.then(response => {
@@ -166,7 +166,7 @@ const AdminClubToken = param => {
 	const saveClub = async () => {
 		if (
 			!document
-				.getElementById(`updateClubForm${param.key}`)
+				.getElementById(`updateClubForm${param.index}`)
 				.checkValidity()
 		)
 			return;
@@ -202,7 +202,7 @@ const AdminClubToken = param => {
 			<Accordion.Header>{formState.name}</Accordion.Header>
 			<Accordion.Body>
 				{" "}
-				<Form id={`updateClubForm${param.eventKey}`}>
+				<Form id={`updateClubForm${param.index}`}>
 					<Form.Label>Nom : </Form.Label>
 					<Form.Control
 						disabled={locked}
