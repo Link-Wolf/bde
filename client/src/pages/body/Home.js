@@ -158,6 +158,7 @@ const ProductList = () => {
 	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
 
 	useEffect(() => {
+		if (products[2] === undefined || products[2] === null) return;
 		fetch(
 			`http://${global.config.api.authority}/goodies/${products[2].id}/thumbnail`,
 			{
@@ -185,6 +186,7 @@ const ProductList = () => {
 	}, [products]);
 
 	useEffect(() => {
+		if (products[0] === undefined || products[0] === null) return;
 		fetch(
 			`http://${global.config.api.authority}/goodies/${products[0].id}/thumbnail`,
 			{
@@ -212,6 +214,7 @@ const ProductList = () => {
 	}, [products]);
 
 	useEffect(() => {
+		if (products[1] === undefined || products[1] === null) return;
 		fetch(
 			`http://${global.config.api.authority}/goodies/${products[1].id}/thumbnail`,
 			{
