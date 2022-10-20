@@ -38,7 +38,7 @@ const UserProfile = props => {
 				setStud(data);
 			})
 			.catch();
-	}, []);
+	}, [props]);
 
 	if (props.login === undefined || stud === undefined) return <Loading />;
 	return (
@@ -70,10 +70,40 @@ const UserProfile = props => {
 			/>
 			{props.stud.isPremium && (
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
+					<defs>
+						<linearGradient
+							id="goldGrad"
+							x1="0%"
+							y1="0%"
+							x2="100%"
+							y2="0%"
+						>
+							<stop
+								offset="0%"
+								style={{
+									"stop-color": "var(--premium-gold-logo)",
+									"stop-opacity": 1
+								}}
+							/>
+							<stop
+								offset="50%"
+								style={{
+									"stop-color": "var(--premium-gold)",
+									"stop-opacity": 1
+								}}
+							/>
+							<stop
+								offset="100%"
+								style={{
+									"stop-color": "var(--premium-gold-logo)",
+									"stop-opacity": 1
+								}}
+							/>
+						</linearGradient>
+					</defs>
 					<path
 						d="M13.5,4l-3,3L7,2,3.5,7,.5,4v6.5A1.5,1.5,0,0,0,2,12H12a1.5,1.5,0,0,0,1.5-1.5Z"
-						fill="none"
-						stroke="var(--premium-gold-logo)"
+						fill="url(#goldGrad)"
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					/>
@@ -88,9 +118,24 @@ const UserProfile = props => {
  *		stud:	object, db data of the student
  */
 const Identity = props => {
-	const [stud, setStud] = useState(undefined);
-
-	return <div className={style.identityContainer}>Nom Prenom login</div>;
+	return (
+		<div className={style.identityContainer}>
+			<h1>{props.stud.login}</h1>
+			<ul>
+				<li>
+					{props.stud.firstname} {props.stud.lastname}
+				</li>
+				<li>
+					Membre depuis le{" "}
+					{new Intl.DateTimeFormat("fr-FR", {
+						day: "numeric",
+						month: "short",
+						year: "numeric"
+					}).format(new Date(props.stud.joinDate))}
+				</li>
+			</ul>
+		</div>
+	);
 };
 
 /*
@@ -98,7 +143,20 @@ const Identity = props => {
  *		login:	string, login of the stud
  */
 const QR = props => {
-	return <div className={style.qrContainer}>QR</div>;
+	return (
+		<div className={style.qrContainer}>
+			<a href={`http://${window.location.host}/profile/${props.login}`}>
+				<QRCode
+					value={`http://${window.location.host}/profile/${props.login}`}
+					level="H"
+					bgColor="var(--white)"
+					fgColor="var(--black)"
+					size={256}
+					viewBox={`0 0 256 256`}
+				/>
+			</a>
+		</div>
+	);
 };
 
 /*
@@ -106,7 +164,112 @@ const QR = props => {
  *		login:	string, login of the stud
  */
 const ChangeEmailField = props => {
-	return <div className={style.emailFieldContainer}>wow :0 mail</div>;
+	const [trueMail, setTrueMail] = useState("");
+
+	const handleMailChange = event => {
+		setTrueMail(event.target.value);
+	};
+
+	const saveMail = async () => {
+		if (trueMail !== "") {
+			await fetch(
+				`http://${global.config.api.authority}/stud/${options.login}`,
+				{
+					credentials: "include",
+					method: "PATCH",
+					body: JSON.stringify({
+						true_email: trueMail
+					}),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error: The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					console.log(
+						"Il y a eu un problème avec l'opération fetch: " +
+							error.message
+					);
+				});
+		}
+	};
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/stud/${props.login}/mail`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(data => {
+				setTrueMail(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [props]);
+
+	return (
+		<div className={style.emailFieldContainer}>
+			Mon email :
+			<input
+				type="email"
+				name="trueMail"
+				id="emailField"
+				value={trueMail}
+				onChange={handleMailChange}
+			/>
+			<button
+				onClick={() => {
+					if (
+						!(
+							document
+								.getElementById("emailField")
+								.checkValidity() &&
+							document
+								.getElementById("emailField")
+								.value.split("@")[1]
+								.split(".")[1]
+								.startsWith("42")
+						)
+					) {
+						if (
+							document.getElementById("emailField").value !==
+							trueMail
+						)
+							saveMail();
+						else {
+							NotificationManager.warning(
+								"Mail déjà enregistré à cette valeur",
+								"Attention",
+								5000
+							);
+						}
+					}
+				}}
+			>
+				Enregistrer
+			</button>
+		</div>
+	);
 };
 
 /*
