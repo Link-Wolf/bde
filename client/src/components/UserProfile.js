@@ -165,40 +165,40 @@ const QR = props => {
  */
 const ChangeEmailField = props => {
 	const [trueMail, setTrueMail] = useState("");
+	const [ogTrueMail, setOgTrueMail] = useState("");
 
 	const handleMailChange = event => {
 		setTrueMail(event.target.value);
 	};
 
 	const saveMail = async () => {
-		if (trueMail !== "") {
-			await fetch(
-				`http://${global.config.api.authority}/stud/${options.login}`,
-				{
-					credentials: "include",
-					method: "PATCH",
-					body: JSON.stringify({
-						true_email: trueMail
-					}),
-					headers: {
-						"Content-Type": "application/json"
-					}
+		if (trueMail === "") return;
+		await fetch(
+			`http://${global.config.api.authority}/stud/${props.login}`,
+			{
+				credentials: "include",
+				method: "PATCH",
+				body: JSON.stringify({
+					true_email: trueMail
+				}),
+				headers: {
+					"Content-Type": "application/json"
 				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-		}
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	};
 
 	useEffect(() => {
@@ -240,30 +240,32 @@ const ChangeEmailField = props => {
 			<button
 				onClick={() => {
 					if (
-						!(
-							document
-								.getElementById("emailField")
-								.checkValidity() &&
-							document
-								.getElementById("emailField")
-								.value.split("@")[1]
-								.split(".")[1]
-								.startsWith("42")
-						)
+						document.getElementById("emailField").checkValidity() &&
+						trueMail
+							.split("@")[1]
+							.split(".")[1]
+							.startsWith("42")
 					) {
-						if (
-							document.getElementById("emailField").value !==
-							trueMail
-						)
-							saveMail();
-						else {
-							NotificationManager.warning(
-								"Mail déjà enregistré à cette valeur",
-								"Attention",
-								5000
-							);
-						}
+						NotificationManager.warning(
+							"Mail invalide", // TODO: words here
+							"Attention",
+							5000
+						);
 					}
+					if (trueMail === ogTrueMail) {
+						NotificationManager.warning(
+							"Mail déjà enregistré à cette valeur",
+							"Attention",
+							5000
+						);
+						return;
+					}
+					saveMail();
+					NotificationManager.success(
+						"Mail biem enregistré", // TODO: words here
+						"Validation",
+						5000
+					);
 				}}
 			>
 				Enregistrer
