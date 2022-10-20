@@ -173,7 +173,7 @@ const ChangeEmailField = props => {
 	const saveMail = async () => {
 		if (trueMail !== "") {
 			await fetch(
-				`http://${global.config.api.authority}/stud/${options.login}`,
+				`http://${global.config.api.authority}/stud/${props.login}`,
 				{
 					credentials: "include",
 					method: "PATCH",
