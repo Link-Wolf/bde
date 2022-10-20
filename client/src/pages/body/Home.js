@@ -263,6 +263,7 @@ const ProductList = () => {
 	return (
 		<div className={style.ProductListContainer}>
 			<h2>NOS PRODUITS</h2>
+			<hr />
 			<div className={style.thumbnailsContainer}>
 				<img src={thumbnailHoodies} />
 				<div className={style.miniThumbnailsContainer}>
