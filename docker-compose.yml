@@ -37,6 +37,7 @@ services:
         container_name: fregate_redis
         command: redis-server --requirepass "xeno1et2"
         image: redis
+        restart: always
         volumes:
             - redis:/data
         networks:
@@ -46,6 +47,8 @@ services:
         container_name: fregate_psql
         image: postgres
         restart: always
+        ports:
+            - 5432:5432
         environment:
                 POSTGRES_DB: ${POSTGRES_DB}
                 POSTGRES_USER: ${POSTGRES_USER}
@@ -54,6 +57,22 @@ services:
           - bde:/var/lib/postgresql/data
         networks:
             - back_network
+
+    phppgadmin:
+        container_name: fregate_phppgadmin
+        image: bitnami/phppgadmin
+        restart: always
+        environment:
+                DATABASE_HOST: postgres
+        depends_on:
+            - postgres
+        networks:
+            - back_network
+            - front_network
+        ports:
+            - 8443:8443
+        volumes:
+            - bde:/var/lib/pgadmin
 volumes:
     redis:
         driver: local
