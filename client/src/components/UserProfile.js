@@ -13,13 +13,16 @@ import style from "../style/UserProfile.module.scss";
 import EventToken from "./EventToken";
 import Loading from "./Loading";
 
+const PER_PAGE = 6;
+
 /*
  *	props:
  *		me:		boolean, true if user is watching it's own profile, false else
  *		login:	string, login of the stud
  */
 const UserProfile = props => {
-	const [stud, setStud] = useState(undefined);
+	const [stud, setStud] = useState();
+	const [blackHole, setBlackHole] = useState();
 
 	useEffect(() => {
 		if (!props.login) return;
@@ -45,12 +48,15 @@ const UserProfile = props => {
 		<div className={style.profileContainer}>
 			<div className={style.profileInfoContainer}>
 				<ProfilePicture stud={stud} />
-				<Identity stud={stud} />
+				<Identity stud={stud} blackHole={blackHole} />
 				<QR login={props.login} />
 			</div>
 			{props.me && <ChangeEmailField login={props.login} />}
 			<div className={style.historicContainer}>
-				<ContributionHistory login={props.login} />
+				<ContributionHistory
+					login={props.login}
+					setBlackHole={setBlackHole}
+				/>
 				<SubscribedEvents login={props.login} />
 				{props.me && <OrderHistory login={props.login} />}
 			</div>
@@ -61,7 +67,8 @@ const UserProfile = props => {
 /*
  *	props:
  *		stud:	object, db data of the student
- */ const ProfilePicture = props => {
+ */
+const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
 			<img
@@ -118,6 +125,7 @@ const UserProfile = props => {
  *		stud:	object, db data of the student
  */
 const Identity = props => {
+	// TODO: text here
 	return (
 		<div className={style.identityContainer}>
 			<h1>{props.stud.login}</h1>
@@ -133,6 +141,7 @@ const Identity = props => {
 						year: "numeric"
 					}).format(new Date(props.stud.joinDate))}
 				</li>
+				<li>Jours de cotisation restants : {props.blackHole}</li>
 			</ul>
 		</div>
 	);
@@ -164,8 +173,8 @@ const QR = props => {
  *		login:	string, login of the stud
  */
 const ChangeEmailField = props => {
-	const [trueMail, setTrueMail] = useState("");
-	const [ogTrueMail, setOgTrueMail] = useState("");
+	const [trueMail, setTrueMail] = useState();
+	const [ogTrueMail, setOgTrueMail] = useState();
 
 	const handleMailChange = event => {
 		setTrueMail(event.target.value);
@@ -279,7 +288,76 @@ const ChangeEmailField = props => {
  *		login:	string, login of the stud
  */
 const ContributionHistory = props => {
-	return <div className={style.contribHistContainer}>Tes contribs</div>;
+	const [page, setPage] = useState();
+	const [count, setCount] = useState();
+	const [data, setData] = useState([]);
+	const viewData = usePagination(data, PER_PAGE);
+
+	const handleChangePage = (e, p) => {
+		setPage(p);
+		viewData.jump(p);
+	};
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/contribution/${props.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setData(data);
+				data.forEach((item, i) => {
+					if (
+						new Date(item.end_date) > Date.now() &&
+						new Date(item.begin_date) <= Date.now()
+					) {
+						props.setBlackHole(
+							Math.ceil(
+								(new Date(item.end_date).getTime() -
+									new Date(Date.now()).getTime()) /
+									(1000 * 3600 * 24)
+							)
+						);
+					}
+				});
+				setCount(Math.ceil(data.length / PER_PAGE));
+				viewData.updateData(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [props]);
+
+	return (
+		<div className={style.contribHistContainer}>
+			<h3> Cotisations</h3>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+			<ul>
+				{viewData.currentData().map(data => (
+					<li key={data.id}>
+						{`${new Date(
+							data.begin_date
+						).toLocaleDateString()} - ${new Date(
+							data.end_date
+						).toLocaleDateString()}`}
+					</li>
+				))}
+			</ul>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+		</div>
+	);
 };
 
 /*
@@ -287,7 +365,58 @@ const ContributionHistory = props => {
  *		login:	string, login of the stud
  */
 const SubscribedEvents = props => {
-	return <div className={style.subEventsContainer}>Tes events</div>;
+	const [page, setPage] = useState();
+	const [count, setCount] = useState();
+	const [data, setData] = useState([]);
+	const viewData = usePagination(data, PER_PAGE);
+
+	const handleChangePage = (e, p) => {
+		setPage(p);
+		viewData.jump(p);
+	};
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/event/stud/${props.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setData(data);
+				setCount(Math.ceil(data.length / PER_PAGE));
+				viewData.updateData(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [props]);
+
+	return (
+		<div className={style.subEventsContainer}>
+			<h3> Évènements </h3>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+			<ul>
+				{viewData.currentData().map(data => (
+					<li key={data.id}>
+						<EventToken event={data} />
+					</li>
+				))}
+			</ul>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+		</div>
+	);
 };
 
 /*
@@ -295,7 +424,58 @@ const SubscribedEvents = props => {
  *		login:	string, login of the stud
  */
 const OrderHistory = props => {
-	return <div className={style.orderHist}>Tes commandes</div>;
+	const [page, setPage] = useState();
+	const [count, setCount] = useState();
+	const [data, setData] = useState([]);
+	const viewData = usePagination(data, PER_PAGE);
+
+	const handleChangePage = (e, p) => {
+		setPage(p);
+		viewData.jump(p);
+	};
+
+	useEffect(() => {
+		fetch(
+			`http://${global.config.api.authority}/order/stud/${props.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setData(data);
+				setCount(Math.ceil(data.length / PER_PAGE));
+				viewData.updateData(data);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [props]);
+
+	return (
+		<div className={style.orderHist}>
+			<h3> Commandes </h3>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+			<ul>
+				{viewData.currentData().map(data => (
+					<li key={data.id}>
+						<a href={`/receipt/${data.id}`}>{data.id}</a>
+					</li>
+				))}
+			</ul>
+			<Pagination count={count} page={page} onChange={handleChangePage} />
+		</div>
+	);
 };
 
 /*
