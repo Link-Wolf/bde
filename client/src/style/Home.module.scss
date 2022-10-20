@@ -202,16 +202,16 @@
 
 			div.col {
 				&.eventFilter {
-					margin: 0;
-
 					#dropdownButton {
 						padding: 10px 20px;
-						margin: 0 10px;
+						margin: 0 calc((100vw - 80px) / 2);
 					}
 
 					#dropdownMenu {
 						padding: 15px;
 						font-size: 1.2em;
+						left: calc((100vw - 80px) / 2);
+						top: 46px;
 
 						input {
 							width: 20px;
