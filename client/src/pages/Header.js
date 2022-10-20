@@ -70,9 +70,12 @@ function Header() {
 		if (document.getElementById(style.burgerMenu).style.left === "0px") {
 			document.getElementById(style.burgerMenu).style.width = "0";
 			document.getElementById(style.burgerMenu).style.left = "100vw";
+			document.getElementById(style.burgerMenu).style.padding = "0";
 		} else {
 			document.getElementById(style.burgerMenu).style.left = "0";
 			document.getElementById(style.burgerMenu).style.width = "100vw";
+			document.getElementById(style.burgerMenu).style.padding =
+				" 0 0 0 40px";
 		}
 	};
 
