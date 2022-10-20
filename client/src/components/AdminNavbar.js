@@ -21,9 +21,9 @@ const AdminNavbar = () => {
 				login: "iCARUS",
 				firstname: "###",
 				lastname: "Azphael",
-				email:
+				true_email:
 					"[192,198,154,214,34,115,164,138,149,222,232,41,86,135,229,118,146,155,51,177,217,153,162,10,100,167,151,10,160,35,75,90]",
-				true_email: "###.###@gmail.com",
+				email: "iCARUS@student.42mulhouse.fr",
 				isDirection: true,
 				clearance: 42
 			})
