@@ -11,10 +11,120 @@ import {Pagination} from "@mui/material";
 import style from "../style/UserProfile.module.scss";
 
 import EventToken from "./EventToken";
+import Loading from "./Loading";
 
-import yellowStar from "../assets/logos/yellow_star.svg";
-import greyStar from "../assets/logos/grey_star.svg";
+/*
+ *	props:
+ *		me:		boolean, true if user is watching it's own profile, false else
+ *		login:	string, login of the stud
+ */
+const UserProfile = props => {
+	const [stud, setStud] = useState(undefined);
 
+	useEffect(() => {
+		if (!props.login) return;
+		fetch(`http://${global.config.api.authority}/stud/${props.login}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setStud(data);
+			})
+			.catch();
+	}, []);
+
+	if (props.login === undefined || stud === undefined) return <Loading />;
+	return (
+		<div className={style.profileContainer}>
+			<div className={style.profileInfoContainer}>
+				<ProfilePicture stud={stud} />
+				<Identity stud={stud} />
+				<QR login={props.login} />
+			</div>
+			{props.me && <ChangeEmailField login={props.login} />}
+			<div className={style.historicContainer}>
+				<ContributionHistory login={props.login} />
+				<SubscribedEvents login={props.login} />
+				{props.me && <OrderHistory login={props.login} />}
+			</div>
+		</div>
+	);
+};
+
+/*
+ *	props:
+ *		stud:	object, db data of the student
+ */
+const ProfilePicture = props => {
+	return (
+		<div className={style.profilePictureContainer}>
+			<img
+				src={`https://cdn.intra.42.fr/users/${props.stud.login}.jpg`}
+			/>
+			<svg></svg>
+			<img src={crownLayer} />
+		</div>
+	);
+};
+
+/*
+ *	props:
+ *		stud:	object, db data of the student
+ */
+const Identity = props => {
+	const [stud, setStud] = useState(undefined);
+
+	return <div className={style.identityContainer}>Nom Prenom login</div>;
+};
+
+/*
+ *	props:
+ *		login:	string, login of the stud
+ */
+const QR = props => {
+	return <div className={style.qrContainer}>QR</div>;
+};
+
+/*
+ *	props:
+ *		login:	string, login of the stud
+ */
+const ChangeEmailField = props => {
+	return <div className={style.emailFieldContainer}>wow :0 mail</div>;
+};
+
+/*
+ *	props:
+ *		login:	string, login of the stud
+ */
+const ContributionHistory = props => {
+	return <div className={style.contribHistContainer}>Tes contribs</div>;
+};
+
+/*
+ *	props:
+ *		login:	string, login of the stud
+ */
+const SubscribedEvents = props => {
+	return <div className={style.subEventsContainer}>Tes events</div>;
+};
+
+/*
+ *	props:
+ *		login:	string, login of the stud
+ */
+const OrderHistory = props => {
+	return <div className={style.orderHist}>Tes commandes</div>;
+};
+
+/*
 const UserProfile = options => {
 	const PER_PAGE = 6;
 	const [dataStud, setDataStud] = useState({});
@@ -439,5 +549,6 @@ const UserProfile = options => {
 		</>
 	);
 };
+*/
 
 export default UserProfile;
