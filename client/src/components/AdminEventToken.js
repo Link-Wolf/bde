@@ -117,6 +117,7 @@ const AdminEventToken = param => {
 	};
 
 	const handleFormChange = event => {
+		console.log(event);
 		let tmp = {...formState};
 		const target = event.target;
 		const value =
@@ -159,6 +160,7 @@ const AdminEventToken = param => {
 			two_digiter(available_date.getHours()) +
 			":" +
 			two_digiter(available_date.getMinutes());
+		setFormState(tmp);
 		setBodyState(tmpBody);
 	};
 
@@ -193,7 +195,7 @@ const AdminEventToken = param => {
 	const saveEvent = async () => {
 		if (
 			!document
-				.getElementById(`updateEventForm${param.key}`)
+				.getElementById(`updateEventForm${param.index}`)
 				.checkValidity()
 		)
 			return;
@@ -367,7 +369,7 @@ const AdminEventToken = param => {
 			</Accordion.Header>
 			<Accordion.Body>
 				{" "}
-				<Form id={`updateEventForm${param.eventKey}`}>
+				<Form id={`updateEventForm${param.index}`}>
 					<Form.Label>Nom : </Form.Label>
 					<Form.Control
 						disabled={locked}
