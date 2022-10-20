@@ -54,15 +54,24 @@
 
 		.eventList {
 			display: flex;
-
-			li {
-				hr {
-					display: none;
-				}
-			}
-			// display: inline;
 			overflow-x: scroll;
 			overflow-y: hidden;
+			width: auto;
+			justify-content: flex-start;
+
+			ul {
+				width: auto;
+
+				li {
+					width: 200px;
+
+					hr {
+						display: none;
+						margin: 0;
+						width: 0;
+					}
+				}
+			}
 		}
 	}
 }
