@@ -31,6 +31,7 @@ const Home = () => {
 				</div>
 				<ProductList />
 			</div>
+			<Presentation />
 		</div>
 	);
 };
@@ -270,6 +271,18 @@ const ProductList = () => {
 					<img src={thumbnailTshirt} />
 					<img src={thumbnailCap} />
 				</div>
+			</div>
+		</div>
+	);
+};
+
+const Presentation = () => {
+	return (
+		<div className={style.presentationContainer}>
+			<h2>Notre Équipe</h2> {/*TODO: text here*/}
+			<hr />
+			<div className={style.presentation}>
+				<p>On est gentils. </p>
 			</div>
 		</div>
 	);
