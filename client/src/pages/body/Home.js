@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
+import {LazyLoadImage} from "react-lazy-load-image-component";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.jpg";
@@ -24,7 +25,7 @@ const Home = () => {
 			<HeaderHome />
 			<div className={style.lists}>
 				<div>
-					<h2>Nos Evenements</h2> {/*TODO: text here*/}
+					<h2>Nos Evènements</h2>
 					<hr />
 					<EventList filter={filter} className={style.col} />{" "}
 					<Filter filter={filter} setFilter={setFilter} />
@@ -279,13 +280,69 @@ const ProductList = () => {
 	);
 };
 
+const EquipePicture = props => {
+	return (
+		<>
+			<a href={`https://profile.intra.42.fr/users/${props.login}`}>
+				<LazyLoadImage
+					src={`https://cdn.intra.42.fr/users/${props.login}.jpg`}
+					effect="blur"
+					height={100}
+					width="auto"
+				/>
+			</a>
+		</>
+	);
+};
+
 const Presentation = () => {
 	return (
 		<div className={style.presentationContainer}>
-			<h2>Notre Équipe</h2> {/*TODO: text here*/}
 			<hr />
+			<h2>Notre Équipe</h2>
+			<div className={style.captain}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="aguemazi" />
+				</div>
+				<h3>Capitaine</h3>
+			</div>
+			<div className={style.vice}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="tvanbael" />
+					<EquipePicture login="jrasser" />
+				</div>
+				<h3>Vice Capitaines</h3>
+			</div>
+			<div className={style.treasure}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="Link" />
+					<EquipePicture login="tbrissia" />
+				</div>
+				<h3>Trésoriers</h3>
+			</div>
+			<div className={style.secret}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="iCARUS" />
+					<EquipePicture login="mcacoilo" />
+				</div>
+				<h3>Secrétaires</h3>
+			</div>
+			<div className={style.comm}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="mwinter-" />
+					<EquipePicture login="mfusil" />
+				</div>
+				<h3>Responsables communication</h3>
+			</div>
+			<div className={style.part}>
+				<div className={style.equipePictureContainer}>
+					<EquipePicture login="jdutschk" />
+				</div>
+				<h3>Responsable partenariats</h3>
+			</div>
+
 			<div className={style.presentation}>
-				<p>On est gentils. </p>
+				<p>On est gentils. Peut être.</p>
 			</div>
 		</div>
 	);
