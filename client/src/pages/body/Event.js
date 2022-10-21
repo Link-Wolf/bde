@@ -198,7 +198,12 @@ const Details = param => {
 			<li>
 				<img src={nbPlacesLogo} />
 				<br />
-				{param.dataEvent.subbed} / {param.dataEvent.nb_places}
+				{param.dataEvent.subbed} /{" "}
+				{param.dataEvent.nb_places == -42 ? (
+					<>∞</>
+				) : (
+					param.dataEvent.nb_places
+				)}
 			</li>
 			<li>
 				<img src={locationLogo} />
@@ -238,12 +243,16 @@ const SubscribeButton = param => {
 		setIsSubbed(undefined);
 		let nb_places, price, subbed;
 		if (stud.isPremium) {
-			nb_places = param.dataEvent.nb_places;
+			if (param.dataEvent.nb_places == -42) nb_places = 4242;
+			else nb_places = param.dataEvent.nb_places;
 			price = param.dataEvent.premium_cost;
 			subbed = param.dataEvent.subbed;
 		} else {
-			nb_places =
-				param.dataEvent.nb_places - param.dataEvent.nb_premium_places;
+			if (param.dataEvent.nb_places == -42) nb_places = 4242;
+			else
+				nb_places =
+					param.dataEvent.nb_places -
+					param.dataEvent.nb_premium_places;
 			price = param.dataEvent.cost;
 			subbed = param.dataEvent.subbed - param.dataEvent.premium_subbed;
 		}
