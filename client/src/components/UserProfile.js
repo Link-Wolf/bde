@@ -53,12 +53,27 @@ const UserProfile = props => {
 			</div>
 			{props.me && <ChangeEmailField login={props.login} />}
 			<div className={style.historicContainer}>
-				<ContributionHistory
-					login={props.login}
-					setBlackHole={setBlackHole}
+				<HistorySelector
+					fields={[
+						{
+							content: (
+								<ContributionHistory
+									login={props.login}
+									setBlackHole={setBlackHole}
+								/>
+							),
+							title: "Contributions" // TODO: text here
+						},
+						{
+							content: <SubscribedEvents login={props.login} />,
+							title: "Evenements" // TODO: text here
+						},
+						{
+							content: <OrderHistory login={props.login} />,
+							title: "Commandes" // TODO: text here
+						}
+					]}
 				/>
-				<SubscribedEvents login={props.login} />
-				{props.me && <OrderHistory login={props.login} />}
 			</div>
 		</div>
 	);
@@ -88,22 +103,22 @@ const ProfilePicture = props => {
 							<stop
 								offset="0%"
 								style={{
-									"stop-color": "var(--premium-gold-logo)",
-									"stop-opacity": 1
+									stopColor: "var(--premium-gold-logo)",
+									stopOpacity: 1
 								}}
 							/>
 							<stop
 								offset="50%"
 								style={{
-									"stop-color": "var(--premium-gold)",
-									"stop-opacity": 1
+									stopColor: "var(--premium-gold)",
+									stopOpacity: 1
 								}}
 							/>
 							<stop
 								offset="100%"
 								style={{
-									"stop-color": "var(--premium-gold-logo)",
-									"stop-opacity": 1
+									stopColor: "var(--premium-gold-logo)",
+									stopOpacity: 1
 								}}
 							/>
 						</linearGradient>
@@ -173,7 +188,7 @@ const QR = props => {
  *		login:	string, login of the stud
  */
 const ChangeEmailField = props => {
-	const [trueMail, setTrueMail] = useState();
+	const [trueMail, setTrueMail] = useState("");
 	const [ogTrueMail, setOgTrueMail] = useState();
 
 	const handleMailChange = event => {
@@ -201,6 +216,7 @@ const ChangeEmailField = props => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
+				setOgTrueMail(trueMail);
 			})
 			.catch(function(error) {
 				console.log(
@@ -227,6 +243,7 @@ const ChangeEmailField = props => {
 			})
 			.then(data => {
 				setTrueMail(data);
+				setOgTrueMail(data);
 			})
 			.catch(function(error) {
 				console.log(
@@ -474,6 +491,32 @@ const OrderHistory = props => {
 				))}
 			</ul>
 			<Pagination count={count} page={page} onChange={handleChangePage} />
+		</div>
+	);
+};
+
+/*
+ *	props:
+ *		fields:	[{content, title}]
+ */
+const HistorySelector = props => {
+	const [selected, setSelected] = useState(0);
+
+	if (props.fields.length === 0) return;
+	return (
+		<div className={style.historySelectorContainer}>
+			<div className={style.historySelector}>
+				<ul>
+					{props.fields.map((field, i) => (
+						<li key={i}>
+							<a onClick={() => setSelected(i)}>{field.title}</a>
+						</li>
+					))}
+				</ul>
+			</div>
+			<div className={style.historyContent}>
+				{props.fields[selected].content}
+			</div>
 		</div>
 	);
 };
