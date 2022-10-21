@@ -2,12 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './http-exception.filter';
 import helmet from 'helmet';
+import * as compression from 'compression';
 //import * as csurf from 'csurf';
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
+const express = require('express');
+const server = express();
 let RedisStore = require("connect-redis")(session)
 
 const { session_secret, url_client, _rdpw, host } = require('../config.json')
+const spdyNest = require('spdy-nest');
 
 async function bootstrap() {
 
@@ -21,11 +25,13 @@ async function bootstrap() {
 	redisClient.connect().catch(console.error)
 	redisClient.on("error", console.error)
 
+
 	const app = await NestFactory.create(AppModule,
 		{
 			logger: ['debug']
 		});
 	app.use(
+		compression(),
 		helmet(),
 		// csurf(),
 		cookieParser("hi this is the secret"),
