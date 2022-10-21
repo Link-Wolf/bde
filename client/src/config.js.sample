@@ -1,0 +1,29 @@
+export default global.config = {
+	intra: {
+		redirect:
+			""
+	},
+	clearance: {
+		default: 0,
+		other_campus: 2,
+		pool: 5,
+		stud: 7,
+		unpaid: 9,
+		admin: 11,
+		bde_director: 21,
+		god: 42
+	},
+	emailjs: {
+		service_id: "",
+		template_contact: "",
+		template_paiement: "",
+		public_key: ""
+	},
+	api: {
+		authority: "k1r2p10:4242"
+	},
+	paypal: {
+		id:
+			""
+	}
+};

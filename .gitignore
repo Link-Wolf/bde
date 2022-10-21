@@ -9,9 +9,8 @@ temp/
 *.constant.*
 coverage/
 .DS_Store
-config.*
+config.json
+config.js
 dump.rdb
 server/build
 server/dist
-token.json
-credentials.json
