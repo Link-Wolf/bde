@@ -2,7 +2,7 @@
 	padding: 20px;
 
 	.profileInfoContainer {
-		--image-size: 200px;
+		--image-size: 300px;
 		display: flex;
 
 		.profilePictureContainer {
@@ -33,12 +33,155 @@
 			}
 		}
 
+		.identityContainer {
+			text-align: center;
+
+			h1 {}
+
+			ul {
+				li {}
+			}
+		}
+
 		.qrContainer {
 			margin: 20px;
 
-			svg {
-				width: var(--image-size);
-				height: var(--image-size);
+			a {
+				svg {
+					width: var(--image-size);
+					height: var(--image-size);
+				}
+			}
+		}
+	}
+
+	.emailFieldContainer {
+		input {}
+
+		button {}
+	}
+
+	.historySelectorContainer {
+		.historySelector {
+			ul {
+				li {
+					a {}
+				}
+			}
+		}
+
+		.historyContent {
+			div {
+				h3 {}
+
+				ul {
+					li {}
+				}
+
+				&.contrib {
+					h3 {}
+
+					ul {
+						li {}
+					}
+				}
+
+				&.event {
+					h3 {}
+
+					ul {
+						li {}
+					}
+				}
+
+				&.order {
+					h3 {}
+
+					ul {
+						li {
+							a {}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+@media (max-width: 100vh) {
+	.profileContainer {
+		.profileInfoContainer {
+			.profilePictureContainer {
+				img {
+					&.premium {}
+				}
+
+				svg {}
+			}
+
+			.identityContainer {
+				h1 {}
+
+				ul {
+					li {}
+				}
+			}
+
+			.qrContainer {
+				a {
+					svg {}
+				}
+			}
+		}
+
+		.emailFieldContainer {
+			input {}
+
+			button {}
+		}
+
+		.historySelectorContainer {
+			.historySelector {
+				ul {
+					li {
+						a {}
+					}
+				}
+			}
+
+			.historyContent {
+				div {
+					h3 {}
+
+					ul {
+						li {}
+					}
+
+					&.contrib {
+						h3 {}
+
+						ul {
+							li {}
+						}
+					}
+
+					&.event {
+						h3 {}
+
+						ul {
+							li {}
+						}
+					}
+
+					&.order {
+						h3 {}
+
+						ul {
+							li {
+								a {}
+							}
+						}
+					}
+				}
 			}
 		}
 	}

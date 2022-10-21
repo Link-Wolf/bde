@@ -52,29 +52,33 @@ const UserProfile = props => {
 				<QR login={props.login} />
 			</div>
 			{props.me && <ChangeEmailField login={props.login} />}
-			<div className={style.historicContainer}>
-				<HistorySelector
-					fields={[
-						{
-							content: (
-								<ContributionHistory
-									login={props.login}
-									setBlackHole={setBlackHole}
-								/>
-							),
-							title: "Contributions" // TODO: text here
-						},
-						{
-							content: <SubscribedEvents login={props.login} />,
-							title: "Evenements" // TODO: text here
-						},
-						{
-							content: <OrderHistory login={props.login} />,
-							title: "Commandes" // TODO: text here
-						}
-					]}
-				/>
-			</div>
+			<HistorySelector
+				fields={[
+					{
+						content: (
+							<ContributionHistory
+								login={props.login}
+								setBlackHole={setBlackHole}
+							/>
+						),
+						title: "Contributions" // TODO: text here
+					},
+					{
+						content: <SubscribedEvents login={props.login} />,
+						title: "Evenements" // TODO: text here
+					},
+					...(props.me
+						? [
+								{
+									content: (
+										<OrderHistory login={props.login} />
+									),
+									title: "Commandes" // TODO: text here
+								}
+						  ]
+						: [])
+				]}
+			/>
 		</div>
 	);
 };
@@ -358,7 +362,7 @@ const ContributionHistory = props => {
 	}, [props]);
 
 	return (
-		<div className={style.contribHistContainer}>
+		<div className={style.contrib}>
 			<h3> Cotisations</h3>
 			<Pagination count={count} page={page} onChange={handleChangePage} />
 			<ul>
@@ -421,7 +425,7 @@ const SubscribedEvents = props => {
 	}, [props]);
 
 	return (
-		<div className={style.subEventsContainer}>
+		<div className={style.event}>
 			<h3> Évènements </h3>
 			<Pagination count={count} page={page} onChange={handleChangePage} />
 			<ul>
