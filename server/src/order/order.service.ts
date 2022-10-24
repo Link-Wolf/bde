@@ -7,18 +7,19 @@ import { ContributionService } from '../contribution/contribution.service';
 import { StudService } from '../stud/stud.service';
 import { OrderDto } from './order.dto';
 import { createDecipheriv, createCipheriv } from 'crypto';
-const _aes = JSON.parse(process.env.AES)
 
 @Injectable()
 export class OrderService {
+	_aes: any;
 	constructor(
 		@InjectRepository(Order)
 		private orderRepository: Repository<Order>,
 		private contributionService: ContributionService,
 		private studService: StudService,
-
 		private readonly logger: LoggerService
-	) { }
+	) {
+		this._aes = JSON.parse(process.env.AES)
+	}
 
 	private static due(): Date {
 		let due = new Date(Date.now())
@@ -56,12 +57,12 @@ export class OrderService {
 				this.logger.log(`Got order ${id}`, login);
 			let stud = await this.studService.findOne(order.studLogin, login)
 			order.stud = stud;
-			let decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			let decipher = createDecipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			order.address = Buffer.concat([
 				decipher.update(Buffer.from(JSON.parse(order.address))),
 				decipher.final(),
 			]).toString();
-			decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			decipher = createDecipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			order.city = Buffer.concat([
 				decipher.update(Buffer.from(JSON.parse(order.city))),
 				decipher.final(),
@@ -79,13 +80,13 @@ export class OrderService {
 			if (await this.orderRepository.findOneBy({ id: body.id }))
 				throw new ConflictException
 					(`Failed -> Create order ${body.id} : order ${body.id} already exists`);
-			let cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			let cipher = createCipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			const tmp = body
 			tmp.city = JSON.stringify(Buffer.concat([
 				cipher.update(body.city),
 				cipher.final(),
 			]).toJSON().data);
-			cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			cipher = createCipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			tmp.address = JSON.stringify(Buffer.concat([
 				cipher.update(body.address),
 				cipher.final(),

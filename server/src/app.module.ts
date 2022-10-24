@@ -30,7 +30,8 @@ import { GoogleModule } from './google/google.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			isGlobal: true
+			isGlobal: true,
+			envFilePath: ['.env.development'],
 		}),
 		TypeOrmModule.forRoot({
 			type: 'postgres',
@@ -57,11 +58,7 @@ import { GoogleModule } from './google/google.module';
 	],
 	controllers: [AppController],
 	providers: [
-		AppService,
-		// {
-		// provide: APP_GUARD,
-		// useClass: JwtAuthGuard,
-		// },
+		AppService
 	],
 })
 export class AppModule { }
