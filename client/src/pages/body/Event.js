@@ -176,7 +176,7 @@ const Price = param => {
 						<div>
 							Prilivège
 							<img src={inscCostLogo} />
-						</div>{" "}
+						</div>
 						{param.dataEvent.premium_cost != 0
 							? param.dataEvent.premium_cost
 							: "Gratuit"}
