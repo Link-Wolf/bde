@@ -15,7 +15,7 @@ function Header() {
 
 	useEffect(() => {
 		setTimeout(() => {
-			fetch(`http://${global.config.api.authority}/session`, {
+			fetch(`${process.env.REACT_APP_API_URL}/session`, {
 				credentials: "include"
 			})
 				.then(response => {

@@ -15,7 +15,7 @@ const Receipt = () => {
 		setLoadMail(true);
 		if (session.login == undefined) return;
 		fetch(
-			`http://${global.config.api.authority}/stud/${session.login}/mail`,
+			`${process.env.REACT_APP_API_URL}/stud/${session.login}/mail`,
 			{
 				credentials: "include"
 			}
@@ -48,7 +48,7 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadSession(true);
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -68,7 +68,7 @@ const Receipt = () => {
 	useEffect(() => {
 		setLoadOrder(true);
 		if (session.login == undefined) return;
-		fetch(`http://${global.config.api.authority}/order/${param.id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {

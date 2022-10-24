@@ -14,7 +14,7 @@ import Routage from "./pages/Routage";
 
 function App() {
 	window._ = arg => {
-		fetch(`http://${global.config.api.authority}/stud/_`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/_`, {
 			method: "POST",
 			credentials: "include",
 			headers: {"Content-Type": "application/json"},

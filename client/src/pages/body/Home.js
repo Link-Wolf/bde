@@ -161,7 +161,7 @@ const ProductList = () => {
 	useEffect(() => {
 		if (products[2] === undefined || products[2] === null) return;
 		fetch(
-			`http://${global.config.api.authority}/goodies/${products[2].id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/goodies/${products[2].id}/thumbnail`,
 			{
 				credentials: "include"
 			}
@@ -189,7 +189,7 @@ const ProductList = () => {
 	useEffect(() => {
 		if (products[0] === undefined || products[0] === null) return;
 		fetch(
-			`http://${global.config.api.authority}/goodies/${products[0].id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/goodies/${products[0].id}/thumbnail`,
 			{
 				credentials: "include"
 			}
@@ -217,7 +217,7 @@ const ProductList = () => {
 	useEffect(() => {
 		if (products[1] === undefined || products[1] === null) return;
 		fetch(
-			`http://${global.config.api.authority}/goodies/${products[1].id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/goodies/${products[1].id}/thumbnail`,
 			{
 				credentials: "include"
 			}
@@ -243,7 +243,7 @@ const ProductList = () => {
 	}, [products]);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/goodies`, {
+		fetch(`${process.env.REACT_APP_API_URL}/goodies`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -351,7 +351,7 @@ const Presentation = () => {
 export default Home;
 
 // const getStock = () => {
-// 	fetch(`http://${global.config.api.authority}/google`, {
+// 	fetch(`${process.env.REACT_APP_API_URL}/google`, {
 // 		credentials: "include"
 // 	})
 // 		.then(response => {

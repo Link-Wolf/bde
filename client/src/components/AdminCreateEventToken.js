@@ -145,7 +145,7 @@ const AdminCreateEventToken = param => {
 			};
 
 			fetch(
-				`http://${global.config.api.authority}/event/`,
+				`${process.env.REACT_APP_API_URL}/event/`,
 				requestOptions
 			)
 				.then(response => {
@@ -174,7 +174,7 @@ const AdminCreateEventToken = param => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
 		await fetch(
-			`http://${global.config.api.authority}/event/upload_image/${id}`,
+			`${process.env.REACT_APP_API_URL}/event/upload_image/${id}`,
 			{
 				method: "POST",
 				credentials: "include",
