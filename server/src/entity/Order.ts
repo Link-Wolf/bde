@@ -1,6 +1,5 @@
 import { Stud } from "./Stud";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-const { contributionPrice } = require('../../config.json')
 
 @Entity()
 export class Order {
@@ -29,7 +28,7 @@ export class Order {
 
 	@Column({
 		type: "double precision",
-		default: contributionPrice
+		default: process.env.CONTRIBUTION_PRICE
 	})
 	cost: number
 

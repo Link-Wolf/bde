@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { StudService } from '../stud/stud.service';
 import axios from 'axios';
-const { intra_uid, intra_secret, url_client } = require("../../config.json")
 
 @Injectable()
 export class AuthService {
@@ -12,11 +11,11 @@ export class AuthService {
 	async loginIntra(code: string) {
 		try {
 			return axios.post('https://api.intra.42.fr/oauth/token', {
-				redirect_uri: url_client + "/log",
+				redirect_uri: process.env.APP_URL + "/log",
 				code: code,
 				grant_type: "authorization_code",
-				client_id: intra_uid,
-				client_secret: intra_secret
+				client_id: process.env.INTRA_UID,
+				client_secret: process.env.INTRA_SECRET
 			})
 				.then(async response => {
 					const token = response.data.access_token;

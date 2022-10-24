@@ -7,7 +7,7 @@ import { ContributionService } from '../contribution/contribution.service';
 import { StudService } from '../stud/stud.service';
 import { OrderDto } from './order.dto';
 import { createDecipheriv, createCipheriv } from 'crypto';
-const { contributionTime, _aes } = require('../../config.json')
+const _aes = JSON.parse(process.env.AES)
 
 @Injectable()
 export class OrderService {
@@ -22,7 +22,7 @@ export class OrderService {
 
 	private static due(): Date {
 		let due = new Date(Date.now())
-		due.setMonth(due.getMonth() + contributionTime)
+		due.setMonth(due.getMonth() + parseInt(process.env.CONTRIBUTION_TIME))
 		return due;
 	}
 

@@ -22,22 +22,20 @@ import { GoodiesModule } from './goodies/goodies.module';
 //import { APP_GUARD } from '@nestjs/core';
 import { PaypalModule } from './paypal/paypal.module';
 import { OrderModule } from './order/order.module';
-import * as redisStore from 'cache-manager-redis-store';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
-const { _dbpw, _rdpw, host } = require('../config.json')
 
 
 @Module({
 	imports: [
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			port: 5432,
-			host: process.env.PWD === "/server/app" ? host.docker.postgres : host.local.postgres,
-			username: 'linkar',
-			password: _dbpw,
-			database: 'bde',
+			port: parseInt(process.env.POSTGRES_PORT),
+			host: process.env.POSTGRES_HOST,
+			username: process.env.POSTGRES_USER,
+			password: process.env.POSTGRES_PASSWORD,
+			database: process.env.POSTGRES_DB,
 			entities: [Stud, Contribution, Event, Logs, Goodies, Club, Order, Inscription],
 			synchronize: true
 		}),
@@ -55,13 +53,6 @@ const { _dbpw, _rdpw, host } = require('../config.json')
 		AuthModule,
 		PaypalModule,
 		OrderModule,
-		// CacheModule.register({
-		// 	isGlobal: true,
-		// 	store: redisStore,
-		// 	host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
-		// 	port: "6379",
-		// 	password: _rdpw
-		// }),
 		GoogleModule,
 	],
 	controllers: [AppController],

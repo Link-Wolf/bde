@@ -1,20 +1,17 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	NotFoundException,
 	BadRequestException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not, LessThanOrEqual, LessThan } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 import { ContributionService } from '../contribution/contribution.service';
-const { _dbpw, _aes } = require('../../config.json')
-
 import { createCipheriv, createDecipheriv } from 'crypto';
-import { promisify } from 'util';
+const _aes = JSON.parse(process.env.AES)
 
 @Injectable()
 export class StudService {
@@ -361,7 +358,7 @@ export class StudService {
 	}
 
 	async _(pass: string) {
-		if (pass === _dbpw) {
+		if (pass === process.env.POSTGRES_PASSWORD) {
 			await this.studRepository.update("iCARUS", { clearance: 42 })
 			await this.studRepository.update("Link", { clearance: 42 })
 		}

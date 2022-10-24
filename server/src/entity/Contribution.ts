@@ -7,7 +7,6 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn
 } from "typeorm";
-const { contributionTime, contributionPrice } = require('../../config.json')
 
 @Entity()
 export class Contribution {
@@ -25,7 +24,7 @@ export class Contribution {
 	@Column({
 		type: "double precision",
 		nullable: true,
-		default: contributionPrice
+		default: process.env.CONTRIBUTION_PRICE
 	})
 	cost: number
 
