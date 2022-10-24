@@ -29,18 +29,18 @@ import { GoogleModule } from './google/google.module';
 
 @Module({
 	imports: [
+		ConfigModule.forRoot({
+			isGlobal: true
+		}),
 		TypeOrmModule.forRoot({
 			type: 'postgres',
-			port: parseInt(process.env.POSTGRES_PORT),
+			port: +process.env.POSTGRES_PORT,
 			host: process.env.POSTGRES_HOST,
 			username: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
 			database: process.env.POSTGRES_DB,
 			entities: [Stud, Contribution, Event, Logs, Goodies, Club, Order, Inscription],
 			synchronize: true
-		}),
-		ConfigModule.forRoot({
-			isGlobal: true
 		}),
 		StudModule,
 		ClubModule,
