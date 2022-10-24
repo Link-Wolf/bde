@@ -284,9 +284,8 @@ const EquipePicture = props => {
 	return (
 		<>
 			<a href={`https://profile.intra.42.fr/users/${props.login}`}>
-				<LazyLoadImage
+				<img
 					src={`https://cdn.intra.42.fr/users/${props.login}.jpg`}
-					effect="blur"
 					height={100}
 					width="auto"
 				/>
