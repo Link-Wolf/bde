@@ -90,7 +90,8 @@ const UserProfile = props => {
 const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
-			<img
+			<LazyLoadImage
+				effect="blur"
 				src={`https://cdn.intra.42.fr/users/${props.stud.login}.jpg`}
 				className={props.stud.isPremium && style.premium}
 			/>
@@ -415,8 +416,10 @@ const ChangeEmailField = props => {
 			<button
 				onClick={() => {
 					if (
-						document.getElementById("emailField").checkValidity() &&
-						trueMail
+						!document
+							.getElementById("emailField")
+							.checkValidity() ||
+						!trueMail
 							.split("@")[1]
 							.split(".")[1]
 							.startsWith("42")
