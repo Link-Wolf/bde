@@ -33,7 +33,6 @@ async function bootstrap() {
 	app.use(
 		compression(),
 		helmet(),
-		// csurf(),
 		cookieParser("hi this is the secret"),
 		session(
 			{
