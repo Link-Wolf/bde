@@ -26,7 +26,7 @@ const UserProfile = props => {
 
 	useEffect(() => {
 		if (!props.login) return;
-		fetch(`http://${global.config.api.authority}/stud/${props.login}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${props.login}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -347,7 +347,7 @@ const ChangeEmailField = props => {
 	const saveMail = async () => {
 		if (trueMail === "") return;
 		await fetch(
-			`http://${global.config.api.authority}/stud/${props.login}`,
+			`${process.env.REACT_APP_API_URL}/stud/${props.login}`,
 			{
 				credentials: "include",
 				method: "PATCH",
@@ -377,7 +377,7 @@ const ChangeEmailField = props => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/stud/${props.login}/mail`,
+			`${process.env.REACT_APP_API_URL}/stud/${props.login}/mail`,
 			{
 				credentials: "include"
 			}
@@ -466,7 +466,7 @@ const ContributionHistory = props => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/contribution/${props.login}`,
+			`${process.env.REACT_APP_API_URL}/contribution/${props.login}`,
 			{
 				credentials: "include"
 			}
@@ -543,7 +543,7 @@ const SubscribedEvents = props => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/event/stud/${props.login}`,
+			`${process.env.REACT_APP_API_URL}/event/stud/${props.login}`,
 			{
 				credentials: "include"
 			}
@@ -602,7 +602,7 @@ const OrderHistory = props => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/order/stud/${props.login}`,
+			`${process.env.REACT_APP_API_URL}/order/stud/${props.login}`,
 			{
 				credentials: "include"
 			}
@@ -708,7 +708,7 @@ const UserProfile = options => {
 	//Stud
 	useEffect(() => {
 		if (options.login === undefined || options.login === "") return;
-		fetch(`http://${global.config.api.authority}/stud/${options.login}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${options.login}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -734,7 +734,7 @@ const UserProfile = options => {
 	useEffect(() => {
 		if (options.login === undefined || options.login === "") return;
 		fetch(
-			`http://${global.config.api.authority}/stud/${options.login}/mail`,
+			`${process.env.REACT_APP_API_URL}/stud/${options.login}/mail`,
 			{
 				credentials: "include"
 			}
@@ -766,7 +766,7 @@ const UserProfile = options => {
 	const saveMail = async () => {
 		if (trueMail !== "") {
 			await fetch(
-				`http://${global.config.api.authority}/stud/${options.login}`,
+				`${process.env.REACT_APP_API_URL}/stud/${options.login}`,
 				{
 					credentials: "include",
 					method: "PATCH",
@@ -798,7 +798,7 @@ const UserProfile = options => {
 	useEffect(() => {
 		if (options.login === undefined || options.login === "") return;
 		fetch(
-			`http://${global.config.api.authority}/contribution/${options.login}`,
+			`${process.env.REACT_APP_API_URL}/contribution/${options.login}`,
 			{
 				credentials: "include"
 			}
@@ -846,7 +846,7 @@ const UserProfile = options => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/event/stud/${dataStud.login}`,
+			`${process.env.REACT_APP_API_URL}/event/stud/${dataStud.login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -878,7 +878,7 @@ const UserProfile = options => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/order/stud/${dataStud.login}`,
+			`${process.env.REACT_APP_API_URL}/order/stud/${dataStud.login}`,
 			requestOptions
 		)
 			.then(response => {

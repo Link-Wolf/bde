@@ -14,7 +14,7 @@ const DropdownUser = param => {
 	});
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -68,7 +68,7 @@ const DropdownUser = param => {
 		);
 	return (
 		<a
-			href={global.config.intra.redirect}
+			href={process.env.REACT_APP_INTRA_REDIRECT}
 			onClick={() => {
 				localStorage.setItem("toRedirectLogin", window.location);
 			}}

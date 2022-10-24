@@ -8,6 +8,14 @@ services:
             - 8080:3000
         depends_on:
             - api
+        environment:
+            REACT_APP_INTRA_REDIRECT: ${INTRA_REDIRECT}
+            REACT_APP_EMAILJS_SERVICE: ${EMAILJS_SERVICE}
+            REACT_APP_EMAILJS_PUBLICKEY: ${EMAILJS_PUBLICKEY}
+            REACT_APP_EMAILJS_TEMPLATE_CONTACT: ${EMAILJS_TEMPLATE_CONTACT}
+            REACT_APP_EMAILJS_TEMPLATE_PAYMENT: ${EMAILJS_TEMPLATE_PAYMENT}
+            REACT_APP_API_URL: ${API_URL}
+            REACT_APP_PAYPAL_ID: ${PAYPAL_ID}
         networks:
             - front_network
 

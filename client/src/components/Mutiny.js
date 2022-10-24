@@ -8,7 +8,7 @@ const Mutiny = () => {
 	const tricorn = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
-				`http://${global.config.api.authority}/stud/admin/${selectedUser}/mutiny`,
+				`${process.env.REACT_APP_API_URL}/stud/admin/${selectedUser}/mutiny`,
 				{
 					credentials: "include",
 					method: "PATCH"
@@ -38,7 +38,7 @@ const Mutiny = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/stud/admin/direction`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/direction`, {
 			credentials: "include"
 		})
 			.then(response => {

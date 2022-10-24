@@ -12,7 +12,7 @@ const Clubs = () => {
 
 	useEffect(() => {
 		setLoad(true);
-		fetch(`http://${global.config.api.authority}/club`, {
+		fetch(`${process.env.REACT_APP_API_URL}/club`, {
 			credentials: "include"
 		})
 			.then(response => {

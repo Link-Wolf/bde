@@ -45,7 +45,7 @@ const AdminClubToken = param => {
 			await isConfirmed(`Désires tu supprimer le club ${param.data.name}`)
 		) {
 			await fetch(
-				`http://${global.config.api.authority}/club/${param.data.id}`,
+				`${process.env.REACT_APP_API_URL}/club/${param.data.id}`,
 				{
 					method: "DELETE",
 					credentials: "include"
@@ -88,7 +88,7 @@ const AdminClubToken = param => {
 
 	const checkStud = async () => {
 		await fetch(
-			`http://${global.config.api.authority}/stud/${bodyState.login}`,
+			`${process.env.REACT_APP_API_URL}/stud/${bodyState.login}`,
 			{
 				credentials: "include"
 			}
@@ -130,7 +130,7 @@ const AdminClubToken = param => {
 					credentials: "include"
 				};
 				await fetch(
-					`http://${global.config.api.authority}/club/${param.data.id}`,
+					`${process.env.REACT_APP_API_URL}/club/${param.data.id}`,
 					requestOptions
 				)
 					.then(response => {

@@ -7,7 +7,7 @@ const Log = () => {
 	const [clearance, setClearance] = useState(-42);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {

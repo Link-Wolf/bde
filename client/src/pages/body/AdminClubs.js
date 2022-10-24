@@ -19,7 +19,7 @@ const AdminClubs = param => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(`http://${global.config.api.authority}/club`, requestOptions)
+		fetch(`${process.env.REACT_APP_API_URL}/club`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
