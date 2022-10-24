@@ -347,19 +347,16 @@ const ChangeEmailField = props => {
 
 	const saveMail = async () => {
 		if (trueMail === "") return;
-		await fetch(
-			`${process.env.REACT_APP_API_URL}/stud/${props.login}`,
-			{
-				credentials: "include",
-				method: "PATCH",
-				body: JSON.stringify({
-					true_email: trueMail
-				}),
-				headers: {
-					"Content-Type": "application/json"
-				}
+		await fetch(`${process.env.REACT_APP_API_URL}/stud/${props.login}`, {
+			credentials: "include",
+			method: "PATCH",
+			body: JSON.stringify({
+				true_email: trueMail
+			}),
+			headers: {
+				"Content-Type": "application/json"
 			}
-		)
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -377,12 +374,9 @@ const ChangeEmailField = props => {
 	};
 
 	useEffect(() => {
-		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/${props.login}/mail`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${props.login}/mail`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -468,12 +462,9 @@ const ContributionHistory = props => {
 	};
 
 	useEffect(() => {
-		fetch(
-			`${process.env.REACT_APP_API_URL}/contribution/${props.login}`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/contribution/${props.login}`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -512,7 +503,13 @@ const ContributionHistory = props => {
 	return (
 		<div className={style.contrib}>
 			<h3> Cotisations</h3>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
@@ -524,7 +521,13 @@ const ContributionHistory = props => {
 					</li>
 				))}
 			</ul>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 		</div>
 	);
 };
@@ -545,12 +548,9 @@ const SubscribedEvents = props => {
 	};
 
 	useEffect(() => {
-		fetch(
-			`${process.env.REACT_APP_API_URL}/event/stud/${props.login}`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/event/stud/${props.login}`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -575,7 +575,13 @@ const SubscribedEvents = props => {
 	return (
 		<div className={style.event}>
 			<h3> Évènements </h3>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
@@ -583,7 +589,13 @@ const SubscribedEvents = props => {
 					</li>
 				))}
 			</ul>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 		</div>
 	);
 };
@@ -604,12 +616,9 @@ const OrderHistory = props => {
 	};
 
 	useEffect(() => {
-		fetch(
-			`${process.env.REACT_APP_API_URL}/order/stud/${props.login}`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/order/stud/${props.login}`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -634,15 +643,27 @@ const OrderHistory = props => {
 	return (
 		<div className={style.orderHist}>
 			<h3> Commandes </h3>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
-						<a href={`/receipt/${data.id}`}>{data.id}</a>
+						<button href={`/receipt/${data.id}`}>{data.id}</button>
 					</li>
 				))}
 			</ul>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+			{data.length > PER_PAGE && (
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			)}{" "}
 		</div>
 	);
 };
@@ -661,7 +682,15 @@ const HistorySelector = props => {
 				<ul>
 					{props.fields.map((field, i) => (
 						<li key={i}>
-							<a onClick={() => setSelected(i)}>{field.title}</a>
+							<input
+								id={`radio${i}`}
+								type="radio"
+								checked={selected === i}
+								onChange={() => {
+									setSelected(i);
+								}}
+							/>
+							<label htmlFor={`radio${i}`}> {field.title}</label>
 						</li>
 					))}
 				</ul>

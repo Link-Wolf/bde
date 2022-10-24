@@ -99,8 +99,31 @@
 	.historySelectorContainer {
 		.historySelector {
 			ul {
+				margin: 0;
+
 				li {
-					a {}
+					display: inline;
+
+					input[type="radio"] {
+						opacity: 0;
+						position: fixed;
+						width: 0;
+
+						& + label {
+							text-align: center;
+							width: 200px;
+							background: var(--white);
+							padding: 5px;
+							margin: 5px;
+							border: none;
+						}
+
+						&:checked {
+							& + label {
+								border-bottom: solid var(--primary) 2px;
+							}
+						}
+					}
 				}
 			}
 		}
