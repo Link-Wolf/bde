@@ -1,11 +1,39 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@sur4c1
+Link-Wolf /
+bde
+Private
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+
+    Insights
+
+bde/docker-compose.yml
+@sur4c1
+sur4c1 adding not so useless volume
+Latest commit 8b50f20 3 days ago
+History
+2 contributors
+@sur4c1
+@Link-Wolf
+76 lines (72 sloc) 1.71 KB
 services:
     app:
         container_name: fregate_app
         build:
             context: .
             dockerfile: client.dockerfile
-        volumes:
-            - ./client:/app
         ports:
             - 8080:3000
         depends_on:
@@ -23,8 +51,6 @@ services:
         networks:
             - back_network
             - front_network
-        volumes:
-            - ./server:/usr/src/app
         restart: unless-stopped
         depends_on:
             - redis
@@ -36,7 +62,7 @@ services:
         image: redis
         restart: always
         volumes:
-            - redis:/data
+            - bde:/redis/data
         networks:
             - back_network
 
@@ -51,7 +77,7 @@ services:
                 POSTGRES_USER: ${POSTGRES_USER}
                 POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         volumes:
-          - bde:/var/lib/postgresql/data
+          - bde:/postgres/data
         networks:
             - back_network
 
@@ -69,11 +95,10 @@ services:
         ports:
             - 8443:8443
         volumes:
-            - bde:/var/lib/pgadmin
+            - bde:/phppgadmin/data
 volumes:
-    redis:
-        driver: local
     bde:
+        driver: local
 networks:
     back_network:
         driver: bridge
