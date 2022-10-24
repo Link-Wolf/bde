@@ -16,15 +16,15 @@ const ContributeButtons = props => {
 	const sendMail = async (date, commande, timestamp, mail) => {
 		await emailjs
 			.send(
-				global.config.emailjs.service_id,
-				global.config.emailjs.template_paiement,
+				process.env.REACT_APP_EMAILJS_SERVICE,
+				process.env.REACT_APP_EMAILJS_TEMPLATE_PAYMENT,
 				{
 					date: date,
 					commande: commande,
 					timestamp: timestamp,
 					mail: mail
 				},
-				global.config.emailjs.public_key
+				process.env.REACT_APP_EMAILJS_PUBLICKEY
 			)
 			.catch(function(error) {
 				console.log(
@@ -80,7 +80,7 @@ const ContributeButtons = props => {
 								}`
 							});
 							fetch(
-								`http://${global.config.api.authority}/order/create`,
+								`${process.env.REACT_APP_API_URL}/order/create`,
 								{
 									method: "POST",
 									credentials: "include",
@@ -99,7 +99,7 @@ const ContributeButtons = props => {
 							id: data.orderID
 						});
 						fetch(
-							`http://${global.config.api.authority}/order/capture`,
+							`${process.env.REACT_APP_API_URL}/order/capture`,
 							{
 								method: "POST",
 								credentials: "include",
@@ -144,7 +144,7 @@ const ContributeButtons = props => {
 							.then(async () => {
 								if (props.needMail)
 									await fetch(
-										`http://${global.config.api.authority}/stud/${props.session.login}`,
+										`${process.env.REACT_APP_API_URL}/stud/${props.session.login}`,
 										{
 											credentials: "include",
 											method: "PATCH",
@@ -607,7 +607,7 @@ const Contribute = () => {
 	const [fixedAddress, setFixedAddress] = useState();
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -629,7 +629,7 @@ const Contribute = () => {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/paypal/clientToken`, {
+		fetch(`${process.env.REACT_APP_API_URL}/paypal/clientToken`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -648,7 +648,7 @@ const Contribute = () => {
 	}, []);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/contribution/info`, {
+		fetch(`${process.env.REACT_APP_API_URL}/contribution/info`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -667,7 +667,7 @@ const Contribute = () => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/contribution/${session.login}`,
+			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
 			{
 				credentials: "include"
 			}
@@ -701,7 +701,7 @@ const Contribute = () => {
 	}, [session]);
 
 	const checkTrueMail = async login => {
-		fetch(`http://${global.config.api.authority}/stud/${login}/mail`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
 			credentials: "include"
 		})
 			.then(response => {

@@ -47,7 +47,7 @@ const AdminProductToken = param => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
 		await fetch(
-			`http://${global.config.api.authority}/goodies/upload_image
+			`${process.env.REACT_APP_API_URL}/goodies/upload_image
 			/${param.data.id}`,
 			{
 				method: "POST",
@@ -99,7 +99,7 @@ const AdminProductToken = param => {
 			};
 
 			await fetch(
-				`http://${global.config.api.authority}/goodies/${param.data.id}`,
+				`${process.env.REACT_APP_API_URL}/goodies/${param.data.id}`,
 				requestOptions
 			)
 				.then(response => {
@@ -135,7 +135,7 @@ const AdminProductToken = param => {
 		if (param === undefined || param === "" || !param) return;
 		setUpdate(false);
 		fetch(
-			`http://${global.config.api.authority}/goodies/${param.data.id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/goodies/${param.data.id}/thumbnail`,
 			{
 				credentials: "include"
 			}
@@ -167,7 +167,7 @@ const AdminProductToken = param => {
 			)
 		) {
 			await fetch(
-				`http://${global.config.api.authority}/goodies/${param.data.id}`,
+				`${process.env.REACT_APP_API_URL}/goodies/${param.data.id}`,
 				{
 					method: "DELETE",
 					credentials: "include"

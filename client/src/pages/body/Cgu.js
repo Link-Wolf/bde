@@ -108,7 +108,7 @@ const Cgu = () => {
 			<h3>Nous contacter</h3>
 			<p>
 				Par email via le{" "}
-				<a href="http://${global.config.api.authority}/contact">
+				<a href="${process.env.REACT_APP_API_URL}/contact">
 					formulaire de contact
 				</a>
 			</p>
@@ -238,7 +238,7 @@ const Cgu = () => {
 				sa décision de se rétracter au moyen d’une déclaration dénuée
 				d’ambiguïté (par exemple, lettre envoyée par la poste, demande
 				via{" "}
-				<a href="http://${global.config.api.authority}/contact">
+				<a href="${process.env.REACT_APP_API_URL}/contact">
 					formulaire de contact du Site
 				</a>{" "}
 				ou courriel) au : BDE 42 Mulhouse - 30 Rue François Spoerry,

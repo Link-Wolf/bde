@@ -5,7 +5,7 @@ const Logout = () => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/auth/logout`, {
+		fetch(`${process.env.REACT_APP_API_URL}/auth/logout`, {
 			method: "POST",
 			credentials: "include"
 		})
@@ -16,7 +16,7 @@ const Logout = () => {
 				};
 				while (loop) {
 					await fetch(
-						`http://${global.config.api.authority}/session`,
+						`${process.env.REACT_APP_API_URL}/session`,
 						{
 							credentials: "include"
 						}

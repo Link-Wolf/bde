@@ -19,7 +19,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/stud/admin/unpaid`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/unpaid`,
 			requestOptions
 		)
 			.then(response => {
@@ -47,7 +47,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/stud/unpaid/yeet/${toYeet}`,
+			`${process.env.REACT_APP_API_URL}/stud/unpaid/yeet/${toYeet}`,
 			requestOptions
 		)
 			.then(response => {

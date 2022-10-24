@@ -70,7 +70,7 @@ const AdminCreateContributionToken = () => {
 			return;
 		}
 		await fetch(
-			`http://${global.config.api.authority}/contribution/admin`,
+			`${process.env.REACT_APP_API_URL}/contribution/admin`,
 			{
 				method: "POST",
 				credentials: "include",
@@ -110,7 +110,7 @@ const AdminCreateContributionToken = () => {
 
 	useEffect(() => {
 		setUpdate(false);
-		fetch(`http://${global.config.api.authority}/stud`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 			credentials: "include"
 		})
 			.then(response => {
