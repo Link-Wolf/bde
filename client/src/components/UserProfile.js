@@ -163,7 +163,8 @@ const Identity = props => {
 					</b>
 				</li>
 				<li>
-					Jours de cotisation restants : <b>{props.blackHole}</b>
+					Jours de cotisation restants :{" "}
+					<b>{props.blackHole ? props.blackHole : 0}</b>
 				</li>
 				<li>
 					{props.blackHole > 0 ? (
