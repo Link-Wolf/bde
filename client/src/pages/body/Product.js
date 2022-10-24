@@ -35,7 +35,7 @@ const Album = param => {
 	useEffect(() => {
 		if (param.id == undefined || !param.id) return;
 		fetch(
-			`http://${global.config.api.authority}/goodies/${param.id}/album`,
+			`${process.env.REACT_APP_API_URL}/goodies/${param.id}/album`,
 			{
 				credentials: "include"
 			}
@@ -132,7 +132,7 @@ const Description = param => {
 	});
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/goodies/${param.id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {

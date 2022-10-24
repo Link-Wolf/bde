@@ -7,7 +7,7 @@ const Me = () => {
 	const [login, setLogin] = useState("");
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {

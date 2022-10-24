@@ -13,7 +13,7 @@ const AdminNavbar = () => {
 			`Wesh bg, fait pas le con, c'est que pour le debug les gros boutons`
 		);
 		if (!confirm) return;
-		await fetch(`http://${global.config.api.authority}/stud`, {
+		await fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 			headers: {"Content-Type": "application/json"},
 			method: "POST",
 			credentials: "include",
@@ -29,7 +29,7 @@ const AdminNavbar = () => {
 			})
 		})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/stud`, {
+				fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -46,7 +46,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/stud`, {
+				fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -62,7 +62,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/goodies`, {
+				fetch(`${process.env.REACT_APP_API_URL}/goodies`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -76,7 +76,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/goodies`, {
+				fetch(`${process.env.REACT_APP_API_URL}/goodies`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -89,7 +89,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/goodies`, {
+				fetch(`${process.env.REACT_APP_API_URL}/goodies`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -103,7 +103,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/event`, {
+				fetch(`${process.env.REACT_APP_API_URL}/event`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -126,7 +126,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/event`, {
+				fetch(`${process.env.REACT_APP_API_URL}/event`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -147,7 +147,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/event`, {
+				fetch(`${process.env.REACT_APP_API_URL}/event`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -168,7 +168,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/event`, {
+				fetch(`${process.env.REACT_APP_API_URL}/event`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -191,7 +191,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/contribution`, {
+				fetch(`${process.env.REACT_APP_API_URL}/contribution`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -201,7 +201,7 @@ const AdminNavbar = () => {
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/contribution`, {
+				fetch(`${process.env.REACT_APP_API_URL}/contribution`, {
 					headers: {"Content-Type": "application/json"},
 					method: "POST",
 					credentials: "include",
@@ -217,30 +217,30 @@ const AdminNavbar = () => {
 			`T'es archi sur de vouloir enculer la database ???`
 		);
 		if (!confirm) return;
-		fetch(`http://${global.config.api.authority}/stud`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 			credentials: "include",
 			method: "DELETE"
 		})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/event`, {
+				fetch(`${process.env.REACT_APP_API_URL}/event`, {
 					credentials: "include",
 					method: "DELETE"
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/goodies`, {
+				fetch(`${process.env.REACT_APP_API_URL}/goodies`, {
 					credentials: "include",
 					method: "DELETE"
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/inscription`, {
+				fetch(`${process.env.REACT_APP_API_URL}/inscription`, {
 					credentials: "include",
 					method: "DELETE"
 				});
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/contribution`, {
+				fetch(`${process.env.REACT_APP_API_URL}/contribution`, {
 					credentials: "include",
 					method: "DELETE"
 				});
@@ -248,7 +248,7 @@ const AdminNavbar = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {

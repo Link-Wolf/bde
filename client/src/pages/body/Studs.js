@@ -4,7 +4,7 @@ const Stud = () => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/stud`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
 			credentials: "include"
 		})
 			.then(response => {

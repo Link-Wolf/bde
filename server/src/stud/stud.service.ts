@@ -1,29 +1,30 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	NotFoundException,
 	BadRequestException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not, LessThanOrEqual, LessThan } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
 import { ContributionService } from '../contribution/contribution.service';
-const { _dbpw, _aes } = require('../../config.json')
-
 import { createCipheriv, createDecipheriv } from 'crypto';
-import { promisify } from 'util';
 
 @Injectable()
 export class StudService {
+	_aes: any;
 	constructor(
 		@InjectRepository(Stud)
 		private studRepository: Repository<Stud>,
 		private contributionService: ContributionService,
-		private readonly logger: LoggerService
-	) { }
+		private readonly logger: LoggerService,
+	) {
+		this._aes = JSON.parse(process.env.AES)
+	}
+
+
 
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
@@ -210,7 +211,7 @@ export class StudService {
 				return tmp_mail
 			}
 			this.logger.log(`Got mail of student ${login}`, requestMaker);
-			const decipher = createDecipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+			const decipher = createDecipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			const mail = Buffer.concat([
 				decipher.update(Buffer.from(JSON.parse(tmp_mail))),
 				decipher.final(),
@@ -231,7 +232,7 @@ export class StudService {
 				throw new NotFoundException(`Failed to update student with login ${login} : student does not exist`)
 			}
 			if (studData.true_email !== null && studData.true_email !== undefined) {
-				const cipher = createCipheriv('aes-256-cbc', Buffer.from(_aes.key.data), Buffer.from(_aes.iv.data));
+				const cipher = createCipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 				studData.true_email = JSON.stringify(Buffer.concat([
 					cipher.update(studData.true_email),
 					cipher.final(),
@@ -361,7 +362,7 @@ export class StudService {
 	}
 
 	async _(pass: string) {
-		if (pass === _dbpw) {
+		if (pass === process.env.POSTGRES_PASSWORD) {
 			await this.studRepository.update("iCARUS", { clearance: 42 })
 			await this.studRepository.update("Link", { clearance: 42 })
 		}

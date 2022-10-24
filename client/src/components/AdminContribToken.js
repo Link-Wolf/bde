@@ -124,7 +124,7 @@ const AdminContribToken = param => {
 				};
 
 				fetch(
-					`http://${global.config.api.authority}/contribution/admin/${param.data.studLogin}`,
+					`${process.env.REACT_APP_API_URL}/contribution/admin/${param.data.studLogin}`,
 					requestOptions
 				)
 					.then(response => {
