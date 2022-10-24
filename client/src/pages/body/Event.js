@@ -94,12 +94,9 @@ const Thumbnail = param => {
 
 	useEffect(() => {
 		if (param.id === undefined || param.id === "" || !param.id) return;
-		fetch(
-			`${process.env.REACT_APP_API_URL}/event/${param.id}/thumbnail`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/event/${param.id}/thumbnail`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -179,8 +176,7 @@ const Price = param => {
 						<div>
 							Prilivège
 							<img src={inscCostLogo} />
-						</div>
-
+						</div>{" "}
 						{param.dataEvent.premium_cost != 0
 							? param.dataEvent.premium_cost
 							: "Gratuit"}
