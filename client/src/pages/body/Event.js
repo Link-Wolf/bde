@@ -360,7 +360,12 @@ const SubscribeButton = param => {
 	}, []);
 
 	useEffect(() => {
-		if (param === undefined || param === "" || !param) return;
+		if (
+			param.dataEvent.id === undefined ||
+			param.dataEvent.id === "" ||
+			!param.dataEvent.id
+		)
+			return;
 		fetch(
 			`${process.env.REACT_APP_API_URL}/inscription/${param.dataEvent.id}/isSubbed`,
 			{
