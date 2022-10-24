@@ -13,7 +13,6 @@ let RedisStore = require("connect-redis")(session)
 const spdyNest = require('spdy-nest');
 
 async function bootstrap() {
-
 	const { createClient } = require("redis")
 	let redisClient = createClient({
 		legacyMode: true, socket: {
