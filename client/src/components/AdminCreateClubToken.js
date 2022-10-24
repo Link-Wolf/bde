@@ -82,7 +82,7 @@ const AdminCreateClubToken = param => {
 
 	const checkStud = async () => {
 		await fetch(
-			`http://${global.config.api.authority}/stud/${bodyState.login}`,
+			`${process.env.REACT_APP_API_URL}/stud/${bodyState.login}`,
 			{
 				credentials: "include"
 			}
@@ -124,7 +124,7 @@ const AdminCreateClubToken = param => {
 					credentials: "include"
 				};
 				await fetch(
-					`http://${global.config.api.authority}/club`,
+					`${process.env.REACT_APP_API_URL}/club`,
 					requestOptions
 				)
 					.then(response => {

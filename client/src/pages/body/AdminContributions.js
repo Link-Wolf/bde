@@ -21,7 +21,7 @@ const AdminContributions = () => {
 			}
 		};
 		fetch(
-			`http://${global.config.api.authority}/contribution`,
+			`${process.env.REACT_APP_API_URL}/contribution`,
 			requestOptions
 		)
 			.then(response => {

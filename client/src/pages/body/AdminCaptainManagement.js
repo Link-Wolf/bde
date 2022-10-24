@@ -19,7 +19,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/stud/admin/direction`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/direction`,
 			requestOptions
 		)
 			.then(response => {
@@ -47,7 +47,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`http://${global.config.api.authority}/stud/admin/yeet/${toYeet}`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/yeet/${toYeet}`,
 			requestOptions
 		)
 			.then(response => {

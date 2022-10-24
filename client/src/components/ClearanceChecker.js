@@ -6,7 +6,7 @@ const ClearanceChecker = data => {
 
 	useEffect(() => {
 		if (data.securityLevel < global.config.clearance.unpaid)
-			fetch(`http://${global.config.api.authority}/session`, {
+			fetch(`${process.env.REACT_APP_API_URL}/session`, {
 				credentials: "include"
 			})
 				.then(response => {
@@ -27,7 +27,7 @@ const ClearanceChecker = data => {
 					);
 				});
 		else
-			fetch(`http://${global.config.api.authority}/session/admin`, {
+			fetch(`${process.env.REACT_APP_API_URL}/session/admin`, {
 				credentials: "include"
 			})
 				.then(response => {

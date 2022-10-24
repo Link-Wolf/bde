@@ -10,17 +10,15 @@ const express = require('express');
 const server = express();
 let RedisStore = require("connect-redis")(session)
 
-const { session_secret, url_client, _rdpw, host } = require('../config.json')
 const spdyNest = require('spdy-nest');
 
 async function bootstrap() {
-
 	const { createClient } = require("redis")
 	let redisClient = createClient({
 		legacyMode: true, socket: {
-			host: process.env.PWD === "/server/app" ? host.docker.redis : host.local.redis,
-			port: "6379",
-		}, password: _rdpw
+			host: process.env.REDIS_HOST,
+			port: process.env.REDIS_POST,
+		}, password: process.env.REDIS_PASSWORD
 	})
 	redisClient.connect().catch(console.error)
 	redisClient.on("error", console.error)
@@ -37,7 +35,7 @@ async function bootstrap() {
 		session(
 			{
 				store: new RedisStore({ client: redisClient }),
-				secret: session_secret,
+				secret: process.env.REDIS_CRYPT_KEY,
 				resave: false,
 				saveUninitialized: true,
 				proxy: true,
@@ -51,7 +49,7 @@ async function bootstrap() {
 	)
 	app.useGlobalFilters(new HttpExceptionFilter());
 	app.enableCors({
-		"origin": url_client,
+		"origin": process.env.APP_URL,
 		"methods": "GET,PUT,PATCH,POST,DELETE",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204,

@@ -15,7 +15,7 @@ const Login = () => {
 				code: code
 			})
 		};
-		fetch(`http://${global.config.api.authority}/auth`, requestOptions)
+		fetch(`${process.env.REACT_APP_API_URL}/auth`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -25,7 +25,7 @@ const Login = () => {
 				}
 			})
 			.then(() => {
-				fetch(`http://${global.config.api.authority}/session`, {
+				fetch(`${process.env.REACT_APP_API_URL}/session`, {
 					credentials: "include"
 				})
 					.then(response => {

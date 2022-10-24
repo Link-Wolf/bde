@@ -4,13 +4,12 @@ node_modules/
 build/
 tmp/
 temp/
-.env
+.env*
 *.log
 *.constant.*
 coverage/
 .DS_Store
 config.json
-config.js
 dump.rdb
 server/build
 server/dist
