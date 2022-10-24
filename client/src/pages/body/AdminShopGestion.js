@@ -21,7 +21,7 @@ const AdminShopGestion = param => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(`http://${global.config.api.authority}/goodies`, requestOptions)
+		fetch(`${process.env.REACT_APP_API_URL}/goodies`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

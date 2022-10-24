@@ -12,7 +12,7 @@ const AdminLogList = param => {
 
 	useEffect(() => {
 		setLoad(true);
-		fetch(`http://${global.config.api.authority}/admin/logs/get`, {
+		fetch(`${process.env.REACT_APP_API_URL}/admin/logs/get`, {
 			credentials: "include",
 			method: "post",
 			headers: {

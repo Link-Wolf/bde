@@ -13,7 +13,7 @@ const EventToken = param => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/event/${param.event.id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/event/${param.event.id}/thumbnail`,
 			{
 				credentials: "include"
 			}

@@ -25,7 +25,7 @@ const Event = param => {
 	const [isPremium, setIsPremium] = useState(undefined);
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/event/${param.id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/event/${param.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -95,7 +95,7 @@ const Thumbnail = param => {
 	useEffect(() => {
 		if (param.id === undefined || param.id === "" || !param.id) return;
 		fetch(
-			`http://${global.config.api.authority}/event/${param.id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/event/${param.id}/thumbnail`,
 			{
 				credentials: "include"
 			}
@@ -273,7 +273,7 @@ const SubscribeButton = param => {
 			return;
 		}
 		await fetch(
-			`http://${global.config.api.authority}/inscription/me/${param.dataEvent.id}`,
+			`${process.env.REACT_APP_API_URL}/inscription/me/${param.dataEvent.id}`,
 			{
 				method: "POST",
 				credentials: "include"
@@ -311,7 +311,7 @@ const SubscribeButton = param => {
 			return;
 		}
 		await fetch(
-			`http://${global.config.api.authority}/inscription/minecraft/${param.dataEvent.id}`,
+			`${process.env.REACT_APP_API_URL}/inscription/minecraft/${param.dataEvent.id}`,
 			{
 				method: "DELETE",
 				credentials: "include"
@@ -336,7 +336,7 @@ const SubscribeButton = param => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/stud/minecraft/`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/minecraft/`, {
 			method: "GET",
 			credentials: "include"
 		})
@@ -367,7 +367,7 @@ const SubscribeButton = param => {
 		)
 			return;
 		fetch(
-			`http://${global.config.api.authority}/inscription/${param.dataEvent.id}/isSubbed`,
+			`${process.env.REACT_APP_API_URL}/inscription/${param.dataEvent.id}/isSubbed`,
 			{
 				credentials: "include"
 			}

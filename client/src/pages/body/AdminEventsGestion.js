@@ -21,7 +21,7 @@ const AdminEventsGestion = param => {
 			},
 			body: JSON.stringify(param.filter)
 		};
-		fetch(`http://${global.config.api.authority}/event/get`, requestOptions)
+		fetch(`${process.env.REACT_APP_API_URL}/event/get`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(

@@ -60,7 +60,7 @@ const AdminProductToken = param => {
 			};
 
 			fetch(
-				`http://${global.config.api.authority}/goodies/`,
+				`${process.env.REACT_APP_API_URL}/goodies/`,
 				requestOptions
 			)
 				.then(response => {
@@ -89,7 +89,7 @@ const AdminProductToken = param => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
 		await fetch(
-			`http://${global.config.api.authority}/goodies/upload_image/${id}`,
+			`${process.env.REACT_APP_API_URL}/goodies/upload_image/${id}`,
 			{
 				method: "POST",
 				credentials: "include",

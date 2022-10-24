@@ -7,7 +7,7 @@ const ShopToken = param => {
 
 	useEffect(() => {
 		fetch(
-			`http://${global.config.api.authority}/goodies/${param.goodies.id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/goodies/${param.goodies.id}/thumbnail`,
 			{
 				credentials: "include"
 			}

@@ -9,7 +9,7 @@ const AddDirectionSearchBar = param => {
 	const promoteUser = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
-				`http://${global.config.api.authority}/stud/admin/promote/${selectedUser}`,
+				`${process.env.REACT_APP_API_URL}/stud/admin/promote/${selectedUser}`,
 				{
 					credentials: "include",
 					method: "PATCH"
@@ -43,7 +43,7 @@ const AddDirectionSearchBar = param => {
 
 	useEffect(() => {
 		setUpdate(false);
-		fetch(`http://${global.config.api.authority}/stud/admin/noDirection`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noDirection`, {
 			credentials: "include"
 		})
 			.then(response => {

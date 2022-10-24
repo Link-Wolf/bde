@@ -16,7 +16,7 @@ const AdminStudents = () => {
 	const [subForm, setSubForm] = useState(false);
 
 	const getStud = id => {
-		fetch(`http://${global.config.api.authority}/inscription/event/${id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/inscription/event/${id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -47,7 +47,7 @@ const AdminStudents = () => {
 			}
 		};
 		fetch(
-			`http://${global.config.api.authority}/inscription/${eventId}/${login}`,
+			`${process.env.REACT_APP_API_URL}/inscription/${eventId}/${login}`,
 			requestOptions
 		)
 			.then(response => {
@@ -75,7 +75,7 @@ const AdminStudents = () => {
 			body: JSON.stringify({login: login, cost: eventCost})
 		};
 		return await fetch(
-			`http://${global.config.api.authority}/event/admin/${eventId}/inscription`,
+			`${process.env.REACT_APP_API_URL}/event/admin/${eventId}/inscription`,
 			requestOptions
 		)
 			.then(response => {
@@ -113,7 +113,7 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/event/current`, {
+		fetch(`${process.env.REACT_APP_API_URL}/event/current`, {
 			credentials: "include"
 		})
 			.then(response => {

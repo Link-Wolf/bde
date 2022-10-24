@@ -88,7 +88,7 @@ const AdminEventToken = param => {
 			)
 		) {
 			await fetch(
-				`http://${global.config.api.authority}/event/${param.data.id}`,
+				`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
 				{
 					method: "DELETE",
 					credentials: "include"
@@ -168,7 +168,7 @@ const AdminEventToken = param => {
 		const data = new FormData();
 		data.append("thumbnail", img.current);
 		await fetch(
-			`http://${global.config.api.authority}/event/upload_image
+			`${process.env.REACT_APP_API_URL}/event/upload_image
 			/${param.data.id}`,
 			{
 				method: "POST",
@@ -232,7 +232,7 @@ const AdminEventToken = param => {
 			};
 
 			await fetch(
-				`http://${global.config.api.authority}/event/${param.data.id}`,
+				`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
 				requestOptions
 			)
 				.then(response => {
@@ -337,7 +337,7 @@ const AdminEventToken = param => {
 	useEffect(() => {
 		if (param === undefined || param === "" || !param) return;
 		fetch(
-			`http://${global.config.api.authority}/event/${param.data.id}/thumbnail`,
+			`${process.env.REACT_APP_API_URL}/event/${param.data.id}/thumbnail`,
 			{
 				credentials: "include"
 			}

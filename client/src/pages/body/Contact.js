@@ -71,15 +71,15 @@ const Contact = () => {
 		setLoading(true);
 		await emailjs
 			.send(
-				global.config.emailjs.service_id,
-				global.config.emailjs.template_contact,
+				process.env.REACT_APP_EMAILJS_SERVICE,
+				process.env.REACT_APP_EMAILJS_TEMPLATE_CONTACT,
 				formState,
-				global.config.emailjs.public_key
+				process.env.REACT_APP_EMAILJS_PUBLICKEY
 			)
 			.then(async () => {
 				if (formState.login !== -42 && needMail)
 					await fetch(
-						`http://${global.config.api.authority}/stud/${formState.login}`,
+						`${process.env.REACT_APP_API_URL}/stud/${formState.login}`,
 						{
 							credentials: "include",
 							method: "PATCH",
@@ -128,7 +128,7 @@ const Contact = () => {
 	};
 
 	useEffect(() => {
-		fetch(`http://${global.config.api.authority}/session`, {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -162,12 +162,9 @@ const Contact = () => {
 			formState.login == ""
 		)
 			return;
-		fetch(
-			`http://${global.config.api.authority}/stud/${formState.login}/mail`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${formState.login}/mail`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -190,7 +187,7 @@ const Contact = () => {
 	}, [formState.login]);
 
 	const checkTrueMail = async login => {
-		fetch(`http://${global.config.api.authority}/stud/${login}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}`, {
 			credentials: "include"
 		})
 			.then(response => {
