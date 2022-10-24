@@ -8,10 +8,6 @@
 	}
 }
 
-#niktameredegagedemapagegrossemerde {
-	display: none;
-}
-
 .eventContainer {
 	--width: 1000px;
 	--title-font-size: 50px;
@@ -149,6 +145,10 @@
 
 					hr {
 						margin: 40px 0;
+
+						&#niktameredegagedemapagegrossemerde {
+							display: none;
+						}
 					}
 				}
 
