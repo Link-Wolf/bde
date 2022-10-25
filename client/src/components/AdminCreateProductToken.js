@@ -11,13 +11,21 @@ const AdminProductToken = param => {
 		name: "",
 		desc: "",
 		cost: 0,
-		available: false
+		stock: 0,
+		s: 0,
+		m: 0,
+		l: 0,
+		xl: 0
 	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
 		desc: "",
 		cost: 0,
-		available: false
+		stock: 0,
+		s: 0,
+		m: 0,
+		l: 0,
+		xl: 0
 	});
 	const img = useRef(null);
 	const [srcImg, setSrcImg] = useState(null);
@@ -48,7 +56,11 @@ const AdminProductToken = param => {
 				name: bodyState.name,
 				cost: bodyState.cost,
 				desc: bodyState.desc,
-				available: bodyState.available
+				stock: bodyState.stock,
+				s: bodyState.s,
+				m: bodyState.m,
+				l: bodyState.l,
+				xl: bodyState.xl
 			});
 
 			var requestOptions = {
@@ -59,10 +71,7 @@ const AdminProductToken = param => {
 				credentials: "include"
 			};
 
-			fetch(
-				`${process.env.REACT_APP_API_URL}/goodies/`,
-				requestOptions
-			)
+			fetch(`${process.env.REACT_APP_API_URL}/goodies/`, requestOptions)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
@@ -144,13 +153,6 @@ const AdminProductToken = param => {
 					required
 				/>{" "}
 				€
-				<Form.Switch
-					id="formAvailable"
-					label="Est il disponible"
-					name="available"
-					onChange={handleFormChange}
-					value={formState.available}
-				/>
 				<Form.Control
 					type="file"
 					id="thumbnail"

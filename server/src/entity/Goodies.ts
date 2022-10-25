@@ -24,10 +24,34 @@ export class Goodies {
 	desc: string
 
 	@Column({
-		type: "bool",
 		nullable: false,
+		type: "integer"
 	})
-	available: boolean
+	s: number
+
+	@Column({
+		nullable: false,
+		type: "integer"
+	})
+	m: number
+
+	@Column({
+		nullable: false,
+		type: "integer"
+	})
+	l: number
+
+	@Column({
+		nullable: false,
+		type: "integer"
+	})
+	xl: number
+
+	@Column({
+		nullable: false,
+		type: "integer"
+	})
+	stock: number
 
 	@Column({
 		type: 'text',

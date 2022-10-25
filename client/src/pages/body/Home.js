@@ -1,7 +1,6 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.jpg";
@@ -77,7 +76,8 @@ const Filter = param => {
 
 	const filterHanddler = () => {
 		if (
-			document.getElementById(style.dropdownMenu).style.display == "block"
+			document.getElementById(style.dropdownMenu).style.display ===
+			"block"
 		)
 			document.getElementById(style.dropdownMenu).style.display = "none";
 		else
@@ -91,7 +91,7 @@ const Filter = param => {
 				!document
 					.getElementById(style.dropdownMenu)
 					.contains(e.target) &&
-				document.getElementById(style.dropdownMenu).style.display ==
+				document.getElementById(style.dropdownMenu).style.display ===
 					"block" &&
 				document.getElementById(style.dropdownButton) !== e.target &&
 				!document
