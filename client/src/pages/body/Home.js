@@ -299,45 +299,47 @@ const Presentation = () => {
 		<div className={style.presentationContainer}>
 			<hr />
 			<h2>Notre Équipe</h2>
-			<div className={style.captain}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="aguemazi" />
+			<div className={style.bureauFaces}>
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="aguemazi" />
+					</div>
+					<h3>Capitaine</h3>
 				</div>
-				<h3>Capitaine</h3>
-			</div>
-			<div className={style.vice}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="tvanbael" />
-					<EquipePicture login="jrasser" />
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="tvanbael" />
+						<EquipePicture login="jrasser" />
+					</div>
+					<h3>Vice Capitaines</h3>
 				</div>
-				<h3>Vice Capitaines</h3>
-			</div>
-			<div className={style.treasure}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="Link" />
-					<EquipePicture login="tbrissia" />
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="Link" />
+						<EquipePicture login="tbrissia" />
+					</div>
+					<h3>Trésoriers</h3>
 				</div>
-				<h3>Trésoriers</h3>
-			</div>
-			<div className={style.secret}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="iCARUS" />
-					<EquipePicture login="mcacoilo" />
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="iCARUS" />
+						<EquipePicture login="mcacoilo" />
+					</div>
+					<h3>Secrétaires</h3>
 				</div>
-				<h3>Secrétaires</h3>
-			</div>
-			<div className={style.comm}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="mwinter-" />
-					<EquipePicture login="mfusil" />
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="mwinter-" />
+						<EquipePicture login="mfusil" />
+					</div>
+					<h3>Responsables communication</h3>
 				</div>
-				<h3>Responsables communication</h3>
-			</div>
-			<div className={style.part}>
-				<div className={style.equipePictureContainer}>
-					<EquipePicture login="jdutschk" />
+				<div className={style.pole}>
+					<div className={style.equipePictureContainer}>
+						<EquipePicture login="jdutschk" />
+					</div>
+					<h3>Responsable partenariats</h3>
 				</div>
-				<h3>Responsable partenariats</h3>
 			</div>
 
 			<div className={style.presentation}>
