@@ -9,6 +9,7 @@ import { ContributionModule } from '../contribution/contribution.module';
 @Module({
 	imports: [LoggerModule, StudModule, EventModule, ContributionModule],
 	controllers: [InscriptionController],
-	providers: [InscriptionService]
+	providers: [InscriptionService],
+	exports: [InscriptionService]
 })
 export class InscriptionModule { }

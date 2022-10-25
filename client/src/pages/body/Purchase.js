@@ -1,4 +1,6 @@
 import {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
+
 import emailjs from "@emailjs/browser";
 import {
 	PayPalScriptProvider,
@@ -66,6 +68,7 @@ const PurchaseButtons = props => {
 						.then(orderId => {
 							const body = JSON.stringify({
 								id: orderId,
+								type: props.event ? props.event.id : -1,
 								studLogin: props.session.login,
 								cost: props.amount,
 								source: data.paymentSource,
@@ -212,7 +215,11 @@ const CommandRecap = props => {
 			</thead>
 			<tbody>
 				<tr>
-					<td colSpan={2}>Cotisation de {props.time} mois</td>
+					<td colSpan={2}>
+						{props.time
+							? `Cotisation de ${props.time} mois`
+							: `Inscription à l'évènement ${props.name}`}
+					</td>
 					<td>{props.amount}€</td>
 				</tr>
 			</tbody>
@@ -582,7 +589,30 @@ const AddressForm = props => {
 	);
 };
 
-const Purchase = () => {
+const PrePurchase = () => {
+	const [data, setData] = useState();
+	const param = useParams();
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/event/${param.event}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setData(json);
+			});
+	}, [param]);
+	if (data == undefined) return;
+	return <Purchase event={data} />;
+};
+
+const Purchase = props => {
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
@@ -730,9 +760,9 @@ const Purchase = () => {
 			});
 	};
 
-	if (contributionStatus === undefined) return "Loading";
+	if (!props.event && contributionStatus === undefined) return "Loading";
 
-	if (contributionStatus === true) {
+	if (!props.event && contributionStatus === true) {
 		window.location = "/home";
 		return <></>;
 	}
@@ -783,11 +813,14 @@ const Purchase = () => {
 						<div hidden={!validated} className={style.paypal}>
 							<PayPalScriptProvider options={optionsProvider}>
 								<PurchaseButtons
-									amount={amount}
+									amount={
+										props.event ? props.event.cost : amount
+									}
 									session={session}
 									address={fixedAddress}
 									setNeedMail={setNeedMail}
 									needMail={needMail}
+									type={props.event ? props.event : "contrib"}
 								/>
 							</PayPalScriptProvider>
 						</div>
@@ -796,10 +829,15 @@ const Purchase = () => {
 				</div>
 			</div>
 			<div className={style.recap}>
-				<CommandRecap amount={amount} time={time} />
+				<CommandRecap
+					amount={props.event ? props.event.cost : amount}
+					time={props.event ? "" : time}
+					name={props.event ? props.event.name : ""}
+				/>
 			</div>
 		</div>
 	);
 };
 
 export default Purchase;
+export {Purchase, PrePurchase};

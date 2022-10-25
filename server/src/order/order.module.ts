@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Order } from '../entity/Order';
 import { LoggerModule } from '../logger/logger.module';
 import { StudModule } from '../stud/stud.module';
+import { InscriptionModule } from '../inscription/inscription.module';
 
 
 @Module({
@@ -13,7 +14,8 @@ import { StudModule } from '../stud/stud.module';
 		ContributionModule,
 		TypeOrmModule.forFeature([Order]),
 		LoggerModule,
-		StudModule],
+		StudModule,
+		InscriptionModule],
 	providers: [OrderService],
 	controllers: [OrderController]
 })

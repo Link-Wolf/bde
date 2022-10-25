@@ -7,6 +7,7 @@ import { ContributionService } from '../contribution/contribution.service';
 import { StudService } from '../stud/stud.service';
 import { OrderDto } from './order.dto';
 import { createDecipheriv, createCipheriv } from 'crypto';
+import { InscriptionService } from '../inscription/inscription.service';
 
 @Injectable()
 export class OrderService {
@@ -14,6 +15,7 @@ export class OrderService {
 	constructor(
 		@InjectRepository(Order)
 		private orderRepository: Repository<Order>,
+		private inscriptionService: InscriptionService,
 		private contributionService: ContributionService,
 		private studService: StudService,
 		private readonly logger: LoggerService
@@ -111,14 +113,19 @@ export class OrderService {
 			order.isCompleted = true
 			await this.orderRepository.update(body.id, order);
 			const stud = await this.studService.findOne(order.studLogin, login)
-			const contrib = {
-				stud: stud,
-				cost: order.cost,
-				begin_date: new Date(Date.now()),
-				end_date: OrderService.due()
-			};
-			await this.contributionService
-				.create(contrib, login);
+			if (order.type == -1) {
+				const contrib = {
+					stud: stud,
+					cost: order.cost,
+					begin_date: new Date(Date.now()),
+					end_date: OrderService.due()
+				};
+				await this.contributionService
+					.create(contrib, login);
+			}
+			else {
+				await this.inscriptionService.link(order.type, login, login)
+			}
 			this.logger.log(`Captured order ${body.id}`, login)
 			return {
 				order: order,

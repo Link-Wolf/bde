@@ -6,6 +6,9 @@ export class Order {
 	@PrimaryColumn({ type: "text" })
 	id: string
 
+	@Column({})
+	type: number
+
 	@Column({
 		type: 'timestamptz',
 	})
