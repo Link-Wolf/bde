@@ -25,6 +25,8 @@ import { OrderModule } from './order/order.module';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
+import { ProfilePictureService } from './profile_picture/profile_picture.service';
+import { ProfilePictureModule } from './profile_picture/profile_picture.module';
 
 
 @Module({
@@ -55,10 +57,12 @@ import { GoogleModule } from './google/google.module';
 		PaypalModule,
 		OrderModule,
 		GoogleModule,
+		ProfilePictureModule,
 	],
 	controllers: [AppController],
 	providers: [
-		AppService
+		AppService,
+		ProfilePictureService
 	],
 })
 export class AppModule { }
