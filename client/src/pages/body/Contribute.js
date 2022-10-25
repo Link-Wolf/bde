@@ -586,7 +586,7 @@ const Contribute = () => {
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
-		"client-id": global.config.paypal.id,
+		"client-id": process.env.REACT_APP_PAYPAL_ID,
 		currency: "EUR",
 		intent: "capture"
 	});

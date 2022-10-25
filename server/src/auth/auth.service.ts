@@ -26,6 +26,8 @@ export class AuthService {
 						"https://api.intra.42.fr/v2/me",
 						{ headers: header })
 						.then(async response => {
+
+							console.log(response)
 							let recent = 0;
 							if (response.data.cursus_users.length != 1) {
 								for (
