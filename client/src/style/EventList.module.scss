@@ -60,10 +60,14 @@
 
 		.eventList {
 			display: flex;
-			overflow-x: scroll;
+			overflow-x: auto;
 			overflow-y: hidden;
 			width: auto;
 			justify-content: flex-start;
+
+			li:nth-last-of-type(1) {
+				width: auto;
+			}
 
 			ul {
 				width: auto;
