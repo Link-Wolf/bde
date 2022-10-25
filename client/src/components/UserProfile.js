@@ -88,7 +88,7 @@ const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
 			<img
-				src={`https://cdn.intra.42.fr/users/${props.stud.login}.jpg`}
+				src={props.stud.img_medium}
 				className={props.stud.isPremium && style.premium}
 			/>
 			{props.stud.isPremium && (

@@ -51,6 +51,7 @@ export class AuthService {
 								clear = 5;
 							else
 								clear = 7;
+							console.log(response.data.image)
 							let stud = {
 								login: response.data.login,
 								firstname: response.data.usual_first_name
@@ -60,10 +61,14 @@ export class AuthService {
 								isDirection: false,
 								clearance: clear,
 								email: response.data.email,
+								img_medium: response.data.image.versions.medium,
+								img_small: response.data.image.versions.small,
 								true_email: null
 							}
+							console.log(stud)
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");
+							console.log("THE END")
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,
