@@ -13,13 +13,10 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadMail(true);
-		if (session.login == undefined) return;
-		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/${session.login}/mail`,
-			{
-				credentials: "include"
-			}
-		)
+		if (session.login === undefined) return;
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${session.login}/mail`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -30,7 +27,7 @@ const Receipt = () => {
 			})
 			.then(data => {
 				let tmp = order;
-				if (!data || data == "" || data == undefined) {
+				if (!data || data === "" || data === undefined) {
 					tmp.stud.true_email = "";
 				} else {
 					tmp.stud.true_email = data;
@@ -67,7 +64,7 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadOrder(true);
-		if (session.login == undefined) return;
+		if (session.login === undefined) return;
 		fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
 			credentials: "include"
 		})

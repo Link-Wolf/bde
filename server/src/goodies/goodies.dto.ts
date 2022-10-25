@@ -2,5 +2,9 @@ export class GoodiesDto {
 	name: string;
 	cost: number;
 	desc: string;
-	available: boolean;
+	stock: number;
+	s: number;
+	m: number;
+	l: number;
+	xl: number;
 }

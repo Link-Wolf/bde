@@ -11,13 +11,21 @@ const AdminProductToken = param => {
 		name: "",
 		desc: "",
 		cost: 0,
-		available: true
+		stock: 0,
+		s: 0,
+		m: 0,
+		l: 0,
+		xl: 0
 	});
 	const [bodyState, setBodyState] = useState({
 		name: "",
 		desc: "",
 		cost: 0,
-		available: true
+		stock: 0,
+		s: 0,
+		m: 0,
+		l: 0,
+		xl: 0
 	});
 	const [locked, setLocked] = useState(true);
 	const [update, setUpdate] = useState(false);
@@ -87,7 +95,11 @@ const AdminProductToken = param => {
 				name: bodyState.name,
 				cost: bodyState.cost,
 				desc: bodyState.desc,
-				available: bodyState.available
+				stock: bodyState.stock,
+				s: bodyState.s,
+				m: bodyState.m,
+				l: bodyState.l,
+				xl: bodyState.xl
 			});
 
 			var requestOptions = {
@@ -231,14 +243,6 @@ const AdminProductToken = param => {
 						required
 					/>{" "}
 					€
-					<Form.Switch
-						disabled={locked}
-						id="formAvailable"
-						label="Disponible"
-						name="available"
-						onChange={handleFormChange}
-						checked={formState.available}
-					/>
 					<Form.Control
 						type="file"
 						id="thumbnail"

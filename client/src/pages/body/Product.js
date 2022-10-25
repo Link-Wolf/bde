@@ -34,12 +34,9 @@ const Album = param => {
 
 	useEffect(() => {
 		if (param.id == undefined || !param.id) return;
-		fetch(
-			`${process.env.REACT_APP_API_URL}/goodies/${param.id}/album`,
-			{
-				credentials: "include"
-			}
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}/album`, {
+			credentials: "include"
+		})
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -159,11 +156,33 @@ const Description = param => {
 			<h1>{product.name}</h1>
 			<p>{product.desc}</p>
 			<ul>
-				<li>Prix: {product.cost.toFixed(2)}</li>
 				<li>
-					{product.available
-						? "Disponible dès maintenant auprès d'un·e membre de la Frégate!"
-						: "Bientôt disponible"}
+					<div className={style.price}>
+						Prix: {product.cost.toFixed(2)}
+					</div>
+				</li>
+				<li>
+					{product.stock ? (
+						product.stock ===
+						product.s + product.m + product.l + product.xl ? (
+							<div className={style.dispo}>
+								Disponible dans les tailles et quantités
+								suivantes :
+								<div className={style.tailles}>
+									<div>S : {product.s}</div>
+									<div>M : {product.m}</div>
+									<div>L : {product.l}</div>
+									<div>XL : {product.xl}</div>
+								</div>
+							</div>
+						) : (
+							<div className={style.dispo}>
+								Disponible ({product.stock} restants)
+							</div>
+						)
+					) : (
+						"En rupture de stock :c"
+					)}
 				</li>
 			</ul>
 		</div>

@@ -181,7 +181,7 @@ const Price = param => {
 							<img src={inscCostLogo} />
 						</div>
 
-						{param.dataEvent.premium_cost != 0
+						{param.dataEvent.premium_cost !== 0
 							? param.dataEvent.premium_cost
 							: "Gratuit"}
 					</a>
@@ -199,7 +199,7 @@ const Details = param => {
 				<img src={nbPlacesLogo} />
 				<br />
 				{param.dataEvent.subbed} /{" "}
-				{param.dataEvent.nb_places == -42 ? (
+				{param.dataEvent.nb_places === -42 ? (
 					<>∞</>
 				) : (
 					param.dataEvent.nb_places
@@ -243,12 +243,12 @@ const SubscribeButton = param => {
 		setIsSubbed(undefined);
 		let nb_places, price, subbed;
 		if (stud.isPremium) {
-			if (param.dataEvent.nb_places == -42) nb_places = 4242;
+			if (param.dataEvent.nb_places === -42) nb_places = 4242;
 			else nb_places = param.dataEvent.nb_places;
 			price = param.dataEvent.premium_cost;
 			subbed = param.dataEvent.subbed;
 		} else {
-			if (param.dataEvent.nb_places == -42) nb_places = 4242;
+			if (param.dataEvent.nb_places === -42) nb_places = 4242;
 			else
 				nb_places =
 					param.dataEvent.nb_places -
