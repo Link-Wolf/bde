@@ -514,15 +514,17 @@ const ContributionHistory = props => {
 	}, [props]);
 
 	return (
-		<div className={style.contrib}>
+		<div className={style.listContainer} id={style.contrib}>
 			<h3> Cotisations</h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
@@ -555,13 +557,15 @@ const ContributionHistory = props => {
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -571,8 +575,8 @@ const ContributionHistory = props => {
  *		login:	string, login of the stud
  */
 const SubscribedEvents = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
 	const viewData = usePagination(data, PER_PAGE);
 
@@ -607,29 +611,33 @@ const SubscribedEvents = props => {
 	}, [props]);
 
 	return (
-		<div className={style.event}>
+		<div className={style.listContainer} id={style.event}>
 			<h3> Évènements </h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
-			<ul>
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
+			<ul id={style.eventList}>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
 						<EventToken event={data} />
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -675,15 +683,17 @@ const OrderHistory = props => {
 	}, [props]);
 
 	return (
-		<div className={style.orderHist}>
+		<div className={style.listContainer} id={style.order}>
 			<h3> Commandes </h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
@@ -691,13 +701,15 @@ const OrderHistory = props => {
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
