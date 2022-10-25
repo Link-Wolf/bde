@@ -159,11 +159,11 @@ const Identity = props => {
 						}).format(new Date(props.stud.joinDate))}
 					</b>
 				</li>
-				<li>
+				<li hidden>
 					Jours de cotisation restants :{" "}
 					<b>{props.blackHole ? props.blackHole : 0}</b>
 				</li>
-				<li>
+				<li hidden>
 					{props.blackHole > 0 ? (
 						props.blackHole > 30 ? (
 							<svg
@@ -1037,7 +1037,7 @@ const UserProfile = options => {
 				</div>
 				<div className={style.cotiser}>
 					{!contributionStatus >= 0 && options.canSub ? (
-						<Button color="primary" href="/contribute">
+						<Button color="primary" href="/purchase">
 							Cotiser
 						</Button>
 					) : (

@@ -171,7 +171,7 @@ const Price = param => {
 				{(param.isPremium || param.dataEvent.cost !== 0) && (
 					<a
 						className={!param.isPremium ? style.no : style.yes}
-						href="/contribute"
+						href="/purchase"
 					>
 						<div>
 							Prilivège

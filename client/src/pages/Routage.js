@@ -24,7 +24,7 @@ import Me from "./body/Me";
 import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
-import Contribute from "./body/Contribute";
+import Purchase from "./body/Purchase";
 import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -89,10 +89,10 @@ const Routage = () => {
 					}
 				/>
 				<Route
-					path="contribute"
+					path="purchase"
 					element={
 						<RouteWrapper
-							route={<Contribute />}
+							route={<Purchase />}
 							check={global.config.clearance.stud}
 						/>
 					}
