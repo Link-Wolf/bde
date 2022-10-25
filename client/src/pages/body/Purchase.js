@@ -6,9 +6,9 @@ import {
 	usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
 import getLabel from "react-select-country-list";
-import style from "../../style/Contribute.module.scss";
+import style from "../../style/Purchase.module.scss";
 
-const ContributeButtons = props => {
+const PurchaseButtons = props => {
 	const currency = "EUR";
 	const style = {layout: "vertical"};
 	const [{options}, dispatch] = usePayPalScriptReducer();
@@ -582,7 +582,7 @@ const AddressForm = props => {
 	);
 };
 
-const Contribute = () => {
+const Purchase = () => {
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
@@ -738,7 +738,7 @@ const Contribute = () => {
 	}
 
 	return (
-		<div className={style.contribute}>
+		<div className={style.purchase}>
 			<div>
 				<div className={style.address}>
 					<AddressForm
@@ -782,7 +782,7 @@ const Contribute = () => {
 					{validated && (
 						<div hidden={!validated} className={style.paypal}>
 							<PayPalScriptProvider options={optionsProvider}>
-								<ContributeButtons
+								<PurchaseButtons
 									amount={amount}
 									session={session}
 									address={fixedAddress}
@@ -802,4 +802,4 @@ const Contribute = () => {
 	);
 };
 
-export default Contribute;
+export default Purchase;
