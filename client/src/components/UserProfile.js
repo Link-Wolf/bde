@@ -1037,7 +1037,7 @@ const UserProfile = options => {
 				</div>
 				<div className={style.cotiser}>
 					{!contributionStatus >= 0 && options.canSub ? (
-						<Button color="primary" href="/purchase">
+						<Button color="primary" href="/purchase/contrib">
 							Cotiser
 						</Button>
 					) : (

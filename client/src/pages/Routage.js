@@ -24,7 +24,7 @@ import Me from "./body/Me";
 import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
-import Purchase from "./body/Purchase";
+import {Purchase, PrePurchase} from "./body/Purchase";
 import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -89,11 +89,20 @@ const Routage = () => {
 					}
 				/>
 				<Route
-					path="purchase"
+					path="purchase/contrib"
 					element={
 						<RouteWrapper
 							route={<Purchase />}
 							check={global.config.clearance.stud}
+						/>
+					}
+				/>
+				<Route
+					path="purchase/:event"
+					element={
+						<RouteWrapper
+							route={<PrePurchase />}
+							check={global.config.clearance.pool}
 						/>
 					}
 				/>

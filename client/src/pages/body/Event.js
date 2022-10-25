@@ -171,7 +171,7 @@ const Price = param => {
 				{(param.isPremium || param.dataEvent.cost !== 0) && (
 					<a
 						className={!param.isPremium ? style.no : style.yes}
-						href="/purchase"
+						href="/purchase/contrib"
 					>
 						<div>
 							Prilivège
@@ -263,10 +263,11 @@ const SubscribeButton = param => {
 			return;
 		}
 		if (price !== 0) {
-			await isConfirmed(
-				`Contacte un membre du BDE pour payer et valider ton inscription !`
-			);
-			setIsSubbed(false);
+			// await isConfirmed(
+			// 	`Contacte un membre du BDE pour payer et valider ton inscription !`
+			// );
+			// setIsSubbed(false);
+			window.location = `/purchase/${param.dataEvent.id}`;
 			return;
 		}
 		await fetch(
