@@ -3,7 +3,7 @@ import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
 
 import style from "../../style/Home.module.scss";
-import frontImage from "../../assets/images/front.jpg";
+import frontImage from "../../assets/images/front.webp";
 
 const Home = () => {
 	const [filter, setFilter] = useState({
