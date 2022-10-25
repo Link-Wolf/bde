@@ -64,6 +64,8 @@
 		.bureauFaces {
 			display: flex;
 			text-align: center;
+			flex-wrap: wrap;
+			justify-content: center;
 
 			.pole {
 				width: 300px;
@@ -163,6 +165,7 @@
 
 			.thumbnailsContainer {
 				margin: var(--margin);
+				height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 				width: calc(var(--colWidth) - 2 * var(--margin));
 				display: flex;
 
@@ -224,9 +227,10 @@
 
 		.lists {
 			display: block;
+			height: auto;
 
 			h2 {
-				margin: 4vw 4vw 0;
+				margin: 30px 4vw 0;
 				font-weight: bold;
 			}
 
@@ -242,10 +246,12 @@
 			}
 
 			div.col {
+				margin-top: 30px;
+
 				&.eventFilter {
 					#dropdownButton {
-						padding: 10px 20px;
-						margin: 0 calc((100vw - 80px) / 2);
+						padding: 5px;
+						margin: 10px calc((100vw - 80px) / 2);
 					}
 
 					#dropdownMenu {
