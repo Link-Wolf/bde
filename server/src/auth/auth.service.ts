@@ -51,6 +51,7 @@ export class AuthService {
 								clear = 5;
 							else
 								clear = 7;
+							console.log(response.data.image)
 							let stud = {
 								login: response.data.login,
 								firstname: response.data.usual_first_name
@@ -60,6 +61,7 @@ export class AuthService {
 								isDirection: false,
 								clearance: clear,
 								email: response.data.email,
+								image_url: response.data.image,
 								true_email: null
 							}
 							const retStud = await this.studService
