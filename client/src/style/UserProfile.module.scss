@@ -63,12 +63,40 @@
 		}
 
 		.qrContainer {
+			display: none;
 			margin: 20px;
 
-			a {
-				svg {
-					width: var(--image-size);
-					height: var(--image-size);
+			button {
+				border: none;
+				background: var(--secondary);
+				color: var(--white);
+				padding: 5px;
+				margin: 5px;
+				text-transform: uppercase;
+
+				&:hover {
+					background: var(--secondary-dark);
+				}
+			}
+
+			.blurryBg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100vw;
+				height: 100vh;
+				backdrop-filter: blur(50px);
+
+				.qrPopup {
+					background: var(--white);
+					width: 90vw;
+					margin: 5vw;
+					padding: 5vw;
+
+					svg {
+						width: 80vw;
+						height: 80vw;
+					}
 				}
 			}
 		}
@@ -99,6 +127,8 @@
 	.historySelectorContainer {
 		.historySelector {
 			ul {
+				padding: 0;
+				width: 600px;
 				margin: 0;
 
 				li {
@@ -111,11 +141,15 @@
 
 						& + label {
 							text-align: center;
-							width: 200px;
+							width: 190px;
 							background: var(--white);
 							padding: 5px;
 							margin: 5px;
 							border: none;
+
+							&:hover {
+								cursor: pointer;
+							}
 						}
 
 						&:checked {
@@ -129,30 +163,81 @@
 		}
 
 		.historyContent {
-			div {
-				h3 {}
+			width: 600px;
+			margin: 0;
+			padding: 0;
+
+			.listContainer {
+				height: 1050px;
+
+				div {
+					height: auto;
+				}
+
+				h3 {
+					text-align: center;
+				}
 
 				ul {
+					margin: 0;
+					padding: 0;
+					list-style: none;
+
 					li {}
 				}
 
-				&.contrib {
-					h3 {}
+				.pagination {
+					height: 32px;
 
 					ul {
-						li {}
+						display: flex;
+						flex-direction: row;
+						justify-content: center;
 					}
 				}
 
-				&.event {
+				&#contrib {
 					h3 {}
 
 					ul {
-						li {}
+						text-align: center;
+
+						li {
+							margin: 20px;
+
+							p {
+								margin: 0;
+							}
+						}
 					}
 				}
 
-				&.order {
+				&#event {
+					width: 600px;
+
+					h3 {}
+
+					ul {
+						&#eventList {
+							height: 900px;
+						}
+						width: 600px;
+
+						li {
+							a {
+								height: 175px;
+							}
+
+							&:nth-last-of-type(1) {
+								hr {
+									display: none;
+								}
+							}
+						}
+					}
+				}
+
+				&#order {
 					h3 {}
 
 					ul {
@@ -240,6 +325,190 @@
 						ul {
 							li {
 								a {}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+@media (max-width: 100vh) {
+	.profileContainer {
+		.profileInfoContainer {
+			.profilePictureContainer {
+				img {
+					&.premium {}
+				}
+
+				svg {}
+			}
+
+			.identityContainer {
+				h1 {}
+
+				ul {
+					li {
+						b {}
+
+						svg {}
+					}
+				}
+			}
+
+			.qrContainer {
+				display: inline-block;
+
+				button {
+					&:hover {}
+				}
+
+				.blurryBg {
+					.qrPopup {
+						svg {}
+					}
+				}
+			}
+		}
+
+		.emailFieldContainer {
+			input {}
+
+			button {
+				&:hover {}
+			}
+		}
+
+		.historySelectorContainer {
+			.historySelector {
+				ul {
+					li {
+						input[type="radio"] {
+							& + label {
+								&:hover {}
+							}
+
+							&:checked {
+								& + label {}
+							}
+						}
+					}
+				}
+			}
+
+			.historyContent {
+				div {
+					h3 {}
+
+					ul {
+						li {}
+					}
+
+					&.contrib {
+						h3 {}
+
+						ul {
+							li {}
+						}
+					}
+
+					&.event {
+						h3 {}
+
+						ul {
+							li {}
+						}
+					}
+
+					&.order {
+						h3 {}
+
+						ul {
+							li {
+								a {}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	@media (max-width: 100vh) {
+		.profileContainer {
+			.profileInfoContainer {
+				.profilePictureContainer {
+					img {
+						&.premium {}
+					}
+
+					svg {}
+				}
+
+				.identityContainer {
+					h1 {}
+
+					ul {
+						li {
+							b {}
+
+							img {}
+						}
+					}
+				}
+
+				.qrContainer {
+					a {
+						svg {}
+					}
+				}
+			}
+
+			.emailFieldContainer {
+				input {}
+
+				button {}
+			}
+
+			.historySelectorContainer {
+				.historySelector {
+					ul {
+						li {
+							a {}
+						}
+					}
+				}
+
+				.historyContent {
+					div {
+						h3 {}
+
+						ul {
+							li {}
+						}
+
+						&.contrib {
+							h3 {}
+
+							ul {
+								li {}
+							}
+						}
+
+						&.event {
+							h3 {}
+
+							ul {
+								li {}
+							}
+						}
+
+						&.order {
+							h3 {}
+
+							ul {
+								li {
+									a {}
+								}
 							}
 						}
 					}

@@ -1,11 +1,8 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import QRCode from "react-qr-code";
-import {Navigate} from "react-router-dom";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import {Button} from "reactstrap";
 import usePagination from "./Pagination";
 import {Pagination} from "@mui/material";
 import style from "../style/UserProfile.module.scss";
@@ -90,8 +87,7 @@ const UserProfile = props => {
 const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
-			<LazyLoadImage
-				effect="blur"
+			<img
 				src={`https://cdn.intra.42.fr/users/${props.stud.login}.jpg`}
 				className={props.stud.isPremium && style.premium}
 			/>
@@ -317,18 +313,35 @@ const Identity = props => {
  *		login:	string, login of the stud
  */
 const QR = props => {
+	const [qr, setQr] = useState(false);
 	return (
 		<div className={style.qrContainer}>
-			<a href={`http://${window.location.host}/profile/${props.login}`}>
-				<QRCode
-					value={`http://${window.location.host}/profile/${props.login}`}
-					level="H"
-					bgColor="var(--white)"
-					fgColor="var(--black)"
-					size={256}
-					viewBox={`0 0 256 256`}
-				/>
-			</a>
+			<button
+				onClick={() => {
+					setQr(true);
+				}}
+			>
+				Afficher le QR
+			</button>
+			{qr && (
+				<div
+					className={style.blurryBg}
+					onClick={() => {
+						setQr(false);
+					}}
+				>
+					<div className={style.qrPopup}>
+						<QRCode
+							value={`http://${window.location.host}/profile/${props.login}`}
+							level="H"
+							bgColor="var(--white)"
+							fgColor="var(--black)"
+							size={256}
+							viewBox={`0 0 256 256`}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
@@ -501,33 +514,58 @@ const ContributionHistory = props => {
 	}, [props]);
 
 	return (
-		<div className={style.contrib}>
+		<div className={style.listContainer} id={style.contrib}>
 			<h3> Cotisations</h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
-						{`${new Date(
-							data.begin_date
-						).toLocaleDateString()} - ${new Date(
-							data.end_date
-						).toLocaleDateString()}`}
+						<div>
+							<p>{`${new Date(
+								data.begin_date
+							).toLocaleDateString()} - ${new Date(
+								data.end_date
+							).toLocaleDateString()}`}</p>
+							<p>
+								{
+									//text here
+									[
+										"Pas encore commencée",
+										"En cours",
+										"Terminée"
+									][
+										+(
+											new Date(data.begin_date) <
+											new Date(Date.now())
+										) +
+											+(
+												new Date(data.end_date) <
+												new Date(Date.now())
+											)
+									]
+								}
+							</p>
+						</div>
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -537,8 +575,8 @@ const ContributionHistory = props => {
  *		login:	string, login of the stud
  */
 const SubscribedEvents = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
 	const viewData = usePagination(data, PER_PAGE);
 
@@ -573,29 +611,33 @@ const SubscribedEvents = props => {
 	}, [props]);
 
 	return (
-		<div className={style.event}>
+		<div className={style.listContainer} id={style.event}>
 			<h3> Évènements </h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
-			<ul>
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
+			<ul id={style.eventList}>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
 						<EventToken event={data} />
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
@@ -641,15 +683,17 @@ const OrderHistory = props => {
 	}, [props]);
 
 	return (
-		<div className={style.orderHist}>
+		<div className={style.listContainer} id={style.order}>
 			<h3> Commandes </h3>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
@@ -657,13 +701,15 @@ const OrderHistory = props => {
 					</li>
 				))}
 			</ul>
-			{data.length > PER_PAGE && (
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
-			)}{" "}
+			<div className={style.pagination}>
+				{data.length > PER_PAGE && (
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				)}
+			</div>
 		</div>
 	);
 };
