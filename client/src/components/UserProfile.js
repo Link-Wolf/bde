@@ -315,7 +315,7 @@ const Identity = props => {
 const QR = props => {
 	const [qr, setQr] = useState(false);
 	return (
-		<div className={style.qrContainer}>
+		<div className={style.qrContainer} hidden>
 			<button
 				onClick={() => {
 					setQr(true);
