@@ -341,10 +341,6 @@ const Presentation = () => {
 					<h3>Responsable partenariats</h3>
 				</div>
 			</div>
-
-			<div className={style.presentation}>
-				<p>On est gentils. Peut être.</p>
-			</div>
 		</div>
 	);
 };
