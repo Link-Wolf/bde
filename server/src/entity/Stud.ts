@@ -48,6 +48,12 @@ export class Stud {
 	})
 	joinDate: Date
 
+	@Column()
+	img_medium: string;
+
+	@Column()
+	img_small: string;
+
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",

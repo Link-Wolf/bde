@@ -6,4 +6,6 @@ export class StudDto {
 	clearance: number;
 	email: string;
 	true_email: string;
+	img_small: string;
+	img_medium: string;
 }
