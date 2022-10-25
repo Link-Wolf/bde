@@ -61,9 +61,37 @@
 			text-transform: uppercase;
 		}
 
-		.presentation {
-			margin: 0;
-			padding: 20px;
+		.bureauFaces {
+			display: flex;
+			text-align: center;
+
+			.pole {
+				width: 300px;
+
+				.equipePictureContainer {
+					position: relative;
+					padding: 25px;
+					margin: 25px;
+
+					&:after {
+						content: "";
+						border-color: var(--black);
+						border-width: 0 2px 2px;
+						border-style: solid;
+						position: absolute;
+						bottom: 0;
+						left: 0;
+						height: 15px;
+						width: 100%;
+					}
+
+					img {
+						height: 100px;
+						width: 100px;
+						object-fit: cover;
+					}
+				}
+			}
 		}
 	}
 
