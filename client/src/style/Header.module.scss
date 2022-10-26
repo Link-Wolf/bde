@@ -43,7 +43,8 @@
 	.rightContainer {
 		display: flex;
 
-		img {
+		img,
+		svg {
 			height: 4vh;
 			width: 4vh;
 			margin: 1vh 0.5vw;
@@ -58,8 +59,8 @@
 			}
 
 			img#logout {
-				height: 2vh;
-				width: 2vh;
+				height: 40px;
+				width: 40px;
 				margin: 1vh 0.5vw;
 				padding: 0;
 			}
