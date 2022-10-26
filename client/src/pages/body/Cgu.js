@@ -47,15 +47,6 @@ const Cgu = () => {
 				pouvant être contactée au 0642694269 et joint par mail via
 				contact@42mulhouse.fr.
 			</p>
-			<h3>Nom de domaine</h3>
-			<p>
-				Le nom de domaine est la propriété exclusive du BDE de 42
-				Mulhouse. La réservation du nom de domaine{" "}
-				<b>"bde42mulhouse.fr "</b> a été effectuée auprès de l'AFNIC
-				conformément aux dispositions en vigueur. L'attribution et le
-				retrait des noms de sous-domaines sont du ressort exclusif du
-				BDE 42 Mulhouse.
-			</p>
 			<h3>Accès au site</h3>
 			<p>
 				Le Site est accessible 7 jours sur 7 et 24 heures sur 24 en tout
