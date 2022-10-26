@@ -9,11 +9,13 @@ import {
 } from "@paypal/react-paypal-js";
 import getLabel from "react-select-country-list";
 import style from "../../style/Purchase.module.scss";
+import Loading from "../../components/Loading";
 
 const PurchaseButtons = props => {
 	const currency = "EUR";
 	const style = {layout: "vertical"};
 	const [{options}, dispatch] = usePayPalScriptReducer();
+	const [loading, setLoading] = useState(false);
 
 	const sendMail = async (date, commande, timestamp, mail) => {
 		await emailjs
@@ -48,6 +50,7 @@ const PurchaseButtons = props => {
 
 	return (
 		<>
+			{loading && <Loading />}
 			<PayPalButtons
 				style={style}
 				disabled={false}
@@ -97,6 +100,7 @@ const PurchaseButtons = props => {
 						});
 				}}
 				onApprove={function(data, actions) {
+					setLoading(true);
 					return actions.order.capture().then(function() {
 						const body = JSON.stringify({
 							id: data.orderID
