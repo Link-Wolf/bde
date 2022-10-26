@@ -6,28 +6,28 @@ import jszip from "jszip";
 import style from "../../style/Product.module.scss";
 import load from "../../assets/animations/gear_clockwise.gif";
 
-const Product = param => {
-	if (param.id === undefined) return;
+const Product = props => {
+	if (props.id === undefined) return;
 	return (
 		<>
 			<div className={style.productContainer}>
 				<div className={style.productFile}>
-					<Album id={param.id} />
-					<Description id={param.id} />
+					<Album id={props.id} />
+					<Description id={props.id} />
 				</div>
 			</div>
 		</>
 	);
 };
 
-const Album = param => {
+const Album = props => {
 	const [album, setAlbum] = useState([load]);
 	const [displayedImage, setDisplayedImage] = useState(0);
 	const [refAlbum, setRefAlbum] = useState(0);
 
 	useEffect(() => {
-		if (param.id == undefined || !param.id) return;
-		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}/album`, {
+		if (props.id == undefined || !props.id) return;
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}/album`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -72,7 +72,7 @@ const Album = param => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [param.id]);
+	}, [props.id]);
 
 	return (
 		<div className={style.album}>
@@ -81,7 +81,7 @@ const Album = param => {
 					album.map((image, i) => (
 						<li key={i}>
 							<a
-								onClick={() => {
+								onMouseOver={() => {
 									setDisplayedImage(i);
 								}}
 							>
@@ -98,7 +98,7 @@ const Album = param => {
 	);
 };
 
-const Description = param => {
+const Description = props => {
 	const [product, setProduct] = useState({
 		name: "█ █ █ █ ",
 		cost: 42,
@@ -107,7 +107,7 @@ const Description = param => {
 	});
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -127,7 +127,7 @@ const Description = param => {
 					`This is a fetch error: The error is ${error.message}`
 				);
 			});
-	}, [param.id]);
+	}, [props.id]);
 
 	return (
 		<div className={style.description}>
