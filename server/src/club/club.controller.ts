@@ -29,7 +29,6 @@ export class ClubController {
 	@UseGuards(new ClearanceGuard(11))
 	create(
 		@Session() session: Record<string, any>, @Body(ClubDtoPipe) club: ClubDto) {
-		console.log("controller", club)
 		return this.clubService.create(club, session.login);
 	}
 

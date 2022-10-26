@@ -153,7 +153,7 @@ const Filter = param => {
 };
 
 const ProductList = () => {
-	const [products, setProducts] = useState([{id: 0}, {id: 1}, {id: 2}]);
+	const [products, setProducts] = useState([]);
 	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
 	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
 	const [thumbnailCap, setThumbnailCap] = useState(frontImage);

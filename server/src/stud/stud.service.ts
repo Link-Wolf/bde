@@ -390,7 +390,6 @@ export class StudService {
 	}
 
 	async logUser(stud: StudDto, requestMaker: string) {
-		console.log(stud)
 		try {
 			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)
@@ -398,7 +397,6 @@ export class StudService {
 			else
 				if (user.clearance <= 7)
 					this.update(user.login, stud, requestMaker)
-			console.log(user)
 			this.logger.log(`Logged student ${user.login}`, requestMaker);
 			return user
 		} catch (error) {

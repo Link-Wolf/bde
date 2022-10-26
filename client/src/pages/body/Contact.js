@@ -52,7 +52,6 @@ const Contact = () => {
 	};
 
 	const sendMail = async () => {
-		console.log(formState);
 		if (
 			formState.mail === "" ||
 			formState.name === "" ||

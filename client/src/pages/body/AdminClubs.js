@@ -30,7 +30,6 @@ const AdminClubs = param => {
 			})
 			.then(actualData => {
 				setData(actualData);
-				console.log(actualData);
 			})
 			.catch(function(error) {
 				console.log(
