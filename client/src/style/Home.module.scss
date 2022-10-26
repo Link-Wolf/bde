@@ -277,3 +277,34 @@
 		}
 	}
 }
+
+#filter {
+	position: absolute;
+	overflow: auto;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.5);
+	backdrop-filter: blur(50px);
+	width: 100vw;
+	height: 100vh;
+	animation: 0.2s linear 0s blurAppear;
+	z-index: 42;
+
+	#outArea {
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		z-index: -1;
+	}
+}
+@keyframes blurAppear {
+	0% {
+		backdrop-filter: blur(0px);
+		background: rgba(0,0,0,0);
+	}
+
+	100% {
+		backdrop-filter: blur(50px);
+		background: rgba(0,0,0,0.5);
+	}
+}

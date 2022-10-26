@@ -1,20 +1,27 @@
-import {useState, useEffect, React} from "react";
-
+import {useState, useRef, useEffect, React} from "react";
+import {useParams} from "react-router-dom";
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
+import {LazyLoadImage} from "react-lazy-load-image-component";
+
+import ProductList from "../../components/ProductList";
 
 import style from "../../style/Product.module.scss";
+
 import load from "../../assets/animations/gear_clockwise.gif";
 
-const Product = param => {
-	if (param.id === undefined) return;
+const Product = () => {
+	const params = useParams();
+
+	if (params.id === undefined) return;
 	return (
 		<>
 			<div className={style.productContainer}>
 				<div className={style.productFile}>
-					<Album id={param.id} />
-					<Description id={param.id} />
+					<Album id={params.id} />
+					<Description id={params.id} />
 				</div>
+				<OtherProducts />
 			</div>
 		</>
 	);
@@ -85,7 +92,13 @@ const Album = param => {
 									setDisplayedImage(i);
 								}}
 							>
-								<img className={style.thumbnail} src={image} />
+								<LazyLoadImage
+									height="auto"
+									className={style.thumbnail}
+									src={image}
+									width="auto"
+									effect="blur"
+								/>
 							</a>
 						</li>
 					))
@@ -93,7 +106,13 @@ const Album = param => {
 					<></>
 				)}
 			</ul>
-			<img className={style.cover} src={album[displayedImage]} />
+			<LazyLoadImage
+				height="auto"
+				className={style.cover}
+				src={album[displayedImage]}
+				width="auto"
+				effect="blur"
+			/>
 		</div>
 	);
 };
@@ -165,6 +184,10 @@ const Description = param => {
 			</ul>
 		</div>
 	);
+};
+
+const OtherProducts = () => {
+	return <ProductList />;
 };
 
 export default Product;
