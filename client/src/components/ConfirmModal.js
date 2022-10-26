@@ -23,7 +23,9 @@ const ConfirmModal = () => {
 					<h1>Confirm</h1>
 					<p>{prompt}</p>
 					<div className={style.buttons}>
-						<button onClick={proceed}>Ok</button>
+						<button id={style.confirm} onClick={proceed}>
+							Ok
+						</button>
 						<button onClick={cancel}>Cancel</button>
 					</div>
 				</div>
