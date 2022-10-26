@@ -1,8 +1,9 @@
 import React from "react";
+import style from "../../style/Cgu.module.scss";
 
 const Cgv = () => {
 	return (
-		<>
+		<div className={style.cgu}>
 			<h2>Conditions générales de ventes</h2>
 			<h3>Clause n° 1 : Objet et champ d'application</h3>
 			<p>
@@ -182,7 +183,7 @@ const Cgv = () => {
 				français. À défaut de résolution amiable, le litige sera porté
 				devant le Tribunal de commerce de Mulhouse.
 			</p>
-		</>
+		</div>
 	);
 };
 

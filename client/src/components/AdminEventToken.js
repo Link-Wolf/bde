@@ -117,7 +117,6 @@ const AdminEventToken = param => {
 	};
 
 	const handleFormChange = event => {
-		console.log(event);
 		let tmp = {...formState};
 		const target = event.target;
 		const value =

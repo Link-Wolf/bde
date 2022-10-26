@@ -54,7 +54,6 @@ const Album = param => {
 					const mediaFiles = Object.entries(
 						files
 					).filter(([fileName]) => fileName.endsWith(""));
-					console.log("media", mediaFiles);
 
 					if (!mediaFiles.length) {
 						throw new Error("No media files found in archive");
@@ -66,8 +65,6 @@ const Album = param => {
 							.then(blob => {
 								let tmp = album;
 								tmp[i] = URL.createObjectURL(blob);
-								console.log("image " + i, tmp[i]);
-
 								setAlbum(tmp);
 							})
 							.then(async () => {
