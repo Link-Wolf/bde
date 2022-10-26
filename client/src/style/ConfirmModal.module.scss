@@ -1,3 +1,13 @@
+@keyframes popDown {
+	0% {
+		transform: translateY(-300px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}
+
 .popUpContainer {
 	position: absolute;
 	top: 0;
@@ -9,6 +19,7 @@
 	flex-direction: row;
 	justify-content: center;
 	z-index: 99;
+	animation: 0.2s linear 0s popDown;
 
 	.popUp {
 		background: var(--white);
