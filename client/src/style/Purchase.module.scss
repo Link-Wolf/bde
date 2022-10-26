@@ -1,0 +1,79 @@
+.purchase {
+	display: flex;
+	justify-content: space-around;
+	padding: 20px;
+
+	.left {
+		margin: 20px;
+		width: 460px;
+
+		.intro {
+			p {}
+
+			hr {}
+		}
+
+		.payment {
+			form {
+				margin: 10px 0;
+				padding: 10px;
+
+				.formLine {
+					display: flex;
+					flex-direction: row !important;
+
+					div {
+						margin: 10px;
+						width: 200px;
+						display: flex;
+						flex-direction: column;
+					}
+				}
+
+				.formMargin {
+					margin: 20px 0;
+					display: flex;
+					flex-direction: column;
+				}
+
+				.country {
+					padding: 0 10px;
+					width: 440px;
+				}
+
+				.mail {
+					padding: 0 10px;
+					width: 440px;
+				}
+			}
+
+			button {
+				margin: 0 0 50px;
+			}
+
+			.paypal {}
+		}
+	}
+
+	.recap {
+		margin: 20px;
+		width: 400px;
+
+		p {
+			a {}
+		}
+
+		table {
+			width: 400px;
+
+			tr {
+				td,
+				th {
+					&:nth-of-type(2) {
+						text-align: right;
+					}
+				}
+			}
+		}
+	}
+}
