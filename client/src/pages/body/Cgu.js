@@ -1,10 +1,13 @@
 import React from "react";
+import style from "../../style/Cgu.module.scss";
 
 const Cgu = () => {
 	return (
-		<>
+		<div className={style.cgu}>
 			<h1>Conditions générales d'utilisations et de ventes</h1>
-			<p>Dernière mise à jour le 4 octobre 2022</p>
+			<div className={style.maj}>
+				<p>Dernière mise à jour le 4 octobre 2022</p>
+			</div>
 			<h2>Conditions générales d'utilisations</h2>
 			<p>
 				Conformément aux dispositions de la loi n° 2004-575 du 21 juin
@@ -282,7 +285,7 @@ const Cgu = () => {
 				français. À défaut de résolution amiable, le litige sera porté
 				devant le Tribunal de commerce de Mulhouse.
 			</p>
-		</>
+		</div>
 	);
 };
 
