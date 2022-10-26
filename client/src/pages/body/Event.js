@@ -237,7 +237,6 @@ const SubscribeButton = param => {
 	const {isConfirmed} = useConfirm();
 
 	const sub = async () => {
-		setIsSubbed(undefined);
 		let nb_places, price, subbed;
 		if (stud.isPremium) {
 			if (param.dataEvent.nb_places === -42) nb_places = 4242;
@@ -294,7 +293,6 @@ const SubscribeButton = param => {
 	};
 
 	const unsub = async () => {
-		setIsSubbed(undefined);
 		let price;
 		if (stud.isPremium) {
 			price = param.dataEvent.premium_cost;
