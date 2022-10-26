@@ -193,7 +193,7 @@ const LegalNote = () => {
 			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
 				conditions générales de vente{" "}
 			</a>{" "}
-			ci-annexées du site du BDE 42 Mulhouse
+			ci-annexées du site du BDE 42 Mulhouse.
 		</p>
 	);
 };
