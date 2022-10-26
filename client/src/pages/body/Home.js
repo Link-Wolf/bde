@@ -114,22 +114,22 @@ const Filter = param => {
 				<CheckSet
 					set={[
 						{
-							label: "Free",
+							label: "Gratuit",
 							name: "free",
 							checked: param.filter.free
 						},
 						{
-							label: "Available",
+							label: "Places restantes",
 							name: "available",
 							checked: param.filter.available
 						},
 						{
-							label: "Miammiam glouglou",
+							label: "Consommations",
 							name: "food",
 							checked: param.filter.food
 						},
 						{
-							label: "Dehors",
+							label: "A l'extérieur",
 							name: "outside",
 							checked: param.filter.outside
 						},
