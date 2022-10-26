@@ -9,7 +9,7 @@ import {
 } from "@paypal/react-paypal-js";
 import getLabel from "react-select-country-list";
 import style from "../../style/Purchase.module.scss";
-import Loading from "../../components/Loading";
+
 const PurchaseButtons = props => {
 	const currency = "EUR";
 	const style = {layout: "vertical"};
@@ -97,7 +97,6 @@ const PurchaseButtons = props => {
 						});
 				}}
 				onApprove={function(data, actions) {
-					props.setLoading(true);
 					return actions.order.capture().then(function() {
 						const body = JSON.stringify({
 							id: data.orderID
@@ -182,7 +181,6 @@ const PurchaseButtons = props => {
 					});
 				}}
 				onError={err => {
-					props.setLoading(false);
 					NotificationManager.error(
 						"Une erreur s'est produite.",
 						"Erreur",
@@ -288,7 +286,6 @@ const Purchase = props => {
 		mail: ""
 	});
 	const [fixedAddress, setFixedAddress] = useState();
-	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/session`, {
@@ -423,9 +420,6 @@ const Purchase = props => {
 
 	return (
 		<div className={style.purchase}>
-			<div hidden={!loading} className={style.load}>
-				<Loading />
-			</div>
 			<div className={style.address}>
 				<AddressForm
 					setState={setAddressFormState}
@@ -476,7 +470,6 @@ const Purchase = props => {
 								needMail={needMail}
 								type={props.event ? props.event : "contrib"}
 								event={props.event}
-								setLoading={setLoading}
 							/>
 						</PayPalScriptProvider>
 					</div>
