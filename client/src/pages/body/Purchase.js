@@ -524,7 +524,7 @@ const AddressForm = props => {
 					/>
 				</div>
 			</div>{" "}
-			<div className={style.formMargin}>
+			<div className={style.formMargin} id={style.address}>
 				<label forHtml="address">Adresse</label>
 				<div className={style.formLine}>
 					<div>
