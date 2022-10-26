@@ -19,7 +19,6 @@
 
 	.productFile {
 		display: flex;
-		flex-wrap: wrap;
 
 		.album {
 			display: flex;
@@ -47,7 +46,7 @@
 				width: 400px;
 				padding: 10px;
 				border-radius: 10px;
-				object-fit: contain;
+				object-fit: cover;
 			}
 		}
 
