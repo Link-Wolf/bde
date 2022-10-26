@@ -412,7 +412,14 @@ const Purchase = props => {
 		<div className={style.purchase}>
 			<div className={style.left}>
 				<div className={style.intro}>
-					<p>blabla paimenet sur place</p>
+					<p>
+						Dans le cas ou vous ne souhaiteriez ou ne pourriez pas
+						procéder à un paiement en ligne sur le site, toute
+						transaction peut se faire en physique par carte bancaire
+						(contact ou sans contact) ou espèces en contactant un
+						membre du BDE.
+					</p>
+					{/*TODO: text*/}
 					<hr />
 				</div>
 				<div className={style.payment}>
