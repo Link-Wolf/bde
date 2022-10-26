@@ -124,7 +124,7 @@ export class OrderService {
 					.create(contrib, login);
 			}
 			else {
-				await this.inscriptionService.link(order.type, login, login)
+				await this.inscriptionService.link(order.type, login, login, order.cost)
 			}
 			this.logger.log(`Captured order ${body.id}`, login)
 			return {
