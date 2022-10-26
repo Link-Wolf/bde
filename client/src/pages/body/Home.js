@@ -4,6 +4,7 @@ import CheckSet from "../../components/CheckSet";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.webp";
+import Product from "./Product.js";
 
 const Home = () => {
 	const [filter, setFilter] = useState({
@@ -157,6 +158,7 @@ const ProductList = () => {
 	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
 	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
 	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
+	const [popUp, setPopUp] = useState(-1);
 
 	useEffect(() => {
 		if (products[2] === undefined || products[2] === null) return;
@@ -264,18 +266,64 @@ const ProductList = () => {
 				);
 			});
 	}, []);
-
+	if (products[2] === undefined)
+		return (
+			<div className={style.ProductListContainer}>
+				<h2>NOS PRODUITS</h2>
+				<hr />
+				<div className={style.thumbnailsContainer}>
+					<img src={thumbnailHoodies} />
+					<div className={style.miniThumbnailsContainer}>
+						<img src={thumbnailTshirt} />
+						<img src={thumbnailCap} />
+					</div>
+				</div>
+			</div>
+		);
 	return (
 		<div className={style.ProductListContainer}>
 			<h2>NOS PRODUITS</h2>
 			<hr />
 			<div className={style.thumbnailsContainer}>
-				<img src={thumbnailHoodies} />
+				<img
+					src={thumbnailHoodies}
+					onClick={() => {
+						setPopUp(products[0].id);
+					}}
+				/>
 				<div className={style.miniThumbnailsContainer}>
-					<img src={thumbnailTshirt} />
-					<img src={thumbnailCap} />
+					<img
+						src={thumbnailTshirt}
+						onClick={() => {
+							setPopUp(products[1].id);
+						}}
+					/>
+					<img
+						src={thumbnailCap}
+						onClick={() => {
+							setPopUp(products[2].id);
+						}}
+					/>
 				</div>
 			</div>
+			{popUp !== -1 && (
+				<>
+					<div id={style.filter}>
+						<div
+							id={style.outArea}
+							onClick={() => {
+								setPopUp(-1);
+							}}
+						></div>
+						<Product
+							id={popUp}
+							closeEvent={() => {
+								setPopUp(-1);
+							}}
+						/>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
