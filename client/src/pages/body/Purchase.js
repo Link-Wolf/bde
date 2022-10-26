@@ -821,6 +821,7 @@ const Purchase = props => {
 									setNeedMail={setNeedMail}
 									needMail={needMail}
 									type={props.event ? props.event : "contrib"}
+									event={props.event}
 								/>
 							</PayPalScriptProvider>
 						</div>
