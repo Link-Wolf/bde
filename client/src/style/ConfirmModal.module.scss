@@ -20,7 +20,28 @@
 		p {}
 
 		.buttons {
-			button {}
+			display: flex;
+			justify-content: space-around;
+
+			button {
+				border: none;
+				color: var(--white);
+				background: var(--secondary);
+				width: 60px;
+				height: 30px;
+
+				&:hover {
+					background: var(--secondary-dark);
+				}
+
+				&#confirm {
+					background: var(--primary);
+
+					&:hover {
+						background: var(--primary-dark);
+					}
+				}
+			}
 		}
 	}
 }
