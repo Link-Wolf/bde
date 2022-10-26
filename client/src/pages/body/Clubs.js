@@ -40,7 +40,6 @@ const Clubs = () => {
 			.then(tmp => {
 				setCount(tmp);
 				setLoad(false);
-				console.log(clubs);
 			})
 			.catch(function(error) {
 				console.log(

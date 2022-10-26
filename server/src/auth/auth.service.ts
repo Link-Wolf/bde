@@ -27,7 +27,6 @@ export class AuthService {
 						{ headers: header })
 						.then(async response => {
 
-							console.log(response)
 							let recent = 0;
 							if (response.data.cursus_users.length != 1) {
 								for (
@@ -51,7 +50,6 @@ export class AuthService {
 								clear = 5;
 							else
 								clear = 7;
-							console.log(response.data.image)
 							let stud = {
 								login: response.data.login,
 								firstname: response.data.usual_first_name
@@ -65,10 +63,8 @@ export class AuthService {
 								img_small: response.data.image.versions.small,
 								true_email: null
 							}
-							console.log(stud)
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");
-							console.log("THE END")
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,
