@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-
 import emailjs from "@emailjs/browser";
+import {NotificationManager} from "react-notifications";
 import {
 	PayPalScriptProvider,
 	PayPalButtons,
@@ -10,7 +10,6 @@ import {
 import getLabel from "react-select-country-list";
 import style from "../../style/Purchase.module.scss";
 import Loading from "../../components/Loading";
-
 const PurchaseButtons = props => {
 	const currency = "EUR";
 	const style = {layout: "vertical"};
@@ -48,7 +47,7 @@ const PurchaseButtons = props => {
 	}, [currency]);
 
 	return (
-		<>
+		<div>
 			<PayPalButtons
 				style={style}
 				disabled={false}
@@ -98,6 +97,7 @@ const PurchaseButtons = props => {
 						});
 				}}
 				onApprove={function(data, actions) {
+					props.setLoading(true);
 					return actions.order.capture().then(function() {
 						const body = JSON.stringify({
 							id: data.orderID
@@ -181,11 +181,19 @@ const PurchaseButtons = props => {
 							});
 					});
 				}}
-				onShippingChange={function(data, actions) {
-					return actions.resolve();
+				onError={err => {
+					props.setLoading(false);
+					NotificationManager.error(
+						"Une erreur s'est produite.",
+						"Erreur",
+						5000
+					); //TODO: text here
+				}}
+				onCancel={() => {
+					window.location = "/home";
 				}}
 			/>
-		</>
+		</div>
 	);
 };
 
@@ -231,6 +239,258 @@ const CommandRecap = props => {
 				</tr>
 			</tfoot>
 		</table>
+	);
+};
+
+const PrePurchase = () => {
+	const [data, setData] = useState();
+	const param = useParams();
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/event/${param.event}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setData(json);
+			});
+	}, [param]);
+	if (data == undefined) return;
+	return <Purchase event={data} />;
+};
+
+const Purchase = props => {
+	const [needMail, setNeedMail] = useState(false);
+	const [contributionStatus, setContributionStatus] = useState(undefined);
+	const [optionsProvider, setOptionsProvider] = useState({
+		"client-id": process.env.REACT_APP_PAYPAL_ID,
+		currency: "EUR",
+		intent: "capture"
+	});
+	const [time, setTime] = useState();
+	const [amount, setAmount] = useState();
+	const [session, setSession] = useState({});
+	const [validated, setValidated] = useState(false);
+	const [addressFormState, setAddressFormState] = useState({
+		postal_code: "",
+		address_line_1: "",
+		address_line_2: "",
+		city: "",
+		country_code: "FR",
+		firstname: "firstname",
+		lastname: "lastname",
+		mail: ""
+	});
+	const [fixedAddress, setFixedAddress] = useState();
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				const tmp = addressFormState;
+				tmp.firstname = json.firstname;
+				tmp.lastname = json.lastname;
+				setAddressFormState(tmp);
+				setSession(json);
+				if (json.clearance !== 0) checkTrueMail(json.login);
+			});
+	}, []);
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/paypal/clientToken`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(text => {
+				let tmp = optionsProvider;
+				tmp["data-client-token"] = text;
+				setOptionsProvider(tmp);
+			});
+	}, []);
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/contribution/info`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setAmount(json.price);
+				setTime(json.time);
+			});
+	}, []);
+
+	useEffect(() => {
+		fetch(
+			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				let tmp = false;
+				data.forEach((item, i) => {
+					if (
+						new Date(item.end_date) > Date.now() &&
+						new Date(item.begin_date) <= Date.now()
+					) {
+						tmp = true;
+					}
+				});
+				setContributionStatus(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	}, [session]);
+
+	const checkTrueMail = async login => {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.text();
+			})
+			.then(data => {
+				let tmp = addressFormState;
+				if (!data || data == "" || data == undefined) {
+					setNeedMail(true);
+					tmp.mail = "";
+				} else {
+					tmp.mail = data;
+				}
+				setAddressFormState(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
+	if (!props.event && contributionStatus === undefined) return "Loading";
+
+	if (!props.event && contributionStatus === true) {
+		window.location = "/home";
+		return <></>;
+	}
+
+	return (
+		<div className={style.purchase}>
+			<div hidden={!loading} className={style.load}>
+				<Loading />
+			</div>
+			<div className={style.address}>
+				<AddressForm
+					setState={setAddressFormState}
+					state={addressFormState}
+					validated={validated}
+					needMail={needMail}
+				/>
+				<button
+					disabled={validated}
+					onClick={() => {
+						if (
+							addressFormState.postal_code !== "" &&
+							addressFormState.address_line_1 !== "" &&
+							addressFormState.city !== "" &&
+							!(
+								document
+									.getElementById("emailField")
+									.checkValidity() &&
+								addressFormState.mail
+									.split("@")[1]
+									.split(".")[1]
+									.startsWith("42")
+							)
+						) {
+							setValidated(true);
+							setFixedAddress(addressFormState);
+						}
+					}}
+				>
+					Valider
+				</button>
+
+				<button
+					onClick={() => {
+						window.history.back();
+					}}
+				>
+					Annuler
+				</button>
+				{validated && (
+					<div hidden={!validated} className={style.paypal}>
+						<PayPalScriptProvider options={optionsProvider}>
+							<PurchaseButtons
+								amount={props.event ? props.event.cost : amount}
+								session={session}
+								address={fixedAddress}
+								setNeedMail={setNeedMail}
+								needMail={needMail}
+								type={props.event ? props.event : "contrib"}
+								event={props.event}
+								setLoading={setLoading}
+							/>
+						</PayPalScriptProvider>
+					</div>
+				)}
+				<LegalNote />
+			</div>
+			<div className={style.recap}>
+				<CommandRecap
+					amount={props.event ? props.event.cost : amount}
+					time={props.event ? "" : time}
+					name={props.event ? props.event.name : ""}
+				/>
+			</div>
+		</div>
 	);
 };
 
@@ -587,257 +847,6 @@ const AddressForm = props => {
 				/>
 			</div>
 		</form>
-	);
-};
-
-const PrePurchase = () => {
-	const [data, setData] = useState();
-	const param = useParams();
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/event/${param.event}`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(json => {
-				setData(json);
-			});
-	}, [param]);
-	if (data == undefined) return;
-	return <Purchase event={data} />;
-};
-
-const Purchase = props => {
-	const [needMail, setNeedMail] = useState(false);
-	const [contributionStatus, setContributionStatus] = useState(undefined);
-	const [optionsProvider, setOptionsProvider] = useState({
-		"client-id": process.env.REACT_APP_PAYPAL_ID,
-		currency: "EUR",
-		intent: "capture"
-	});
-	const [time, setTime] = useState();
-	const [amount, setAmount] = useState();
-	const [session, setSession] = useState({});
-	const [validated, setValidated] = useState(false);
-	const [addressFormState, setAddressFormState] = useState({
-		postal_code: "",
-		address_line_1: "",
-		address_line_2: "",
-		city: "",
-		country_code: "FR",
-		firstname: "firstname",
-		lastname: "lastname",
-		mail: ""
-	});
-	const [fixedAddress, setFixedAddress] = useState();
-
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/session`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(json => {
-				const tmp = addressFormState;
-				tmp.firstname = json.firstname;
-				tmp.lastname = json.lastname;
-				setAddressFormState(tmp);
-				setSession(json);
-				if (json.clearance !== 0) checkTrueMail(json.login);
-			});
-	}, []);
-
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/paypal/clientToken`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.text();
-			})
-			.then(text => {
-				let tmp = optionsProvider;
-				tmp["data-client-token"] = text;
-				setOptionsProvider(tmp);
-			});
-	}, []);
-
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/contribution/info`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(json => {
-				setAmount(json.price);
-				setTime(json.time);
-			});
-	}, []);
-
-	useEffect(() => {
-		fetch(
-			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
-			{
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				let tmp = false;
-				data.forEach((item, i) => {
-					if (
-						new Date(item.end_date) > Date.now() &&
-						new Date(item.begin_date) <= Date.now()
-					) {
-						tmp = true;
-					}
-				});
-				setContributionStatus(tmp);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [session]);
-
-	const checkTrueMail = async login => {
-		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.text();
-			})
-			.then(data => {
-				let tmp = addressFormState;
-				if (!data || data == "" || data == undefined) {
-					setNeedMail(true);
-					tmp.mail = "";
-				} else {
-					tmp.mail = data;
-				}
-				setAddressFormState(tmp);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	};
-
-	if (!props.event && contributionStatus === undefined) return "Loading";
-
-	if (!props.event && contributionStatus === true) {
-		window.location = "/home";
-		return <></>;
-	}
-
-	return (
-		<div className={style.purchase}>
-			<div>
-				<div className={style.address}>
-					<AddressForm
-						setState={setAddressFormState}
-						state={addressFormState}
-						validated={validated}
-						needMail={needMail}
-					/>
-					<button
-						disabled={validated}
-						onClick={() => {
-							if (
-								addressFormState.postal_code !== "" &&
-								addressFormState.address_line_1 !== "" &&
-								addressFormState.city !== "" &&
-								!(
-									document
-										.getElementById("emailField")
-										.checkValidity() &&
-									addressFormState.mail
-										.split("@")[1]
-										.split(".")[1]
-										.startsWith("42")
-								)
-							) {
-								setValidated(true);
-								setFixedAddress(addressFormState);
-							}
-						}}
-					>
-						Valider
-					</button>
-
-					<button
-						onClick={() => {
-							window.history.back();
-						}}
-					>
-						Annuler
-					</button>
-					{validated && (
-						<div hidden={!validated} className={style.paypal}>
-							<PayPalScriptProvider options={optionsProvider}>
-								<PurchaseButtons
-									amount={
-										props.event ? props.event.cost : amount
-									}
-									session={session}
-									address={fixedAddress}
-									setNeedMail={setNeedMail}
-									needMail={needMail}
-									type={props.event ? props.event : "contrib"}
-									event={props.event}
-								/>
-							</PayPalScriptProvider>
-						</div>
-					)}
-					<LegalNote />
-				</div>
-			</div>
-			<div className={style.recap}>
-				<CommandRecap
-					amount={props.event ? props.event.cost : amount}
-					time={props.event ? "" : time}
-					name={props.event ? props.event.name : ""}
-				/>
-			</div>
-		</div>
 	);
 };
 
