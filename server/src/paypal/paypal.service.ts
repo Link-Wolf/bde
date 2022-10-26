@@ -7,27 +7,47 @@ export class PaypalService {
 	constructor(private readonly logger: LoggerService) { };
 
 	async generateClientToken(login: string) {
-		const accessToken = await this.generateAccessToken(login);
-		const response = await axios(`${process.env.PAYPAL_BASE}/v1/identity/generate-token`, {
-			method: "post",
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				"Accept-Language": "en_US",
-				"Content-Type": "application/json",
-			},
-		});
-		return response.data.client_token;
+		try {
+
+			const accessToken = await this.generateAccessToken(login);
+			const response = await axios(`${process.env.PAYPAL_BASE}/v1/identity/generate-token`, {
+				method: "post",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+					"Accept-Language": "en_US",
+					"Content-Type": "application/json",
+				},
+			});
+			this.logger.log("Generated paypal client token", login)
+			return response.data.client_token;
+		} catch (err) {
+			this.logger.error(`Failed to generate paypal client token : ${err}`, login)
+			throw err;
+
+		}
 	}
 
 	async generateAccessToken(login: string) {
-		const auth = Buffer.from(process.env.PAYPAL_ID + ":" + process.env.PAYPAL_SECRET).toString("base64");
-		const response = await axios(`${process.env.PAYPAL_BASE}/v1/oauth2/token`, {
-			method: "post",
-			data: "grant_type=client_credentials",
-			headers: {
-				Authorization: `Basic ${auth}`,
-			},
-		});
-		return response.data.access_token;
+		try {
+			const auth = Buffer
+				.from(process.env.PAYPAL_ID + ":" + process.env.PAYPAL_SECRET)
+				.toString("base64");
+			const response = await axios(`${process.env.PAYPAL_BASE}/v1/oauth2/token`, {
+				method: "post",
+				data: "grant_type=client_credentials",
+				headers: {
+					Authorization: `Basic ${auth}`,
+					Accept: "application/json",
+					Content: "x-www-form-urlencoded"
+				},
+			});
+			this.logger.log("Generated paypal access token", login)
+			return response.data.access_token;
+		}
+		catch (err) {
+			this.logger.error(`Failed to generate paypal access token : ${err}`, login)
+			throw err;
+
+		}
 	}
 }
