@@ -94,6 +94,12 @@ const PurchaseButtons = props => {
 								}
 							);
 							return orderId;
+						})
+						.catch(function(error) {
+							console.log(
+								"Il y a eu un problème avec l'opération create order: " +
+									error.message
+							);
 						});
 				}}
 				onApprove={function(data, actions) {
@@ -177,6 +183,12 @@ const PurchaseButtons = props => {
 							})
 							.then(() => {
 								window.location = `/receipt/${data.orderID}`;
+							})
+							.catch(function(error) {
+								console.log(
+									"Il y a eu un problème avec l'opération capture order: " +
+										error.message
+								);
 							});
 					});
 				}}
@@ -306,6 +318,12 @@ const Purchase = props => {
 				setAddressFormState(tmp);
 				setSession(json);
 				if (json.clearance !== 0) checkTrueMail(json.login);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
 			});
 	}, []);
 
@@ -325,6 +343,12 @@ const Purchase = props => {
 				let tmp = optionsProvider;
 				tmp["data-client-token"] = text;
 				setOptionsProvider(tmp);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
 			});
 	}, []);
 
@@ -343,6 +367,12 @@ const Purchase = props => {
 			.then(json => {
 				setAmount(json.price);
 				setTime(json.time);
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
 			});
 	}, []);
 
