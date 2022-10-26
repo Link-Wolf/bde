@@ -71,7 +71,7 @@ export class InscriptionService {
 		}
 	}
 
-	async link(id: number, login: string, requestMaker: string) {
+	async link(id: number, login: string, requestMaker: string, price = undefined) {
 		try {
 			if ((await this.manager.query(`SELECT * FROM "inscription" WHERE "studLogin" = '${login}' AND "eventId" = ${id}`)).length != 0) {
 				this.logger.error(`Failed -> Save subscription for student ${login} to event ${id} : subscription already exists`, requestMaker)
@@ -109,7 +109,12 @@ export class InscriptionService {
 				this.logger.error(`Failed to save subscription for student ${login} to event ${id} : event ${id} is full`, requestMaker)
 				throw new ConflictException(`Failed to save subscription for student ${login} to event ${id} : event ${id} is full`)
 			}
-			let ret = await this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId", "date") VALUES('${login}', ${id}, NOW())`);
+			let ret: any;
+			if (price === undefined)
+				ret = await this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId", "date") VALUES('${login}', ${id}, NOW())`);
+			else
+				ret = await this.manager.query(`INSERT INTO "inscription" ("studLogin", "eventId", "date", "price") VALUES('${login}', ${id}, NOW(), ${price})`);
+
 			this.logger.log(`Saved subscription for student ${login} to event ${id}`, requestMaker);
 			return ret
 		} catch (error) {
