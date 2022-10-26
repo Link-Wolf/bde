@@ -190,6 +190,8 @@ export class StudService {
 						return status
 					})()
 			}
+			if (ret.true_email === "" || ret.true_email === undefined || ret.true_email === null)
+				return ret
 			const decipher = createDecipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			ret.true_email = (Buffer.concat([
 				decipher.update(Buffer.from(JSON.parse(ret.true_email))),
