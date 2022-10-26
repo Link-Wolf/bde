@@ -93,15 +93,19 @@ const EventList = param => {
 					)}
 				</div>
 				<ul className={style.eventList}>
-					{(telephone ? data : viewData.currentData()).map(item => (
-						<li key={item.id}>
-							<EventToken
-								setPopUpEvent={setPopUpEvent}
-								event={item}
-								type="event"
-							/>
-						</li>
-					))}
+					{data.length
+						? (telephone ? data : viewData.currentData()).map(
+								item => (
+									<li key={item.id}>
+										<EventToken
+											setPopUpEvent={setPopUpEvent}
+											event={item}
+											type="event"
+										/>
+									</li>
+								)
+						  )
+						: `Aucun évènement prévu pour le moment`}
 				</ul>
 				<div className={style.paginationContainer}>
 					{data.length > 3 && !telephone && (
