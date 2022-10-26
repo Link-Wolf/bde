@@ -258,8 +258,9 @@ export class StudService {
 				this.logger.error(`Failed -> Add direction member with login ${login} : stud is already a direction member`, requestMaker, true);
 				throw new ConflictException(`Failed to add direction member with login ${login} : stud is already a direction member`)
 			}
-			let updatedOne = `UPDATE stud SET "isDirection" = 't', "clearance" = 11 WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "isDirection" = 't' WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
+			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '11' WHERE login = '${login}' AND "clearance" < 42`);
 			this.logger.warn(`Added direction member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
@@ -278,8 +279,9 @@ export class StudService {
 				this.logger.error(`Failed -> Add direction member with login ${login} : stud isn't direction member`, requestMaker), true;
 				throw new ConflictException(`Failed to add direction member with login ${login} : stud isn't direction member`)
 			}
-			let updatedOne = `UPDATE stud SET "isDirection" = 'f', "clearance" = 7 WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "isDirection" = 'f' WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
+			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '7' WHERE login = '${login}' AND "clearance" < 42`);
 			this.logger.warn(`Yeeted direction member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
