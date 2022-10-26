@@ -13,39 +13,6 @@ const Receipt = () => {
 
 	const param = useParams();
 
-	// useEffect(() => {
-	// 	setLoadMail(true);
-	// 	if (session.login === undefined || order === undefined) return;
-	// 	fetch(`${process.env.REACT_APP_API_URL}/stud/${session.login}/mail`, {
-	// 		credentials: "include"
-	// 	})
-	// 		.then(response => {
-	// 			if (!response.ok) {
-	// 				throw new Error(
-	// 					`This is an HTTP error: The status is ${response.status}`
-	// 				);
-	// 			}
-	// 			return response.text();
-	// 		})
-	// 		.then(data => {
-	// 			let tmp = order;
-	// 			// console.log(tmp);
-	// 			if (!data || data === "" || data === undefined) {
-	// 				tmp.stud.true_email = "";
-	// 			} else {
-	// 				tmp.stud.true_email = data;
-	// 			}
-	// 			setOrder(tmp);
-	// 			setLoadMail(false);
-	// 		})
-	// 		.catch(function(error) {
-	// 			console.log(
-	// 				"Il y a eu un problème avec l'opération fetch: " +
-	// 					error.message
-	// 			);
-	// 		});
-	// }, [session, order]);
-
 	useEffect(() => {
 		setLoadSession(true);
 		fetch(`${process.env.REACT_APP_API_URL}/session`, {
