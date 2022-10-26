@@ -93,7 +93,11 @@ const Album = props => {
 					<></>
 				)}
 			</ul>
-			<img className={style.cover} src={album[displayedImage]} />
+			<img
+				className={style.cover}
+				src={album[displayedImage]}
+				rounded-corners
+			/>
 		</div>
 	);
 };
@@ -132,7 +136,6 @@ const Description = props => {
 	return (
 		<div className={style.description}>
 			<h1>{product.name}</h1>
-			<p>{product.desc}</p>
 			<ul>
 				<li>
 					<div className={style.price}>
@@ -163,6 +166,7 @@ const Description = props => {
 					)}
 				</li>
 			</ul>
+			<p>{product.desc}</p>
 		</div>
 	);
 };
