@@ -25,7 +25,7 @@ export class Event {
 	place: string
 
 	@Column({
-		type: "integer",
+		type: "double precision",
 		nullable: true,
 		default: 0
 	})
