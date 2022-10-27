@@ -7,6 +7,8 @@ import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.webp";
 import Product from "./Product.js";
 
+import aguemazi from "../../assets/images/aguemazi.webp";
+
 const Home = () => {
 	const [filter, setFilter] = useState({
 		current: true,
@@ -332,11 +334,7 @@ const EquipePicture = props => {
 	return (
 		<>
 			<a href={`https://profile.intra.42.fr/users/${props.login}`}>
-				<img
-					src={`https://cdn.intra.42.fr/users/${props.login}.jpg`}
-					height={100}
-					width="auto"
-				/>
+				<img src={props.img} height={100} width="auto" />
 			</a>
 		</>
 	);
@@ -350,7 +348,7 @@ const Presentation = () => {
 			<div className={style.bureauFaces}>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="aguemazi" />
+						<EquipePicture login="aguemazi" img={aguemazi} />
 					</div>
 					<h3>Capitaine</h3>
 				</div>
