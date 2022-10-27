@@ -334,7 +334,11 @@ const AdminProductToken = param => {
 						>
 							Réinitialiser
 						</button>
-						<button color="danger" onClick={deleteProduct}>
+						<button
+							color="danger"
+							type="button"
+							onClick={deleteProduct}
+						>
 							Supprimer
 						</button>
 					</div>
