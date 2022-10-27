@@ -175,7 +175,7 @@ const Description = props => {
 					<dd>{product[size]}</dd>
 				</div>
 				<div id={style.price}>
-					<dd>${product.cost.toFixed(2)}</dd>
+					<dd>{product.cost.toFixed(2)}€</dd>
 				</div>
 			</dl>
 		</div>
