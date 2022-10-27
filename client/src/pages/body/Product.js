@@ -145,11 +145,51 @@ const Description = props => {
 					<option value="select" disabled hidden>
 						Taille ?
 					</option>
-					<option value="stock">Taille Unique</option>
-					<option value="s">S</option>
-					<option value="m">M</option>
-					<option value="l">L</option>
-					<option value="xl">XL</option>
+					<option
+						value="stock"
+						hidden={
+							product.stock ===
+							product.s + product.m + product.l + product.xl
+						}
+					>
+						Taille Unique
+					</option>
+					<option
+						value="s"
+						hidden={
+							product.stock !==
+							product.s + product.m + product.l + product.xl
+						}
+					>
+						S
+					</option>
+					<option
+						value="m"
+						hidden={
+							product.stock !==
+							product.s + product.m + product.l + product.xl
+						}
+					>
+						M
+					</option>
+					<option
+						value="l"
+						hidden={
+							product.stock !==
+							product.s + product.m + product.l + product.xl
+						}
+					>
+						L
+					</option>
+					<option
+						value="xl"
+						hidden={
+							product.stock !==
+							product.s + product.m + product.l + product.xl
+						}
+					>
+						XL
+					</option>
 				</select>
 				<label>Couleur</label>
 				<input
@@ -157,7 +197,7 @@ const Description = props => {
 					name="color"
 					value="black"
 					id="colorBlack"
-					checked
+					defaultChecked
 				/>
 				<label htmlFor="colorBlack" style={{"--my-color": "#000000"}} />
 			</div>
