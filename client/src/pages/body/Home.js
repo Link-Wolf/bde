@@ -46,17 +46,16 @@ const HeaderHome = () => {
 				<h1>BDE 42 Mulhouse</h1>
 				<span>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Nulla eget leo sollicitudin, lacinia dui ut, dictum
-						metus.
+						Bienvenue sur le site de La Frégate, BDE de 42 Mulhouse
+						!
 					</p>
 					<p>
-						Curabitur laoreet iaculis arcu eget elementum. Donec
-						risus magna, rhoncus quis ipsum in, maximus mattis nibh.{" "}
+						Vous y retrouverez les évènements à venir ainsi que la
+						possibilité de vous y inscrire,
 					</p>
 					<p>
-						Donec at nunc eu ipsum ultricies sagittis. Aliquam ac
-						mauris lobortis, consequat quam at, luctus lacus.
+						Mais aussi les informations sur les goodies que nous
+						vous proposons ou encore les clubs de l'école !
 					</p>
 				</span>
 			</div>
