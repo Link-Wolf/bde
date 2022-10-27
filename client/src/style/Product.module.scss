@@ -51,6 +51,41 @@
 
 		.description {
 			margin: 0 0 0 60px;
+
+			div {
+				display: flex;
+				flex-direction: column;
+
+				label {
+					margin: 20px 0 5px;
+				}
+
+				input {
+					display: none;
+
+					& + label {
+						margin: 0;
+						width: 30px;
+						height: 30px;
+						padding: 2px;
+						border-radius: 100%;
+						background-color: var(--my-color);
+						cursor: pointer;
+						border-spacing: 2px;
+						background-clip: content-box;
+					}
+
+					&:checked + label {
+						margin: 0;
+						border: solid var(--primary) 2px;
+						border-spacing: 2px;
+					}
+				}
+			}
+
+			dl {
+				margin: 20px 0;
+			}
 		}
 	}
 }
