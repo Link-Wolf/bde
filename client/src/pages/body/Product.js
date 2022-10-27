@@ -119,7 +119,6 @@ const Description = props => {
 				return response.json();
 			})
 			.then(d => {
-				console.log(d);
 				setProduct(d);
 			})
 			.catch(function(error) {
