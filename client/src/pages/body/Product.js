@@ -106,7 +106,7 @@ const Description = props => {
 		desc: "█ █ █ █ "
 	});
 
-	const [size, setSize] = useState("select");
+	const [size, setSize] = useState("m");
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}`, {
@@ -122,6 +122,7 @@ const Description = props => {
 			})
 			.then(d => {
 				setProduct(d);
+				if (d.stock !== d.s + d.m + d.l + d.xl) setSize("stock");
 			})
 			.catch(function(error) {
 				console.log(
@@ -134,78 +135,48 @@ const Description = props => {
 		<div className={style.description}>
 			<h1>{product.name}</h1>
 			<p>{product.desc}</p>
-			<div>
-				<label>Taille</label>
-				<select
-					value={size}
-					onChange={e => {
-						setSize(e.target.value);
-					}}
-				>
-					<option value="select" disabled hidden>
-						Taille ?
-					</option>
-					<option
-						value="stock"
-						hidden={
-							product.stock ===
-							product.s + product.m + product.l + product.xl
-						}
-					>
-						Taille Unique
-					</option>
-					<option
-						value="s"
-						hidden={
-							product.stock !==
-							product.s + product.m + product.l + product.xl
-						}
-					>
-						S
-					</option>
-					<option
-						value="m"
-						hidden={
-							product.stock !==
-							product.s + product.m + product.l + product.xl
-						}
-					>
-						M
-					</option>
-					<option
-						value="l"
-						hidden={
-							product.stock !==
-							product.s + product.m + product.l + product.xl
-						}
-					>
-						L
-					</option>
-					<option
-						value="xl"
-						hidden={
-							product.stock !==
-							product.s + product.m + product.l + product.xl
-						}
-					>
-						XL
-					</option>
-				</select>
-				<label>Couleur</label>
-				<input
-					type="radio"
-					name="color"
-					value="black"
-					id="colorBlack"
-					defaultChecked
-				/>
-				<label htmlFor="colorBlack" style={{"--my-color": "#000000"}} />
+			<div className={style.form}>
+				{product.stock ===
+					product.s + product.m + product.l + product.xl && (
+					<div>
+						{" "}
+						<label>Taille</label>
+						<select
+							value={size}
+							onChange={e => {
+								setSize(e.target.value);
+							}}
+						>
+							<option value="s">S</option>
+							<option value="m">M</option>
+							<option value="l">L</option>
+							<option value="xl">XL</option>
+						</select>
+					</div>
+				)}
+				<div>
+					<label>Couleur</label>
+					<input
+						type="radio"
+						name="color"
+						value="black"
+						id="colorBlack"
+						defaultChecked
+					/>
+					<label
+						htmlFor="colorBlack"
+						style={{"--my-color": "#000000"}}
+					/>
+				</div>
 			</div>
 			<dl>
-				<dt>Stock</dt>
-				<dd>{product[size]}</dd>
-				<dt>Prix</dt>
-				<dd>${product.cost.toFixed(2)}</dd>
+				<div>
+					<dt>Stock</dt>
+					<dd>{product[size]}</dd>
+				</div>
+				<div id={style.price}>
+					<dd>${product.cost.toFixed(2)}</dd>
+				</div>
 			</dl>
 		</div>
 	);
