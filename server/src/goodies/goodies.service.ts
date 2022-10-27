@@ -83,24 +83,35 @@ export class GoodiesService {
 
 	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
-			let path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
-			let ret = fs.writeFile(
-				path,
-				file.buffer,
-				(err) => {
-					if (err) {
-						this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
-							login, true);
-						throw err
-					}
-					else {
-						this.goodiesRepository.update(id, {
-							thumbnail_filename: path
-						})
-						this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
-					}
+			let path: any
+			if ('err' in file) {
+				let nb = Math.floor(Math.random() * 5)
+				path = "assets/placeholder/thumbnails/" + nb + ".jpg"
+				this.goodiesRepository.update(id, {
+					thumbnail_filename: path
 				})
-			return ret
+				this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
+			}
+			else {
+				path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
+				let ret = fs.writeFile(
+					path,
+					file.buffer,
+					(err) => {
+						if (err) {
+							this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
+								login, true);
+							throw err
+						}
+						else {
+							this.goodiesRepository.update(id, {
+								thumbnail_filename: path
+							})
+							this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
+						}
+					})
+				return (ret);
+			}
 		} catch (error) {
 			this.logger.error(`Failed -> Save thumbnail of goodies ${id} on database (${error})`, login, true);
 			throw error
