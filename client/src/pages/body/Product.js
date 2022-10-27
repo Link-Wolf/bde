@@ -93,11 +93,7 @@ const Album = props => {
 					<></>
 				)}
 			</ul>
-			<img
-				className={style.cover}
-				src={album[displayedImage]}
-				rounded-corners
-			/>
+			<img className={style.cover} src={album[displayedImage]} />
 		</div>
 	);
 };

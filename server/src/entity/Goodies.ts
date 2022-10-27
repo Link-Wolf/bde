@@ -58,4 +58,10 @@ export class Goodies {
 		nullable: true
 	})
 	thumbnail_filename: string
+
+	@Column({
+		type: 'text',
+		nullable: true
+	})
+	album_path: string
 }
