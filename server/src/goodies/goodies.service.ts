@@ -81,6 +81,44 @@ export class GoodiesService {
 		}
 	}
 
+	async saveAlbum(id: number, files: Array<Express.Multer.File>, login: any) {
+		console.log(files);
+		// try {
+		// 	let path: any
+		// 	if ('err' in file) {
+		// 		let nb = Math.floor(Math.random() * 5)
+		// 		path = "assets/placeholder/thumbnails/" + nb + ".jpg"
+		// 		this.goodiesRepository.update(id, {
+		// 			thumbnail_filename: path
+		// 		})
+		// 		this.logger.log(`Saved album of goodies ${id}`, login, true)
+		// 	}
+		// 	else {
+		// 		path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
+		// 		let ret = fs.writeFile(
+		// 			path,
+		// 			file.buffer,
+		// 			(err) => {
+		// 				if (err) {
+		// 					this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
+		// 						login, true);
+		// 					throw err
+		// 				}
+		// 				else {
+		// 					this.goodiesRepository.update(id, {
+		// 						thumbnail_filename: path
+		// 					})
+		// 					this.logger.log(`Saved album of goodies ${id}`, login, true)
+		// 				}
+		// 			})
+		// 		return (ret);
+		// 	}
+		// } catch (error) {
+		// 	this.logger.error(`Failed -> Save thumbnail of goodies ${id} on database (${error})`, login, true);
+		// 	throw error
+		// }
+	}
+
 	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
 			let path: any
