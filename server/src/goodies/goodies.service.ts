@@ -44,15 +44,17 @@ export class GoodiesService {
 	async getAlbum(id: number, login: any) {
 		try {
 			const goodies = await this.goodiesRepository.findOneById(id);
-			if (!goodies || !fs.existsSync(`assets/album/goodies/${id}`)) {
-				this.logger.error(`Failed -> Get album of goodies ${id} : goodies doesn't exist or does not have an album`, login);
+			if (!goodies || !fs.existsSync(goodies.album_path)) {
+				this.logger.error(`Failed -> Get album of goodies ${id} : goodies doesn't exist`, login);
 				throw new NotFoundException(`Failed to get album of goodies ${id}`)
 			}
 			const addFilesFromDirectoryToZip =
-				(directoryPath = `assets/album/goodies/${id}`, zip: JSZip) => {
+				(directoryPath: fs.PathLike, zip: JSZip) => {
 					const directoryContents = fs.readdirSync(directoryPath, {
 						withFileTypes: true,
 					});
+
+					console.log(directoryPath, directoryContents)
 
 					directoryContents.forEach(({ name }) => {
 						const path = `${directoryPath}/${name}`;
@@ -67,7 +69,7 @@ export class GoodiesService {
 					});
 				};
 
-			const directoryPath = `assets/album/goodies/${id}`
+			const directoryPath = goodies.album_path
 			const zip = new JSZip();
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
@@ -81,26 +83,79 @@ export class GoodiesService {
 		}
 	}
 
+	async saveAlbum(id: number, files: Array<Express.Multer.File>, login: any) {
+		try {
+			let path: any
+			if (files.length === 0) {
+				path = "assets/placeholders/album"
+				this.goodiesRepository.update(id, {
+					album_path: path
+				})
+				this.logger.log(`Saved album of goodies ${id}`, login, true)
+			}
+			else {
+				path = `assets/album/goodies/${id}/`
+				if (!fs.existsSync(path)) {
+					fs.mkdirSync(path);
+				}
+				for (let i = 0; i < files.length; i++) {
+					fs.writeFile(
+						path + `${i}.${files[i].mimetype.split('/')[1]}`,
+						files[i].buffer,
+						(err) => {
+							if (err) {
+								this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
+									login, true);
+								throw err
+							}
+							else {
+
+							}
+						})
+				}
+				this.goodiesRepository.update(id, {
+					album_path: path
+				})
+				this.logger.log(`Saved album of goodies ${id}`, login, true)
+				return;
+			}
+		} catch (error) {
+			this.logger.error(`Failed -> Save thumbnail of goodies ${id} on database (${error})`, login, true);
+			throw error
+		}
+	}
+
 	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
-			let path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
-			let ret = fs.writeFile(
-				path,
-				file.buffer,
-				(err) => {
-					if (err) {
-						this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
-							login, true);
-						throw err
-					}
-					else {
-						this.goodiesRepository.update(id, {
-							thumbnail_filename: path
-						})
-						this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
-					}
+			let path: any
+			if (file === undefined) {
+				let nb = Math.floor(Math.random() * 5)
+				path = "assets/placeholders/thumbnails/placeholder" + nb + ".jpg"
+				this.goodiesRepository.update(id, {
+					thumbnail_filename: path
 				})
-			return ret
+				this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
+			}
+			else {
+				path = `assets/thumbnails/goodies/${id}.${file.mimetype.split('/')[1]}`
+				let ret = fs.writeFile(
+					path,
+					file.buffer,
+					(err) => {
+						if (err) {
+							this.logger.error(`Failed -> Create goodies ${id} thumbnail (${err})`,
+								login, true);
+							throw err
+						}
+						else {
+							this.goodiesRepository.update(id, {
+								thumbnail_filename: path
+							})
+							this.logger.log(`Saved thumbnail of goodies ${id}`, login, true)
+						}
+					})
+				return (ret);
+			}
 		} catch (error) {
 			this.logger.error(`Failed -> Save thumbnail of goodies ${id} on database (${error})`, login, true);
 			throw error

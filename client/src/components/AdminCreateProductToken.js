@@ -3,6 +3,7 @@ import {Button, Form} from "react-bootstrap";
 import useConfirm from "./useConfirm";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import style from "../style/AdminProductToken.module.scss";
 
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
@@ -27,8 +28,8 @@ const AdminProductToken = param => {
 		l: 0,
 		xl: 0
 	});
-	const img = useRef(null);
-	const [srcImg, setSrcImg] = useState(null);
+	const [thumbnail, setThumbnail] = useState([]);
+	const [album, setAlbum] = useState([]);
 
 	const handleFormChange = event => {
 		let tmp = {...formState};
@@ -71,19 +72,22 @@ const AdminProductToken = param => {
 				credentials: "include"
 			};
 
-			fetch(`${process.env.REACT_APP_API_URL}/goodies/`, requestOptions)
+			await fetch(
+				`${process.env.REACT_APP_API_URL}/goodies`,
+				requestOptions
+			)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
+							`This is an HTTP error:
+							 The status is ${response.status}`
 						);
 					}
 					return response.json();
 				})
-				.then(data => {
-					changeThumbnail(data.id).then(() => {
-						param.setUpdate(true);
-					});
+				.then(async data => {
+					await changeThumbnail(data.id);
+					await changeAlbum(data.id);
 				})
 				.catch(function(error) {
 					console.log(
@@ -91,14 +95,17 @@ const AdminProductToken = param => {
 							error.message
 					);
 				});
+
+			window.location.reload();
 		}
 	};
 
 	const changeThumbnail = async id => {
 		const data = new FormData();
-		data.append("thumbnail", img.current);
+		data.append("thumbnail", thumbnail[0]);
 		await fetch(
-			`${process.env.REACT_APP_API_URL}/goodies/upload_image/${id}`,
+			`${process.env.REACT_APP_API_URL}/goodies/upload_image
+			/${id}`,
 			{
 				method: "POST",
 				credentials: "include",
@@ -113,6 +120,38 @@ const AdminProductToken = param => {
 					);
 				}
 			})
+
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
+	};
+
+	const changeAlbum = async id => {
+		const data = new FormData();
+		for (let i = 0; i < album.length; i++) {
+			data.append(`album`, album[i]);
+		}
+		await fetch(
+			`${process.env.REACT_APP_API_URL}/goodies/upload_album
+			/${id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+
 			.catch(function(error) {
 				console.log(
 					"Il y a eu un problème avec l'opération fetch: " +
@@ -122,59 +161,72 @@ const AdminProductToken = param => {
 	};
 
 	return (
-		<>
-			<Form>
-				<Form.Label>Nom : </Form.Label>
-				<Form.Control
-					name="name"
-					type="text"
-					id="formName"
-					autoFocus="autofocus"
-					value={formState.name}
-					onChange={handleFormChange}
-					required
-				/>
-				<Form.Label>Description : </Form.Label>
-				<Form.Control
-					name="desc"
-					value={formState.desc}
-					onChange={handleFormChange}
-					id="formDesc"
-				/>
-				<Form.Label>Prix : </Form.Label>
-				<Form.Control
-					type="number"
-					min="0"
-					step="0.01"
-					id="formCost"
-					value={formState.cost}
-					name="cost"
-					onChange={handleFormChange}
-					required
-				/>{" "}
-				€
-				<Form.Control
-					type="file"
-					id="thumbnail"
-					onChange={event => {
-						img.current = event.target.files[0];
-						setSrcImg(URL.createObjectURL(event.target.files[0]));
-					}}
-				/>
-				<LazyLoadImage
+		<form className={style.form}>
+			<label>Nom</label>
+			<input
+				name="name"
+				type="text"
+				id="formName"
+				autoFocus="autofocus"
+				value={formState.name}
+				onChange={handleFormChange}
+				required
+			/>
+			<label>Description</label>
+			<input
+				name="desc"
+				value={formState.desc}
+				onChange={handleFormChange}
+				id="formDesc"
+			/>
+			<label>Prix</label>
+			<input
+				type="number"
+				min="0"
+				step="0.01"
+				id="formCost"
+				value={formState.cost}
+				name="cost"
+				onChange={handleFormChange}
+				required
+			/>
+			<label>Image de couverture</label>
+			<input
+				type="file"
+				id="thumbnail"
+				accept="img/png, img/jpeg"
+				files={thumbnail}
+				onChange={event => {
+					setThumbnail(event.target.files);
+				}}
+			/>
+			{thumbnail.length && (
+				<img
 					height="150px"
-					src={srcImg}
+					src={URL.createObjectURL(thumbnail[0])}
 					width="auto"
-					effect="blur"
 				/>
-				<Button type="button" defaultValue={-1} onClick={saveProduct}>
+			)}
+			<label>Album photos</label>
+			<input
+				type="file"
+				id="album"
+				multiple
+				accept="img/png, img/jpeg"
+				files={album}
+				onChange={event => {
+					setAlbum(event.target.files);
+				}}
+			/>
+			<div>
+				<button type="button" defaultValue={-1} onClick={saveProduct}>
 					Enregistrer
-				</Button>
-				<Button type="button" defaultValue={-1} onClick={param.cancel}>
+				</button>
+				<button type="button" defaultValue={-1} onClick={param.cancel}>
 					Annuler
-				</Button>
-			</Form>
-		</>
+				</button>
+			</div>
+		</form>
 	);
 };
 
