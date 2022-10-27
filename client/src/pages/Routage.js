@@ -56,15 +56,17 @@ const Routage = () => {
 					path="log/redirect"
 					element={<RouteWrapper route={<Log />} />}
 				/>
-				<Route
-					path="clubs"
-					element={
-						<RouteWrapper
-							route={<Clubs />}
-							check={global.config.clearance.other_campus}
-						/>
-					}
-				/>
+				{
+					// <Route
+					// 	path="clubs"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<Clubs />}
+					// 			check={global.config.clearance.other_campus}
+					// 		/>
+					// 	}
+					// />
+				}
 				<Route
 					path="me"
 					element={

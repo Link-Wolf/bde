@@ -140,7 +140,7 @@ const Description = props => {
 					product.s + product.m + product.l + product.xl && (
 					<div>
 						{" "}
-						<label>Taille</label>
+						<label>Taille :</label>
 						<select
 							value={size}
 							onChange={e => {
@@ -155,7 +155,7 @@ const Description = props => {
 					</div>
 				)}
 				<div>
-					<label>Couleur</label>
+					<label>Couleur :</label>
 					<input
 						type="radio"
 						name="color"
@@ -171,7 +171,7 @@ const Description = props => {
 			</div>
 			<dl>
 				<div>
-					<dt>Stock</dt>
+					<dt>Stock pour ce choix :</dt>
 					<dd>{product[size]}</dd>
 				</div>
 				<div id={style.price}>

@@ -361,9 +361,11 @@ const AdminNavbar = () => {
 				<a href="/admin/contributions">
 					<h3>Cotisations</h3>
 				</a>
-				<a href="/admin/clubs">
-					<h3>Clubs</h3>
-				</a>
+				{
+					// <a href="/admin/clubs">
+					// 	<h3>Clubs</h3>
+					// </a>
+				}
 				<a href="/admin/shop">
 					<h3>Produits</h3>
 				</a>
