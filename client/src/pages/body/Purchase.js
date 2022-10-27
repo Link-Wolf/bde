@@ -509,7 +509,7 @@ const AddressForm = props => {
 		<form>
 			<div className={` ${style.formMargin} ${style.formLine}  `}>
 				<div>
-					<label forHtml="firstName">Prenom</label>
+					<label htmlFor="firstName">Prenom</label>
 					<input
 						id="firstName"
 						placeholder="Prénom"
@@ -520,7 +520,7 @@ const AddressForm = props => {
 					/>
 				</div>
 				<div>
-					<label forHtml="lastName">Nom</label>
+					<label htmlFor="lastName">Nom</label>
 					<input
 						id="lastName"
 						placeholder="Nom de famille"
@@ -532,7 +532,7 @@ const AddressForm = props => {
 				</div>
 			</div>{" "}
 			<div className={style.formMargin} id={style.address}>
-				<label forHtml="address">Adresse</label>
+				<label htmlFor="address">Adresse</label>
 				<div className={style.formLine}>
 					<div>
 						<input
@@ -582,7 +582,7 @@ const AddressForm = props => {
 				</div>
 			</div>
 			<div className={`${style.country} ${style.formMargin}`}>
-				<label forHtml="country">Pays</label>
+				<label htmlFor="country">Pays</label>
 				<select
 					id="country"
 					name="country_code"
@@ -860,7 +860,7 @@ const AddressForm = props => {
 				className={`${style.mail} ${style.formMargin}`}
 				hidden={!props.needMail}
 			>
-				<label forHtml="emailField">Mail</label>
+				<label htmlFor="emailField">Mail</label>
 				<input
 					placeholder="Email"
 					name="mail"
