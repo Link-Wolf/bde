@@ -14,7 +14,7 @@ export class Event {
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "double precision"
 	})
 	cost: number
 
@@ -25,7 +25,7 @@ export class Event {
 	place: string
 
 	@Column({
-		type: "integer",
+		type: "double precision",
 		nullable: true,
 		default: 0
 	})

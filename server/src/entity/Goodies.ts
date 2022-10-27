@@ -13,7 +13,7 @@ export class Goodies {
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "double precision"
 	})
 	cost: number
 
