@@ -113,6 +113,8 @@
 					flex-direction: column;
 
 					&#price {
+						position: relative;
+						left: 40px;
 						font-size: 30px;
 					}
 				}
