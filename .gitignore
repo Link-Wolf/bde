@@ -13,5 +13,10 @@ config.json
 dump.rdb
 server/build
 server/dist
-**/assets/album
-**/assets/thumbnails
+!server/assets/album/goodies
+server/assets/album/goodies/*
+!server/assets/thumbnails/goodies
+server/assets/thumbnails/goodies/*
+!server/assets/thumbnails/events
+server/assets/thumbnails/events/*
+!.gitignore
