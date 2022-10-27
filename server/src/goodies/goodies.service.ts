@@ -45,14 +45,16 @@ export class GoodiesService {
 		try {
 			const goodies = await this.goodiesRepository.findOneById(id);
 			if (!goodies || !fs.existsSync(goodies.album_path)) {
-				this.logger.error(`Failed -> Get album of goodies ${id} : goodies doesn't exist or does not have an album`, login);
+				this.logger.error(`Failed -> Get album of goodies ${id} : goodies doesn't exist`, login);
 				throw new NotFoundException(`Failed to get album of goodies ${id}`)
 			}
 			const addFilesFromDirectoryToZip =
-				(directoryPath = goodies.album_path, zip: JSZip) => {
+				(directoryPath: fs.PathLike, zip: JSZip) => {
 					const directoryContents = fs.readdirSync(directoryPath, {
 						withFileTypes: true,
 					});
+
+					console.log(directoryPath, directoryContents)
 
 					directoryContents.forEach(({ name }) => {
 						const path = `${directoryPath}/${name}`;
@@ -67,7 +69,7 @@ export class GoodiesService {
 					});
 				};
 
-			const directoryPath = `assets/album/goodies/${id}`
+			const directoryPath = goodies.album_path
 			const zip = new JSZip();
 
 			addFilesFromDirectoryToZip(directoryPath, zip);
@@ -85,10 +87,9 @@ export class GoodiesService {
 		try {
 			let path: any
 			if (files.length === 0) {
-				let nb = Math.floor(Math.random() * 5)
 				path = "assets/placeholders/album"
 				this.goodiesRepository.update(id, {
-					thumbnail_filename: path
+					album_path: path
 				})
 				this.logger.log(`Saved album of goodies ${id}`, login, true)
 			}
@@ -125,12 +126,11 @@ export class GoodiesService {
 	}
 
 	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
-		console.log(file)
 		try {
 			let path: any
-			if ('err' in file) {
+			if (file === undefined) {
 				let nb = Math.floor(Math.random() * 5)
-				path = "assets/placeholders/thumbnails/" + nb + ".jpg"
+				path = "assets/placeholders/thumbnails/placeholder" + nb + ".jpg"
 				this.goodiesRepository.update(id, {
 					thumbnail_filename: path
 				})

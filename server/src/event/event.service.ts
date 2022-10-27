@@ -59,7 +59,7 @@ export class EventService {
 			let path: any
 			if ('err' in file) {
 				let nb = Math.floor(Math.random() * 5)
-				path = "assets/placeholders/thumbnails/" + nb + ".jpg"
+				path = "assets/placeholders/thumbnails/placeholder" + nb + ".jpg"
 				this.eventRepository.update(id, {
 					thumbnail_filename: path
 				})
