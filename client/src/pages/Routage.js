@@ -9,7 +9,7 @@ import style from "../style/Routage.module.scss";
 // Nos pages
 import Home from "./body/Home";
 import Cgu from "./body/Cgu";
-import Events from "./body/Events";
+import Cgv from "./body/Cgv";
 import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
 import AdminEventsGestion from "./body/AdminEventsGestion";
@@ -42,6 +42,10 @@ const Routage = () => {
 				<Route
 					path="legalthings"
 					element={<RouteWrapper route={<Cgu />} />}
+				/>
+				<Route
+					path="dollarthings"
+					element={<RouteWrapper route={<Cgv />} />}
 				/>
 				<Route
 					path="contact"
