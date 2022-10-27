@@ -46,13 +46,6 @@ export class EventController {
 		return this.eventService.getThumbnail(id, session.login)
 	}
 
-	@Get(':id/album')
-	async getAlbum(
-		@Param('id', ParseIntPipe) id: number,
-		@Session() session: Record<string, any>) {
-		return this.eventService.getAlbum(id, session.login)
-	}
-
 	@Post('')
 	@UseGuards(new ClearanceGuard(11))
 	create(

@@ -106,6 +106,8 @@ const Description = props => {
 		desc: "█ █ █ █ "
 	});
 
+	const [size, setSize] = useState("select");
+
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}`, {
 			credentials: "include"
@@ -119,7 +121,6 @@ const Description = props => {
 				return response.json();
 			})
 			.then(d => {
-				console.log(d);
 				setProduct(d);
 			})
 			.catch(function(error) {
@@ -133,36 +134,39 @@ const Description = props => {
 		<div className={style.description}>
 			<h1>{product.name}</h1>
 			<p>{product.desc}</p>
-			<ul>
-				<li>
-					<div className={style.price}>
-						Prix: {product.cost.toFixed(2)}
-					</div>
-				</li>
-				<li>
-					{product.stock ? (
-						product.stock ===
-						product.s + product.m + product.l + product.xl ? (
-							<div className={style.dispo}>
-								Disponible dans les tailles et quantités
-								suivantes :
-								<div className={style.tailles}>
-									<div>S : {product.s}</div>
-									<div>M : {product.m}</div>
-									<div>L : {product.l}</div>
-									<div>XL : {product.xl}</div>
-								</div>
-							</div>
-						) : (
-							<div className={style.dispo}>
-								Disponible ({product.stock} restants)
-							</div>
-						)
-					) : (
-						"En rupture de stock :c"
-					)}
-				</li>
-			</ul>
+			<div>
+				<label>Taille</label>
+				<select
+					value={size}
+					onChange={e => {
+						setSize(e.target.value);
+					}}
+				>
+					<option value="select" disabled hidden>
+						Taille ?
+					</option>
+					<option value="stock">Taille Unique</option>
+					<option value="s">S</option>
+					<option value="m">M</option>
+					<option value="l">L</option>
+					<option value="xl">XL</option>
+				</select>
+				<label>Couleur</label>
+				<input
+					type="radio"
+					name="color"
+					value="black"
+					id="colorBlack"
+					checked
+				/>
+				<label htmlFor="colorBlack" style={{"--my-color": "#000000"}} />
+			</div>
+			<dl>
+				<dt>Stock</dt>
+				<dd>{product[size]}</dd>
+				<dt>Prix</dt>
+				<dd>${product.cost.toFixed(2)}</dd>
+			</dl>
 		</div>
 	);
 };
