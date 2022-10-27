@@ -134,30 +134,33 @@ const Description = props => {
 		<div className={style.description}>
 			<h1>{product.name}</h1>
 			<p>{product.desc}</p>
-			<select
-				value={size}
-				onChange={e => {
-					setSize(e.target.value);
-				}}
-			>
-				<option value="select" disabled hidden>
-					Taille ?
-				</option>
-				<option value="stock">Taille Unique</option>
-				<option value="s">S</option>
-				<option value="m">M</option>
-				<option value="l">L</option>
-				<option value="xl">XL</option>
-			</select>
-			<label>Couleur</label>
-			<input
-				type="radio"
-				name="color"
-				value="black"
-				id="colorBlack"
-				checked
-			/>
-			<label htmlFor="colorBlack" style={{"--my-color": "#0000000"}} />
+			<div>
+				<label>Taille</label>
+				<select
+					value={size}
+					onChange={e => {
+						setSize(e.target.value);
+					}}
+				>
+					<option value="select" disabled hidden>
+						Taille ?
+					</option>
+					<option value="stock">Taille Unique</option>
+					<option value="s">S</option>
+					<option value="m">M</option>
+					<option value="l">L</option>
+					<option value="xl">XL</option>
+				</select>
+				<label>Couleur</label>
+				<input
+					type="radio"
+					name="color"
+					value="black"
+					id="colorBlack"
+					checked
+				/>
+				<label htmlFor="colorBlack" style={{"--my-color": "#000000"}} />
+			</div>
 			<dl>
 				<dt>Stock</dt>
 				<dd>{product[size]}</dd>
