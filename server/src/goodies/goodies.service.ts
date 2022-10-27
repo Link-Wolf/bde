@@ -86,7 +86,7 @@ export class GoodiesService {
 			let path: any
 			if (files.length === 0) {
 				let nb = Math.floor(Math.random() * 5)
-				path = "assets/placeholder/album"
+				path = "assets/placeholders/album"
 				this.goodiesRepository.update(id, {
 					thumbnail_filename: path
 				})
@@ -125,11 +125,12 @@ export class GoodiesService {
 	}
 
 	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
+		console.log(file)
 		try {
 			let path: any
 			if ('err' in file) {
 				let nb = Math.floor(Math.random() * 5)
-				path = "assets/placeholder/thumbnails/" + nb + ".jpg"
+				path = "assets/placeholders/thumbnails/" + nb + ".jpg"
 				this.goodiesRepository.update(id, {
 					thumbnail_filename: path
 				})
