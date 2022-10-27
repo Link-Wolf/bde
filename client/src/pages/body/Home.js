@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import CheckSet from "../../components/CheckSet";
+import {LoadingSmall, LoadingMicro} from "../../components/Loading";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.webp";
@@ -271,10 +272,10 @@ const ProductList = () => {
 				<h2>NOS PRODUITS</h2>
 				<hr />
 				<div className={style.thumbnailsContainer}>
-					<img src={thumbnailHoodies} />
+					<LoadingSmall />
 					<div className={style.miniThumbnailsContainer}>
-						<img src={thumbnailTshirt} />
-						<img src={thumbnailCap} />
+						<LoadingMicro />
+						<LoadingMicro />
 					</div>
 				</div>
 			</div>
