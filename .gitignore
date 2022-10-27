@@ -13,3 +13,5 @@ config.json
 dump.rdb
 server/build
 server/dist
+**/assets/album
+**/assets/thumbnails
