@@ -15,7 +15,7 @@
 	font-family: Futura;
 	color: var(--black);
 	background: var(--white);
-	width: 1000px;
+	width: 1200px;
 
 	.productFile {
 		display: flex;
@@ -52,12 +52,32 @@
 		.description {
 			margin: 0 0 0 60px;
 
-			div {
+			h1 {
+				font-size: 50px;
+				text-transform: capitalize;
+			}
+
+			p {
+				font-size: 20px;
+			}
+
+			.form {
+				padding: 0 177px 0 50px;
 				display: flex;
-				flex-direction: column;
+				justify-content: space-between;
+				flex-direction: row;
+
+				div {
+					display: flex;
+					flex-direction: column;
+				}
 
 				label {
 					margin: 20px 0 5px;
+				}
+
+				select {
+					width: 100px;
 				}
 
 				input {
@@ -84,7 +104,18 @@
 			}
 
 			dl {
+				padding: 0 180px 0 50px;
+				display: flex;
+				justify-content: space-between;
 				margin: 20px 0;
+
+				div {
+					flex-direction: column;
+
+					&#price {
+						font-size: 30px;
+					}
+				}
 			}
 		}
 	}
