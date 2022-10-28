@@ -157,19 +157,17 @@
 				border-left: none;
 				padding-left: 0;
 			}
-		}	}
-
-		#exitButton {
-			display: none;
 		}
-}
+	}
 
-@media (max-width: 100vh)
-{
+	#exitButton {
+		display: none;
+	}
+}
+@media (max-width: 100vh) {
 	.productContainer {
 		width: 96vw;
 		padding: 5px;
-
 
 		.productFile {
 			flex-direction: column;
@@ -177,29 +175,21 @@
 			.album {
 				height: 250px;
 				// flex-direction: column;
-
 				ul {
 					// display: flex;
 					// flex-direction: row;
 					// width: 100%;
 					// height: 50px;
 					// margin:  0 0 5px 0;
-
-
 					li {
 						// margin: 0 2px;
-
-
-						.thumbnail {
-
-						}
+						.thumbnail {}
 					}
 				}
 
 				.cover {
 					width: 100%;
 					height: 250px;
-
 				}
 			}
 
@@ -209,7 +199,6 @@
 				h1 {
 					font-size: 30px;
 					text-align: center;
-
 				}
 
 				p {
@@ -217,55 +206,46 @@
 					max-height: 150px;
 					height: auto;
 					width: 100%;
-
 				}
 
 				.form {
-					padding: 0                  40px ;
+					padding: 0 40px;
 
-					div {
+					div {}
 
-					}
+					label {}
 
-					label {
-					}
-
-					select {
-					}
+					select {}
 
 					input {
+						& + label {}
 
-						& + label {
-
-						}
-
-						&:checked + label {
-
-						}
+						&:checked + label {}
 					}
 				}
 
 				dl {
-					padding:   0 40px;
-
+					padding: 0 40px;
 
 					div {
-
 						&#price {
 							left: 0;
-
 						}
 					}
 				}
 			}
 		}
+
 		#exitButton {
 			width: 100px;
 			height: 30px;
 			margin: 0 calc(50% - 50px);
 			border: none;
 			color: var(--black);
-			background: var(--light-grey);			&:hover, &:active {
+			background: var(--light-grey);
+
+			&:active,
+			&:hover {
 				background: var(--dark-grey);
 			}
 			display: inline;
