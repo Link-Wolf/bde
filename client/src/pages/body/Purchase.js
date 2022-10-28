@@ -208,6 +208,7 @@ const PrePurchase = () => {
 };
 
 const Purchase = props => {
+	const [isSubbed, setIsSubbed] = useState(undefined);
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
@@ -291,6 +292,7 @@ const Purchase = props => {
 	}, []);
 
 	useEffect(() => {
+		if (session === undefined || isSubbed === undefined) return;
 		fetch(
 			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
 			{
@@ -323,7 +325,7 @@ const Purchase = props => {
 					(props.event.premium_cost <= 0 && tmp) ||
 					session.clearance <
 						global.config.clearance
-							.pool /*|| si_le_mec_est_deja_inscrit*/
+							.pool || isSubbed
 				)
 					window.location = "/home";
 			})
@@ -333,7 +335,39 @@ const Purchase = props => {
 						error.message
 				);
 			});
-	}, [session]);
+	}, [session, isSubbed]);
+
+	useEffect(() => {
+		if (
+			props.type === -1
+		)
+			{
+				setIsSubbed(false);
+				return;
+			}
+		fetch(
+			`${process.env.REACT_APP_API_URL}/inscription/${props.type}/isSubbed`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setIsSubbed(data.isSubbed);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, [props]);
 
 	const checkTrueMail = async login => {
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
