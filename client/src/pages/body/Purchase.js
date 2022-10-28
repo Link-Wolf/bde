@@ -14,7 +14,6 @@ const PurchaseButtons = props => {
 	const style = {layout: "vertical"};
 	const [{options}, dispatch] = usePayPalScriptReducer();
 
-
 	useEffect(() => {
 		dispatch({
 			type: "resetOptions",
@@ -317,6 +316,13 @@ const Purchase = props => {
 					}
 				});
 				setContributionStatus(tmp);
+				if (
+					(!props.event.for_pool &&
+						session.clearance < global.config.clearance.stud) ||
+					props.event.cost <= 0 ||
+					(props.event.premium_cost <= 0 && tmp)
+				)
+					window.location = "/home";
 			})
 			.catch(function(error) {
 				console.log(
