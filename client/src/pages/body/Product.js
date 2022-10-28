@@ -84,6 +84,10 @@ const Album = props => {
 								onMouseOver={() => {
 									setDisplayedImage(i);
 								}}
+
+								onClick={() => {
+									setDisplayedImage(i);
+								}}
 							>
 								<img className={style.thumbnail} src={image} />
 							</a>
