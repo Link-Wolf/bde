@@ -427,7 +427,14 @@ const Purchase = props => {
 						validated={validated}
 						needMail={needMail}
 					/>
-					<button
+					<button id={style.undo}
+						onClick={() => {
+							window.history.back();
+						}}
+					>
+						Annuler
+					</button>
+					<button id={style.validate}
 						disabled={validated}
 						onClick={() => {
 							if (
@@ -452,13 +459,7 @@ const Purchase = props => {
 						Valider
 					</button>
 
-					<button
-						onClick={() => {
-							window.history.back();
-						}}
-					>
-						Annuler
-					</button>
+
 					{validated && (
 						<div hidden={!validated} className={style.paypal}>
 							<PayPalScriptProvider options={optionsProvider}>
