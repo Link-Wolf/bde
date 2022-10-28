@@ -97,13 +97,129 @@
 		}
 
 		table {
-			width: 400px;
+			margin: 40px 0;
+			min-width: 400px;
 
 			tr {
 				td,
 				th {
 					&:nth-of-type(2) {
 						text-align: right;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 100vh)
+{
+	.purchase {
+		display: flex;
+		flex-direction: column-reverse;
+		width: 100vw;
+		padding: 2vw;
+
+		.left {
+			width: 100%;
+			margin: 50px 0;
+			.intro {
+				p {}
+
+				hr {}
+			}
+
+			.payment {
+				form {
+					padding: 0;
+					margin: 0;
+
+					label {
+					}
+
+					.formLine {
+						display: flex;
+						flex-direction: row !important;
+
+						div {
+							margin: 0 5px 10px ;
+							width: calc(50vw - 15px - 1vw);
+							display: flex;
+							flex-direction: column;
+						}
+					}
+
+					.formMargin {
+						margin: 20px 0;
+						display: flex;
+						flex-direction: column;
+
+						&#address label {
+							margin-left: 5px;
+						}
+					}
+
+					.country {
+						padding: 0 ;
+						width: 96vw;
+					}
+
+					.mail {
+						padding: 0 ;
+						width: 96vw;
+					}
+				}
+
+				button {
+					margin-bottom: 50px;
+					width: 20vw;
+					height: 30px;
+					border: none;
+					color: var(--white);
+
+					&#validate {
+						margin-left: 56vw;
+						background: var(--primary);
+
+						&:hover {
+							background: var(--primary-dark);
+						}
+					}
+
+					&#undo {
+						margin-left: 0px;
+						background: var(--light-grey);
+
+						&:hover {
+							background: var(--dark-grey);
+						}
+					}
+				}
+
+
+				.paypal {
+					margin: 0;
+					width: 96vw;
+				}
+			}
+		}
+
+		.recap {
+			width: 94vw;
+			margin: 0;
+			p {
+				a {}
+			}
+
+			table {
+				margin: 20px 0;
+				width: 94vw;
+
+				tr {
+					td,
+					th {
+						&:nth-of-type(2) {
+						}
 					}
 				}
 			}
