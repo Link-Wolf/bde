@@ -138,18 +138,19 @@
 			flex-direction: column;
 
 			.album {
-				flex-direction: column;
+				height: 250px;
+				// flex-direction: column;
 
 				ul {
-					display: flex;
-					flex-direction: row;
-					width: 100%;
-					height: 50px;
-					margin:  0 0 5px 0;
+					// display: flex;
+					// flex-direction: row;
+					// width: 100%;
+					// height: 50px;
+					// margin:  0 0 5px 0;
 
 
 					li {
-						margin: 0 2px;
+						// margin: 0 2px;
 
 
 						.thumbnail {
@@ -160,7 +161,7 @@
 
 				.cover {
 					width: 100%;
-					height: 300px;
+					height: 250px;
 
 				}
 			}
@@ -183,7 +184,7 @@
 				}
 
 				.form {
-					padding: 0;
+					padding: 0                  40px ;
 
 					div {
 
@@ -208,7 +209,7 @@
 				}
 
 				dl {
-					padding:   0;
+					padding:   0 40px;
 
 
 					div {
