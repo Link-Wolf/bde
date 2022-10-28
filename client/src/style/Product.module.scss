@@ -229,11 +229,10 @@
 			width: 100px;
 			height: 30px;
 			margin: 0 calc(50% - 50px);
-			color: var(--white);
 			border: none;
-			background-color: var(--secondary);
-			&:hover, &:active {
-				background-color: var(--secondary-dark);
+			color: var(--black);
+			background: var(--light-grey);			&:hover, &:active {
+				background: var(--dark-grey);
 			}
 			display: inline;
 		}
