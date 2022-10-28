@@ -1,5 +1,5 @@
 .bodyContainer {
-	min-height: 80vh;
+	min-height: calc(100vh - 80px);
 	background: var(--white);
 	color: var(--black);
 
