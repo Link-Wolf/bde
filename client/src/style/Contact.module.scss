@@ -1,62 +1,72 @@
 .contactContainer {
-  min-height: 80vh;
-  background-image: radial-gradient(at left bottom,
-       var(--primary) 5%, var(--white) 70%);
-       background-clip: border-box;
-       padding: 50px 50px 50px 400px;
+	min-height: 80vh;
+	background-image: radial-gradient(at left bottom, var(--primary) 5%, var(--white) 70%);
+	background-clip: border-box;
+	padding: 0;
 
-  form {
-    width: 400px;
+	form {
+		margin: 0 calc((100% - 600px) / 2);
+		width: 600px;
+		padding-top: 10%;
 
-    .section{
-      margin: 20px;
-      display: flex;
-      flex-direction: column;
-    }
+		.section {
+			margin: 20px;
+			display: flex;
+			flex-direction: column;
 
-    button {
-      margin: 20px 20px 20px 280px;
+			label {
+				font-style: condensed;
+				padding-bottom: 10px;
+				font-size: 20px;
+			}
 
-      background: var(--secondary);
-      color: var(--white);
-      border: none;
-      width: 100px;
-      height: 30px;
+			textarea {
+				height: 200px;
+				background: var(--white);
+			}
+		}
 
-      &:hover {
-        background: var(--secondary-dark)
-      }
-    }
-  }
+		button {
+			margin: 20px 20px 20px 280px;
+			background: var(--secondary);
+			color: var(--white);
+			border: none;
+			width: 150px;
+			height: 40px;
+
+			&:hover {
+				background: var(--secondary-dark);
+			}
+		}
+	}
 }
+@media (max-width: 100vh) {
+	.contactContainer {
+		padding: 2vw;
 
-@media (max-width: 100vh)
-{
-  .contactContainer {
-    padding: 2vw;
+		form {
+			margin: 0 calc((100% - 95%) / 2);
+			width: 95%;
+			padding-top: 15%;
 
-    form {
-      width: 100%;
+			.section {
+				margin: 20px;
+				display: flex;
+				flex-direction: column;
+			}
 
-      .section{
-        margin: 20px;
-        display: flex;
-        flex-direction: column;
-      }
+			button {
+				margin: 20px 20px 20px calc(100% - 120px);
+				background: var(--secondary);
+				color: var(--white);
+				border: none;
+				width: 100px;
+				height: 30px;
 
-      button {
-        margin: 20px 20px 20px calc(100% - 120px);
-
-        background: var(--secondary);
-        color: var(--white);
-        border: none;
-        width: 100px;
-        height: 30px;
-
-        &:hover {
-          background: var(--secondary-dark)
-        }
-      }
-    }
-  }
+				&:hover {
+					background: var(--secondary-dark);
+				}
+			}
+		}
+	}
 }

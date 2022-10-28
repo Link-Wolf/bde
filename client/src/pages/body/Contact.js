@@ -4,7 +4,7 @@ import {Form, Button} from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
 import Loading from "../../components/Loading";
-import style from "../../style/Contact.module.scss"
+import style from "../../style/Contact.module.scss";
 const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
 	const [formState, setFormState] = useState({
@@ -255,7 +255,8 @@ const Contact = () => {
 						<option value="Feedback">Feedback d'un event</option>
 						<option value="Autre">Autre</option>
 					</select>
-				</div><div className={style.section}>
+				</div>
+				<div className={style.section}>
 					<label>Message</label>
 					<textarea
 						placeholder="Votre messsage"
@@ -265,8 +266,9 @@ const Contact = () => {
 						required
 						disabled={lock}
 						minLength={10}
-					/></div>
-				<div className={style.section}hidden={idForm}>
+					/>
+				</div>
+				<div className={style.section} hidden={idForm}>
 					<label>Nom</label>
 					<input
 						placeholder="Jean-Billy"
@@ -277,7 +279,7 @@ const Contact = () => {
 						disabled={lock}
 					/>
 				</div>
-				<div className={style.section}hidden={!needMail && idForm}>
+				<div className={style.section} hidden={!needMail && idForm}>
 					<label>Email</label>
 					<input
 						disabled={lock}
@@ -289,9 +291,7 @@ const Contact = () => {
 						id="emailField"
 						required
 					/>
-					<p>
-						Nous ne partagerons jamais votre mail.
-					</p>
+					<p>Nous ne partagerons jamais votre mail.</p>
 				</div>
 				<button
 					variant="outline-primary"
