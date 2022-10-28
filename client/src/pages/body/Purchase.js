@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
 import {
 	PayPalScriptProvider,
@@ -15,26 +14,6 @@ const PurchaseButtons = props => {
 	const style = {layout: "vertical"};
 	const [{options}, dispatch] = usePayPalScriptReducer();
 
-	const sendMail = async (date, commande, timestamp, mail) => {
-		await emailjs
-			.send(
-				process.env.REACT_APP_EMAILJS_SERVICE,
-				process.env.REACT_APP_EMAILJS_TEMPLATE_PAYMENT,
-				{
-					date: date,
-					commande: commande,
-					timestamp: timestamp,
-					mail: mail
-				},
-				process.env.REACT_APP_EMAILJS_PUBLICKEY
-			)
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
-				);
-			});
-	};
 
 	useEffect(() => {
 		dispatch({
@@ -111,30 +90,6 @@ const PurchaseButtons = props => {
 								);
 							}
 							return response.json();
-						})
-						.then(async data => {
-							await sendMail(
-								new Date(Date.now()).toLocaleDateString(
-									"fr-FR",
-									{
-										weekday: "long",
-										year: "numeric",
-										month: "long",
-										day: "numeric"
-									}
-								),
-								data.order.id,
-								new Intl.DateTimeFormat("fr-FR", {
-									day: "numeric",
-									month: "short",
-									year: "numeric",
-									hour: "2-digit",
-									minute: "2-digit",
-									second: "2-digit",
-									timeZoneName: "short"
-								}).format(new Date(data.order.date)),
-								props.address.mail
-							);
 						})
 						.then(async () => {
 							if (props.needMail)

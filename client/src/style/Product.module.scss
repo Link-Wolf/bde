@@ -221,6 +221,7 @@
 					max-height: 150px;
 					height: auto;
 					width: 100%;
+					font-size: 14px;
 				}
 
 				.form {
@@ -245,7 +246,13 @@
 					div {
 						&#price {
 							left: 0;
+							font-size: 30px;
 						}
+					}
+
+					#rupture {
+						font-size: 18px;
+
 					}
 				}
 			}
