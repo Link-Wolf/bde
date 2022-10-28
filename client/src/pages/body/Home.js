@@ -322,6 +322,7 @@ const ProductList = () => {
 						></div>
 						<Product
 							id={popUp}
+							setPopUp={setPopUp}
 							closeEvent={() => {
 								setPopUp(-1);
 							}}
