@@ -203,11 +203,12 @@ const PrePurchase = () => {
 				window.location = "/home";
 			});
 	}, [param]);
-	if (data == undefined) return;
+	if (data === undefined) return;
 	return <Purchase event={data} />;
 };
 
 const Purchase = props => {
+	const [isSubbed, setIsSubbed] = useState(undefined);
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
@@ -291,6 +292,7 @@ const Purchase = props => {
 	}, []);
 
 	useEffect(() => {
+		if (session === undefined || isSubbed === undefined) return;
 		fetch(
 			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
 			{
@@ -317,13 +319,13 @@ const Purchase = props => {
 				});
 				setContributionStatus(tmp);
 				if (
-					(!props.event.for_pool &&
+					((props.event === undefined && tmp) || !props.event.for_pool &&
 						session.clearance < global.config.clearance.stud) ||
 					props.event.cost <= 0 ||
 					(props.event.premium_cost <= 0 && tmp) ||
 					session.clearance <
 						global.config.clearance
-							.pool /*|| si_le_mec_est_deja_inscrit*/
+							.pool || isSubbed
 				)
 					window.location = "/home";
 			})
@@ -333,7 +335,39 @@ const Purchase = props => {
 						error.message
 				);
 			});
-	}, [session]);
+	}, [session, isSubbed]);
+
+	useEffect(() => {
+		if (
+			props.event === undefined
+		)
+			{
+				setIsSubbed(false);
+				return;
+			}
+		fetch(
+			`${process.env.REACT_APP_API_URL}/inscription/${props.event.id}/isSubbed`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setIsSubbed(data.isSubbed);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, [props]);
 
 	const checkTrueMail = async login => {
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
@@ -393,7 +427,14 @@ const Purchase = props => {
 						validated={validated}
 						needMail={needMail}
 					/>
-					<button
+					<button id={style.undo}
+						onClick={() => {
+							window.history.back();
+						}}
+					>
+						Annuler
+					</button>
+					<button id={style.validate}
 						disabled={validated}
 						onClick={() => {
 							if (
@@ -418,13 +459,7 @@ const Purchase = props => {
 						Valider
 					</button>
 
-					<button
-						onClick={() => {
-							window.history.back();
-						}}
-					>
-						Annuler
-					</button>
+
 					{validated && (
 						<div hidden={!validated} className={style.paypal}>
 							<PayPalScriptProvider options={optionsProvider}>
