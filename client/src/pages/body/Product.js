@@ -15,6 +15,7 @@ const Product = props => {
 					<Album id={props.id} />
 					<Description id={props.id} />
 				</div>
+				<button id={style.exitButton}>Quitter</button>
 			</div>
 		</>
 	);
