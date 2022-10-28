@@ -8,6 +8,9 @@ import frontImage from "../../assets/images/front.webp";
 import Product from "./Product.js";
 
 import aguemazi from "../../assets/images/aguemazi.webp";
+import mcacoilo from "../../assets/images/mcacoilo.webp";
+import Link from "../../assets/images/Link.webp";
+import iCARUS from "../../assets/images/iCARUS.webp";
 
 const Home = () => {
 	const [filter, setFilter] = useState({
@@ -361,15 +364,15 @@ const Presentation = () => {
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="Link" />
+						<EquipePicture login="Link" img={Link} />
 						<EquipePicture login="tbrissia" />
 					</div>
 					<h3>Trésoriers</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="iCARUS" />
-						<EquipePicture login="mcacoilo" />
+						<EquipePicture login="iCARUS" img={iCARUS} />
+						<EquipePicture login="mcacoilo" img={mcacoilo} />
 					</div>
 					<h3>Secrétaires</h3>
 				</div>
