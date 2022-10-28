@@ -42,7 +42,6 @@ const Home = () => {
 			})
 			.then(json => {
 				setSession(json);
-				console.log(json);
 			});
 	}, []);
 
@@ -69,7 +68,7 @@ const Home = () => {
 						<></>
 					)}
 				</div>
-				<ProductList />
+				<ProductList session={session} />
 			</div>
 			<Presentation />
 		</div>
@@ -191,7 +190,7 @@ const Filter = param => {
 	);
 };
 
-const ProductList = () => {
+const ProductList = param => {
 	const [products, setProducts] = useState([]);
 	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
 	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
@@ -354,6 +353,7 @@ const ProductList = () => {
 							}}
 						></div>
 						<Product
+							session={param.session}
 							id={popUp}
 							setPopUp={setPopUp}
 							closeEvent={() => {
