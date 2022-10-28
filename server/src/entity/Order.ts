@@ -29,6 +29,9 @@ export class Order {
 	@Column({ default: false })
 	isCompleted: boolean
 
+	@Column({ default: false })
+	isMailed: boolean
+
 	@Column({
 		type: "double precision",
 		default: process.env.CONTRIBUTION_PRICE

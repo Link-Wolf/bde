@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
 import {Print} from "../../components/Invoice";
+import emailjs from "@emailjs/browser";
 
 const Receipt = () => {
 	const [type, setType] = useState(undefined);
@@ -12,6 +13,51 @@ const Receipt = () => {
 	const [loadMail, setLoadMail] = useState(false);
 
 	const param = useParams();
+
+	const sendMail = async (date, commande, timestamp, mail) => {
+		await emailjs
+			.send(
+				process.env.REACT_APP_EMAILJS_SERVICE,
+				process.env.REACT_APP_EMAILJS_TEMPLATE_PAYMENT,
+				{
+					date: date,
+					commande: commande,
+					timestamp: timestamp,
+					mail: mail
+				},
+				process.env.REACT_APP_EMAILJS_PUBLICKEY
+			)
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération mail: " +
+						error.message
+				);
+			});
+	};
+
+
+	const compMail = async (data, mail) => {await sendMail(
+		new Date(Date.now()).toLocaleDateString(
+			"fr-FR",
+			{
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric"
+			}
+		),
+		data.order.id,
+		new Intl.DateTimeFormat("fr-FR", {
+			day: "numeric",
+			month: "short",
+			year: "numeric",
+			hour: "2-digit",
+			minute: "2-digit",
+			second: "2-digit",
+			timeZoneName: "short"
+		}).format(new Date(data.order.date)),
+		mail
+	)};
 
 	useEffect(() => {
 		setLoadSession(true);
@@ -76,6 +122,28 @@ const Receipt = () => {
 			});
 	}, [order]);
 
+	useEffect(() => {
+		if (session === undefined || order === undefined || order.isMailed) return;
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${session.login}`, {
+			credentials: "include"
+		}).then(response => {
+			if (!response.ok) {
+				throw new Error(
+					`This is an HTTP error: The status is ${response.status}`
+				);
+			}
+			return response.json();
+		})
+		.then(async stud => {
+		await compMail(order, stud.true_email);
+		await fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
+			credentials: "include", method: "PATCH", body: JSON.stringify({isMailed: true}), headers:{				"Content-Type": "application/json"
+}
+		})
+		});
+
+	}, [session, order])
+
 	if (
 		loadSession ||
 		loadOrder ||
@@ -84,7 +152,7 @@ const Receipt = () => {
 		dataEvent === undefined
 	)
 		return <>Loading</>;
-	if (session.login !== order.studLogin) return <Navigate to="/home" />;
+	if (session.login !== order.studLogin || !order.isCompleted) return <Navigate to="/home" />;
 	return (
 		<>
 			Facture :
