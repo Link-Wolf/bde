@@ -1,5 +1,5 @@
 .contactContainer {
-  min-height: 80vh;
+  min-height: calc(100vh - 80px);
   background-image: radial-gradient(at left bottom,
        var(--primary) 5%, var(--white) 70%);
        background-clip: border-box;
