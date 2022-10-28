@@ -1,5 +1,5 @@
 .contactContainer {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px - 120px);
   background-image: radial-gradient(at left bottom,
        var(--primary) 5%, var(--white) 70%);
        background-clip: border-box;
@@ -33,7 +33,7 @@
 @media (max-width: 100vh)
 {
   .contactContainer {
-    padding: 2vw;
+    padding: 20px;
 
     form {
       width: 100%;
