@@ -74,8 +74,6 @@ const EventList = param => {
 		viewData.jump(p);
 	};
 
-	console.log(data)
-
 	return (
 		<>
 			{param.showCount && (

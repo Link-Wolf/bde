@@ -21,6 +21,7 @@ const Product = props => {
 					<h1 id={style.phoneH1}>{product.name}</h1>
 					<Album id={props.id} />
 					<Description
+						session={props.session}
 						id={props.id}
 						product={product}
 						setProduct={setProduct}
@@ -146,14 +147,20 @@ const Description = props => {
 			});
 	}, [props.id]);
 
+	console.log(props.session);
+
 	return (
 		<div className={style.description}>
 			<h1 id={style.deskH1}>{props.product.name}</h1>
 			<p>{props.product.desc}</p>
-			<p>
-				Ce produit ne peut être acheté que physiquement sur place auprès
-				d'un membre du BDE.
-			</p>
+			{props.session.clearance > 2 && props.session !== 0 ? (
+				<p id={style.warn}>
+					Ce produit ne peut être acheté que physiquement sur place
+					auprès d'un membre du BDE.
+				</p>
+			) : (
+				<></>
+			)}
 			<div className={style.form}>
 				{props.product.stock ===
 					props.product.s +
@@ -211,9 +218,15 @@ const Description = props => {
 						</div>
 					)}
 				</div>
-				<div id={style.price}>
-					<dd>{props.product.cost.toFixed(2)}€</dd>
-				</div>
+				{props.session.clearance > 2 && props.session !== 0 ? (
+					<>
+						<div id={style.price}>
+							<dd>{props.product.cost.toFixed(2)}€</dd>
+						</div>
+					</>
+				) : (
+					<></>
+				)}
 			</dl>
 		</div>
 	);
