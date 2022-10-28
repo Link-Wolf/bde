@@ -8,7 +8,7 @@ import style from "../style/Header.module.scss";
 
 const DropdownUser = param => {
 	const [img, setImg] = useState({
-		profile: blank,
+		profile: undefined,
 		login: blank,
 		logout: blank
 	});
@@ -42,6 +42,7 @@ const DropdownUser = param => {
 			});
 	}, []);
 
+	if (img.profile == undefined) return;
 	if (img.profile !== blank)
 		return (
 			<div>

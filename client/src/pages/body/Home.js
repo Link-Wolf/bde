@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
+import EventListPublic from "../../components/EventListPublic";
 import CheckSet from "../../components/CheckSet";
 import {LoadingSmall, LoadingMicro} from "../../components/Loading";
 
@@ -13,6 +14,7 @@ import Link from "../../assets/images/Link.webp";
 import iCARUS from "../../assets/images/iCARUS.webp";
 
 const Home = () => {
+	const [session, setSession] = useState(0);
 	const [filter, setFilter] = useState({
 		current: true,
 		free: false,
@@ -26,6 +28,24 @@ const Home = () => {
 		available_date: true
 	});
 
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setSession(json);
+				console.log(json);
+			});
+	}, []);
+
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
@@ -33,8 +53,21 @@ const Home = () => {
 				<div>
 					<h2>Nos Evènements</h2>
 					<hr />
-					<EventList filter={filter} className={style.col} />{" "}
-					<Filter filter={filter} setFilter={setFilter} />
+					{session !== 0 ? (
+						session.clearance >= 2 ? (
+							<>
+								<EventList
+									filter={filter}
+									className={style.col}
+								/>
+								<Filter filter={filter} setFilter={setFilter} />
+							</>
+						) : (
+							<EventListPublic />
+						)
+					) : (
+						<></>
+					)}
 				</div>
 				<ProductList />
 			</div>

@@ -14,58 +14,56 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		setTimeout(() => {
-			fetch(`${process.env.REACT_APP_API_URL}/session`, {
-				credentials: "include"
-			})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					return response.json();
-				})
-				.then(data => {
-					if (data.clearance === global.config.clearance.default) {
-						setLeftButton(
-							<>
-								<a href="/contact">
-									<h1>Contact</h1>
-								</a>
-							</>
-						);
-					}
-					if (data.clearance > global.config.clearance.default) {
-						setLeftButton(
-							<>
-								{
-									// <a href="/clubs">
-									// 	<h1>Clubs</h1>
-									// </a>
-								}
-								<a href="/contact">
-									<h1>Contact</h1>
-								</a>
-							</>
-						);
-					}
-					if (data.clearance >= global.config.clearance.admin) {
-						setRightButton(
-							<a href="/admin" className={style.hrbefore}>
-								<hr />
-								<h1>Admin</h1>
-							</a>
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-		}, 100);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.clearance === global.config.clearance.default) {
+					setLeftButton(
+						<>
+							<a href="/contact">
+								<h1>Contact</h1>
+							</a>
+						</>
+					);
+				}
+				if (data.clearance > global.config.clearance.default) {
+					setLeftButton(
+						<>
+							{
+								// <a href="/clubs">
+								// 	<h1>Clubs</h1>
+								// </a>
+							}
+							<a href="/contact">
+								<h1>Contact</h1>
+							</a>
+						</>
+					);
+				}
+				if (data.clearance >= global.config.clearance.admin) {
+					setRightButton(
+						<a href="/admin" className={style.hrbefore}>
+							<hr />
+							<h1>Admin</h1>
+						</a>
+					);
+				}
+			})
+			.catch(function(error) {
+				console.log(
+					"Il y a eu un problème avec l'opération fetch: " +
+						error.message
+				);
+			});
 	}, []);
 
 	const toggleBurgerMenu = () => {
