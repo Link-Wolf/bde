@@ -37,10 +37,7 @@
 @media (min-width: 100vh) {
 	.nopage {
 		cursor: none;
-
-		body {
-			overflow: hidden;
-		}
+		overflow: hidden;
 
 		.body {
 			height: 100vh;
@@ -51,6 +48,8 @@
 			flex-flow: column wrap;
 			justify-content: center;
 			align-items: center;
+			overflow: hidden;
+
 		}
 
 		.boat {
@@ -91,6 +90,8 @@
 		}
 
 		.torch {
+			overflow: hidden;
+
 			margin: -300px 0 0 -300px;
 			width: 600px;
 			height: 600px;
@@ -102,7 +103,8 @@
 			background: rgba(0, 0, 0, 0.3);
 		}
 
-		.torch::after {
+		.torch::after {			overflow: hidden;
+
 			content: '';
 			display: block;
 			border-radius: 50%;
