@@ -56,10 +56,35 @@
 			}
 
 			button {
-				margin: 0 0 50px;
+				margin-bottom: 50px;
+				width: 100px;
+				height: 30px;
+				border: none;
+				color: var(--white);
+
+				&#validate {
+					margin-left: 220px;
+					background: var(--primary);
+
+					&:hover {
+						background: var(--primary-dark);
+					}
+				}
+
+				&#undo {
+					margin-left: 20px;
+					background: var(--light-grey);
+
+					&:hover {
+						background: var(--dark-grey);
+					}
+				}
 			}
 
-			.paypal {}
+			.paypal {
+				margin-left: 20px;
+				width: 420px;
+			}
 		}
 	}
 
