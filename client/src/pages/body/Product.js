@@ -18,11 +18,22 @@ const Product = props => {
 		<>
 			<div className={style.productContainer}>
 				<div className={style.productFile}>
-				<h1 id={style.phoneH1}>{product.name}</h1>
+					<h1 id={style.phoneH1}>{product.name}</h1>
 					<Album id={props.id} />
-					<Description id={props.id} product={product} setProduct={setProduct}/>
+					<Description
+						id={props.id}
+						product={product}
+						setProduct={setProduct}
+					/>
 				</div>
-				<button id={style.exitButton} onClick={() => props.setPopUp(-1)}>Quitter</button>
+				<div id={style.exit}>
+					<button
+						id={style.exitButton}
+						onClick={() => props.setPopUp(-1)}
+					>
+						Quitter
+					</button>
+				</div>
 			</div>
 		</>
 	);
@@ -92,7 +103,6 @@ const Album = props => {
 								onMouseOver={() => {
 									setDisplayedImage(i);
 								}}
-
 								onClick={() => {
 									setDisplayedImage(i);
 								}}
@@ -111,8 +121,6 @@ const Album = props => {
 };
 
 const Description = props => {
-
-
 	const [size, setSize] = useState("m");
 
 	useEffect(() => {
@@ -144,8 +152,10 @@ const Description = props => {
 			<p>{props.product.desc}</p>
 			<div className={style.form}>
 				{props.product.stock ===
-					props.product.s + props.product.m + props.product.l + props.product.xl &&
-				props.product.stock !== 0 ? (
+					props.product.s +
+						props.product.m +
+						props.product.l +
+						props.product.xl && props.product.stock !== 0 ? (
 					<div>
 						{" "}
 						<label>Taille</label>
