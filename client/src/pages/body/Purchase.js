@@ -320,7 +320,10 @@ const Purchase = props => {
 					(!props.event.for_pool &&
 						session.clearance < global.config.clearance.stud) ||
 					props.event.cost <= 0 ||
-					(props.event.premium_cost <= 0 && tmp)
+					(props.event.premium_cost <= 0 && tmp) ||
+					session.clearance <
+						global.config.clearance
+							.pool /*|| si_le_mec_est_deja_inscrit*/
 				)
 					window.location = "/home";
 			})
