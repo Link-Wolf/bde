@@ -203,7 +203,7 @@ const PrePurchase = () => {
 				window.location = "/home";
 			});
 	}, [param]);
-	if (data == undefined) return;
+	if (data === undefined) return;
 	return <Purchase event={data} />;
 };
 
@@ -339,14 +339,14 @@ const Purchase = props => {
 
 	useEffect(() => {
 		if (
-			props.type === -1
+			props.type === undefined
 		)
 			{
 				setIsSubbed(false);
 				return;
 			}
 		fetch(
-			`${process.env.REACT_APP_API_URL}/inscription/${props.type}/isSubbed`,
+			`${process.env.REACT_APP_API_URL}/inscription/${props.event.id}/isSubbed`,
 			{
 				credentials: "include"
 			}
