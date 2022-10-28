@@ -4,7 +4,7 @@ import {Form, Button} from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
 import Loading from "../../components/Loading";
-
+import style from "../../style/Contact.module.scss"
 const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
 	const [formState, setFormState] = useState({
@@ -230,11 +230,11 @@ const Contact = () => {
 		);
 	if (loading) return <Loading />;
 	return (
-		<div>
-			<Form>
-				<Form.Group>
-					<Form.Label>Sujet</Form.Label>
-					<Form.Select
+		<div className={style.contactContainer}>
+			<form>
+				<div className={style.section}>
+					<label>Sujet</label>
+					<select
 						aria-label="Sélectionnez le sujet"
 						value={formState.subject}
 						onChange={handleFormChange}
@@ -254,12 +254,10 @@ const Contact = () => {
 						<option value="Boutique">Boutique</option>
 						<option value="Feedback">Feedback d'un event</option>
 						<option value="Autre">Autre</option>
-					</Form.Select>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Message</Form.Label>
-					<Form.Control
-						as="textarea"
+					</select>
+				</div><div className={style.section}>
+					<label>Message</label>
+					<textarea
 						placeholder="Votre messsage"
 						value={formState.message}
 						onChange={handleFormChange}
@@ -267,43 +265,42 @@ const Contact = () => {
 						required
 						disabled={lock}
 						minLength={10}
-					/>
-				</Form.Group>
-				<Form.Group hidden={idForm}>
-					<Form.Label>Nom</Form.Label>
-					<Form.Control
-						placeholder="Veuillez entrer votre nom"
+					/></div>
+				<div className={style.section}hidden={idForm}>
+					<label>Nom</label>
+					<input
+						placeholder="Jean-Billy"
 						value={formState.name}
 						onChange={handleFormChange}
 						name="name"
 						required
 						disabled={lock}
 					/>
-				</Form.Group>
-				<Form.Group hidden={!needMail && idForm}>
-					<Form.Label>Email</Form.Label>
-					<Form.Control
+				</div>
+				<div className={style.section}hidden={!needMail && idForm}>
+					<label>Email</label>
+					<input
 						disabled={lock}
 						type="email"
-						placeholder="Veuillez entrer votre mail afin de vous recontacter"
+						placeholder="me@exemple.net"
 						value={formState.mail}
 						onChange={handleFormChange}
 						name="mail"
 						id="emailField"
 						required
 					/>
-					<Form.Text className="text-muted">
-						Nous ne partagerons jamais votre mail
-					</Form.Text>
-				</Form.Group>
-				<Button
+					<p>
+						Nous ne partagerons jamais votre mail.
+					</p>
+				</div>
+				<button
 					variant="outline-primary"
 					disabled={lock}
 					onClick={sendMail}
 				>
 					Envoyer
-				</Button>
-			</Form>
+				</button>
+			</form>
 		</div>
 	);
 };

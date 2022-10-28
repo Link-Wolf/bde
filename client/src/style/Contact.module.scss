@@ -1,0 +1,31 @@
+.contactContainer {
+  min-height: 80vh;
+  background-image: radial-gradient(at left bottom,
+       var(--primary) 5%, var(--white) 70%);
+       background-clip: border-box;
+       padding: 50px 50px 50px 400px;
+
+  form {
+    width: 400px;
+
+    .section{
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      margin: 20px 20px 20px 280px;
+
+      background: var(--secondary);
+      color: var(--white);
+      border: none;
+      width: 100px;
+      height: 30px;
+
+      &:hover {
+        background: var(--secondary-dark)
+      }
+    }
+  }
+  }
