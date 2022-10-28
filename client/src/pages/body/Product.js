@@ -7,13 +7,20 @@ import style from "../../style/Product.module.scss";
 import load from "../../assets/animations/gear_clockwise.gif";
 
 const Product = props => {
+	const [product, setProduct] = useState({
+		name: "█ █ █ █ ",
+		cost: 42,
+		available: true,
+		desc: "█ █ █ █ "
+	});
 	if (props.id === undefined) return;
 	return (
 		<>
 			<div className={style.productContainer}>
 				<div className={style.productFile}>
+				<h1 id={style.phoneH1}>{product.name}</h1>
 					<Album id={props.id} />
-					<Description id={props.id} />
+					<Description id={props.id} product={product} setProduct={setProduct}/>
 				</div>
 				<button id={style.exitButton} onClick={() => props.setPopUp(-1)}>Quitter</button>
 			</div>
@@ -104,12 +111,7 @@ const Album = props => {
 };
 
 const Description = props => {
-	const [product, setProduct] = useState({
-		name: "█ █ █ █ ",
-		cost: 42,
-		available: true,
-		desc: "█ █ █ █ "
-	});
+
 
 	const [size, setSize] = useState("m");
 
@@ -126,7 +128,7 @@ const Description = props => {
 				return response.json();
 			})
 			.then(d => {
-				setProduct(d);
+				props.setProduct(d);
 				if (d.stock !== d.s + d.m + d.l + d.xl) setSize("stock");
 			})
 			.catch(function(error) {
@@ -138,12 +140,12 @@ const Description = props => {
 
 	return (
 		<div className={style.description}>
-			<h1>{product.name}</h1>
-			<p>{product.desc}</p>
+			<h1 id={style.deskH1}>{props.product.name}</h1>
+			<p>{props.product.desc}</p>
 			<div className={style.form}>
-				{product.stock ===
-					product.s + product.m + product.l + product.xl &&
-				product.stock !== 0 ? (
+				{props.product.stock ===
+					props.product.s + props.product.m + props.product.l + props.product.xl &&
+				props.product.stock !== 0 ? (
 					<div>
 						{" "}
 						<label>Taille</label>
@@ -179,12 +181,12 @@ const Description = props => {
 			</div>
 			<dl>
 				<div>
-					{product.stock ? (
+					{props.product.stock ? (
 						<>
 							<dt>Stock pour ce choix</dt>
 							<dd id={style.rest}>
-								{product[size]}{" "}
-								{product[size] > 1
+								{props.product[size]}{" "}
+								{props.product[size] > 1
 									? "pièces restantes"
 									: "pièce restante"}
 							</dd>
@@ -196,7 +198,7 @@ const Description = props => {
 					)}
 				</div>
 				<div id={style.price}>
-					<dd>{product.cost.toFixed(2)}€</dd>
+					<dd>{props.product.cost.toFixed(2)}€</dd>
 				</div>
 			</dl>
 		</div>
