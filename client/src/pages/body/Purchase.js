@@ -319,7 +319,7 @@ const Purchase = props => {
 				});
 				setContributionStatus(tmp);
 				if (
-					(!props.event.for_pool &&
+					((props.event === undefined && tmp) || !props.event.for_pool &&
 						session.clearance < global.config.clearance.stud) ||
 					props.event.cost <= 0 ||
 					(props.event.premium_cost <= 0 && tmp) ||
@@ -339,7 +339,7 @@ const Purchase = props => {
 
 	useEffect(() => {
 		if (
-			props.type === undefined
+			props.event === undefined
 		)
 			{
 				setIsSubbed(false);
