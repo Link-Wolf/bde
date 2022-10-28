@@ -137,10 +137,11 @@ const Description = props => {
 			<p>{product.desc}</p>
 			<div className={style.form}>
 				{product.stock ===
-					product.s + product.m + product.l + product.xl && (
+					product.s + product.m + product.l + product.xl &&
+				product.stock !== 0 ? (
 					<div>
 						{" "}
-						<label>Taille :</label>
+						<label>Taille</label>
 						<select
 							value={size}
 							onChange={e => {
@@ -153,9 +154,11 @@ const Description = props => {
 							<option value="xl">XL</option>
 						</select>
 					</div>
+				) : (
+					<div></div>
 				)}
 				<div>
-					<label>Couleur :</label>
+					<label>Coloris</label>
 					<input
 						type="radio"
 						name="color"
@@ -171,8 +174,21 @@ const Description = props => {
 			</div>
 			<dl>
 				<div>
-					<dt>Stock pour ce choix :</dt>
-					<dd>{product[size]}</dd>
+					{product.stock ? (
+						<>
+							<dt>Stock pour ce choix</dt>
+							<dd id={style.rest}>
+								{product[size]}{" "}
+								{product[size] > 1
+									? "pièces restantes"
+									: "pièce restante"}
+							</dd>
+						</>
+					) : (
+						<div>
+							<dt id={style.rupture}>Rupture de stock</dt>
+						</div>
+					)}
 				</div>
 				<div id={style.price}>
 					<dd>{product.cost.toFixed(2)}€</dd>
