@@ -150,6 +150,10 @@ const Description = props => {
 		<div className={style.description}>
 			<h1 id={style.deskH1}>{props.product.name}</h1>
 			<p>{props.product.desc}</p>
+			<p>
+				Ce produit ne peut être acheté que physiquement sur place auprès
+				d'un membre du BDE.
+			</p>
 			<div className={style.form}>
 				{props.product.stock ===
 					props.product.s +
