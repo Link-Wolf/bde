@@ -4,10 +4,10 @@
 	}
 	display: flex;
 	justify-content: space-between;
-	padding: 1vh 5vw;
+	padding: 10px 50px;
 	background-color: #151E23;
 	color: #D2D8DA;
-	height: 8vh;
+	height: 80px;
 	font-family: Futura;
 
 	a {
@@ -18,9 +18,9 @@
 	h1 {
 		text-transform: uppercase;
 		color: #B0BABF;
-		font-size: 2vh;
+		font-size: 20px;
 		margin: 0 0 0 20px;
-		padding: 1.7vh 0.5vw;
+		padding: 17px 5px;
 	}
 
 	h1:hover {
@@ -45,9 +45,9 @@
 
 		img,
 		svg {
-			height: 4vh;
-			width: 4vh;
-			margin: 1vh 0.5vw;
+			height: 40px;
+			width: 40px;
+			margin: 10px 5px;
 			padding: 0;
 		}
 
@@ -61,7 +61,7 @@
 			img#logout {
 				height: 40px;
 				width: 40px;
-				margin: 1vh 0.5vw;
+				margin: 10px 5px;
 				padding: 0;
 			}
 		}
@@ -77,19 +77,19 @@
 
 	.logoContainer {
 		display: flex;
-		margin-right: 1vw;
+		margin-right: 10px;
 
 		img {
-			height: 6vh;
-			width: 6vh;
+			height: 60px;
+			width: 60px;
 		}
 
 		h1 {
 			text-transform: none;
-			font-size: 3vh;
+			font-size: 30px;
 			color: #D2D8DA;
 			margin: 0;
-			padding: 1vh 0.5vw;
+			padding: 10px 5px;
 		}
 	}
 
@@ -121,12 +121,12 @@
 
 		#x {
 			text-align: right;
-			padding: 2vh 5.5vw 0 calc(100vw - 4vh - 5.5vw - 40px);
+			padding: 20px 55px 0 calc(100vw - 40px - 55px - 40px);
 			margin-bottom: 20px;
 
 			svg {
-				height: 4vh;
-				width: 4vh;
+				height: 40px;
+				width: 40px;
 			}
 		}
 	}
