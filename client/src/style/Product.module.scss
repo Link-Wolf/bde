@@ -96,7 +96,7 @@
 					display: none;
 
 					& + label {
-						margin: 0;
+						margin: 0 0  0 8px;
 						width: 30px;
 						height: 30px;
 						padding: 2px;
@@ -108,7 +108,6 @@
 					}
 
 					&:checked + label {
-						margin: 0;
 						border: solid var(--primary) 2px;
 						border-spacing: 2px;
 					}
