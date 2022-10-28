@@ -1,5 +1,5 @@
 import {useState, React} from "react";
-import style from "../../style/NoPage.module.css";
+import style from "../../style/NoPage.module.scss";
 
 const NoPage = () => {
 	const [mouseX, setMouseX] = useState(0);
@@ -16,10 +16,8 @@ const NoPage = () => {
 				<div className={style.text}>
 					<h1>404</h1>
 					<h2>Page not found</h2>
-					<h3>
-						La Frégate ne sait pas s'aventurer par là... tu es sur
-						de ton chemin ?
-					</h3>
+					<h3>La Frégate s'est perdue...</h3>
+					<h3>tu es sur de ton chemin ?</h3>
 				</div>
 				<div
 					className={style.torch}
