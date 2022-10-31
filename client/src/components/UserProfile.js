@@ -45,10 +45,14 @@ const UserProfile = props => {
 		<div className={style.profileContainer}>
 			<div className={style.profileInfoContainer}>
 				<ProfilePicture stud={stud} />
-				<Identity stud={stud} blackHole={blackHole} />
+				<Identity
+					stud={stud}
+					blackHole={blackHole}
+					me={props.me}
+					login={props.login}
+				/>
 				<QR login={props.login} />
 			</div>
-			{props.me && <ChangeEmailField login={props.login} />}
 			<HistorySelector
 				fields={[
 					{
@@ -58,7 +62,7 @@ const UserProfile = props => {
 								setBlackHole={setBlackHole}
 							/>
 						),
-						title: "Contributions" // TODO: text here
+						title: "Cotisations" // TODO: text here
 					},
 					{
 						content: <SubscribedEvents login={props.login} />,
@@ -304,6 +308,7 @@ const Identity = props => {
 					)}
 				</li>
 			</ul>
+			{props.me && <ChangeEmailField login={props.login} />}
 		</div>
 	);
 };
@@ -412,7 +417,7 @@ const ChangeEmailField = props => {
 
 	return (
 		<div className={style.emailFieldContainer}>
-			Mon email :
+			<label>Email :</label>
 			<input
 				type="email"
 				name="trueMail"
