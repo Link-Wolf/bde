@@ -12,6 +12,12 @@ import aguemazi from "../../assets/images/aguemazi.webp";
 import mcacoilo from "../../assets/images/mcacoilo.webp";
 import Link from "../../assets/images/Link.webp";
 import iCARUS from "../../assets/images/iCARUS.webp";
+import mwinter from "../../assets/images/mwinter-.webp";
+import tbrissia from "../../assets/images/tbrissia.webp";
+import mfusil from "../../assets/images/mfusil.webp";
+import tvanbael from "../../assets/images/tvanbael.webp";
+import jdutschk from "../../assets/images/jdutschk.webp";
+import jrasser from "../../assets/images/jrasser.webp";
 
 const Home = () => {
 	const [session, setSession] = useState(0);
@@ -370,7 +376,11 @@ const ProductList = param => {
 const EquipePicture = props => {
 	return (
 		<>
-			<a href={`https://profile.intra.42.fr/users/${props.login}`}>
+			<a
+				href={`https://profile.intra.42.fr/users/${props.login}`}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
 				<img src={props.img} height={100} width="auto" />
 			</a>
 		</>
@@ -391,15 +401,15 @@ const Presentation = () => {
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="tvanbael" />
-						<EquipePicture login="jrasser" />
+						<EquipePicture login="tvanbael" img={tvanbael} />
+						<EquipePicture login="jrasser" img={jrasser} />
 					</div>
 					<h3>Vice Capitaines</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
 						<EquipePicture login="Link" img={Link} />
-						<EquipePicture login="tbrissia" />
+						<EquipePicture login="tbrissia" img={tbrissia} />
 					</div>
 					<h3>Trésoriers</h3>
 				</div>
@@ -412,14 +422,14 @@ const Presentation = () => {
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="mwinter-" />
-						<EquipePicture login="mfusil" />
+						<EquipePicture login="mwinter-" img={mwinter} />
+						<EquipePicture login="mfusil" img={mfusil} />
 					</div>
 					<h3>Responsables communication</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="jdutschk" />
+						<EquipePicture login="jdutschk" img={jdutschk} />
 					</div>
 					<h3>Responsable partenariats</h3>
 				</div>
