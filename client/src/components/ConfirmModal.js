@@ -18,10 +18,9 @@ const ConfirmModal = () => {
 	return (
 		isOpen && (
 			<div className={style.popUpContainer}>
-				<div></div>
 				<div className={style.popUp}>
-					<h1>Confirm</h1>
 					<p>{prompt}</p>
+					<hr />
 					<div className={style.buttons}>
 						<button id={style.confirm} onClick={proceed}>
 							Ok
@@ -29,7 +28,6 @@ const ConfirmModal = () => {
 						<button onClick={cancel}>Cancel</button>
 					</div>
 				</div>
-				<div></div>
 			</div>
 		)
 	);
