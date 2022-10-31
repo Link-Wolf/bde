@@ -59,17 +59,18 @@ export class AuthService {
 								isDirection: false,
 								clearance: clear,
 								email: response.data.email,
-								img_medium: response.data.image.versions.medium,
+								img_medium: response.data.image.versions.large,
 								img_small: response.data.image.versions.small,
 								true_email: null
 							}
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");
+
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,
 								lastname: retStud.lastname,
-								image_url: response.data.image.link,
+								image_url: response.data.image.versions.small,
 								clearance: retStud.clearance,
 								mail: response.data.email
 							}
