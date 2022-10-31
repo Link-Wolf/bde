@@ -51,8 +51,10 @@ const Event = param => {
 				}
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}.`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 				window.location = "/events";
 			});
@@ -113,9 +115,10 @@ const Thumbnail = param => {
 				setThumnail(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param.id]);
@@ -288,8 +291,10 @@ const SubscribeButton = param => {
 			})
 			.then(param.setIsSubbed(true))
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -327,8 +332,10 @@ const SubscribeButton = param => {
 				param.setIsSubbed(false);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -351,8 +358,10 @@ const SubscribeButton = param => {
 				param.setIsPremium(data.isPremium);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -382,8 +391,10 @@ const SubscribeButton = param => {
 				param.setIsSubbed(data.isSubbed);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param]);

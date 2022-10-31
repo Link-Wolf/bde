@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {NotificationManager} from "react-notifications";
 import style from "../style/EventToken.module.scss";
 import conso from "../assets/logos/consos.svg";
 import sponso from "../assets/logos/sponso.svg";
@@ -31,9 +32,10 @@ const EventToken = param => {
 				setImgSrc(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

@@ -106,15 +106,18 @@ const AdminCreateClubToken = param => {
 						);
 					})
 					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
+						NotificationManager.error(
+							"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+							"Erreur",
+							5000
 						);
 					});
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};

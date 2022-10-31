@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import burger from "../assets/logos/burger.png";
 
@@ -59,9 +60,10 @@ function Header() {
 				}
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import {Placeholder} from "react-bootstrap";
 import ShopToken from "./ShopToken";
+import {NotificationManager} from "react-notifications";
 
 import style from "../style/ProductList.module.css";
 import grey from "../assets/placeholders/grey.png";
@@ -55,9 +56,10 @@ const ProductList = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

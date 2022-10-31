@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
 import EventListPublic from "../../components/EventListPublic";
+import {NotificationManager} from "react-notifications";
 import CheckSet from "../../components/CheckSet";
 import {LoadingSmall, LoadingMicro} from "../../components/Loading";
 
@@ -227,9 +228,10 @@ const ProductList = param => {
 				setThumbnailCap(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -255,9 +257,10 @@ const ProductList = param => {
 				setThumbnailHoodies(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -283,9 +286,10 @@ const ProductList = param => {
 				setThumbnailTshirt(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -306,9 +310,10 @@ const ProductList = param => {
 				setProducts(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -442,23 +447,3 @@ const Presentation = () => {
 };
 
 export default Home;
-
-// const getStock = () => {
-// 	fetch(`${process.env.REACT_APP_API_URL}/google`, {
-// 		credentials: "include"
-// 	})
-// 		.then(response => {
-// 			if (!response.ok) {
-// 				throw new Error(
-// 					`This is an HTTP error: The status is` +
-// 						` ${response.status}`
-// 				);
-// 			}
-// 		})
-// 		.catch(function(error) {
-// 			console.log(
-// 				"Il y a eu un problème avec l'opération fetch: " +
-// 					error.message
-// 			);
-// 		});
-// };

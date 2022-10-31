@@ -1,4 +1,5 @@
 import {Navigate} from "react-router-dom";
+import {NotificationManager} from "react-notifications";
 import {useEffect, useState} from "react";
 
 const Logout = () => {
@@ -15,12 +16,9 @@ const Logout = () => {
 					loop = false;
 				};
 				while (loop) {
-					await fetch(
-						`${process.env.REACT_APP_API_URL}/session`,
-						{
-							credentials: "include"
-						}
-					)
+					await fetch(`${process.env.REACT_APP_API_URL}/session`, {
+						credentials: "include"
+					})
 						.then(response => {
 							if (!response.ok) {
 								throw new Error(
@@ -40,9 +38,10 @@ const Logout = () => {
 				setRet(<Navigate to="/home" replace={true} />);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

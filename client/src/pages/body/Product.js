@@ -1,4 +1,5 @@
 import {useState, useEffect, React} from "react";
+import {NotificationManager} from "react-notifications";
 
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
@@ -88,8 +89,10 @@ const Album = props => {
 				});
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props.id]);
@@ -141,13 +144,13 @@ const Description = props => {
 				if (d.stock !== d.s + d.m + d.l + d.xl) setSize("stock");
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props.id]);
-
-	console.log(props.session);
 
 	return (
 		<div className={style.description}>

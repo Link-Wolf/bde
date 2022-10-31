@@ -127,10 +127,10 @@ const PurchaseButtons = props => {
 			}}
 			onError={err => {
 				NotificationManager.error(
-					"Une erreur s'est produite.",
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 					"Erreur",
 					5000
-				); //TODO: text here
+				);
 			}}
 			onCancel={() => {
 				window.location = "/home";
@@ -319,13 +319,13 @@ const Purchase = props => {
 				});
 				setContributionStatus(tmp);
 				if (
-					((props.event === undefined && tmp) || !props.event.for_pool &&
+					(props.event === undefined && tmp) ||
+					(!props.event.for_pool &&
 						session.clearance < global.config.clearance.stud) ||
 					props.event.cost <= 0 ||
 					(props.event.premium_cost <= 0 && tmp) ||
-					session.clearance <
-						global.config.clearance
-							.pool || isSubbed
+					session.clearance < global.config.clearance.pool ||
+					isSubbed
 				)
 					window.location = "/home";
 			})
@@ -338,13 +338,10 @@ const Purchase = props => {
 	}, [session, isSubbed]);
 
 	useEffect(() => {
-		if (
-			props.event === undefined
-		)
-			{
-				setIsSubbed(false);
-				return;
-			}
+		if (props.event === undefined) {
+			setIsSubbed(false);
+			return;
+		}
 		fetch(
 			`${process.env.REACT_APP_API_URL}/inscription/${props.event.id}/isSubbed`,
 			{
@@ -427,14 +424,16 @@ const Purchase = props => {
 						validated={validated}
 						needMail={needMail}
 					/>
-					<button id={style.undo}
+					<button
+						id={style.undo}
 						onClick={() => {
 							window.history.back();
 						}}
 					>
 						Annuler
 					</button>
-					<button id={style.validate}
+					<button
+						id={style.validate}
 						disabled={validated}
 						onClick={() => {
 							if (
@@ -458,7 +457,6 @@ const Purchase = props => {
 					>
 						Valider
 					</button>
-
 
 					{validated && (
 						<div hidden={!validated} className={style.paypal}>
