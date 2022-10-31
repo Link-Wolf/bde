@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
 import Loading from "../../components/Loading";
 import style from "../../style/Contact.module.scss";
+
 const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
 	const [formState, setFormState] = useState({
@@ -99,9 +100,10 @@ const Contact = () => {
 							setNeedMail(false);
 						})
 						.catch(function(error) {
-							console.log(
-								"Il y a eu un problème avec l'opération fetch: " +
-									error.message
+							NotificationManager.error(
+								"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+								"Erreur",
+								5000
 							);
 						});
 			})
@@ -116,9 +118,10 @@ const Contact = () => {
 				);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 		setLock(false);
@@ -147,9 +150,10 @@ const Contact = () => {
 				else checkTrueMail(tmp.login);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -178,9 +182,10 @@ const Contact = () => {
 				setFormState(tmp);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [formState.login]);
@@ -208,9 +213,10 @@ const Contact = () => {
 				setFormState(tmp);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};

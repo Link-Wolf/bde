@@ -2,6 +2,7 @@ import {useState, useEffect, React} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import {Button} from "react-bootstrap";
 import AdminContribToken from "../../components/AdminContribToken";
+import {NotificationManager} from "react-notifications";
 
 import AdminCreateContributionToken from "../../components/AdminCreateContributionToken";
 
@@ -20,10 +21,7 @@ const AdminContributions = () => {
 				"Content-Type": "application/json"
 			}
 		};
-		fetch(
-			`${process.env.REACT_APP_API_URL}/contribution`,
-			requestOptions
-		)
+		fetch(`${process.env.REACT_APP_API_URL}/contribution`, requestOptions)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -36,8 +34,10 @@ const AdminContributions = () => {
 				setData(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [update]);
