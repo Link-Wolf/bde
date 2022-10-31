@@ -381,7 +381,7 @@ const AdminNavbar = () => {
 					</a>
 				)}
 				{session.clearance >= 42 && (
-					<div>
+					<div id={style.buttonContainer}>
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init DB
 						</button>
