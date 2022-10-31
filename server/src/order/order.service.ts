@@ -11,6 +11,8 @@ import { InscriptionService } from '../inscription/inscription.service';
 
 @Injectable()
 export class OrderService {
+
+
 	_aes: any;
 	constructor(
 		@InjectRepository(Order)
@@ -137,5 +139,22 @@ export class OrderService {
 				login);
 			throw err
 		}
+	}
+
+	async 	editIsMailed(id: string, isMailed: boolean, login: any) {
+		try {
+			const order = await this.orderRepository.findOneBy({ id: id })
+			if (!order)
+				throw new NotFoundException
+					(`Failed -> editIsMailed order ${id} : order ${id} doesn't exist`);
+			order.isMailed = isMailed
+			let ret = await this.orderRepository.update(id, order);
+			this.logger.log(`editIsMailed on order ${id}`, login)
+			return ret
+		} catch (err) {
+			this.logger.error(
+				`Failed -> editIsMailed order ${id} on database (${err})`,
+				login); throw err
+		};
 	}
 }
