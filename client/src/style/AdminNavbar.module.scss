@@ -15,6 +15,7 @@
 				min-width: 1vw;
 				min-height: 1vw;
 			}
+			display: none;
 			text-align: right;
 			margin: 0 0.5vw;
 		}
@@ -48,6 +49,7 @@
 		text-decoration: none;
 		display: inline-block;
 		border-radius: 15px;
+		width: 100px;
 
 		&:hover {
 			transition: 0.5s;
@@ -77,9 +79,54 @@
 		transition: 0.5s;
 		background: var(--black);
 		color: var(--white);
-		position: absolute;
-		height: 80vh;
-		left: -800px;
-		width: 800px;
+		// position: absolute;
+		height: calc(100vh - 80px);
+		// left: -800px;
+		// width: 800px;
+	}
+}
+@media (max-width: 100vh) {
+	.adminNavbarContainer {
+		text-align: left;
+
+		a {
+			text-align: center;
+
+			&#expendButton {
+				svg {}
+				display: inline;
+			}
+		}
+
+		h2 {}
+
+		h3 {
+			&:hover {}
+		}
+
+		button {
+			margin: auto;
+
+			&:hover {}
+
+			&#bigRedButton {
+				&:hover {}
+			}
+
+			&#bigYellowButton {
+				&:hover {}
+			}
+		}
+
+		#panel {
+			position: absolute;
+			z-index: 99;
+			left: -100vw;
+			width: 100vw;
+		}
+
+		#buttonContainer {
+			text-align: center;
+		}
 	}
 }
