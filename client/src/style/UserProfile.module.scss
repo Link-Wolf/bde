@@ -7,16 +7,19 @@
 		width: calc(var(--image-size) * 2 + 40px + 250px + 120px);
 
 		.profilePictureContainer {
+			margin-left: 300px;
 			position: relative;
-			height: calc(var(--image-size) + 40px);
-			width: calc(var(--image-size) + 40px);
+			height: calc(var(--image-size));
+			width: calc(var(--image-size));
+			padding-left: 300px;
 
 			img {
-				margin: 20px;
+				margin: 0;
 				position: absolute;
 				width: var(--image-size);
 				height: var(--image-size);
-				padding: 5px;
+				left: 0;
+				padding: 0;
 				object-fit: cover;
 
 				&.premium {
@@ -35,22 +38,27 @@
 		}
 
 		.identityContainer {
-			width: 250px;
-			text-align: center;
+			text-align: left;
 			margin: 0 40px;
+			padding: 20px 0;
 
 			h1 {
+				font-size: 30px;
 				text-transform: uppercase;
 				font-weight: bold;
 			}
 
 			ul {
 				padding: 0;
-				margin: 0;
+				margin: 0 0 50px;
 				list-style-type: none;
 
 				li {
-					margin: 20px 0;
+					margin: 0 0 25px;
+
+					&:nth-of-type(1) {
+						font-size: 20px;
+					}
 
 					b {}
 
@@ -103,7 +111,14 @@
 	}
 
 	.emailFieldContainer {
-		margin: 20px 40px;
+		margin: 0;
+		display: flex;
+
+		label {
+			padding: 5px;
+			margin: 5px 0;
+			width: 60px;
+		}
 
 		input {
 			padding: 5px;
@@ -125,14 +140,18 @@
 	}
 
 	.historySelectorContainer {
+		display: flex;
+		margin: 50px 0 50px 300px;
+
 		.historySelector {
 			ul {
 				padding: 0;
-				width: 600px;
-				margin: 0;
+				width: 300px;
 
 				li {
-					display: inline;
+					width: 300px;
+					// display: inline;
+					list-style-type: none;
 
 					input[type="radio"] {
 						opacity: 0;
@@ -140,12 +159,16 @@
 						width: 0;
 
 						& + label {
-							text-align: center;
-							width: 190px;
+							text-align: left;
+							text-transform: uppercase;
+							font-size: 18px;
+							font-weight: bold;
+							// font-stretch: condensed;
+							border-bottom: solid var(--dark-grey) 1px;
+							width: 300px;
 							background: var(--white);
 							padding: 5px;
-							margin: 5px;
-							border: none;
+							margin: 0;
 
 							&:hover {
 								cursor: pointer;
@@ -154,7 +177,15 @@
 
 						&:checked {
 							& + label {
-								border-bottom: solid var(--primary) 2px;
+								background: var(--lighter-grey);
+							}
+						}
+					}
+
+					&:nth-last-of-type(1) {
+						input {
+							& + label {
+								border: none;
 							}
 						}
 					}
@@ -163,8 +194,8 @@
 		}
 
 		.historyContent {
-			width: 600px;
-			margin: 0;
+			// width: 600px;
+			margin: 0 0 0 40px;
 			padding: 0;
 
 			.listContainer {
@@ -197,6 +228,8 @@
 				}
 
 				&#contrib {
+					width: 380px;
+
 					h3 {}
 
 					ul {
@@ -213,7 +246,7 @@
 				}
 
 				&#event {
-					width: 600px;
+					width: 380px;
 
 					h3 {}
 
@@ -221,8 +254,7 @@
 						&#eventList {
 							height: 900px;
 						}
-						width: 600px;
-
+						// width: 600px;
 						li {
 							a {
 								height: 175px;
@@ -238,278 +270,14 @@
 				}
 
 				&#order {
+					width: 380px;
+					text-align: center;
+
 					h3 {}
 
 					ul {
 						li {
 							a {}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-@media (max-width: 100vh) {
-	.profileContainer {
-		.profileInfoContainer {
-			.profilePictureContainer {
-				img {
-					&.premium {}
-				}
-
-				svg {}
-			}
-
-			.identityContainer {
-				h1 {}
-
-				ul {
-					li {
-						b {}
-
-						img {}
-					}
-				}
-			}
-
-			.qrContainer {
-				a {
-					svg {}
-				}
-			}
-		}
-
-		.emailFieldContainer {
-			input {}
-
-			button {}
-		}
-
-		.historySelectorContainer {
-			.historySelector {
-				ul {
-					li {
-						a {}
-					}
-				}
-			}
-
-			.historyContent {
-				div {
-					h3 {}
-
-					ul {
-						li {}
-					}
-
-					&.contrib {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.event {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.order {
-						h3 {}
-
-						ul {
-							li {
-								a {}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-@media (max-width: 100vh) {
-	.profileContainer {
-		.profileInfoContainer {
-			.profilePictureContainer {
-				img {
-					&.premium {}
-				}
-
-				svg {}
-			}
-
-			.identityContainer {
-				h1 {}
-
-				ul {
-					li {
-						b {}
-
-						svg {}
-					}
-				}
-			}
-
-			.qrContainer {
-				display: inline-block;
-
-				button {
-					&:hover {}
-				}
-
-				.blurryBg {
-					.qrPopup {
-						svg {}
-					}
-				}
-			}
-		}
-
-		.emailFieldContainer {
-			input {}
-
-			button {
-				&:hover {}
-			}
-		}
-
-		.historySelectorContainer {
-			.historySelector {
-				ul {
-					li {
-						input[type="radio"] {
-							& + label {
-								&:hover {}
-							}
-
-							&:checked {
-								& + label {}
-							}
-						}
-					}
-				}
-			}
-
-			.historyContent {
-				div {
-					h3 {}
-
-					ul {
-						li {}
-					}
-
-					&.contrib {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.event {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.order {
-						h3 {}
-
-						ul {
-							li {
-								a {}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	@media (max-width: 100vh) {
-		.profileContainer {
-			.profileInfoContainer {
-				.profilePictureContainer {
-					img {
-						&.premium {}
-					}
-
-					svg {}
-				}
-
-				.identityContainer {
-					h1 {}
-
-					ul {
-						li {
-							b {}
-
-							img {}
-						}
-					}
-				}
-
-				.qrContainer {
-					a {
-						svg {}
-					}
-				}
-			}
-
-			.emailFieldContainer {
-				input {}
-
-				button {}
-			}
-
-			.historySelectorContainer {
-				.historySelector {
-					ul {
-						li {
-							a {}
-						}
-					}
-				}
-
-				.historyContent {
-					div {
-						h3 {}
-
-						ul {
-							li {}
-						}
-
-						&.contrib {
-							h3 {}
-
-							ul {
-								li {}
-							}
-						}
-
-						&.event {
-							h3 {}
-
-							ul {
-								li {}
-							}
-						}
-
-						&.order {
-							h3 {}
-
-							ul {
-								li {
-									a {}
-								}
-							}
 						}
 					}
 				}
