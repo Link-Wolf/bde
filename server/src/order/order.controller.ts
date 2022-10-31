@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Session, Body, Param, Get } from '@nestjs/common';
+import { Controller, UseGuards, Post, Session, Body, Param, Get, Patch, ParseBoolPipe } from '@nestjs/common';
 import { ClearanceGuard } from '../auth/clearance.guard';
 import { OrderDto } from "./order.dto"
 import { OrderService } from './order.service';
@@ -38,5 +38,14 @@ export class OrderController {
 		@Body() order: { id: string }
 	) {
 		return this.orderService.captureOrder(order, session.login);
+	}
+
+	@Patch(':id')
+	updateOrder(
+		@Session() session: Record<string, any>,
+		@Body('isMailed', new ParseBoolPipe()) isMailed: boolean,
+		@Param('id') id: string
+	) {
+		return this.orderService.editIsMailed(id, isMailed, session.login)
 	}
 }
