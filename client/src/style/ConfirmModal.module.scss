@@ -14,33 +14,38 @@
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	padding: 50px;
-	display: flex;
+	padding: 50px calc((100vw - 700px) / 2);
+	// display: flex;
 	flex-direction: row;
 	justify-content: center;
+	// text-align: center;
 	z-index: 99;
-	animation: 0.2s linear 0s popDown;
+	animation: 0.15s linear 0s popDown;
 
 	.popUp {
+		width: 700px;
 		background: var(--white);
 		border: solid var(--primary) 2px;
-		padding: 20px;
-		height: 200px;
-
+		padding: 30px 80px;
+		// height: 195px;
 		h1 {}
 
-		p {}
+		p {
+			font-size: 20px;
+		}
 
 		.buttons {
 			display: flex;
 			justify-content: space-around;
 
 			button {
+				margin: 5px 0;
 				border: none;
 				color: var(--white);
 				background: var(--secondary);
-				width: 60px;
-				height: 30px;
+				width: 80px;
+				height: 40px;
+				font-size: 20px;
 
 				&:hover {
 					background: var(--secondary-dark);
