@@ -74,6 +74,9 @@ const Receipt = () => {
 			.then(json => {
 				setSession(json);
 				setLoadSession(false);
+			})
+			.catch(err => {
+				console.log("error while fetching:", err);
 			});
 	}, []);
 
@@ -98,6 +101,9 @@ const Receipt = () => {
 				if (json.type !== -1) setType("event");
 				else setType("contrib");
 				setOrder(json);
+			})
+			.catch(err => {
+				console.log("error while fetching:", err);
 			});
 	}, [param, session]);
 
@@ -118,6 +124,9 @@ const Receipt = () => {
 			.then(json => {
 				setDataEvent(json);
 				setLoadOrder(false);
+			})
+			.catch(err => {
+				console.log("error while fetching:", err);
 			});
 	}, [order]);
 
@@ -146,6 +155,9 @@ const Receipt = () => {
 						headers: {"Content-Type": "application/json"}
 					}
 				);
+			})
+			.catch(err => {
+				console.log("error while fetching:", err);
 			});
 	}, [session, order]);
 
