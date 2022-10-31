@@ -170,14 +170,14 @@
 				display: flex;
 
 				img {
-					transition: 0.2s;
+					transition: 0.2s ease-out;
 					padding: var(--padding);
 					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					object-fit: cover;
 
 					&:hover {
-						transition: 0.2s;
+						transition: 0.2s ease-out;
 						padding: 0;
 					}
 				}
