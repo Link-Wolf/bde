@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
+import {NotificationManager} from "react-notifications";
 import {Print} from "../../components/Invoice";
 import emailjs from "@emailjs/browser";
 
@@ -28,9 +29,10 @@ const Receipt = () => {
 				process.env.REACT_APP_EMAILJS_PUBLICKEY
 			)
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -76,7 +78,11 @@ const Receipt = () => {
 				setLoadSession(false);
 			})
 			.catch(err => {
-				console.log("error while fetching:", err);
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, []);
 
@@ -103,7 +109,11 @@ const Receipt = () => {
 				setOrder(json);
 			})
 			.catch(err => {
-				console.log("error while fetching:", err);
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, [param, session]);
 
@@ -126,7 +136,11 @@ const Receipt = () => {
 				setLoadOrder(false);
 			})
 			.catch(err => {
-				console.log("error while fetching:", err);
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, [order]);
 
@@ -157,7 +171,11 @@ const Receipt = () => {
 				);
 			})
 			.catch(err => {
-				console.log("error while fetching:", err);
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, [session, order]);
 
