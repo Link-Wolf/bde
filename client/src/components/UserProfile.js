@@ -707,7 +707,13 @@ const OrderHistory = props => {
 			<ul>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
-						<button href={`/receipt/${data.id}`}>{data.id}</button>
+						<button
+							onClick={() => {
+								window.location = `/receipt/${data.id}`;
+							}}
+						>
+							{data.id}
+						</button>
 					</li>
 				))}
 			</ul>
