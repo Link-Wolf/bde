@@ -534,7 +534,7 @@ const AddressForm = props => {
 					<div>
 						<input
 							id="address"
-							placeholder="30 Rue François Spoerry"
+							placeholder="42 avenue Segfault"
 							name="address_line_1"
 							value={props.state.address_line_1}
 							onChange={handleChange}
@@ -545,7 +545,7 @@ const AddressForm = props => {
 					<div>
 						<input
 							id="address2"
-							placeholder="Bocal"
+							placeholder="appartement, ..."
 							name="address_line_2"
 							value={props.state.address_line_2}
 							onChange={handleChange}
@@ -557,7 +557,7 @@ const AddressForm = props => {
 					<div>
 						<input
 							id="city"
-							placeholder="Mulhouse"
+							placeholder="Moulinette-City"
 							name="city"
 							value={props.state.city}
 							onChange={handleChange}
@@ -568,7 +568,7 @@ const AddressForm = props => {
 					<div>
 						<input
 							id="postal"
-							placeholder="68100"
+							placeholder="42069"
 							name="postal_code"
 							value={props.state.postal_code}
 							onChange={handleChange}
