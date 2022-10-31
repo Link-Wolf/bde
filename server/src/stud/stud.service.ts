@@ -169,7 +169,7 @@ export class StudService {
 			let stud = await this.studRepository.findOneBy({ login: login });
 			if (!stud) {
 				this.logger.warn(`Failed -> Find student with login ${login} : student does not exist`, requestMaker)
-				return {}
+				return stud
 			}
 			else
 				this.logger.log(`Got student with login ${login}`, requestMaker);
