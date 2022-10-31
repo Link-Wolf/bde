@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import useConfirm from "./useConfirm";
+import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminNavbar.module.scss";
 import burger from "../assets/logos/burger.png";
@@ -263,9 +264,10 @@ const AdminNavbar = () => {
 				setSession(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

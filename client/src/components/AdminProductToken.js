@@ -1,9 +1,8 @@
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState} from "react";
 import {Accordion, Form} from "react-bootstrap";
-import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminProductToken.module.scss";
 
@@ -77,9 +76,10 @@ const AdminProductToken = param => {
 				setUpdate(true);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -110,9 +110,10 @@ const AdminProductToken = param => {
 				setUpdate(true);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -158,9 +159,10 @@ const AdminProductToken = param => {
 					}
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 			await changeThumbnail();
@@ -201,9 +203,10 @@ const AdminProductToken = param => {
 				setThumbnail([blob]);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [update, param]);
@@ -230,9 +233,10 @@ const AdminProductToken = param => {
 					}
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 			param.setUpdate(true);

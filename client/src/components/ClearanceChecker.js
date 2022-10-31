@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {NotificationManager} from "react-notifications";
 
 const ClearanceChecker = data => {
 	const [clearance, setClearance] = useState(-42);
@@ -21,9 +22,10 @@ const ClearanceChecker = data => {
 					if (data.clearance !== -42) setClearance(data.clearance);
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 		else
@@ -42,9 +44,10 @@ const ClearanceChecker = data => {
 					if (data.clearance !== -42) setClearance(data.clearance);
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 	}, []);
