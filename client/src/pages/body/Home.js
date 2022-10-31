@@ -52,6 +52,9 @@ const Home = () => {
 			});
 	}, []);
 
+	console.log(session);
+	console.log(session.clearance);
+
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
