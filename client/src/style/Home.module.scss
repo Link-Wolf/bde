@@ -170,10 +170,16 @@
 				display: flex;
 
 				img {
+					transition: 0.2s;
 					padding: var(--padding);
 					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					object-fit: cover;
+
+					&:hover {
+						transition: 0.2s;
+						padding: 0;
+					}
 				}
 
 				.miniThumbnailsContainer {
