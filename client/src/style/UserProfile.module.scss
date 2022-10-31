@@ -275,9 +275,32 @@
 
 					h3 {}
 
-					ul {
+					ul#MALISTE {
 						li {
-							a {}
+							button {
+								padding: 5px;
+								border: none;
+								width: 300px;
+								margin: 5px;
+
+								&.evenement {
+									background: var(--primary-light);
+									color: var(--white);
+
+									&:hover {
+										background: var(--primary);
+									}
+								}
+
+								&.cotisation {
+									background: var(--secondary-light);
+									color: var(--white);
+
+									&:hover {
+										background: var(--secondary);
+									}
+								}
+							}
 						}
 					}
 				}
