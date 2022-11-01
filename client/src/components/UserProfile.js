@@ -471,8 +471,8 @@ const ChangeEmailField = props => {
  *		login:	string, login of the stud
  */
 const ContributionHistory = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
 	const viewData = usePagination(data, PER_PAGE);
 
@@ -656,8 +656,8 @@ const SubscribedEvents = props => {
  *		login:	string, login of the stud
  */
 const OrderHistory = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
 	const viewData = usePagination(data, PER_PAGE);
 
@@ -704,15 +704,25 @@ const OrderHistory = props => {
 					/>
 				)}
 			</div>
-			<ul>
+			<ul id={style.MALISTE}>
 				{viewData.currentData().map(data => (
 					<li key={data.id}>
 						<button
+							className={
+								style[
+									data.type === -1
+										? "cotisation"
+										: "evenement"
+								]
+							}
 							onClick={() => {
 								window.location = `/receipt/${data.id}`;
 							}}
 						>
-							{data.id}
+							{data.type === -1 ? "Cotisation" : "Évènement"}{" "}
+							<span style={{"font-family": "monospace"}}>
+								{data.id}
+							</span>
 						</button>
 					</li>
 				))}
