@@ -21,7 +21,7 @@ export class PaypalService {
 			this.logger.log("Generated paypal client token", login)
 			return response.data.client_token;
 		} catch (err) {
-			this.logger.error(`Failed to generate paypal client token : ${err}`, login)
+			this.logger.warn(`Failed -> generate paypal client token (certainly not a real problem t r u s t) : ${err}`, login)
 			throw err;
 
 		}
@@ -45,7 +45,7 @@ export class PaypalService {
 			return response.data.access_token;
 		}
 		catch (err) {
-			this.logger.error(`Failed to generate paypal access token : ${err}`, login)
+			this.logger.warn(`Failed -> generate paypal access token (certainly not a real problem t r u s t) : ${err}`, login)
 			throw err;
 
 		}
