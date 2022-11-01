@@ -21,7 +21,7 @@ export class LoggerService {
 			type: "error"
 		})
 		if (requestMaker == undefined)
-			this.logfile("error", `(unknown public) : ${message}`)
+			this.logfile("error", `(Public) : ${message}`)
 		else
 			this.logfile("error", `(${requestMaker}) : ${message}`)
 	}
@@ -37,7 +37,7 @@ export class LoggerService {
 		}
 		await this.logRepertory.save(t)
 		if (requestMaker == undefined)
-			this.logfile("warning", `(unknown public) : ${message}`)
+			this.logfile("warning", `(Public) : ${message}`)
 		else
 			this.logfile("warning", `(${requestMaker}) : ${message}`)
 	}
@@ -45,7 +45,7 @@ export class LoggerService {
 	async log(message: string, requestMaker: string, isAdmin = false) {
 		Logger.log(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
-			this.logfile("log", `(unknown public) : ${message}`)
+			this.logfile("log", `(Public) : ${message}`)
 		else
 			this.logfile("log", `(${requestMaker}) : ${message}`)
 	}
@@ -53,7 +53,7 @@ export class LoggerService {
 	async verbose(message: string, requestMaker: string) {
 		Logger.verbose(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
-			this.logfile("verbose", `(unknown public) : ${message}`)
+			this.logfile("verbose", `(Public) : ${message}`)
 		else
 			this.logfile("verbose", `(${requestMaker}) : ${message}`)
 	}
