@@ -4,9 +4,9 @@
 	}
 	display: flex;
 	justify-content: space-between;
-	padding: 10px 50px;
-	background-color: #151E23;
-	color: #D2D8DA;
+	padding: 10px;
+	background-color: var(--black);
+	color: var(--white);
 	height: 80px;
 	font-family: Futura;
 
@@ -133,6 +133,8 @@
 }
 @media screen and (min-width: 100vh) {
 	.container {
+		padding: 10px 50px;
+
 		.buttonContainer {
 			display: flex;
 		}
