@@ -474,7 +474,7 @@ const ContributionHistory = props => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
+	const viewData = usePagination(data, 3);
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
@@ -509,7 +509,7 @@ const ContributionHistory = props => {
 						);
 					}
 				});
-				setCount(Math.ceil(data.length / PER_PAGE));
+				setCount(Math.ceil(data.length / 3));
 				viewData.updateData(data);
 			})
 			.catch(function(error) {
@@ -525,7 +525,7 @@ const ContributionHistory = props => {
 		<div className={style.listContainer} id={style.contrib}>
 			<h3> Cotisations</h3>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
@@ -566,7 +566,7 @@ const ContributionHistory = props => {
 				))}
 			</ul>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
