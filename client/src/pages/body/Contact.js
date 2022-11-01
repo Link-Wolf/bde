@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import {Form, Button} from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
-import Loading from "../../components/Loading";
+import LoadingMedium from "../../components/Loading";
 import style from "../../style/Contact.module.scss";
 
 const Contact = () => {
@@ -223,18 +223,28 @@ const Contact = () => {
 
 	if (sent)
 		return (
-			<>
-				<p>Merci pour votre retour !</p>
-				<button
-					onClick={() => {
-						setSent(false);
-					}}
-				>
-					Envoyer un nouveau message
-				</button>
-			</>
+			<div className={style.contactContainer}>
+				<form>
+					<p id={style.pouet}>Merci pour votre retour !</p>
+					<button
+						id={style.resend}
+						onClick={() => {
+							setSent(false);
+						}}
+					>
+						Envoyer un nouveau message
+					</button>
+				</form>
+			</div>
 		);
-	if (loading) return <Loading />;
+	if (loading)
+		return (
+			<div className={style.contactContainer}>
+				<div id={style.loading}>
+					<LoadingMedium />
+				</div>
+			</div>
+		);
 	return (
 		<div className={style.contactContainer}>
 			<form>
