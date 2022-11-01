@@ -7,7 +7,7 @@
 	padding: 10px 50px;
 	background-color: #151E23;
 	color: #D2D8DA;
-	height: 120px;
+	height: 80px;
 	font-family: Futura;
 
 	a {
@@ -18,9 +18,9 @@
 	h1 {
 		text-transform: uppercase;
 		color: #B0BABF;
-		font-size: 30px;
-		margin: 0 0 0 30px;
-		padding: 26px 8px;
+		font-size: 20px;
+		margin: 0 0 0 20px;
+		padding: 17px 5px;
 	}
 
 	h1:hover {
@@ -45,9 +45,9 @@
 
 		img,
 		svg {
-			height: 60px;
-			width: 60px;
-			margin: 15px 8px;
+			height: 40px;
+			width: 40px;
+			margin: 10px 5px;
 			padding: 0;
 		}
 
@@ -59,9 +59,9 @@
 			}
 
 			img#logout {
-				height: 60px;
-				width: 60px;
-				margin: 15px 8px;
+				height: 40px;
+				width: 40px;
+				margin: 10px 5px;
 				padding: 0;
 			}
 		}
@@ -77,19 +77,19 @@
 
 	.logoContainer {
 		display: flex;
-		margin-right: 15px;
+		margin-right: 10px;
 
 		img {
-			height: 90px;
-			width: 90px;
+			height: 60px;
+			width: 60px;
 		}
 
 		h1 {
 			text-transform: none;
-			font-size: 45px;
+			font-size: 30px;
 			color: #D2D8DA;
 			margin: 0;
-			padding: 15px 8px;
+			padding: 10px 5px;
 		}
 	}
 
