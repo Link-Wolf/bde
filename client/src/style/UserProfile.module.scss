@@ -315,3 +315,138 @@
 		}
 	}
 }
+@media (max-width: 100vh) {
+	.profileContainer {
+		.profileInfoContainer {
+			.profilePictureContainer {
+				img {
+					&.premium {}
+				}
+
+				svg {}
+			}
+
+			.identityContainer {
+				h1 {}
+
+				ul {
+					li {
+						&:nth-of-type(1) {}
+
+						b {}
+
+						svg {}
+					}
+				}
+			}
+
+			.qrContainer {
+				button {
+					&:hover {}
+				}
+
+				.blurryBg {
+					.qrPopup {
+						svg {}
+					}
+				}
+			}
+		}
+
+		.emailFieldContainer {
+			label {}
+
+			input {}
+
+			button {
+				&:hover {}
+			}
+		}
+
+		.historySelectorContainer {
+			.historySelector {
+				ul {
+					li {
+						input[type="radio"] {
+							& + label {
+								&:hover {}
+							}
+
+							&:checked {
+								& + label {}
+							}
+						}
+
+						&:nth-last-of-type(1) {
+							input {
+								& + label {}
+							}
+						}
+					}
+				}
+			}
+
+			.historyContent {
+				.listContainer {
+					div {}
+
+					h3 {}
+
+					ul {
+						li {}
+					}
+
+					.pagination {
+						ul {}
+					}
+
+					&#contrib {
+						h3 {}
+
+						ul#malist {
+							li {
+								p {}
+							}
+						}
+					}
+
+					&#event {
+						h3 {}
+
+						ul {
+							&#eventList {
+								li {
+									hr {}
+
+									a {}
+
+									&:nth-last-of-type(1) {
+										hr {}
+									}
+								}
+							}
+						}
+					}
+
+					&#order {
+						h3 {}
+
+						ul#MALISTE {
+							li {
+								button {
+									&.evenement {
+										&:hover {}
+									}
+
+									&.cotisation {
+										&:hover {}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
