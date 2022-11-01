@@ -9,10 +9,10 @@ import load from "../../assets/animations/gear_clockwise.gif";
 
 const Product = props => {
 	const [product, setProduct] = useState({
-		name: "█ █ █ █ ",
+		name: "",
 		cost: 42,
 		available: true,
-		desc: "█ █ █ █ "
+		desc: ""
 	});
 	if (props.id === undefined) return;
 	return (
@@ -189,18 +189,24 @@ const Description = props => {
 					<div></div>
 				)}
 				<div>
-					<label>Coloris</label>
-					<input
-						type="radio"
-						name="color"
-						value="black"
-						id="colorBlack"
-						defaultChecked
-					/>
-					<label
-						htmlFor="colorBlack"
-						style={{"--my-color": "#000000"}}
-					/>
+					{props.product.stock ? (
+						<>
+							<label>Coloris</label>
+							<input
+								type="radio"
+								name="color"
+								value="black"
+								id="colorBlack"
+								defaultChecked
+							/>
+							<label
+								htmlFor="colorBlack"
+								style={{"--my-color": "#000000"}}
+							/>
+						</>
+					) : (
+						""
+					)}
 				</div>
 			</div>
 			<dl>
@@ -215,10 +221,12 @@ const Description = props => {
 									: "pièce restante"}
 							</dd>
 						</>
-					) : (
+					) : props.product.stock !== undefined ? (
 						<div>
 							<dt id={style.rupture}>Rupture de stock</dt>
 						</div>
+					) : (
+						""
 					)}
 				</div>
 				{props.session.clearance > 2 && props.session !== 0 ? (
