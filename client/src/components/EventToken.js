@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {NotificationManager} from "react-notifications";
-import style from "../style/EventToken.module.scss";
+import styleBasic from "../style/EventToken.module.scss";
+import styleUser from "../style/EventTokenUser.module.scss";
 import conso from "../assets/logos/consos.svg";
 import sponso from "../assets/logos/sponso.svg";
 import pool from "../assets/logos/pool.svg";
@@ -11,7 +12,9 @@ import dateTime from "../assets/logos/date.svg";
 
 const EventToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
-
+	let style;
+	if (param.user) style = styleUser;
+	else style = styleBasic;
 	useEffect(() => {
 		fetch(
 			`${process.env.REACT_APP_API_URL}/event/${param.event.id}/thumbnail`,
