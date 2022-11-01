@@ -8,9 +8,14 @@
 		width: 460px;
 
 		.intro {
-			p {}
+			p {
+				text-align: justify;
+				margin-top: 80px;
+			}
 
-			hr {}
+			hr {
+				margin-top: 50px;
+			}
 		}
 
 		.payment {
@@ -74,6 +79,7 @@
 				&#undo {
 					margin-left: 20px;
 					background: var(--light-grey);
+					color: var(--black);
 
 					&:hover {
 						background: var(--dark-grey);
@@ -89,31 +95,49 @@
 	}
 
 	.recap {
-		margin: 20px;
+		margin: 80px 20px 20px;
 		width: 400px;
 
 		p {
-			a {}
+			font-style: italic;
+			text-align: justify;
+			font-size: 15px;
+
+			a {
+				font-weight: bold;
+				text-decoration: inherit;
+				color: var(--primary-light);
+
+				&:hover {
+					color: var(--primary);
+				}
+			}
 		}
 
 		table {
-			margin: 40px 0;
+			border-left: solid;
+			border-color: var(--primary);
 			min-width: 400px;
+			margin-bottom: 50px;
 
 			tr {
 				td,
 				th {
+					padding-left: 8px;
+
 					&:nth-of-type(2) {
 						text-align: right;
 					}
+				}
+
+				td {
+					padding: 10px 0 5px 8px;
 				}
 			}
 		}
 	}
 }
-
-@media (max-width: 100vh)
-{
+@media (max-width: 100vh) {
 	.purchase {
 		display: flex;
 		flex-direction: column-reverse;
@@ -123,6 +147,7 @@
 		.left {
 			width: 100%;
 			margin: 50px 0;
+
 			.intro {
 				p {}
 
@@ -134,15 +159,14 @@
 					padding: 0;
 					margin: 0;
 
-					label {
-					}
+					label {}
 
 					.formLine {
 						display: flex;
 						flex-direction: row !important;
 
 						div {
-							margin: 0 5px 10px ;
+							margin: 0 5px 10px;
 							width: calc(50vw - 15px - 1vw);
 							display: flex;
 							flex-direction: column;
@@ -160,12 +184,12 @@
 					}
 
 					.country {
-						padding: 0 ;
+						padding: 0;
 						width: 96vw;
 					}
 
 					.mail {
-						padding: 0 ;
+						padding: 0;
 						width: 96vw;
 					}
 				}
@@ -187,7 +211,7 @@
 					}
 
 					&#undo {
-						margin-left: 0px;
+						margin-left: 0;
 						background: var(--light-grey);
 
 						&:hover {
@@ -195,7 +219,6 @@
 						}
 					}
 				}
-
 
 				.paypal {
 					margin: 0;
@@ -207,6 +230,7 @@
 		.recap {
 			width: 94vw;
 			margin: 0;
+
 			p {
 				a {}
 			}
@@ -218,8 +242,7 @@
 				tr {
 					td,
 					th {
-						&:nth-of-type(2) {
-						}
+						&:nth-of-type(2) {}
 					}
 				}
 			}
