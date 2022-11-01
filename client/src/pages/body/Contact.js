@@ -161,8 +161,9 @@ const Contact = () => {
 	useEffect(() => {
 		if (
 			!formState.login ||
-			formState.login == undefined ||
-			formState.login == ""
+			formState.login === undefined ||
+			formState.login === "" ||
+			formState.login === -42
 		)
 			return;
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${formState.login}/mail`, {
