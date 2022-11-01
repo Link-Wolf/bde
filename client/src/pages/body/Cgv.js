@@ -25,12 +25,17 @@ const Cgv = () => {
 							l'association BDE 42 Mulhouse et de son client dans
 							le cadre de la vente des marchandises suivantes, ci
 							après "Produit" : Cotisation au BDE, Inscription à
-							un événement. Toute acceptation du devis/bon de
-							commande en ce compris la clause « Je reconnais
-							avoir pris connaissance et j'accepte les conditions
-							générales de vente ci-annexées » implique l'adhésion
-							sans réserve de l'acheteur aux "Clauses" des
-							présentes conditions générales de vente.
+							un événement. L'acquisition de tout Produit par un
+							Utilisateur peut avoir pour objet une utilisation
+							personnelle mais ne peut avoir pour objet la
+							revente, la commercialisation, ou la distribution
+							professionnelles desdits Produits. Toute acceptation
+							du devis/bon de commande en ce compris la clause «
+							Je reconnais avoir pris connaissance et j'accepte
+							les conditions générales de vente ci-annexées »
+							implique l'adhésion sans réserve de l'acheteur aux
+							"Clauses" des présentes conditions générales de
+							vente.
 						</p>
 						<h3>Clause n° 2 : Prix</h3>
 						<p>
