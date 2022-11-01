@@ -315,3 +315,200 @@
 		}
 	}
 }
+@media (max-width: 100vh) {
+	.profileContainer {
+		padding: 20px 2vw;
+
+		.profileInfoContainer {
+			flex-direction: column;
+			--image-size: 150px;
+
+			.profilePictureContainer {
+				margin: 0 calc((96vw - 150px)/2);
+
+				img {
+					&.premium {}
+				}
+
+				svg {}
+			}
+
+			.identityContainer {
+				margin: 0;
+				width: 96vw;
+
+				h1 {
+					text-align: center;
+					font-size: 20px;
+					margin-bottom: 0;
+				}
+
+				ul {
+					text-align: center;
+					margin: 0;
+
+					li {
+						margin: 0 0 10px;
+						font-size: 12px;
+
+						&:nth-of-type(1) {
+							font-size: 15px;
+						}
+
+						b {}
+
+						svg {}
+					}
+				}
+			}
+
+			.qrContainer {
+				button {
+					&:hover {}
+				}
+
+				.blurryBg {
+					.qrPopup {
+						svg {}
+					}
+				}
+			}
+		}
+
+		.emailFieldContainer {
+			width: 96vw;
+			justify-content: space-around;
+			margin: 20px 0;
+
+			label {
+				font-size: 15px;
+				width: auto;
+			}
+
+			input {
+				font-size: 15px;
+				width: 40vw;
+			}
+
+			button {
+				&:hover {}
+			}
+		}
+
+		.historySelectorContainer {
+			margin: 0;
+			flex-direction: column;
+
+			.historySelector {
+				ul {
+					display: flex;
+					width: 96vw;
+
+					li {
+						width: 32vw;
+
+						input[type="radio"] {
+							& + label {
+								letter-spacing: 1px;
+								width: 32vw;
+								font-size: 18px;
+								font-stretch: condensed;
+								text-align: center;
+								font-weight: normal;
+
+								&:hover {}
+							}
+
+							&:checked {
+								& + label {}
+							}
+						}
+
+						&:nth-last-of-type(1) {
+							input {
+								& + label {
+									border-bottom: solid var(--dark-grey) 1px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.historyContent {
+				margin: 0;
+				width: 96vw;
+
+				.listContainer {
+					width: 96vw;
+
+					div {}
+
+					h3 {}
+
+					ul {
+						li {}
+					}
+
+					.pagination {
+						margin: 20px 0;
+
+						ul {}
+					}
+
+					&#contrib {
+						width: 96vw;
+
+						h3 {}
+
+						ul#malist {
+							li {
+								p {}
+							}
+						}
+					}
+
+					&#event {
+						width: 96vw;
+
+						h3 {}
+
+						ul {
+							&#eventList {
+								li {
+									hr {}
+
+									a {}
+
+									&:nth-last-of-type(1) {
+										hr {}
+									}
+								}
+							}
+						}
+					}
+
+					&#order {
+						width: 96vw;
+
+						h3 {}
+
+						ul#MALISTE {
+							li {
+								button {
+									&.evenement {
+										&:hover {}
+									}
+
+									&.cotisation {
+										&:hover {}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

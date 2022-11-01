@@ -56,29 +56,3 @@
 	// 	display: none;
 	// }
 }
-@media (max-width: 100vh) {
-	.eventTokenContainer {
-		border: solid var(--light-grey) 1px;
-		width: 200px;
-		height: 90%;
-		flex-direction: column;
-		padding: 10px;
-		margin: 5% 10px;
-
-		img {
-			width: 180px;
-		}
-
-		div {
-			padding: 0;
-			justify-content: space-between;
-			width: 180px;
-			height: 100%;
-
-			h1 {
-				width: 180px;
-				font-size: 20px;
-			}
-		}
-	}
-}
