@@ -408,13 +408,12 @@ const Purchase = props => {
 			<div className={style.left}>
 				<div className={style.intro}>
 					<p>
-						Dans le cas ou vous ne souhaiteriez ou ne pourriez pas
+						Dans le cas où vous ne souhaiteriez ou ne pourriez pas
 						procéder à un paiement en ligne sur le site, toute
-						transaction peut se faire en physique par carte bancaire
-						(contact ou sans contact) ou espèces en contactant un
-						membre du BDE.
+						transaction peut se faire en <b>physique</b> par carte
+						bancaire (contact ou sans contact) ou espèces en
+						contactant un membre du BDE.
 					</p>
-					{/*TODO: text*/}
 					<hr />
 				</div>
 				<div className={style.payment}>
@@ -506,7 +505,7 @@ const AddressForm = props => {
 		<form>
 			<div className={` ${style.formMargin} ${style.formLine}  `}>
 				<div>
-					<label htmlFor="firstName">Prenom</label>
+					<label htmlFor="firstName">Prénom</label>
 					<input
 						id="firstName"
 						placeholder="Prénom"
@@ -529,7 +528,7 @@ const AddressForm = props => {
 				</div>
 			</div>{" "}
 			<div className={style.formMargin} id={style.address}>
-				<label htmlFor="address">Adresse</label>
+				<label htmlFor="address">Adresse de facturation</label>
 				<div className={style.formLine}>
 					<div>
 						<input
@@ -545,7 +544,7 @@ const AddressForm = props => {
 					<div>
 						<input
 							id="address2"
-							placeholder="appartement, ..."
+							placeholder="apt, ... (optionnel)"
 							name="address_line_2"
 							value={props.state.address_line_2}
 							onChange={handleChange}
