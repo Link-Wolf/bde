@@ -219,7 +219,7 @@
 
 				.pagination {
 					height: 32px;
-
+					// background: red;
 					ul {
 						display: flex;
 						flex-direction: row;
@@ -232,7 +232,7 @@
 
 					h3 {}
 
-					ul {
+					ul#malist {
 						text-align: center;
 
 						li {
@@ -252,17 +252,24 @@
 
 					ul {
 						&#eventList {
-							height: 900px;
-						}
-						// width: 600px;
-						li {
-							a {
-								height: 175px;
-							}
+							height: 250px;
+							margin: 10px;
 
-							&:nth-last-of-type(1) {
+							li {
+								margin: 5px;
+
 								hr {
 									display: none;
+								}
+
+								a {
+									height: 175px;
+								}
+
+								&:nth-last-of-type(1) {
+									hr {
+										display: none;
+									}
 								}
 							}
 						}
