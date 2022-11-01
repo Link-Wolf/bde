@@ -218,7 +218,7 @@ const Purchase = props => {
 	});
 	const [time, setTime] = useState();
 	const [amount, setAmount] = useState();
-	const [session, setSession] = useState({});
+	const [session, setSession] = useState();
 	const [validated, setValidated] = useState(false);
 	const [addressFormState, setAddressFormState] = useState({
 		postal_code: "",
