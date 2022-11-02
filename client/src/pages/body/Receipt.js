@@ -7,7 +7,7 @@ import emailjs from "@emailjs/browser";
 const Receipt = () => {
 	const [type, setType] = useState(undefined);
 	const [dataEvent, setDataEvent] = useState(undefined);
-	const [session, setSession] = useState({});
+	const [session, setSession] = useState();
 	const [loadSession, setLoadSession] = useState(true);
 	const [order, setOrder] = useState({});
 	const [loadOrder, setLoadOrder] = useState(true);
@@ -88,7 +88,7 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadOrder(true);
-		if (session.login === undefined) return;
+		if (session === undefined) return;
 		fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
 			credentials: "include"
 		})
@@ -119,7 +119,7 @@ const Receipt = () => {
 
 	useEffect(() => {
 		setLoadOrder(true);
-		if (session.login === undefined || type === "contrib") return;
+		if (session === undefined || type === "contrib") return;
 		fetch(`${process.env.REACT_APP_API_URL}/event/${order.type}`, {
 			credentials: "include"
 		})
