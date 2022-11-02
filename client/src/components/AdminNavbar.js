@@ -227,7 +227,7 @@ const AdminNavbar = () => {
 					<div id={style.buttonContainer}>
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
-						</button>{" "}
+						</button>
 						<button onClick={getBlob}>Get Blob</button>
 					</div>
 				)}
