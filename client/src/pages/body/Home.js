@@ -57,7 +57,7 @@ const Home = () => {
 			<HeaderHome />
 			<div className={style.lists}>
 				<div>
-					<h2>Nos Evènements</h2>
+					<h2>Nos Évènements</h2>
 					<hr />
 					{session !== 0 ? (
 						session.clearance >= 2 ? (
@@ -413,7 +413,7 @@ const Presentation = () => {
 						<EquipePicture login="tvanbael" img={tvanbael} />
 						<EquipePicture login="jrasser" img={jrasser} />
 					</div>
-					<h3>Vice Capitaines</h3>
+					<h3>Vice-Capitaines</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>

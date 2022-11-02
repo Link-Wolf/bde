@@ -25,7 +25,7 @@ const Cgv = () => {
 							l'association BDE 42 Mulhouse et de son client dans
 							le cadre de la vente des marchandises suivantes, ci
 							après "Produit" : Cotisation au BDE, Inscription à
-							un événement. L'acquisition de tout Produit par un
+							un évènement. L'acquisition de tout Produit par un
 							Utilisateur peut avoir pour objet une utilisation
 							personnelle mais ne peut avoir pour objet la
 							revente, la commercialisation, ou la distribution
@@ -139,7 +139,7 @@ const Cgv = () => {
 							de ses obligations décrites dans les présentes
 							conditions générales de vente découle d'un cas de
 							force majeure. À ce titre, la force majeure s'entend
-							de tout événement extérieur, imprévisible et
+							de tout évènement extérieur, imprévisible et
 							irrésistible au sens de l'article 1148 du Code
 							civil.
 						</p>

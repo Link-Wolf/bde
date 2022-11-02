@@ -263,13 +263,15 @@ const Contact = () => {
 							Sélectionnez le sujet ici..
 						</option>
 						<option value="Idées et suggestions">
-							Suggestion / Idées
+							Suggestions / Idées
 						</option>
 						<option value="Partenariat">Partenariat</option>
 						<option value="Réclamation">Réclamation</option>
 						<option value="Club">Club</option>
 						<option value="Boutique">Boutique</option>
-						<option value="Feedback">Feedback d'un event</option>
+						<option value="Feedback">
+							Retour sur un évènement
+						</option>
 						<option value="Autre">Autre</option>
 					</select>
 				</div>
