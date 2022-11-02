@@ -719,8 +719,8 @@ const OrderHistory = props => {
 								window.location = `/receipt/${data.id}`;
 							}}
 						>
-							{data.type === -1 ? "Cotisation" : "Évènement"}{" "}
-							<span style={{"font-family": "monospace"}}>
+							{data.type === -1 ? "Cotisation" : "évènement"}{" "}
+							<span style={{fontFamily: "monospace"}}>
 								{data.id}
 							</span>
 						</button>
