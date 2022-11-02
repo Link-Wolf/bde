@@ -221,14 +221,14 @@ const AdminNavbar = () => {
 						<a href="/admin/teammanagement">
 							<h3>Gestion bureau</h3>
 						</a>
-						<button onClick={getBlob}>Get Blob</button>
 					</>
 				)}
 				{session.clearance >= 42 && (
 					<div id={style.buttonContainer}>
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
-						</button>
+						</button>{" "}
+						<button onClick={getBlob}>Get Blob</button>
 					</div>
 				)}
 			</div>
