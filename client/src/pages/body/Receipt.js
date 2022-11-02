@@ -11,7 +11,6 @@ const Receipt = () => {
 	const [loadSession, setLoadSession] = useState(true);
 	const [order, setOrder] = useState({});
 	const [loadOrder, setLoadOrder] = useState(true);
-	const [loadMail, setLoadMail] = useState(false);
 
 	const param = useParams();
 
@@ -87,8 +86,8 @@ const Receipt = () => {
 	}, []);
 
 	useEffect(() => {
-		setLoadOrder(true);
 		if (session === undefined) return;
+		setLoadOrder(true);
 		fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
 			credentials: "include"
 		})
@@ -108,6 +107,9 @@ const Receipt = () => {
 				else setType("contrib");
 				setOrder(json);
 			})
+			.then(() => {
+				setLoadOrder(false);
+			})
 			.catch(err => {
 				NotificationManager.error(
 					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
@@ -118,8 +120,8 @@ const Receipt = () => {
 	}, [param, session]);
 
 	useEffect(() => {
-		setLoadOrder(true);
 		if (session === undefined || type === "contrib") return;
+		setLoadOrder(true);
 		fetch(`${process.env.REACT_APP_API_URL}/event/${order.type}`, {
 			credentials: "include"
 		})
@@ -182,9 +184,8 @@ const Receipt = () => {
 	if (
 		loadSession ||
 		loadOrder ||
-		loadMail ||
 		type === undefined ||
-		dataEvent === undefined
+		(type === "event" && dataEvent === undefined)
 	)
 		return <>Loading</>;
 	if (session.login !== order.studLogin || !order.isCompleted)
