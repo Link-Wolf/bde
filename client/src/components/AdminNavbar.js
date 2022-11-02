@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import useConfirm from "./useConfirm";
 import {NotificationManager} from "react-notifications";
-
 import style from "../style/AdminNavbar.module.scss";
 import burger from "../assets/logos/burger.png";
 
@@ -45,6 +44,47 @@ const AdminNavbar = () => {
 				})
 			});
 		});
+	};
+	const getBlob = async () => {
+		await fetch(`${process.env.REACT_APP_API_URL}/admin/logs/file`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) throw response.statusCode;
+				return response.text();
+			})
+			.then(b64zip => {
+				const element = document.createElement("a");
+				element.href = URL.createObjectURL(b64toBlob(b64zip));
+				element.download = "logs" + Date.now() + ".zip";
+				document.body.appendChild(element);
+				element.click();
+			})
+			.catch(err => {});
+	};
+
+	const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
+		const byteCharacters = atob(b64Data);
+		const byteArrays = [];
+
+		for (
+			let offset = 0;
+			offset < byteCharacters.length;
+			offset += sliceSize
+		) {
+			const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+			const byteNumbers = new Array(slice.length);
+			for (let i = 0; i < slice.length; i++) {
+				byteNumbers[i] = slice.charCodeAt(i);
+			}
+
+			const byteArray = new Uint8Array(byteNumbers);
+			byteArrays.push(byteArray);
+		}
+
+		const blob = new Blob(byteArrays, {type: contentType});
+		return blob;
 	};
 
 	useEffect(() => {
@@ -177,9 +217,12 @@ const AdminNavbar = () => {
 					<h3>Gestion volontaires</h3>
 				</a>
 				{session.clearance >= 21 && (
-					<a href="/admin/teammanagement">
-						<h3>Gestion bureau</h3>
-					</a>
+					<>
+						<a href="/admin/teammanagement">
+							<h3>Gestion bureau</h3>
+						</a>
+						<button onClick={getBlob}>Get Blob</button>
+					</>
 				)}
 				{session.clearance >= 42 && (
 					<div id={style.buttonContainer}>
