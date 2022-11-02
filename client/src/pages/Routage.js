@@ -94,24 +94,26 @@ const Routage = () => {
 						/>
 					}
 				/>
-				<Route
-					path="purchase/contrib"
-					element={
-						<RouteWrapper
-							route={<Purchase />}
-							check={global.config.clearance.stud}
-						/>
-					}
-				/>
-				<Route
-					path="purchase/:event"
-					element={
-						<RouteWrapper
-							route={<PrePurchase />}
-							check={global.config.clearance.pool}
-						/>
-					}
-				/>
+				{
+					// <Route
+					// 	path="purchase/contrib"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<Purchase />}
+					// 			check={global.config.clearance.stud}
+					// 		/>
+					// 	}
+					// />
+					// <Route
+					// 	path="purchase/:event"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<PrePurchase />}
+					// 			check={global.config.clearance.pool}
+					// 		/>
+					// 	}
+					// />
+				}
 				<Route
 					path="admin/teammanagement"
 					element={
