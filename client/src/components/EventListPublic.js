@@ -1,7 +1,7 @@
 import {React} from "react";
 
 import style from "../style/EventListPublic.module.scss";
-import patchwork from "../assets/placeholders/grey.png";
+import patchwork from "../assets/images/events.webp";
 
 const EventListPublic = param => {
 	return (
@@ -15,7 +15,7 @@ const EventListPublic = param => {
 			<p>
 				Étudiant à 42 ?{" "}
 				<a href={`${process.env.REACT_APP_INTRA_REDIRECT}`}>
-					Connectes-toi
+					Connecte-toi
 				</a>{" "}
 				pour en savoir plus sur les évènements actuels !
 			</p>
