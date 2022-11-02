@@ -65,7 +65,12 @@ const UserProfile = props => {
 						title: "Cotisations" // TODO: text here
 					},
 					{
-						content: <SubscribedEvents login={props.login} />,
+						content: (
+							<SubscribedEvents
+								login={props.login}
+								me={props.me}
+							/>
+						),
 						title: "Evenements" // TODO: text here
 					},
 					...(props.me
@@ -523,7 +528,7 @@ const ContributionHistory = props => {
 
 	return (
 		<div className={style.listContainer} id={style.contrib}>
-			<h3> Cotisations</h3>
+			<h3> Historique des cotisations</h3>
 			<div className={style.pagination}>
 				{data.length > 3 && (
 					<Pagination
@@ -534,36 +539,40 @@ const ContributionHistory = props => {
 				)}
 			</div>
 			<ul id={style.malist}>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<div>
-							<p>{`${new Date(
-								data.begin_date
-							).toLocaleDateString()} - ${new Date(
-								data.end_date
-							).toLocaleDateString()}`}</p>
-							<p>
-								{
-									//text here
-									[
-										"Pas encore commencée",
-										"En cours",
-										"Terminée"
-									][
-										+(
-											new Date(data.begin_date) <
-											new Date(Date.now())
-										) +
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<div>
+								<p>{`${new Date(
+									data.begin_date
+								).toLocaleDateString()} - ${new Date(
+									data.end_date
+								).toLocaleDateString()}`}</p>
+								<p>
+									{
+										//text here
+										[
+											"Pas encore commencée",
+											"En cours",
+											"Echue"
+										][
 											+(
-												new Date(data.end_date) <
+												new Date(data.begin_date) <
 												new Date(Date.now())
-											)
-									]
-								}
-							</p>
-						</div>
-					</li>
-				))}
+											) +
+												+(
+													new Date(data.end_date) <
+													new Date(Date.now())
+												)
+										]
+									}
+								</p>
+							</div>
+						</li>
+					))
+				) : (
+					<div>Aucune cotisation active ou passée</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
 				{data.length > 3 && (
@@ -632,11 +641,19 @@ const SubscribedEvents = props => {
 				)}
 			</div>
 			<ul id={style.eventList}>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<EventToken event={data} user />
-					</li>
-				))}
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<EventToken event={data} user />
+						</li>
+					))
+				) : props.me ? (
+					<div>Tu ne t'es inscrit à aucun évènement</div>
+				) : (
+					<div>
+						{props.login} n'a encore participé à aucun évènement
+					</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
 				{data.length > 3 && (
@@ -705,27 +722,31 @@ const OrderHistory = props => {
 				)}
 			</div>
 			<ul id={style.MALISTE}>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<button
-							className={
-								style[
-									data.type === -1
-										? "cotisation"
-										: "evenement"
-								]
-							}
-							onClick={() => {
-								window.location = `/receipt/${data.id}`;
-							}}
-						>
-							{data.type === -1 ? "Cotisation" : "évènement"}{" "}
-							<span style={{fontFamily: "monospace"}}>
-								{data.id}
-							</span>
-						</button>
-					</li>
-				))}
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<button
+								className={
+									style[
+										data.type === -1
+											? "cotisation"
+											: "evenement"
+									]
+								}
+								onClick={() => {
+									window.location = `/receipt/${data.id}`;
+								}}
+							>
+								{data.type === -1 ? "Cotisation" : "évènement"}{" "}
+								<span style={{fontFamily: "monospace"}}>
+									{data.id}
+								</span>
+							</button>
+						</li>
+					))
+				) : (
+					<div>Aucune commande passée</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
 				{data.length > PER_PAGE && (
