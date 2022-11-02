@@ -1,0 +1,14 @@
+.container {
+	width: 400px;
+	text-align: justify;
+	font-size: 20px;
+	padding: 5px;
+	// border-left: solid var(--primary) 2px;
+	img {
+		--imgsize: 200px;
+		width: var(--imgsize);
+		height: 300px;
+		object-fit: cover;
+		margin: 0 calc((400px - var(--imgsize)) / 2) 10px;
+	}
+}
