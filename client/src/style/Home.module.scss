@@ -169,11 +169,16 @@
 				width: calc(var(--colWidth) - 2 * var(--margin));
 				display: flex;
 
+				&#load {
+					img {
+						padding: calc(100% - 10px);
+					}
+				}
+
 				img {
 					transition: 0.2s ease-out;
 					padding: var(--padding);
 					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
-					// height: 100%;
 					object-fit: cover;
 
 					&:hover {

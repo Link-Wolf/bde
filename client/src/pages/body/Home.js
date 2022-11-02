@@ -7,6 +7,7 @@ import {LoadingSmall, LoadingMicro} from "../../components/Loading";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.webp";
+import blank from "../../assets/placeholders/tmp_profile.png";
 import Product from "./Product.js";
 
 import aguemazi from "../../assets/images/aguemazi.webp";
@@ -203,9 +204,9 @@ const Filter = param => {
 
 const ProductList = param => {
 	const [products, setProducts] = useState([]);
-	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
-	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
-	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
+	const [thumbnailHoodies, setThumbnailHoodies] = useState(blank);
+	const [thumbnailTshirt, setThumbnailTshirt] = useState(blank);
+	const [thumbnailCap, setThumbnailCap] = useState(blank);
 	const [popUp, setPopUp] = useState(-1);
 
 	useEffect(() => {
@@ -318,17 +319,17 @@ const ProductList = param => {
 				);
 			});
 	}, []);
-	if (products[2] === undefined)
+	if (
+		thumbnailTshirt === blank ||
+		thumbnailCap === blank ||
+		thumbnailHoodies === blank
+	)
 		return (
 			<div className={style.ProductListContainer}>
 				<h2>NOS PRODUITS</h2>
 				<hr />
-				<div className={style.thumbnailsContainer}>
+				<div className={style.thumbnailsContainer} id={style.load}>
 					<LoadingSmall />
-					<div className={style.miniThumbnailsContainer}>
-						<LoadingMicro />
-						<LoadingMicro />
-					</div>
 				</div>
 			</div>
 		);
