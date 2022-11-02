@@ -155,7 +155,11 @@ const Description = props => {
 	return (
 		<div className={style.description}>
 			<h1 id={style.deskH1}>{props.product.name}</h1>
-			<p>{props.product.desc}</p>
+			<div className={style.p}>
+				{props.product.desc.split("\n").map((line, i) => (
+					<p eventKey={i}>{line}</p>
+				))}
+			</div>
 			{props.session.clearance > 2 && props.session !== 0 ? (
 				<p id={style.warn}>
 					Ce produit ne peut être acheté que physiquement sur place
