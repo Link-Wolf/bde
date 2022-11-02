@@ -267,11 +267,11 @@ const SubscribeButton = param => {
 			return;
 		}
 		if (price !== 0) {
-			// await isConfirmed(
-			// 	`Contacte un membre du BDE pour payer et valider ton inscription !`
-			// );
-			// setIsSubbed(false);
-			window.location = `/purchase/${param.dataEvent.id}`;
+			await isConfirmed(
+				`Le paiement en ligne sera bientôt disponbile ! D'ici là, contacte un membre du BDE pour payer et valider ton inscription !`
+			);
+			param.setIsSubbed(false);
+			//window.location = `/purchase/${param.dataEvent.id}`;
 			return;
 		}
 		await fetch(
