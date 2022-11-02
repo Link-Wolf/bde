@@ -119,7 +119,11 @@ const Album = props => {
 					<></>
 				)}
 			</ul>
-			<img className={style.cover} src={album[displayedImage]} />
+			<img
+				className={style.cover}
+				id={album[displayedImage] === load ? style.load : style._}
+				src={album[displayedImage]}
+			/>
 		</div>
 	);
 };
