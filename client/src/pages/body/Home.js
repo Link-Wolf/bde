@@ -319,20 +319,7 @@ const ProductList = param => {
 				);
 			});
 	}, []);
-	if (
-		thumbnailTshirt === blank ||
-		thumbnailCap === blank ||
-		thumbnailHoodies === blank
-	)
-		return (
-			<div className={style.ProductListContainer}>
-				<h2>NOS PRODUITS</h2>
-				<hr />
-				<div className={style.thumbnailsContainer} id={style.load}>
-					<LoadingSmall />
-				</div>
-			</div>
-		);
+
 	return (
 		<div className={style.ProductListContainer}>
 			<h2>NOS PRODUITS</h2>
