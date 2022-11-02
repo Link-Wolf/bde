@@ -71,7 +71,7 @@
 
 			.p {
 				text-align: justify;
-				height: 200px;
+				height: 190px;
 				width: 570px;
 				overflow: auto;
 				font-size: 16px;
@@ -233,14 +233,17 @@
 
 				.p {
 					padding: 0 10px;
-					max-height: 139px;
+					max-height: 149px;
 					height: auto;
 					width: 100%;
 					font-size: 14px;
+					border: solid 1px var(--primary);
+					border-radius: 12px;
 				}
 
 				#warn {
 					font-size: 11px;
+					margin-left: 3vw;
 				}
 
 				.form {
