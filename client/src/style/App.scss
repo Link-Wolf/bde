@@ -40,4 +40,17 @@ html {
 	--secondary-light: #E7AD9D;
 	--premium-gold: #eee9bb;
 	--premium-gold-logo: gold;
+
+	a {
+		text-decoration: inherit;
+		color: var(--primary-light);
+
+		&:hover {
+			color: var(--primary);
+		}
+
+		&:active {
+			color: var(--primary-dark);
+		}
+	}
 }

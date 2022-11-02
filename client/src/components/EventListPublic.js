@@ -1,22 +1,24 @@
 import {React} from "react";
 
-import style from "../style/EventList.module.scss";
+import style from "../style/EventListPublic.module.scss";
+import patchwork from "../assets/images/events.webp";
 
 const EventListPublic = param => {
 	return (
-		<div width="400px">
-			<div>
-				Barbecues, Loup-Garou, soirée d'intégration... La Frégate
-				organise divers évènements en tant que BDE pour faire vivre et
-				animer le campus !
-			</div>
-			<div>
+		<div className={style.container}>
+			<p>Barbecues, Loup-Garou, soirée d'intégration...</p>
+			<p>
+				La Frégate organise divers évènements en tant que BDE pour faire
+				vivre et animer le campus !
+			</p>
+			<img src={patchwork} />
+			<p>
 				Étudiant à 42 ?{" "}
 				<a href={`${process.env.REACT_APP_INTRA_REDIRECT}`}>
-					Connectes-toi
+					Connecte-toi
 				</a>{" "}
 				pour en savoir plus sur les évènements actuels !
-			</div>
+			</p>
 		</div>
 	);
 };
