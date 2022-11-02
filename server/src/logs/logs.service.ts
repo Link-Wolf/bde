@@ -6,15 +6,54 @@ import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudService } from '../stud/stud.service';
 import { LogsDto, LogsFilterDto } from './logs.dto';
+import JSZip = require('jszip');
+import * as fs from 'fs';
 
 @Injectable()
 export class LogsService {
-
 	constructor(
 		@InjectRepository(Logs)
 		private logsRepository: Repository<Logs>,
 		private logger: LoggerService,
 	) { }
+
+	async blobAll(login: string) {
+		try {
+			const addFilesFromDirectoryToZip =
+				(directoryPath: fs.PathLike, zip: JSZip) => {
+					const directoryContents = fs.readdirSync(directoryPath, {
+						withFileTypes: true,
+					});
+
+					console.log(directoryPath, directoryContents)
+
+					directoryContents.forEach(({ name }) => {
+						const path = `${directoryPath}/${name}`;
+
+						if (fs.statSync(path).isFile()) {
+							zip.file(`${name}`, fs.readFileSync(path));
+						}
+
+						if (fs.statSync(path).isDirectory()) {
+							addFilesFromDirectoryToZip(path, zip);
+						}
+					});
+				};
+
+			const directoryPath = 'logs'
+			const zip = new JSZip();
+
+			addFilesFromDirectoryToZip(directoryPath, zip);
+			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
+			this.logger.log(`Blobed all logs`, login, true);
+
+			return zipAsBase64;
+		}
+		catch (err) {
+			this.logger.error(`Failed -> Blob all logs`, login, true)
+			throw err;
+		}
+	}
 
 	async findAll(filterDto: LogsFilterDto, requestMaker: string): Promise<Logs[]> {
 		try {
