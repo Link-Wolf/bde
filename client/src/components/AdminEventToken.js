@@ -83,35 +83,40 @@ const AdminEventToken = param => {
 	const img = useRef(null);
 
 	const deleteEvent = async () => {
-		if (
-			await isConfirmed(
-				`Désires tu supprimer l'évènement ${param.data.name}`
-			)
-		) {
-			await fetch(
-				`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
-				{
-					method: "DELETE",
-					credentials: "include"
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error:
-					 The status is ${response.status}`
-						);
-					}
-					window.location.reload();
-				})
-				.catch(function(error) {
-					NotificationManager.error(
-						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
-						"Erreur",
-						5000
-					);
-				});
-		}
+		await isConfirmed(
+			`C'est compliqué y a des trucs à gérer qu'on fix bientôt, contacte ### ou Xxxxx si tu veux faire ça stp`
+		);
+
+		//if (
+		// await isConfirmed(
+		// 	`Désires tu supprimer l'évènement ${param.data.name}`
+		// );
+		//)
+		//  {
+		// 	await fetch(
+		// 		`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
+		// 		{
+		// 			method: "DELETE",
+		// 			credentials: "include"
+		// 		}
+		// 	)
+		// 		.then(response => {
+		// 			if (!response.ok) {
+		// 				throw new Error(
+		// 					`This is an HTTP error:
+		// 			 The status is ${response.status}`
+		// 				);
+		// 			}
+		// 			window.location.reload();
+		// 		})
+		// 		.catch(function(error) {
+		// 			NotificationManager.error(
+		// 				"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+		// 				"Erreur",
+		// 				5000
+		// 			);
+		// 		});
+		// }
 	};
 
 	const switchLock = () => {
