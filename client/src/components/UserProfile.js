@@ -40,7 +40,12 @@ const UserProfile = props => {
 			.catch();
 	}, [props]);
 
-	if (props.login === undefined || stud === undefined) return <Loading />;
+	if (props.login === undefined || stud === undefined)
+		return (
+			<div id={style.load}>
+				<Loading />
+			</div>
+		);
 	return (
 		<div className={style.profileContainer}>
 			<div className={style.profileInfoContainer}>
@@ -98,7 +103,7 @@ const ProfilePicture = props => {
 		<div className={style.profilePictureContainer}>
 			<img
 				src={props.stud.img_medium}
-				className={props.stud.isPremium && style.premium}
+				className={props.stud.isPremium ? style.premium : ""}
 			/>
 			{props.stud.isPremium && (
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
