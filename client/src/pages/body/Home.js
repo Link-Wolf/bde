@@ -52,9 +52,6 @@ const Home = () => {
 			});
 	}, []);
 
-	console.log(session);
-	console.log(session.clearance);
-
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
@@ -94,8 +91,8 @@ const HeaderHome = () => {
 				<h1>BDE 42 Mulhouse</h1>
 				<span>
 					<p>
-						Bienvenue sur le site de La Frégate, BDE de 42 Mulhouse
-						!
+						Bienvenue sur le site de La Frégate, l'association
+						auto-gérée remplissant le rôle du BDE de 42 Mulhouse !
 					</p>
 					<p>
 						Vous y retrouverez les évènements à venir ainsi que la
@@ -103,7 +100,11 @@ const HeaderHome = () => {
 					</p>
 					<p>
 						Mais aussi les informations sur les goodies que nous
-						vous proposons ou encore les clubs de l'école !
+						vous proposons{" "}
+						{
+							//ou encore les clubs de l'école !
+						}
+						et plus encore à l'avenir !
 					</p>
 				</span>
 			</div>
