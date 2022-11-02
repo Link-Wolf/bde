@@ -38,6 +38,11 @@
 		list-style-type: none;
 		width: 400px;
 
+		p {
+			text-align: center;
+			width: 400px;
+		}
+
 		li:nth-last-of-type(1) {
 			width: 400px;
 
@@ -64,6 +69,11 @@
 			overflow-y: hidden;
 			width: auto;
 			justify-content: flex-start;
+
+			p {
+				text-align: center;
+				width: auto;
+			}
 
 			li:nth-last-of-type(1) {
 				width: auto;
