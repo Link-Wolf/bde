@@ -45,7 +45,7 @@ const AdminNavbar = () => {
 			});
 		});
 	};
-	const getBlob = async () => {
+	const getLogs = async () => {
 		await fetch(`${process.env.REACT_APP_API_URL}/admin/logs/file`, {
 			credentials: "include"
 		})
@@ -234,7 +234,7 @@ const AdminNavbar = () => {
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
 						</button>
-						<button onClick={getBlob}>Get Blob</button>
+						<button onClick={getLogs}>Get Blob</button>
 					</div>
 				)}
 			</div>
