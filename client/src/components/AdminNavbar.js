@@ -45,7 +45,7 @@ const AdminNavbar = () => {
 			});
 		});
 	};
-	const getBlob = async () => {
+	const getLogs = async () => {
 		await fetch(`${process.env.REACT_APP_API_URL}/admin/logs/file`, {
 			credentials: "include"
 		})
@@ -56,7 +56,13 @@ const AdminNavbar = () => {
 			.then(b64zip => {
 				const element = document.createElement("a");
 				element.href = URL.createObjectURL(b64toBlob(b64zip));
-				element.download = "logs" + Date.now() + ".zip";
+				const date = new Date(Date.now());
+				const year = date.toLocaleString("default", {year: "numeric"});
+				const month = date.toLocaleString("default", {
+					month: "2-digit"
+				});
+				const day = date.toLocaleString("default", {day: "2-digit"});
+				element.download = `logs_${year}_${month}_${day}.zip`;
 				document.body.appendChild(element);
 				element.click();
 			})
@@ -228,7 +234,7 @@ const AdminNavbar = () => {
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
 						</button>
-						<button onClick={getBlob}>DL Logs</button>
+						<button onClick={getLogs}>Get Logs</button>
 					</div>
 				)}
 			</div>
