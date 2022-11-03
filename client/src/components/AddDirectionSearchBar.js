@@ -27,7 +27,7 @@ const AddDirectionSearchBar = param => {
 					param.setUpdate(true);
 					setUpdate(true);
 					NotificationManager.success(
-						`Student ${selectedUser} ajouté au bureau directeur`,
+						`Student ${selectedUser} ajouté aux administrateur·trice·s`,
 						"Validation",
 						5000
 					);
