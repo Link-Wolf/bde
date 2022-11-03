@@ -55,10 +55,10 @@ export class StudService {
 		}
 	}
 
-	async findDirection(requestMaker: string): Promise<Stud[]> {
+	async findAdmins(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
-				isDirection: true,
+				isAdmin: true,
 				clearance: Not(21)
 			});
 			for (let stud of studs) {
@@ -74,19 +74,19 @@ export class StudService {
 					return status;
 				})();
 			}
-			this.logger.log(`Got all direction members`, requestMaker, true);
+			this.logger.log(`Got all admin members`, requestMaker, true);
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed -> Get all direction members on database (${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Get all admin members on database (${error})`, requestMaker, true)
 			throw error;
 		}
 	}
 
-	async findNoDirection(requestMaker: string): Promise<Stud[]> {
+	async findNoAdmins(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
-				isDirection: false,
+				isAdmin: false,
 			});
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
@@ -101,16 +101,16 @@ export class StudService {
 					return status;
 				})();
 			}
-			this.logger.log(`Got all non-direction members`, requestMaker, true);
+			this.logger.log(`Got all non-admin members`, requestMaker, true);
 			return studs;
 		}
 		catch (error) {
-			this.logger.error(`Failed -> Get all non-direction members on database (${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Get all non-admin members on database (${error})`, requestMaker, true)
 			throw error;
 		}
 	}
 
-	async findUnpaid(requestMaker: string): Promise<Stud[]> {
+	async findVolunteers(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
 				clearance: 9
@@ -137,7 +137,7 @@ export class StudService {
 		}
 	}
 
-	async findNoUnpaid(requestMaker: string): Promise<Stud[]> {
+	async findNoVolunteers(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
 				clearance: 7
@@ -254,50 +254,50 @@ export class StudService {
 		}
 	}
 
-	async addDirection(login: string, requestMaker: string): Promise<any> {
+	async addAdmin(login: string, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed -> Add direction member with login ${login} : stud does not exist`, requestMaker, true);
-				throw new NotFoundException(`Failed to add direction member with login ${login} : stud does not exist`)
+				this.logger.error(`Failed -> Add admin member with login ${login} : stud does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to add admin member with login ${login} : stud does not exist`)
 			}
-			if (user.isDirection) {
-				this.logger.error(`Failed -> Add direction member with login ${login} : stud is already a direction member`, requestMaker, true);
-				throw new ConflictException(`Failed to add direction member with login ${login} : stud is already a direction member`)
+			if (user.isAdmin) {
+				this.logger.error(`Failed -> Add admin member with login ${login} : stud is already a admin member`, requestMaker, true);
+				throw new ConflictException(`Failed to add admin member with login ${login} : stud is already a admin member`)
 			}
-			let updatedOne = `UPDATE stud SET "isDirection" = 't' WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "isAdmin" = 't' WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
 			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '11' WHERE login = '${login}' AND "clearance" < 42`);
-			this.logger.warn(`Added direction member ${login}`, requestMaker, true);
+			this.logger.warn(`Added admin member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed -> Add direction member ${login} on database (${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Add admin member ${login} on database (${error})`, requestMaker, true)
 			throw error;
 		}
 	}
 
-	async removeDirection(login: string, requestMaker: string): Promise<void> {
+	async removeAdmin(login: string, requestMaker: string): Promise<void> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
-				this.logger.error(`Failed -> Yeet direction member with login ${login} : direction member does not exist`, requestMaker, true);
-				throw new NotFoundException(`Failed to yeet direction member with login ${login} : direction member does not exist`)
-			} if (!user.isDirection) {
-				this.logger.error(`Failed -> Add direction member with login ${login} : stud isn't direction member`, requestMaker), true;
-				throw new ConflictException(`Failed to add direction member with login ${login} : stud isn't direction member`)
+				this.logger.error(`Failed -> Yeet admin member with login ${login} : admin member does not exist`, requestMaker, true);
+				throw new NotFoundException(`Failed to yeet admin member with login ${login} : admin member does not exist`)
+			} if (!user.isAdmin) {
+				this.logger.error(`Failed -> Add admin member with login ${login} : stud isn't admin member`, requestMaker), true;
+				throw new ConflictException(`Failed to add admin member with login ${login} : stud isn't admin member`)
 			}
-			let updatedOne = `UPDATE stud SET "isDirection" = 'f' WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "isAdmin" = 'f' WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
 			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '7' WHERE login = '${login}' AND "clearance" < 42`);
-			this.logger.warn(`Yeeted direction member ${login}`, requestMaker, true);
+			this.logger.warn(`Yeeted admin member ${login}`, requestMaker, true);
 			return ret
 		} catch (error) {
-			this.logger.error(`Failed -> Yeet direction member ${login} on database (${error})`, requestMaker, true)
+			this.logger.error(`Failed -> Yeet admin member ${login} on database (${error})`, requestMaker, true)
 			throw error;
 		}
 	}
 
-	async addUnpaid(login: string, requestMaker: string): Promise<any> {
+	async addVolunteer(login: string, requestMaker: string): Promise<any> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
@@ -318,7 +318,7 @@ export class StudService {
 		}
 	}
 
-	async removeUnpaid(login: string, requestMaker: string): Promise<void> {
+	async removeVolunteer(login: string, requestMaker: string): Promise<void> {
 		try {
 			let user = await this.findOne(login, requestMaker);
 			if (!user) {
@@ -413,7 +413,7 @@ export class StudService {
 				this.logger.error(`Failed -> Give the tricorn to ${login} : there is not any current Captain`, requestMaker, true);
 				throw new NotFoundException(`Failed to give the tricorn to ${login} : there is not any current Captain`)
 			}
-			if (!newCaptain || !newCaptain.isDirection) {
+			if (!newCaptain || !newCaptain.isAdmin) {
 				this.logger.error(`Failed -> Give the tricorn to ${login} : new captain does not exist or isn't a direction member`, requestMaker, true);
 				throw new ConflictException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
 			}

@@ -29,7 +29,7 @@ export class Stud {
 		nullable: true,
 		default: false
 	})
-	isDirection: boolean
+	isAdmin: boolean
 
 	@Column({ default: 0 })
 	clearance: number

@@ -4,11 +4,11 @@ import { Injectable, PipeTransform } from "@nestjs/common";
 @Injectable()
 export class StudDtoPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
-		if ("isDirection" in value) {
-			if (value.isDirection === "true")
-				value.isDirection = true;
+		if ("isAdmin" in value) {
+			if (value.isAdmin === "true")
+				value.isAdmin = true;
 			else
-				value.isDirection = false;
+				value.isAdmin = false;
 		}
 		return value;
 	}
