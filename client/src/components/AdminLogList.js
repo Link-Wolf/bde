@@ -3,6 +3,8 @@ import usePagination from "./Pagination";
 import {Pagination} from "@mui/material";
 import {NotificationManager} from "react-notifications";
 
+import style from "../style/AdminLogs.module.scss";
+
 const AdminLogList = param => {
 	const PER_PAGE = 21;
 	const [data, setData] = useState([]);
@@ -63,23 +65,55 @@ const AdminLogList = param => {
 	return load ? (
 		<div>Chargement ...</div>
 	) : data.length ? (
-		<div>
-			<Pagination count={count} page={page} onChange={handleChangePage} />
-			{data.length > 0 && (
-				<ul>
-					{viewData.currentData().map(log => (
-						<li key={log.id}>
-							<ul>
-								<li>{log.type}</li>
-								<li>{log.login}</li>
-								<li>{log.message}</li>
-								<li>{log.date}</li>
-							</ul>
-						</li>
-					))}
-				</ul>
-			)}
-			<Pagination count={count} page={page} onChange={handleChangePage} />
+		<div className={style.logs}>
+			<ul id={style.desc}>
+				<li id={style.descType}>Type</li>
+				<li id={style.descLogin}>Login</li>
+				<li id={style.descMessage}>Message</li>
+				<li id={style.descDate}>Date</li>
+			</ul>
+
+			<ul>
+				{viewData.currentData().map(log => (
+					<li id={style.eachLine} key={log.id}>
+						<ul className={style.logLine}>
+							<li id={style.type}>{log.type}</li>
+							<li id={style.login}>
+								{log.login === "Public" ||
+								log.login === "42intra-API" ? (
+									log.login
+								) : (
+									<a href={`/profile/${log.login}`}>
+										{log.login}
+									</a>
+								)}
+							</li>
+							<li id={style.message}>{log.message}</li>
+							<li id={style.date}>
+								{new Date(log.date).toLocaleDateString(
+									"fr-FR",
+									{
+										year: "numeric",
+										month: "2-digit",
+										day: "2-digit",
+										hour: "2-digit",
+										minute: "2-digit",
+										second: "2-digit",
+										fractionalSecondDigits: 3
+									}
+								)}
+							</li>
+						</ul>
+					</li>
+				))}
+			</ul>
+			<div className={style.pagination}>
+				<Pagination
+					count={count}
+					page={page}
+					onChange={handleChangePage}
+				/>
+			</div>
 		</div>
 	) : (
 		<div>

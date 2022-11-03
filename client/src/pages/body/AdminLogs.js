@@ -1,8 +1,9 @@
-import {useState, React} from "react";
+import {useState, React, useEffect} from "react";
 import AdminNavbar from "../../components/AdminNavbar";
 import CheckSet from "../../components/CheckSet";
-import {Dropdown} from "react-bootstrap";
 import AdminLogList from "../../components/AdminLogList";
+
+import style from "../../style/AdminLogs.module.scss";
 
 const AdminLogs = () => {
 	const [filter, setFilter] = useState({
@@ -30,6 +31,12 @@ const AdminLogs = () => {
 		setFilter(tempFilter);
 	};
 
+	const filterHanddler = () => {
+		if (document.getElementById(style.dropdown).style.display === "block")
+			document.getElementById(style.dropdown).style.display = "none";
+		else document.getElementById(style.dropdown).style.display = "block";
+	};
+
 	return (
 		<div
 			style={{
@@ -37,53 +44,77 @@ const AdminLogs = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div className={`${"flex"}`}>
-				<div>
-					<Dropdown>
-						<Dropdown.Toggle variant="success" id="dropdown-basic">
-							Filtrer
-						</Dropdown.Toggle>
+			<div className={style.logsContainer}>
+				<div className={style.dropdownContainer}>
+					<button id={style.dropdownButton} onClick={filterHanddler}>
+						Filtrer
+					</button>
 
-						<Dropdown.Menu>
-							<CheckSet
-								set={[
-									{
-										label: "Warn",
-										name: "warn",
-										checked: filter.warn
-									},
-									{
-										label: "Error",
-										name: "error",
-										checked: filter.error
-									},
-									{
-										label: "Admin",
-										name: "isAdmin",
-										checked: filter.isAdmin
-									}
-								]}
-								onChange={handleFormChange}
-								type="checkbox"
-							/>
-							<div className="dropdown-divider"></div>
-							<div className="form-group">
-								<label>Filtrer par login</label>
-								<input
-									autoFocus={true}
-									className="form-control"
-									placeholder="Login"
-									name="login"
-									onChange={handleFormChange}
-								/>
-							</div>
-						</Dropdown.Menu>
-					</Dropdown>
-					<p> Trier par : </p>
-					<label>Date : </label>
-					<button onClick={handleButtonChange}>⇃↾</button>
-					<AdminLogList filter={filter} />
+					<div id={style.dropdown}>
+						<CheckSet
+							set={[
+								{
+									label: "Warn",
+									name: "warn",
+									checked: filter.warn
+								},
+								{
+									label: "Error",
+									name: "error",
+									checked: filter.error
+								},
+								{
+									label: "Admin",
+									name: "isAdmin",
+									checked: filter.isAdmin
+								}
+							]}
+							onChange={handleFormChange}
+							type="checkbox"
+						/>
+						<label>Filtrer par login</label>
+						<input
+							autoFocus={true}
+							placeholder="Login"
+							name="login"
+							onChange={handleFormChange}
+						/>
+						<label>Tri</label>
+						<button onClick={handleButtonChange}>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 14 14"
+							>
+								<g>
+									<polyline
+										points="2.5 3.5 5.5 0.5 5.5 13.5"
+										fill="none"
+										stroke={
+											filter.asc
+												? "var(--black)"
+												: "var(--secondary)"
+										}
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+									<polyline
+										points="11.5 10.5 8.5 13.5 8.5 0.5"
+										fill="none"
+										stroke={
+											!filter.asc
+												? "var(--black)"
+												: "var(--secondary)"
+										}
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</g>
+							</svg>
+						</button>
+					</div>
 				</div>
+
+				<AdminLogList filter={filter} />
 			</div>
 		</div>
 	);
