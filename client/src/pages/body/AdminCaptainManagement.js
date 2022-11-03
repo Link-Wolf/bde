@@ -74,32 +74,32 @@ const AdminCaptainManagement = () => {
 	const yeetMember = async login => {
 		if (
 			await isConfirmed(
-				`Voulez vous exclure ${login} du bureau de direction ?`
+				`Voulez vous exclure ${login} des administrateur·trice·s ?`
 			)
 		) {
 			if (
 				await isConfirmed(
-					`Voulez vous VRAIMENT exclure ${login} du bureau de direction ?`
+					`Voulez vous VRAIMENT exclure ${login} des administrateur·trice·s ?`
 				)
 			) {
 				if (
 					await isConfirmed(
-						`Êtes vous absolument certain de vouloir exclure ${login} du bureau de direction ? Cette action est réversible`
+						`Êtes vous absolument certain de vouloir exclure ${login} des administrateur·trice·s ? Cette action est réversible`
 					)
 				) {
 					if (
 						await isConfirmed(
-							`Il est encore temps de changer d'avis. Exclure non-définitivement ${login} du bureau de direction ?`
+							`Il est encore temps de changer d'avis. Exclure non-définitivement ${login} des administrateur·trice·s ?`
 						)
 					) {
 						if (
 							!(await isConfirmed(
-								`Souhaiteriez vous ne pas exclure ${login} du bureau de direction et annuler l'opération ?`
+								`Souhaiteriez vous ne pas exclure ${login} des administrateur·trice·s et annuler l'opération ?`
 							))
 						) {
 							yeetConfirm(login);
 							NotificationManager.success(
-								`${login} a bien été exclu du bureau de direction`,
+								`${login} a bien été retiré·e des administrateur·trice·s`,
 								"Validation",
 								5000
 							);
@@ -138,7 +138,7 @@ const AdminCaptainManagement = () => {
 								</button>
 							</li>
 					  ))
-					: "Le Bureau de direction est vide"}
+					: "Il n'y a aucun administrateur"}
 				<Mutiny />
 			</div>
 		</div>
