@@ -219,7 +219,7 @@ const AdminNavbar = () => {
 				{session.clearance >= 21 && (
 					<>
 						<a href="/admin/teammanagement">
-							<h3>Gestion des Administrateur·trice·s</h3>
+							<h3>Gestion admins</h3>
 						</a>
 					</>
 				)}
@@ -228,7 +228,7 @@ const AdminNavbar = () => {
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
 						</button>
-						<button onClick={getBlob}>Get Blob</button>
+						<button onClick={getBlob}>DL Logs</button>
 					</div>
 				)}
 			</div>
