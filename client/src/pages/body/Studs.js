@@ -27,7 +27,7 @@ const Stud = () => {
 								<li>{user.firstname}</li>
 								<li>{user.lastname}</li>
 								<li>
-									{user.isDirection
+									{user.isAdmin
 										? "Admin"
 										: user.clearance == 9
 										? "Volontaire"
