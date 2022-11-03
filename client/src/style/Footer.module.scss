@@ -20,18 +20,3 @@
 		margin: 0 1px;
 	}
 }
-
-.credits {
-	a {
-		text-decoration: inherit;
-		color: var(--primary-light);
-
-		&:hover {
-			color: var(--primary);
-		}
-
-		&:active {
-			color: var(--primary-dark);
-		}
-	}
-}
