@@ -44,7 +44,7 @@ const AddDirectionSearchBar = param => {
 
 	useEffect(() => {
 		setUpdate(false);
-		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noDirection`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noAdmin`, {
 			credentials: "include"
 		})
 			.then(response => {

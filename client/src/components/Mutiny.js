@@ -39,7 +39,7 @@ const Mutiny = () => {
 	};
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/direction`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/members`, {
 			credentials: "include"
 		})
 			.then(response => {

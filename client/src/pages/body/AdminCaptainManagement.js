@@ -19,7 +19,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/admin/direction`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/members`,
 			requestOptions
 		)
 			.then(response => {
