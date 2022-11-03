@@ -19,7 +19,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/admin/unpaid`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/volunteers`,
 			requestOptions
 		)
 			.then(response => {
@@ -48,7 +48,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/unpaid/yeet/${toYeet}`,
+			`${process.env.REACT_APP_API_URL}/stud/volunteers/yeet/${toYeet}`,
 			requestOptions
 		)
 			.then(response => {

@@ -213,7 +213,7 @@ const AdminNavbar = () => {
 				<a href="/admin/logs">
 					<h3>Logs</h3>
 				</a>
-				<a href="/admin/unpaidmanagement">
+				<a href="/admin/volunteersmanagement">
 					<h3>Gestion volontaires</h3>
 				</a>
 				{session.clearance >= 21 && (
