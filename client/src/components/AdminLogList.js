@@ -78,7 +78,7 @@ const AdminLogList = param => {
 					<li id={style.eachLine} key={log.id}>
 						<ul className={style.logLine}>
 							<li id={style.type} type={log.type}>
-								{log.type}
+								<div>{log.type}</div>
 							</li>
 							<li id={style.login}>
 								{log.login === "Public" ||

@@ -97,7 +97,7 @@
 			li {
 				display: flex;
 				flex-direction: column;
-				justify-content: center;
+				justify-content: flex-start;
 
 				&#type {
 					text-transform: uppercase;
@@ -106,17 +106,18 @@
 					margin-right: 20px;
 					width: 60px;
 					text-align: center;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
 					color: var(--white);
 
 					&[type="warn"] {
-						background: var(--warn);
+						div {
+							background: var(--warn);
+						}
 					}
 
 					&[type="error"] {
-						background: var(--error);
+						div {
+							background: var(--error);
+						}
 					}
 				};
 

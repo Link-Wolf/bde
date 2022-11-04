@@ -65,56 +65,73 @@ const AdminStudents = () => {
 						: "Montrer les premiums"}
 				</button>
 				<div>
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-					{data.length > 0 && (
-						<ul>
-							{viewData.currentData().map(
+					<table>
+						<tr>
+							<td colSpan={4}>
+								<Pagination
+									count={count}
+									page={page}
+									onChange={handleChangePage}
+								/>
+							</td>
+						</tr>
+						<thead>
+							<tr>
+								<th>login</th>
+								<th>Nom Prénom</th>
+								<th>Privilège</th>
+								<th>Autorisations</th>
+							</tr>
+						</thead>
+						{data.length > 0 ? (
+							viewData.currentData().map(
 								user =>
 									(!isFiltered || user.isPremium) && (
-										<li key={user.login}>
-											{user.login}
-											<ul>
-												<li>
-													{user.firstname}{" "}
-													{user.lastname}
-												</li>
-												<li>
-													<img
-														src={
-															user.isPremium
-																? yellowStar
-																: greyStar
-														}
-													/>
-												</li>
-												<li>
-													{
-														{
-															[2]: "Autre Campus",
-															[5]: "Piscineux",
-															[7]: "Student",
-															[9]: "Bénévole",
-															[11]: "Admin",
-															[21]: "Capitaine",
-															[42]: "0uebM@st3r"
-														}[user.clearance]
+										<tr key={user.login}>
+											<td>{user.login}</td>
+											<td>
+												{user.firstname} {user.lastname}
+											</td>
+											<td>
+												<img
+													src={
+														user.isPremium
+															? yellowStar
+															: greyStar
 													}
-												</li>
-											</ul>
-										</li>
+												/>
+											</td>
+											<td>
+												{
+													{
+														[2]: "Autre Campus",
+														[5]: "Piscineux",
+														[7]: "Student",
+														[9]: "Bénévole",
+														[11]: "Admin",
+														[21]: "Capitaine",
+														[42]: "0uebM@st3r"
+													}[user.clearance]
+												}
+											</td>
+										</tr>
 									)
-							)}
-						</ul>
-					)}
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
+							)
+						) : (
+							<tr>
+								<td colSpan={4}>Aucuns utilisateurs</td>
+							</tr>
+						)}
+						<tr>
+							<td colSpan={4}>
+								<Pagination
+									count={count}
+									page={page}
+									onChange={handleChangePage}
+								/>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
