@@ -7,6 +7,8 @@ import {NotificationManager} from "react-notifications";
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
 
+import style from "../../style/AdminStudents.module.scss";
+
 const AdminStudents = () => {
 	const PER_PAGE = 21;
 	const [data, setData] = useState([]);
@@ -53,7 +55,7 @@ const AdminStudents = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.studListContainer}>
 				<h1> AdminPannel Students part </h1>
 				<button
 					onClick={() => {
@@ -65,22 +67,13 @@ const AdminStudents = () => {
 						: "Montrer les premiums"}
 				</button>
 				<div>
-					<table>
-						<tr>
-							<td colSpan={4}>
-								<Pagination
-									count={count}
-									page={page}
-									onChange={handleChangePage}
-								/>
-							</td>
-						</tr>
+					<table className={style.table}>
 						<thead>
 							<tr>
-								<th>login</th>
-								<th>Nom Prénom</th>
-								<th>Privilège</th>
-								<th>Autorisations</th>
+								<th className={style.login}>login</th>
+								<th className={style.name}>Nom Prénom</th>
+								<th className={style.priv}>Privilège</th>
+								<th className={style.auth}>Autorisations</th>
 							</tr>
 						</thead>
 						{data.length > 0 ? (
@@ -88,11 +81,13 @@ const AdminStudents = () => {
 								user =>
 									(!isFiltered || user.isPremium) && (
 										<tr key={user.login}>
-											<td>{user.login}</td>
-											<td>
+											<td className={style.login}>
+												{user.login}
+											</td>
+											<td className={style.name}>
 												{user.firstname} {user.lastname}
 											</td>
-											<td>
+											<td className={style.priv}>
 												<img
 													src={
 														user.isPremium
@@ -101,7 +96,7 @@ const AdminStudents = () => {
 													}
 												/>
 											</td>
-											<td>
+											<td className={style.auth}>
 												{
 													{
 														[2]: "Autre Campus",
@@ -122,16 +117,12 @@ const AdminStudents = () => {
 								<td colSpan={4}>Aucuns utilisateurs</td>
 							</tr>
 						)}
-						<tr>
-							<td colSpan={4}>
-								<Pagination
-									count={count}
-									page={page}
-									onChange={handleChangePage}
-								/>
-							</td>
-						</tr>
 					</table>
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
 				</div>
 			</div>
 		</div>
