@@ -119,7 +119,6 @@
 			margin: 0;
 
 			&.eventFilter {
-				position: relative;
 				width: 400px;
 
 				#dropdownButton {
@@ -145,14 +144,26 @@
 					width: 200px;
 					z-index: 9999;
 					display: none;
-					position: absolute;
+					position: relative;
 					background: var(--light-grey);
-					top: -137px;
-					left: 160px;
+					top: -212px;
+					left: 157px;
 
 					input {
 						margin: 5px;
 					}
+				}
+
+				#dropdownBg {
+					width: 100vw;
+					height: 100vh;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: rgba(0,0,0,0.5);
+					backdrop-filter: blur(5px);
+					display: none;
+					z-index: 8;
 				}
 			}
 		}
