@@ -77,7 +77,9 @@ const AdminLogList = param => {
 				{viewData.currentData().map(log => (
 					<li id={style.eachLine} key={log.id}>
 						<ul className={style.logLine}>
-							<li id={style.type}>{log.type}</li>
+							<li id={style.type} type={log.type}>
+								{log.type}
+							</li>
 							<li id={style.login}>
 								{log.login === "Public" ||
 								log.login === "42intra-API" ? (
