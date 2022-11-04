@@ -77,7 +77,7 @@ const UserProfile = props => {
 							/>
 						),
 						title: "Bientôt",
-						disable: true
+						disabled: true
 						// title: "Cotisations"
 					}
 					// 	,
@@ -786,7 +786,7 @@ const HistorySelector = props => {
 					{props.fields.map((field, i) => (
 						<li key={i}>
 							<input
-								disabled={props.disable}
+								disabled={field.disabled}
 								id={`radio${i}`}
 								type="radio"
 								checked={selected === i}
@@ -795,7 +795,7 @@ const HistorySelector = props => {
 								}}
 							/>
 							<label
-								disabled={props.disable}
+								disabled={field.disabled}
 								htmlFor={`radio${i}`}
 							>
 								{" "}
