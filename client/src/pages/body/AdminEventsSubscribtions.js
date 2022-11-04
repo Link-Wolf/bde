@@ -193,7 +193,6 @@ const AdminStudents = () => {
 			<AdminNavbar />
 			<div className={style.subscribtionsContainer}>
 				<div id={style.tittle}>Inscriptions aux évènements</div>
-				<h1> AdminPannel </h1>
 				<div>
 					<Form>
 						Event :
