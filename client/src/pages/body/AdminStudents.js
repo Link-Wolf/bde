@@ -58,6 +58,8 @@ const AdminStudents = () => {
 			<div className={style.studListContainer}>
 				<h1> AdminPannel Students part </h1>
 				<button
+					hidden
+					id={style.premium}
 					onClick={() => {
 						setIsFiltered(!isFiltered);
 					}}
@@ -72,7 +74,9 @@ const AdminStudents = () => {
 							<tr>
 								<th className={style.login}>login</th>
 								<th className={style.name}>Nom Prénom</th>
-								<th className={style.priv}>Privilège</th>
+								<th className={style.priv} hidden>
+									Privilège
+								</th>
 								<th className={style.auth}>Autorisations</th>
 							</tr>
 						</thead>
@@ -87,7 +91,7 @@ const AdminStudents = () => {
 											<td className={style.name}>
 												{user.firstname} {user.lastname}
 											</td>
-											<td className={style.priv}>
+											<td className={style.priv} hidden>
 												<img
 													src={
 														user.isPremium
