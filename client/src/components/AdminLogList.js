@@ -65,59 +65,62 @@ const AdminLogList = param => {
 	return load ? (
 		<div>Chargement ...</div>
 	) : data.length ? (
-		<div className={style.logs}>
-			<ul id={style.desc}>
-				<li id={style.descType}>Type</li>
-				<li id={style.descLogin}>Login</li>
-				<li id={style.descMessage}>Message</li>
-				<li id={style.descDate}>Date</li>
-			</ul>
+		<>
+			<div id={style.results}>{data.length} résultats</div>
+			<div className={style.logs}>
+				<ul id={style.desc}>
+					<li id={style.descType}>Type</li>
+					<li id={style.descLogin}>Login</li>
+					<li id={style.descMessage}>Message</li>
+					<li id={style.descDate}>Date</li>
+				</ul>
 
-			<ul>
-				{viewData.currentData().map(log => (
-					<li id={style.eachLine} key={log.id}>
-						<ul className={style.logLine}>
-							<li id={style.type} type={log.type}>
-								<div>{log.type}</div>
-							</li>
-							<li id={style.login}>
-								{log.login === "Public" ||
-								log.login === "42intra-API" ||
-								log.login === "INTERNAL" ? (
-									log.login
-								) : (
-									<a href={`/profile/${log.login}`}>
-										{log.login}
-									</a>
-								)}
-							</li>
-							<li id={style.message}>{log.message}</li>
-							<li id={style.date}>
-								{new Date(log.date).toLocaleDateString(
-									"fr-FR",
-									{
-										year: "numeric",
-										month: "2-digit",
-										day: "2-digit",
-										hour: "2-digit",
-										minute: "2-digit",
-										second: "2-digit",
-										fractionalSecondDigits: 3
-									}
-								)}
-							</li>
-						</ul>
-					</li>
-				))}
-			</ul>
-			<div className={style.pagination}>
-				<Pagination
-					count={count}
-					page={page}
-					onChange={handleChangePage}
-				/>
+				<ul>
+					{viewData.currentData().map(log => (
+						<li id={style.eachLine} key={log.id}>
+							<ul className={style.logLine}>
+								<li id={style.type} type={log.type}>
+									<div>{log.type}</div>
+								</li>
+								<li id={style.login}>
+									{log.login === "Public" ||
+									log.login === "42intra-API" ||
+									log.login === "INTERNAL" ? (
+										log.login
+									) : (
+										<a href={`/profile/${log.login}`}>
+											{log.login}
+										</a>
+									)}
+								</li>
+								<li id={style.message}>{log.message}</li>
+								<li id={style.date}>
+									{new Date(log.date).toLocaleDateString(
+										"fr-FR",
+										{
+											year: "numeric",
+											month: "2-digit",
+											day: "2-digit",
+											hour: "2-digit",
+											minute: "2-digit",
+											second: "2-digit",
+											fractionalSecondDigits: 3
+										}
+									)}
+								</li>
+							</ul>
+						</li>
+					))}
+				</ul>
+				<div className={style.pagination}>
+					<Pagination
+						count={count}
+						page={page}
+						onChange={handleChangePage}
+					/>
+				</div>
 			</div>
-		</div>
+		</>
 	) : (
 		<div>
 			Aucun logs disponibles correspondants aux filtres sélectionnés

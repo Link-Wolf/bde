@@ -1,6 +1,21 @@
 .studListContainer {
+	margin-left: 400px;
+
+	#eachLine {
+		margin-bottom: 10px;
+	}
+
+	div {
+		#pagination {
+			width: 940px;
+			display: flex;
+			justify-content: center;
+			margin: 50px 0;
+		}
+	}
+
 	#tittle {
-		margin-top: 20px;
+		margin: 20px 0;
 		font-size: 40px;
 		font-stretch: condensed;
 		letter-spacing: 4px;
@@ -9,12 +24,50 @@
 	}
 
 	.table {
+		width: 980px;
+
+		.Desclogin {
+			width: 140px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		.Descname {
+			width: 280px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		.Descpriv {
+			text-align: center;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		.Descauth {
+			width: 280px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		.DescjoinDate {
+			min-width: 280px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
 		.login {
 			width: 140px;
+			padding-left: 20px;
 		}
 
 		.name {
-			width: 200px;
+			width: 280px;
+			padding-left: 40px;
+
+			#lastname {
+				text-transform: uppercase;
+			}
 		}
 
 		.priv {
@@ -23,11 +76,18 @@
 		}
 
 		.auth {
-			width: 100px;
+			width: 280px;
+			padding-left: 60px;
+		}
+
+		.joinDate {
+			min-width: 280px;
+			padding-left: 60px;
 		}
 
 		th {
 			text-align: center;
+			height: 70px;
 		}
 	}
 

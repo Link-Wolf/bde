@@ -72,24 +72,39 @@ const AdminStudents = () => {
 					<table className={style.table}>
 						<thead>
 							<tr>
-								<th className={style.login}>login</th>
-								<th className={style.name}>Nom Prénom</th>
-								<th className={style.priv} hidden>
+								<th className={style.Desclogin}>Login</th>
+								<th className={style.Descname}>Nom Prénom</th>
+								<th className={style.Descpriv} hidden>
 									Privilège
 								</th>
-								<th className={style.auth}>Autorisations</th>
+								<th className={style.Descauth}>
+									Autorisations
+								</th>
+								<th className={style.DescjoinDate}>
+									Première connexion
+								</th>
 							</tr>
 						</thead>
 						{data.length > 0 ? (
 							viewData.currentData().map(
 								user =>
 									(!isFiltered || user.isPremium) && (
-										<tr key={user.login}>
+										<tr
+											key={user.login}
+											id={style.eachLine}
+										>
 											<td className={style.login}>
-												{user.login}
+												<a
+													href={`/profile/${user.login}`}
+												>
+													{user.login}
+												</a>
 											</td>
 											<td className={style.name}>
-												{user.firstname} {user.lastname}
+												{user.firstname}{" "}
+												<label id={style.lastname}>
+													{user.lastname}
+												</label>
 											</td>
 											<td className={style.priv} hidden>
 												<img
@@ -113,6 +128,17 @@ const AdminStudents = () => {
 													}[user.clearance]
 												}
 											</td>
+											<td className={style.joinDate}>
+												{new Date(
+													user.joinDate
+												).toLocaleDateString("fr-FR", {
+													year: "numeric",
+													month: "2-digit",
+													day: "2-digit",
+													hour: "2-digit",
+													minute: "2-digit"
+												})}
+											</td>
 										</tr>
 									)
 							)
@@ -122,11 +148,13 @@ const AdminStudents = () => {
 							</tr>
 						)}
 					</table>
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
+					<div id={style.pagination}>
+						<Pagination
+							count={count}
+							page={page}
+							onChange={handleChangePage}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
