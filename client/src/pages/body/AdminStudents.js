@@ -56,7 +56,7 @@ const AdminStudents = () => {
 		>
 			<AdminNavbar />
 			<div className={style.studListContainer}>
-				<h1> AdminPannel Students part </h1>
+				<div id={style.tittle}>Gestion des utilisateurs</div>
 				<button
 					hidden
 					id={style.premium}

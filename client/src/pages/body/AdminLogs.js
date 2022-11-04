@@ -48,6 +48,7 @@ const AdminLogs = () => {
 		>
 			<AdminNavbar />
 			<div className={style.logsContainer}>
+				<div id={style.tittle}>Logs</div>
 				<div className={style.dropdownContainer}>
 					<button id={style.dropdownButton} onClick={filterHanddler}>
 						Filtrer
@@ -123,7 +124,6 @@ const AdminLogs = () => {
 						</button>
 					</div>
 				</div>
-
 				<AdminLogList filter={filter} />
 			</div>
 		</div>
