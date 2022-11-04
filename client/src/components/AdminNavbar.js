@@ -194,7 +194,7 @@ const AdminNavbar = () => {
 					</svg>
 				</a>
 				<a href="/admin">
-					<h2>Admin</h2>
+					<h2>Admin </h2>
 				</a>
 				<a href="/admin/students">
 					<h3>Utilisateurs</h3>
@@ -203,7 +203,7 @@ const AdminNavbar = () => {
 					<h3>Évènements</h3>
 				</a>
 				<a href="/admin/events/subscribtions">
-					<h3>Inscriptions aux évènement</h3>
+					<h3>Inscriptions</h3>
 				</a>
 				<a href="/admin/contributions">
 					<h3>Cotisations</h3>
