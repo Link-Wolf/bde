@@ -35,6 +35,9 @@ const AdminLogs = () => {
 		if (document.getElementById(style.dropdown).style.display === "block")
 			document.getElementById(style.dropdown).style.display = "none";
 		else document.getElementById(style.dropdown).style.display = "block";
+		if (document.getElementById(style.dropdownBg).style.display === "block")
+			document.getElementById(style.dropdownBg).style.display = "none";
+		else document.getElementById(style.dropdownBg).style.display = "block";
 	};
 
 	return (
@@ -49,7 +52,7 @@ const AdminLogs = () => {
 					<button id={style.dropdownButton} onClick={filterHanddler}>
 						Filtrer
 					</button>
-
+					<div id={style.dropdownBg} onClick={filterHanddler}></div>
 					<div id={style.dropdown}>
 						<CheckSet
 							set={[

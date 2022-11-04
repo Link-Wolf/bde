@@ -24,6 +24,18 @@
 			}
 		}
 
+		#dropdownBg {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.5);
+			backdrop-filter: blur(5px);
+			display: none;
+			z-index: 8;
+		}
+
 		#dropdown {
 			background: var(--light-grey);
 			padding: 20px;
