@@ -62,32 +62,35 @@ const UserProfile = props => {
 				fields={[
 					{
 						content: (
-							<ContributionHistory
-								login={props.login}
-								setBlackHole={setBlackHole}
-							/>
-						),
-						title: "Cotisations" // TODO: text here
-					},
-					{
-						content: (
 							<SubscribedEvents
 								login={props.login}
 								me={props.me}
 							/>
 						),
-						title: "Evenements" // TODO: text here
+						title: "Evenements"
 					},
-					...(props.me
-						? [
-								{
-									content: (
-										<OrderHistory login={props.login} />
-									),
-									title: "Commandes" // TODO: text here
-								}
-						  ]
-						: [])
+					{
+						content: (
+							<ContributionHistory
+								login={props.login}
+								setBlackHole={setBlackHole}
+							/>
+						),
+						title: "Bientôt",
+						disable: true
+						// title: "Cotisations"
+					}
+					// 	,
+					// ...(props.me
+					// 	? [
+					// 			{
+					// 				content: (
+					// 					<OrderHistory login={props.login} />
+					// 				),
+					// 				title: "Commandes"
+					// 			}
+					// 	  ]
+					// 	: [])
 				]}
 			/>
 		</div>
@@ -155,7 +158,6 @@ const ProfilePicture = props => {
  *		stud:	object, db data of the student
  */
 const Identity = props => {
-	// TODO: text here
 	return (
 		<div className={style.identityContainer}>
 			<h1>{props.stud.login}</h1>
@@ -449,14 +451,14 @@ const ChangeEmailField = props => {
 							.startsWith("42")
 					) {
 						NotificationManager.warning(
-							"Mail invalide", // TODO: words here
+							"Le mail entré est invalide",
 							"Attention",
 							5000
 						);
 					}
 					if (trueMail === ogTrueMail) {
 						NotificationManager.warning(
-							"Mail déjà enregistré à cette valeur",
+							"Le mail est déjà enregistré à cette valeur",
 							"Attention",
 							5000
 						);
@@ -464,7 +466,7 @@ const ChangeEmailField = props => {
 					}
 					saveMail();
 					NotificationManager.success(
-						"Mail biem enregistré", // TODO: words here
+						"Le mail a bien été enregistré",
 						"Validation",
 						5000
 					);
@@ -775,12 +777,16 @@ const HistorySelector = props => {
 
 	if (props.fields.length === 0) return;
 	return (
-		<div className={style.historySelectorContainer}>
+		<div
+			className={style.historySelectorContainer}
+			disabled={props.disable}
+		>
 			<div className={style.historySelector}>
 				<ul>
 					{props.fields.map((field, i) => (
 						<li key={i}>
 							<input
+								disabled={props.disable}
 								id={`radio${i}`}
 								type="radio"
 								checked={selected === i}
@@ -788,7 +794,13 @@ const HistorySelector = props => {
 									setSelected(i);
 								}}
 							/>
-							<label htmlFor={`radio${i}`}> {field.title}</label>
+							<label
+								disabled={props.disable}
+								htmlFor={`radio${i}`}
+							>
+								{" "}
+								{field.title}
+							</label>
 						</li>
 					))}
 				</ul>
