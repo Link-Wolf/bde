@@ -82,7 +82,8 @@ const AdminLogList = param => {
 							</li>
 							<li id={style.login}>
 								{log.login === "Public" ||
-								log.login === "42intra-API" ? (
+								log.login === "42intra-API" ||
+								log.login === "INTERNAL" ? (
 									log.login
 								) : (
 									<a href={`/profile/${log.login}`}>
