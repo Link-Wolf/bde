@@ -6,6 +6,8 @@ import {NotificationManager} from "react-notifications";
 import AddDirectionSearchBar from "../../components/AddDirectionSearchBar";
 import Mutiny from "../../components/Mutiny";
 
+import style from "../../style/AdminCaptainManagement.module.scss";
+
 const AdminCaptainManagement = () => {
 	const {isConfirmed} = useConfirm();
 
@@ -117,7 +119,8 @@ const AdminCaptainManagement = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.captainManagementContainer}>
+				<div id={style.tittle}>Gestion des administrateurs</div>
 				<AddDirectionSearchBar
 					setUpdate={d => {
 						setUpdate(d);

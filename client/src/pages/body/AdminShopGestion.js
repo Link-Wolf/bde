@@ -4,6 +4,8 @@ import AdminProductToken from "../../components/AdminProductToken";
 import AdminCreateProductToken from "../../components/AdminCreateProductToken";
 import {NotificationManager} from "react-notifications";
 
+import style from "../../style/AdminShopgestion.module.scss";
+
 import {Accordion, Button} from "react-bootstrap";
 
 const AdminShopGestion = param => {
@@ -65,7 +67,8 @@ const AdminShopGestion = param => {
 				}}
 			>
 				<AdminNavbar />
-				<div>
+				<div className={style.shopGestionContainer}>
+					<div id={style.tittle}>Gestion des produits</div>
 					<Button onClick={createNewProduct}>New</Button>
 					<Accordion>
 						{newProduct}

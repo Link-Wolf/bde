@@ -6,6 +6,8 @@ import {NotificationManager} from "react-notifications";
 import AddUnpaidSearchBar from "../../components/AddUnpaidSearchBar";
 import Mutiny from "../../components/Mutiny";
 
+import style from "../../style/AdminUnpaidManagement.module.scss";
+
 const AdminCaptainManagement = () => {
 	const {isConfirmed} = useConfirm();
 
@@ -89,7 +91,8 @@ const AdminCaptainManagement = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.unpaidManagementContainer}>
+				<div id={style.tittle}>Gestion des volontaires</div>
 				<AddUnpaidSearchBar
 					setUpdate={d => {
 						setUpdate(d);
