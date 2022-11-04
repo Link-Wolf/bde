@@ -75,14 +75,19 @@ const AdminLogs = () => {
 							onChange={handleFormChange}
 							type="checkbox"
 						/>
-						<label>Filtrer par login</label>
+						<hr />
+						<label id={style.login}>Filtrer par login :</label>
 						<input
 							autoFocus={true}
 							placeholder="Login"
 							name="login"
 							onChange={handleFormChange}
 						/>
-						<label>Tri</label>
+						<hr />
+						<div>
+							<label id={style.tri}>Trier par : </label>
+						</div>
+						<label id={style.triDate}>Date </label>
 						<button onClick={handleButtonChange}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +99,10 @@ const AdminLogs = () => {
 										fill="none"
 										stroke={
 											filter.asc
-												? "var(--black)"
-												: "var(--secondary)"
+												? "var(--primary-dark)"
+												: "var(--secondary-dark)"
 										}
+										strokeWidth="10%"
 										strokeLinecap="round"
 										strokeLinejoin="round"
 									/>
@@ -105,9 +111,10 @@ const AdminLogs = () => {
 										fill="none"
 										stroke={
 											!filter.asc
-												? "var(--black)"
-												: "var(--secondary)"
+												? "var(--primary-dark)"
+												: "var(--secondary-dark)"
 										}
+										strokeWidth="10%"
 										strokeLinecap="round"
 										strokeLinejoin="round"
 									/>
