@@ -3,6 +3,8 @@ import AdminNavbar from "../../components/AdminNavbar";
 import useConfirm from "../../components/useConfirm";
 import {NotificationManager} from "react-notifications";
 
+import style from "../../style/AdminEventsSubscribtions.module.scss";
+
 import {Form, Button, FormGroup} from "react-bootstrap";
 
 const AdminStudents = () => {
@@ -189,7 +191,8 @@ const AdminStudents = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.subscribtionsContainer}>
+				<div id={style.tittle}>Inscriptions aux évènements</div>
 				<h1> AdminPannel </h1>
 				<div>
 					<Form>

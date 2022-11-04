@@ -6,6 +6,8 @@ import {NotificationManager} from "react-notifications";
 
 import {Accordion, Button} from "react-bootstrap";
 
+import style from "../../style/AdminEventsGestion.module.scss";
+
 const AdminEventsGestion = param => {
 	const [data, setData] = useState([]);
 	const [openEventId, setOpenEventId] = useState(-42);
@@ -65,7 +67,8 @@ const AdminEventsGestion = param => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.eventsContainer}>
+				<div id={style.tittle}>Gestion des évènements</div>
 				<Button onClick={createNewEvent}>New</Button>
 				<Accordion>
 					{newEvent}
