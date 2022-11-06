@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {NotificationManager} from "react-notifications";
 
 import login from "../assets/logos/login.png";
 import logout from "../assets/logos/logout.png";
@@ -8,7 +9,7 @@ import style from "../style/Header.module.scss";
 
 const DropdownUser = param => {
 	const [img, setImg] = useState({
-		profile: blank,
+		profile: undefined,
 		login: blank,
 		logout: blank
 	});
@@ -35,13 +36,15 @@ const DropdownUser = param => {
 				});
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
 
+	if (img.profile == undefined) return;
 	if (img.profile !== blank)
 		return (
 			<div>

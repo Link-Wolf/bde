@@ -3,7 +3,8 @@ import {useState, useEffect} from "react";
 import {Form, Button} from "react-bootstrap";
 import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
-import Loading from "../../components/Loading";
+import LoadingMedium from "../../components/Loading";
+import style from "../../style/Contact.module.scss";
 
 const Contact = () => {
 	const [idForm, setIdForm] = useState(true);
@@ -52,7 +53,6 @@ const Contact = () => {
 	};
 
 	const sendMail = async () => {
-		console.log(formState);
 		if (
 			formState.mail === "" ||
 			formState.name === "" ||
@@ -100,9 +100,10 @@ const Contact = () => {
 							setNeedMail(false);
 						})
 						.catch(function(error) {
-							console.log(
-								"Il y a eu un problème avec l'opération fetch: " +
-									error.message
+							NotificationManager.error(
+								"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+								"Erreur",
+								5000
 							);
 						});
 			})
@@ -117,9 +118,10 @@ const Contact = () => {
 				);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 		setLock(false);
@@ -148,9 +150,10 @@ const Contact = () => {
 				else checkTrueMail(tmp.login);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -158,8 +161,9 @@ const Contact = () => {
 	useEffect(() => {
 		if (
 			!formState.login ||
-			formState.login == undefined ||
-			formState.login == ""
+			formState.login === undefined ||
+			formState.login === "" ||
+			formState.login === -42
 		)
 			return;
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${formState.login}/mail`, {
@@ -179,9 +183,10 @@ const Contact = () => {
 				setFormState(tmp);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [formState.login]);
@@ -209,33 +214,44 @@ const Contact = () => {
 				setFormState(tmp);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
 
 	if (sent)
 		return (
-			<>
-				<p>Merci pour votre retour !</p>
-				<button
-					onClick={() => {
-						setSent(false);
-					}}
-				>
-					Envoyer un nouveau message
-				</button>
-			</>
+			<div className={style.contactContainer}>
+				<form>
+					<p id={style.pouet}>Merci pour votre retour !</p>
+					<button
+						id={style.resend}
+						onClick={() => {
+							setSent(false);
+						}}
+					>
+						Envoyer un nouveau message
+					</button>
+				</form>
+			</div>
 		);
-	if (loading) return <Loading />;
+	if (loading)
+		return (
+			<div className={style.contactContainer}>
+				<div id={style.loading}>
+					<LoadingMedium />
+				</div>
+			</div>
+		);
 	return (
-		<div>
-			<Form>
-				<Form.Group>
-					<Form.Label>Sujet</Form.Label>
-					<Form.Select
+		<div className={style.contactContainer}>
+			<form>
+				<div className={style.section}>
+					<label>Sujet</label>
+					<select
 						aria-label="Sélectionnez le sujet"
 						value={formState.subject}
 						onChange={handleFormChange}
@@ -247,20 +263,21 @@ const Contact = () => {
 							Sélectionnez le sujet ici..
 						</option>
 						<option value="Idées et suggestions">
-							Suggestion / Idées
+							Suggestions / Idées
 						</option>
 						<option value="Partenariat">Partenariat</option>
 						<option value="Réclamation">Réclamation</option>
 						<option value="Club">Club</option>
 						<option value="Boutique">Boutique</option>
-						<option value="Feedback">Feedback d'un event</option>
+						<option value="Feedback">
+							Retour sur un évènement
+						</option>
 						<option value="Autre">Autre</option>
-					</Form.Select>
-				</Form.Group>
-				<Form.Group>
-					<Form.Label>Message</Form.Label>
-					<Form.Control
-						as="textarea"
+					</select>
+				</div>
+				<div className={style.section}>
+					<label>Message</label>
+					<textarea
 						placeholder="Votre messsage"
 						value={formState.message}
 						onChange={handleFormChange}
@@ -269,42 +286,40 @@ const Contact = () => {
 						disabled={lock}
 						minLength={10}
 					/>
-				</Form.Group>
-				<Form.Group hidden={idForm}>
-					<Form.Label>Nom</Form.Label>
-					<Form.Control
-						placeholder="Veuillez entrer votre nom"
+				</div>
+				<div className={style.section} hidden={idForm}>
+					<label>Nom</label>
+					<input
+						placeholder="Jean-Billy"
 						value={formState.name}
 						onChange={handleFormChange}
 						name="name"
 						required
 						disabled={lock}
 					/>
-				</Form.Group>
-				<Form.Group hidden={!needMail && idForm}>
-					<Form.Label>Email</Form.Label>
-					<Form.Control
+				</div>
+				<div className={style.section} hidden={!needMail && idForm}>
+					<label>Email</label>
+					<input
 						disabled={lock}
 						type="email"
-						placeholder="Veuillez entrer votre mail afin de vous recontacter"
+						placeholder="me@exemple.net"
 						value={formState.mail}
 						onChange={handleFormChange}
 						name="mail"
 						id="emailField"
 						required
 					/>
-					<Form.Text className="text-muted">
-						Nous ne partagerons jamais votre mail
-					</Form.Text>
-				</Form.Group>
-				<Button
+					<p>Nous ne partagerons jamais votre mail.</p>
+				</div>
+				<button
 					variant="outline-primary"
 					disabled={lock}
 					onClick={sendMail}
 				>
 					Envoyer
-				</Button>
-			</Form>
+				</button>
+			</form>
 		</div>
 	);
 };

@@ -61,9 +61,10 @@ const AdminClubToken = param => {
 					window.location.reload();
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 		}
@@ -134,7 +135,6 @@ const AdminClubToken = param => {
 					requestOptions
 				)
 					.then(response => {
-						console.log("rep", response);
 						if (!response.ok) {
 							throw new Error(
 								`This is an HTTP error: The status is ${response.status}`
@@ -150,15 +150,18 @@ const AdminClubToken = param => {
 						);
 					})
 					.catch(function(error) {
-						console.log(
-							"Il y a eu un problème avec l'opération fetch: " +
-								error.message
+						NotificationManager.error(
+							"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+							"Erreur",
+							5000
 						);
 					});
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};

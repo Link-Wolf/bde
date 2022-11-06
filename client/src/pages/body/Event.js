@@ -21,6 +21,7 @@ import fadedPool from "../../assets/logos/fadedPool.svg";
 
 const Event = param => {
 	const [dataEvent, setDataEvent] = useState([]);
+	const [isSubbed, setIsSubbed] = useState(undefined);
 	const [duration, setDuration] = useState("Never Ending Fun");
 	const [isPremium, setIsPremium] = useState(undefined);
 
@@ -50,12 +51,14 @@ const Event = param => {
 				}
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}.`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 				window.location = "/events";
 			});
-	}, [param.id]);
+	}, [param.id, isSubbed]);
 
 	return (
 		<div className={style.eventContainer}>
@@ -78,6 +81,8 @@ const Event = param => {
 					<div>
 						<Price dataEvent={dataEvent} isPremium={isPremium} />
 						<SubscribeButton
+							setIsSubbed={setIsSubbed}
+							isSubbed={isSubbed}
 							closeEvent={param.closeEvent}
 							dataEvent={dataEvent}
 							setIsPremium={setIsPremium}
@@ -110,9 +115,10 @@ const Thumbnail = param => {
 				setThumnail(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param.id]);
@@ -233,11 +239,9 @@ const Details = param => {
 
 const SubscribeButton = param => {
 	const [stud, setStud] = useState({});
-	const [isSubbed, setIsSubbed] = useState(undefined);
 	const {isConfirmed} = useConfirm();
 
 	const sub = async () => {
-		setIsSubbed(undefined);
 		let nb_places, price, subbed;
 		if (stud.isPremium) {
 			if (param.dataEvent.nb_places === -42) nb_places = 4242;
@@ -259,15 +263,15 @@ const SubscribeButton = param => {
 				"Attention",
 				5000
 			);
-			setIsSubbed(false);
+			param.setIsSubbed(false);
 			return;
 		}
 		if (price !== 0) {
-			// await isConfirmed(
-			// 	`Contacte un membre du BDE pour payer et valider ton inscription !`
-			// );
-			// setIsSubbed(false);
-			window.location = `/purchase/${param.dataEvent.id}`;
+			await isConfirmed(
+				`Le paiement en ligne sera bientôt disponbile ! D'ici là, contacte un membre du BDE pour payer et valider ton inscription !`
+			);
+			param.setIsSubbed(false);
+			//window.location = `/purchase/${param.dataEvent.id}`;
 			return;
 		}
 		await fetch(
@@ -279,22 +283,23 @@ const SubscribeButton = param => {
 		)
 			.then(response => {
 				if (!response.ok) {
-					setIsSubbed(false);
+					param.setIsSubbed(false);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
 			})
-			.then(setIsSubbed(true))
+			.then(param.setIsSubbed(true))
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
 
 	const unsub = async () => {
-		setIsSubbed(undefined);
 		let price;
 		if (stud.isPremium) {
 			price = param.dataEvent.premium_cost;
@@ -305,7 +310,7 @@ const SubscribeButton = param => {
 			await isConfirmed(
 				`Contacte un membre du BDE pour te faire rembourser et compléter ta désinscription !`
 			);
-			setIsSubbed(true);
+			param.setIsSubbed(true);
 			return;
 		}
 		await fetch(
@@ -317,18 +322,20 @@ const SubscribeButton = param => {
 		)
 			.then(response => {
 				if (!response.ok) {
-					setIsSubbed(true);
+					param.setIsSubbed(true);
 					throw new Error(
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
 			})
 			.then(() => {
-				setIsSubbed(false);
+				param.setIsSubbed(false);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -351,8 +358,10 @@ const SubscribeButton = param => {
 				param.setIsPremium(data.isPremium);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -379,11 +388,13 @@ const SubscribeButton = param => {
 				return response.json();
 			})
 			.then(data => {
-				setIsSubbed(data.isSubbed);
+				param.setIsSubbed(data.isSubbed);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param]);
@@ -392,11 +403,11 @@ const SubscribeButton = param => {
 		<div className={style.buttons}>
 			<button onClick={param.closeEvent}>Fermer</button>
 			<button
-				disabled={isSubbed === undefined}
-				onClick={isSubbed ? unsub : sub}
+				disabled={param.isSubbed === undefined}
+				onClick={param.isSubbed ? unsub : sub}
 				className={style.subButton}
 			>
-				{isSubbed ? "Désinscription" : "Inscription"}
+				{param.isSubbed ? "Désinscription" : "Inscription"}
 			</button>
 		</div>
 	);

@@ -13,7 +13,7 @@ export class Goodies {
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "double precision"
 	})
 	cost: number
 
@@ -58,4 +58,10 @@ export class Goodies {
 		nullable: true
 	})
 	thumbnail_filename: string
+
+	@Column({
+		type: 'text',
+		nullable: true
+	})
+	album_path: string
 }

@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 
 import EventToken from "./EventToken";
+import {NotificationManager} from "react-notifications";
 
 import style from "../style/EventList.module.scss";
 
@@ -53,9 +54,10 @@ const EventList = param => {
 				setCount(newCount);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param.filter]);
@@ -93,15 +95,21 @@ const EventList = param => {
 					)}
 				</div>
 				<ul className={style.eventList}>
-					{(telephone ? data : viewData.currentData()).map(item => (
-						<li key={item.id}>
-							<EventToken
-								setPopUpEvent={setPopUpEvent}
-								event={item}
-								type="event"
-							/>
-						</li>
-					))}
+					{data.length ? (
+						(telephone ? data : viewData.currentData()).map(
+							item => (
+								<li key={item.id}>
+									<EventToken
+										setPopUpEvent={setPopUpEvent}
+										event={item}
+										type="event"
+									/>
+								</li>
+							)
+						)
+					) : (
+						<p> Aucun évènement prévu pour le moment.</p>
+					)}
 				</ul>
 				<div className={style.paginationContainer}>
 					{data.length > 3 && !telephone && (

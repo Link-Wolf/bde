@@ -1,6 +1,7 @@
 import {useState, useRef} from "react";
 import {Button, Form} from "react-bootstrap";
 import useConfirm from "./useConfirm";
+import {NotificationManager} from "react-notifications";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -72,43 +73,6 @@ const AdminCreateEventToken = param => {
 		const name = target.name;
 
 		tmp[name] = value;
-		// console.log(tmp);
-
-		// let begin_date = new Date(Date.parse(tmp.begin_date));
-		// let end_date = new Date(Date.parse(tmp.end_date));
-		// let available_date = new Date(Date.parse(tmp.available_date));
-		// let tmpBody = {...tmp};
-		// console.log(tmp.begin_date);
-		// tmpBody.end_date =
-		// 	two_digiter(end_date.getFullYear()) +
-		// 	"-" +
-		// 	two_digiter(end_date.getMonth() + 1) +
-		// 	"-" +
-		// 	two_digiter(end_date.getDate()) +
-		// 	"T" +
-		// 	two_digiter(end_date.getHours()) +
-		// 	":" +
-		// 	two_digiter(end_date.getMinutes());
-		// tmpBody.begin_date =
-		// 	two_digiter(begin_date.getFullYear()) +
-		// 	"-" +
-		// 	two_digiter(begin_date.getMonth() + 1) +
-		// 	"-" +
-		// 	two_digiter(begin_date.getDate()) +
-		// 	"T" +
-		// 	two_digiter(begin_date.getHours()) +
-		// 	":" +
-		// 	two_digiter(begin_date.getMinutes());
-		// tmpBody.available_date =
-		// 	two_digiter(available_date.getFullYear()) +
-		// 	"-" +
-		// 	two_digiter(available_date.getMonth() + 1) +
-		// 	"-" +
-		// 	two_digiter(available_date.getDate()) +
-		// 	"T" +
-		// 	two_digiter(available_date.getHours()) +
-		// 	":" +
-		// 	two_digiter(available_date.getMinutes());
 		setBodyState(tmp);
 		setFormState(tmp);
 	};
@@ -144,10 +108,7 @@ const AdminCreateEventToken = param => {
 				credentials: "include"
 			};
 
-			fetch(
-				`${process.env.REACT_APP_API_URL}/event/`,
-				requestOptions
-			)
+			fetch(`${process.env.REACT_APP_API_URL}/event/`, requestOptions)
 				.then(response => {
 					if (!response.ok) {
 						throw new Error(
@@ -162,9 +123,10 @@ const AdminCreateEventToken = param => {
 					});
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 		}
@@ -190,9 +152,10 @@ const AdminCreateEventToken = param => {
 				}
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};

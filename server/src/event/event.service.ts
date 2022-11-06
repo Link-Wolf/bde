@@ -54,52 +54,12 @@ export class EventService {
 		}
 	}
 
-	async getAlbum(id: number, login: any) {
-		try {
-			const event = await this.eventRepository.findOneById(id);
-			if (!event || !fs.existsSync(`assets/album/events/${id}`)) {
-				this.logger.error(`Failed -> Get album of event ${id} : event doesn't exist`, login);
-				throw new NotFoundException(`Failed to get album of event ${id}`)
-			}
-			const addFilesFromDirectoryToZip =
-				(directoryPath = `assets/album/events/${id}`, zip: JSZip) => {
-					const directoryContents = fs.readdirSync(directoryPath, {
-						withFileTypes: true,
-					});
-
-					directoryContents.forEach(({ name }) => {
-						const path = `${directoryPath}/${name}`;
-
-						if (fs.statSync(path).isFile()) {
-							zip.file(`${name}`, fs.readFileSync(path));
-						}
-
-						if (fs.statSync(path).isDirectory()) {
-							addFilesFromDirectoryToZip(path, zip);
-						}
-					});
-				};
-
-			const directoryPath = `assets/album/events/${id}`
-			const zip = new JSZip();
-
-			addFilesFromDirectoryToZip(directoryPath, zip);
-			const zipAsBase64 = await zip.generateAsync({ type: "base64" });
-			this.logger.log(`Got album of event ${id}`, login);
-
-			return zipAsBase64;
-		} catch (error) {
-			this.logger.error(`Failed -> Get album of event ${id} on database (${error})`, login);
-			throw error
-		}
-	}
-
 	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
 			let path: any
 			if ('err' in file) {
 				let nb = Math.floor(Math.random() * 5)
-				path = "assets/thumbnails/events/placeholder" + nb + ".jpg"
+				path = "assets/placeholders/thumbnails/placeholder" + nb + ".jpg"
 				this.eventRepository.update(id, {
 					thumbnail_filename: path
 				})

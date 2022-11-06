@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
-import style from "../style/EventToken.module.scss";
+import {NotificationManager} from "react-notifications";
+import styleBasic from "../style/EventToken.module.scss";
+import styleUser from "../style/EventTokenUser.module.scss";
 import conso from "../assets/logos/consos.svg";
 import sponso from "../assets/logos/sponso.svg";
 import pool from "../assets/logos/pool.svg";
@@ -10,7 +12,9 @@ import dateTime from "../assets/logos/date.svg";
 
 const EventToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
-
+	let style;
+	if (param.user) style = styleUser;
+	else style = styleBasic;
 	useEffect(() => {
 		fetch(
 			`${process.env.REACT_APP_API_URL}/event/${param.event.id}/thumbnail`,
@@ -31,9 +35,10 @@ const EventToken = param => {
 				setImgSrc(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

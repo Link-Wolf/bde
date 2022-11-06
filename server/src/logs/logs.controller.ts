@@ -15,6 +15,12 @@ export class LogsController {
 		return this.logsService.findAll(null, session.login);
 	}
 
+	@UseGuards(new ClearanceGuard(21))
+	@Get('file')
+	blobAll(@Session() session: Record<string, any>) {
+		return this.logsService.blobAll(session.login);
+	}
+
 	@Post('get')
 	findAllButFilter(
 		@Body(new LogsFilterDtoPipe()) filters: LogsFilterDto,

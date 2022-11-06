@@ -169,11 +169,23 @@
 				width: calc(var(--colWidth) - 2 * var(--margin));
 				display: flex;
 
+				&#load {
+					img {
+						padding: calc(100% - 10px);
+					}
+				}
+
 				img {
+					transition: 0.2s ease-out;
 					padding: var(--padding);
 					width: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					height: calc((var(--colWidth) - 2 * var(--margin)) / 3 * 2);
 					object-fit: cover;
+
+					&:hover {
+						transition: 0.2s ease-out;
+						padding: 0;
+					}
 				}
 
 				.miniThumbnailsContainer {
@@ -211,9 +223,11 @@
 					margin: 0;
 
 					span {
-						margin: 0;
+						margin: 10px 0 0;
 
 						p {
+							line-height: 13px;
+							margin: 15px 0;
 							font-size: 12px;
 						}
 					}
@@ -273,5 +287,36 @@
 				--colWidth: 100vw;
 			}
 		}
+	}
+}
+
+#filter {
+	position: absolute;
+	overflow: auto;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.5);
+	backdrop-filter: blur(50px);
+	width: 100vw;
+	height: 100vh;
+	animation: 0.2s linear 0s blurAppear;
+	z-index: 42;
+
+	#outArea {
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		z-index: -1;
+	}
+}
+@keyframes blurAppear {
+	0% {
+		backdrop-filter: blur(0px);
+		background: rgba(0,0,0,0);
+	}
+
+	100% {
+		backdrop-filter: blur(50px);
+		background: rgba(0,0,0,0.5);
 	}
 }

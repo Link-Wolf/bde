@@ -1,6 +1,7 @@
 import {React, useState, useEffect} from "react";
 import usePagination from "../../components/Pagination";
 import {Pagination} from "@mui/material";
+import {NotificationManager} from "react-notifications";
 
 const Clubs = () => {
 	const [clubs, setClubs] = useState([]);
@@ -40,12 +41,12 @@ const Clubs = () => {
 			.then(tmp => {
 				setCount(tmp);
 				setLoad(false);
-				console.log(clubs);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

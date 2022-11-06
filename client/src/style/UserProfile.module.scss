@@ -4,19 +4,22 @@
 	.profileInfoContainer {
 		--image-size: 300px;
 		display: flex;
-		width: calc(var(--image-size) * 2 + 40px + 250px + 80px);
+		width: calc(var(--image-size) * 2 + 40px + 250px + 120px);
 
 		.profilePictureContainer {
+			margin-left: 300px;
 			position: relative;
-			height: calc(var(--image-size) + 40px);
-			width: calc(var(--image-size) + 40px);
+			height: calc(var(--image-size));
+			width: calc(var(--image-size));
+			padding-left: 300px;
 
 			img {
-				margin: 20px;
+				margin: 0;
 				position: absolute;
 				width: var(--image-size);
 				height: var(--image-size);
-				padding: 5px;
+				left: 0;
+				padding: 0;
 				object-fit: cover;
 
 				&.premium {
@@ -30,27 +33,32 @@
 				position: absolute;
 				transform: rotate(9deg);
 				left: calc(var(--image-size) / 2.2);
-				top: calc(var(--image-size) / 20);
+				top: 0;
 			}
 		}
 
 		.identityContainer {
-			width: 250px;
-			text-align: center;
-			margin: 0 40px;
+			text-align: left;
+			margin: 0 40px 0 120px;
+			padding: 20px 0;
 
 			h1 {
+				font-size: 30px;
 				text-transform: uppercase;
 				font-weight: bold;
 			}
 
 			ul {
 				padding: 0;
-				margin: 0;
+				margin: 0 0 50px;
 				list-style-type: none;
 
 				li {
-					margin: 20px 0;
+					margin: 0 0 25px;
+
+					&:nth-of-type(1) {
+						font-size: 20px;
+					}
 
 					b {}
 
@@ -103,7 +111,14 @@
 	}
 
 	.emailFieldContainer {
-		margin: 20px 40px;
+		margin: 0;
+		display: flex;
+
+		label {
+			padding: 5px;
+			margin: 5px 0;
+			width: 60px;
+		}
 
 		input {
 			padding: 5px;
@@ -125,14 +140,17 @@
 	}
 
 	.historySelectorContainer {
+		display: flex;
+		margin: 50px 0 50px 300px;
+
 		.historySelector {
 			ul {
 				padding: 0;
-				width: 600px;
-				margin: 0;
+				width: 300px;
 
 				li {
-					display: inline;
+					width: 300px;
+					list-style-type: none;
 
 					input[type="radio"] {
 						opacity: 0;
@@ -140,12 +158,15 @@
 						width: 0;
 
 						& + label {
-							text-align: center;
-							width: 190px;
+							text-align: left;
+							text-transform: uppercase;
+							font-size: 18px;
+							font-weight: bold;
+							border-bottom: solid var(--dark-grey) 1px;
+							width: 300px;
 							background: var(--white);
 							padding: 5px;
-							margin: 5px;
-							border: none;
+							margin: 0;
 
 							&:hover {
 								cursor: pointer;
@@ -154,7 +175,15 @@
 
 						&:checked {
 							& + label {
-								border-bottom: solid var(--primary) 2px;
+								background: var(--lighter-grey);
+							}
+						}
+					}
+
+					&:nth-last-of-type(1) {
+						input {
+							& + label {
+								border: none;
 							}
 						}
 					}
@@ -163,8 +192,7 @@
 		}
 
 		.historyContent {
-			width: 600px;
-			margin: 0;
+			margin: 0 0 0 120px;
 			padding: 0;
 
 			.listContainer {
@@ -197,9 +225,11 @@
 				}
 
 				&#contrib {
+					width: 380px;
+
 					h3 {}
 
-					ul {
+					ul#malist {
 						text-align: center;
 
 						li {
@@ -213,24 +243,31 @@
 				}
 
 				&#event {
-					width: 600px;
+					width: 380px;
 
 					h3 {}
 
 					ul {
 						&#eventList {
-							height: 900px;
-						}
-						width: 600px;
+							height: 250px;
+							margin: 10px;
+							text-align: center;
 
-						li {
-							a {
-								height: 175px;
-							}
+							li {
+								margin: 5px;
 
-							&:nth-last-of-type(1) {
 								hr {
 									display: none;
+								}
+
+								a {
+									height: 175px;
+								}
+
+								&:nth-last-of-type(1) {
+									hr {
+										display: none;
+									}
 								}
 							}
 						}
@@ -238,93 +275,36 @@
 				}
 
 				&#order {
+					width: 380px;
+					text-align: center;
+
 					h3 {}
 
-					ul {
+					ul#MALISTE {
 						li {
-							a {}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-@media (max-width: 100vh) {
-	.profileContainer {
-		.profileInfoContainer {
-			.profilePictureContainer {
-				img {
-					&.premium {}
-				}
+							button {
+								padding: 5px;
+								border: none;
+								width: 300px;
+								margin: 5px;
 
-				svg {}
-			}
+								&.evenement {
+									background: var(--primary-light);
+									color: var(--white);
 
-			.identityContainer {
-				h1 {}
+									&:hover {
+										background: var(--primary);
+									}
+								}
 
-				ul {
-					li {
-						b {}
+								&.cotisation {
+									background: var(--secondary-light);
+									color: var(--white);
 
-						img {}
-					}
-				}
-			}
-
-			.qrContainer {
-				a {
-					svg {}
-				}
-			}
-		}
-
-		.emailFieldContainer {
-			input {}
-
-			button {}
-		}
-
-		.historySelectorContainer {
-			.historySelector {
-				ul {
-					li {
-						a {}
-					}
-				}
-			}
-
-			.historyContent {
-				div {
-					h3 {}
-
-					ul {
-						li {}
-					}
-
-					&.contrib {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.event {
-						h3 {}
-
-						ul {
-							li {}
-						}
-					}
-
-					&.order {
-						h3 {}
-
-						ul {
-							li {
-								a {}
+									&:hover {
+										background: var(--secondary);
+									}
+								}
 							}
 						}
 					}
@@ -333,22 +313,59 @@
 		}
 	}
 }
+
+#load {
+	padding: calc((100vh - 350px) / 2) calc((100vw - 150px) / 2);
+
+	img {
+		width: 150px !important;
+		height: 150px !important;
+	}
+}
 @media (max-width: 100vh) {
 	.profileContainer {
+		padding: 20px 2vw;
+
 		.profileInfoContainer {
+			flex-direction: column;
+			--image-size: 150px;
+
 			.profilePictureContainer {
+				margin: 0 calc((96vw - 150px)/2);
+
 				img {
 					&.premium {}
 				}
 
-				svg {}
+				svg {
+					width: 20px;
+					left: 60px;
+					top: -7px;
+				}
 			}
 
 			.identityContainer {
-				h1 {}
+				margin: 0;
+				width: 96vw;
+
+				h1 {
+					text-align: center;
+					font-size: 20px;
+					margin-bottom: 0;
+				}
 
 				ul {
+					text-align: center;
+					margin: 0;
+
 					li {
+						margin: 0 0 10px;
+						font-size: 12px;
+
+						&:nth-of-type(1) {
+							font-size: 15px;
+						}
+
 						b {}
 
 						svg {}
@@ -357,8 +374,6 @@
 			}
 
 			.qrContainer {
-				display: inline-block;
-
 				button {
 					&:hover {}
 				}
@@ -372,7 +387,19 @@
 		}
 
 		.emailFieldContainer {
-			input {}
+			width: 96vw;
+			justify-content: space-around;
+			margin: 20px 0;
+
+			label {
+				font-size: 15px;
+				width: auto;
+			}
+
+			input {
+				font-size: 15px;
+				width: 40vw;
+			}
 
 			button {
 				&:hover {}
@@ -380,11 +407,26 @@
 		}
 
 		.historySelectorContainer {
+			margin: 0;
+			flex-direction: column;
+
 			.historySelector {
 				ul {
+					display: flex;
+					width: 96vw;
+
 					li {
+						width: 32vw;
+
 						input[type="radio"] {
 							& + label {
+								letter-spacing: 1px;
+								width: 32vw;
+								font-size: 18px;
+								font-stretch: condensed;
+								text-align: center;
+								font-weight: normal;
+
 								&:hover {}
 							}
 
@@ -392,122 +434,86 @@
 								& + label {}
 							}
 						}
+
+						&:nth-last-of-type(1) {
+							input {
+								& + label {
+									border-bottom: solid var(--dark-grey) 1px;
+								}
+							}
+						}
 					}
 				}
 			}
 
 			.historyContent {
-				div {
+				margin: 0;
+				width: 96vw;
+
+				.listContainer {
+					width: 96vw;
+
+					div {}
+
 					h3 {}
 
 					ul {
 						li {}
 					}
 
-					&.contrib {
-						h3 {}
+					.pagination {
+						margin: 20px 0;
 
-						ul {
-							li {}
-						}
+						ul {}
 					}
 
-					&.event {
+					&#contrib {
+						width: 96vw;
+
 						h3 {}
 
-						ul {
-							li {}
-						}
-					}
-
-					&.order {
-						h3 {}
-
-						ul {
+						ul#malist {
 							li {
-								a {}
+								p {}
 							}
 						}
 					}
-				}
-			}
-		}
-	}
-	@media (max-width: 100vh) {
-		.profileContainer {
-			.profileInfoContainer {
-				.profilePictureContainer {
-					img {
-						&.premium {}
-					}
 
-					svg {}
-				}
+					&#event {
+						width: 96vw;
 
-				.identityContainer {
-					h1 {}
-
-					ul {
-						li {
-							b {}
-
-							img {}
-						}
-					}
-				}
-
-				.qrContainer {
-					a {
-						svg {}
-					}
-				}
-			}
-
-			.emailFieldContainer {
-				input {}
-
-				button {}
-			}
-
-			.historySelectorContainer {
-				.historySelector {
-					ul {
-						li {
-							a {}
-						}
-					}
-				}
-
-				.historyContent {
-					div {
 						h3 {}
 
 						ul {
-							li {}
-						}
-
-						&.contrib {
-							h3 {}
-
-							ul {
-								li {}
-							}
-						}
-
-						&.event {
-							h3 {}
-
-							ul {
-								li {}
-							}
-						}
-
-						&.order {
-							h3 {}
-
-							ul {
+							&#eventList {
 								li {
+									hr {}
+
 									a {}
+
+									&:nth-last-of-type(1) {
+										hr {}
+									}
+								}
+							}
+						}
+					}
+
+					&#order {
+						width: 96vw;
+
+						h3 {}
+
+						ul#MALISTE {
+							li {
+								button {
+									&.evenement {
+										&:hover {}
+									}
+
+									&.cotisation {
+										&:hover {}
+									}
 								}
 							}
 						}

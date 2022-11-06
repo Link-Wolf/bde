@@ -40,15 +40,24 @@ const UserProfile = props => {
 			.catch();
 	}, [props]);
 
-	if (props.login === undefined || stud === undefined) return <Loading />;
+	if (props.login === undefined || stud === undefined)
+		return (
+			<div id={style.load}>
+				<Loading />
+			</div>
+		);
 	return (
 		<div className={style.profileContainer}>
 			<div className={style.profileInfoContainer}>
 				<ProfilePicture stud={stud} />
-				<Identity stud={stud} blackHole={blackHole} />
+				<Identity
+					stud={stud}
+					blackHole={blackHole}
+					me={props.me}
+					login={props.login}
+				/>
 				<QR login={props.login} />
 			</div>
-			{props.me && <ChangeEmailField login={props.login} />}
 			<HistorySelector
 				fields={[
 					{
@@ -58,10 +67,15 @@ const UserProfile = props => {
 								setBlackHole={setBlackHole}
 							/>
 						),
-						title: "Contributions" // TODO: text here
+						title: "Cotisations" // TODO: text here
 					},
 					{
-						content: <SubscribedEvents login={props.login} />,
+						content: (
+							<SubscribedEvents
+								login={props.login}
+								me={props.me}
+							/>
+						),
 						title: "Evenements" // TODO: text here
 					},
 					...(props.me
@@ -89,7 +103,7 @@ const ProfilePicture = props => {
 		<div className={style.profilePictureContainer}>
 			<img
 				src={props.stud.img_medium}
-				className={props.stud.isPremium && style.premium}
+				className={props.stud.isPremium ? style.premium : ""}
 			/>
 			{props.stud.isPremium && (
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
@@ -304,6 +318,7 @@ const Identity = props => {
 					)}
 				</li>
 			</ul>
+			{props.me && <ChangeEmailField login={props.login} />}
 		</div>
 	);
 };
@@ -379,9 +394,10 @@ const ChangeEmailField = props => {
 				setOgTrueMail(trueMail);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -403,16 +419,17 @@ const ChangeEmailField = props => {
 				setOgTrueMail(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props]);
 
 	return (
 		<div className={style.emailFieldContainer}>
-			Mon email :
+			<label>Email :</label>
 			<input
 				type="email"
 				name="trueMail"
@@ -464,10 +481,10 @@ const ChangeEmailField = props => {
  *		login:	string, login of the stud
  */
 const ContributionHistory = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
+	const viewData = usePagination(data, 3);
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
@@ -502,22 +519,23 @@ const ContributionHistory = props => {
 						);
 					}
 				});
-				setCount(Math.ceil(data.length / PER_PAGE));
+				setCount(Math.ceil(data.length / 3));
 				viewData.updateData(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props]);
 
 	return (
 		<div className={style.listContainer} id={style.contrib}>
-			<h3> Cotisations</h3>
+			<h3> Historique des cotisations</h3>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
@@ -525,40 +543,44 @@ const ContributionHistory = props => {
 					/>
 				)}
 			</div>
-			<ul>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<div>
-							<p>{`${new Date(
-								data.begin_date
-							).toLocaleDateString()} - ${new Date(
-								data.end_date
-							).toLocaleDateString()}`}</p>
-							<p>
-								{
-									//text here
-									[
-										"Pas encore commencée",
-										"En cours",
-										"Terminée"
-									][
-										+(
-											new Date(data.begin_date) <
-											new Date(Date.now())
-										) +
+			<ul id={style.malist}>
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<div>
+								<p>{`${new Date(
+									data.begin_date
+								).toLocaleDateString()} - ${new Date(
+									data.end_date
+								).toLocaleDateString()}`}</p>
+								<p>
+									{
+										//text here
+										[
+											"Pas encore commencée",
+											"En cours",
+											"Echue"
+										][
 											+(
-												new Date(data.end_date) <
+												new Date(data.begin_date) <
 												new Date(Date.now())
-											)
-									]
-								}
-							</p>
-						</div>
-					</li>
-				))}
+											) +
+												+(
+													new Date(data.end_date) <
+													new Date(Date.now())
+												)
+										]
+									}
+								</p>
+							</div>
+						</li>
+					))
+				) : (
+					<div>Aucune cotisation active ou passée</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
@@ -578,7 +600,7 @@ const SubscribedEvents = props => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
+	const viewData = usePagination(data, 3);
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
@@ -599,13 +621,14 @@ const SubscribedEvents = props => {
 			})
 			.then(data => {
 				setData(data);
-				setCount(Math.ceil(data.length / PER_PAGE));
+				setCount(Math.ceil(data.length / 3));
 				viewData.updateData(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props]);
@@ -614,7 +637,7 @@ const SubscribedEvents = props => {
 		<div className={style.listContainer} id={style.event}>
 			<h3> Évènements </h3>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
@@ -623,14 +646,22 @@ const SubscribedEvents = props => {
 				)}
 			</div>
 			<ul id={style.eventList}>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<EventToken event={data} />
-					</li>
-				))}
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<EventToken event={data} user />
+						</li>
+					))
+				) : props.me ? (
+					<div>Tu ne t'es inscrit à aucun évènement</div>
+				) : (
+					<div>
+						{props.login} n'a encore participé à aucun évènement
+					</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
+				{data.length > 3 && (
 					<Pagination
 						count={count}
 						page={page}
@@ -647,8 +678,8 @@ const SubscribedEvents = props => {
  *		login:	string, login of the stud
  */
 const OrderHistory = props => {
-	const [page, setPage] = useState();
-	const [count, setCount] = useState();
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
 	const [data, setData] = useState([]);
 	const viewData = usePagination(data, PER_PAGE);
 
@@ -675,9 +706,10 @@ const OrderHistory = props => {
 				viewData.updateData(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [props]);
@@ -694,12 +726,32 @@ const OrderHistory = props => {
 					/>
 				)}
 			</div>
-			<ul>
-				{viewData.currentData().map(data => (
-					<li key={data.id}>
-						<button href={`/receipt/${data.id}`}>{data.id}</button>
-					</li>
-				))}
+			<ul id={style.MALISTE}>
+				{viewData.length ? (
+					viewData.currentData().map(data => (
+						<li key={data.id}>
+							<button
+								className={
+									style[
+										data.type === -1
+											? "cotisation"
+											: "evenement"
+									]
+								}
+								onClick={() => {
+									window.location = `/receipt/${data.id}`;
+								}}
+							>
+								{data.type === -1 ? "Cotisation" : "évènement"}{" "}
+								<span style={{fontFamily: "monospace"}}>
+									{data.id}
+								</span>
+							</button>
+						</li>
+					))
+				) : (
+					<div>Aucune commande passée</div>
+				)}
 			</ul>
 			<div className={style.pagination}>
 				{data.length > PER_PAGE && (
@@ -747,432 +799,5 @@ const HistorySelector = props => {
 		</div>
 	);
 };
-
-/*
-const UserProfile = options => {
-	const PER_PAGE = 6;
-	const [dataStud, setDataStud] = useState({});
-	const [dataContrib, setDataContrib] = useState([]);
-	const [pageContrib, setPageContrib] = useState(1);
-	const [countContrib, setCountContrib] = useState(0);
-	const viewDataContrib = usePagination(dataContrib, PER_PAGE);
-	const [dataEvent, setDataEvent] = useState([]);
-	const [pageEvent, setPageEvent] = useState(1);
-	const [countEvent, setCountEvent] = useState(0);
-	const viewDataEvent = usePagination(dataEvent, PER_PAGE);
-	const [dataOrder, setDataOrder] = useState([]);
-	const [pageOrder, setPageOrder] = useState(1);
-	const [countOrder, setCountOrder] = useState(0);
-	const viewDataOrder = usePagination(dataOrder, PER_PAGE);
-	const [contributionStatus, setContributionStatus] = useState(-1);
-	const [nav, setNav] = useState(<></>);
-	const [trueMail, setTrueMail] = useState("");
-
-	const handleChangePageContrib = (e, p) => {
-		setPageContrib(p);
-		viewDataContrib.jump(p);
-	};
-
-	const handleChangePageEvent = (e, p) => {
-		setPageEvent(p);
-		viewDataEvent.jump(p);
-	};
-
-	const handleChangePageOrder = (e, p) => {
-		setPageOrder(p);
-		viewDataOrder.jump(p);
-	};
-
-	//Stud
-	useEffect(() => {
-		if (options.login === undefined || options.login === "") return;
-		fetch(`${process.env.REACT_APP_API_URL}/stud/${options.login}`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					setNav(<Navigate to="/home" />);
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				setDataStud(data);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [options]);
-
-	useEffect(() => {
-		if (options.login === undefined || options.login === "") return;
-		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/${options.login}/mail`,
-			{
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					setNav(<Navigate to="/home" />);
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.text();
-			})
-			.then(data => {
-				setTrueMail(data);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [options]);
-
-	const handleMailChange = event => {
-		setTrueMail(event.target.value);
-	};
-
-	const saveMail = async () => {
-		if (trueMail !== "") {
-			await fetch(
-				`${process.env.REACT_APP_API_URL}/stud/${options.login}`,
-				{
-					credentials: "include",
-					method: "PATCH",
-					body: JSON.stringify({
-						true_email: trueMail
-					}),
-					headers: {
-						"Content-Type": "application/json"
-					}
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-		}
-	};
-
-	//Contribs
-	useEffect(() => {
-		if (options.login === undefined || options.login === "") return;
-		fetch(
-			`${process.env.REACT_APP_API_URL}/contribution/${options.login}`,
-			{
-				credentials: "include"
-			}
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				setDataContrib(data);
-				data.forEach((item, i) => {
-					if (
-						new Date(item.end_date) > Date.now() &&
-						new Date(item.begin_date) <= Date.now()
-					) {
-						setContributionStatus(
-							Math.ceil(
-								(new Date(item.end_date).getTime() -
-									new Date(Date.now()).getTime()) /
-									(1000 * 3600 * 24)
-							)
-						);
-					}
-				});
-				setCountContrib(Math.ceil(data.length / PER_PAGE));
-				viewDataContrib.updateData(data);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [options]);
-
-	//Events
-	useEffect(() => {
-		if (dataStud.login === undefined || dataStud.login === "") return;
-		const requestOptions = {
-			method: "get",
-			credentials: "include"
-		};
-		fetch(
-			`${process.env.REACT_APP_API_URL}/event/stud/${dataStud.login}`,
-			requestOptions
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(actualData => {
-				setDataEvent(actualData);
-				setCountEvent(Math.ceil(actualData.length / PER_PAGE));
-				viewDataEvent.updateData(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [dataStud]);
-
-	//Orders
-	useEffect(() => {
-		if (dataStud.login === undefined || dataStud.login === "") return;
-		const requestOptions = {
-			method: "get",
-			credentials: "include"
-		};
-		fetch(
-			`${process.env.REACT_APP_API_URL}/order/stud/${dataStud.login}`,
-			requestOptions
-		)
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(actualData => {
-				setDataOrder(actualData);
-				setCountOrder(Math.ceil(actualData.length / PER_PAGE));
-				viewDataOrder.updateData(actualData);
-			})
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
-				);
-			});
-	}, [dataStud]);
-
-	return (
-		<>
-			{nav}
-			<div>
-				<div className={style.recap}>
-					<LazyLoadImage
-						height="100px"
-						src={
-							dataStud.login === undefined
-								? ""
-								: `https://cdn.intra.42.fr/users/${dataStud.login}.jpg`
-						}
-						width="auto"
-						effect="blur"
-					/>
-					<div className={style.name}>
-						<h1>
-							{dataStud.login === undefined ? "" : dataStud.login}
-						</h1>
-						<h2>
-							{dataStud.login === undefined
-								? ""
-								: `${dataStud.firstname} ${dataStud.lastname}`}
-						</h2>
-					</div>
-					<div className={style.qr}>
-						<a
-							href={`http://${window.location.host}/profile/${dataStud.login}`}
-						>
-							<QRCode
-								value={`http://${window.location.host}/profile/${dataStud.login}`}
-								level="H"
-							/>
-						</a>
-					</div>
-				</div>
-				<div className={style.cotis}>
-					<LazyLoadImage
-						height="50px"
-						src={contributionStatus >= 0 ? yellowStar : greyStar}
-						width="auto"
-						effect="blur"
-					/>
-					<p style={{fontSize: "40px"}}>
-						{contributionStatus >= 0
-							? `Cotisation active (${contributionStatus} jours restants)`
-							: "Aucune cotisation en cours"}
-					</p>
-					<LazyLoadImage
-						height="50px"
-						src={contributionStatus >= 0 ? yellowStar : greyStar}
-						width="auto"
-						effect="blur"
-					/>
-				</div>
-				<div className={style.cotiser}>
-					{!contributionStatus >= 0 && options.canSub ? (
-						<Button color="primary" href="/purchase/contrib">
-							Cotiser
-						</Button>
-					) : (
-						""
-					)}
-				</div>
-				<div className={style.mail}>
-					{!dataStud.true_email ? (
-						<></>
-					) : options.command_history ? (
-						<>
-							Mon email :
-							<input
-								type="email"
-								name="trueMail"
-								id="emailField"
-								value={trueMail}
-								onChange={handleMailChange}
-							/>
-							<button
-								onClick={() => {
-									if (
-										!(
-											document
-												.getElementById("emailField")
-												.checkValidity() &&
-											document
-												.getElementById("emailField")
-												.value.split("@")[1]
-												.split(".")[1]
-												.startsWith("42")
-										)
-									) {
-										if (
-											document.getElementById(
-												"emailField"
-											).value !== trueMail
-										)
-											saveMail();
-										else {
-											NotificationManager.warning(
-												"Mail déjà enregistré à cette valeur",
-												"Attention",
-												5000
-											);
-										}
-									}
-								}}
-							>
-								Enregistrer
-							</button>
-						</>
-					) : (
-						<></>
-					)}
-				</div>
-				<div>
-					Historique
-					<div className={style.histo}>
-						<div className={style.contribs}>
-							<h3> Cotisations</h3>
-							<Pagination
-								count={countContrib}
-								page={pageContrib}
-								onChange={handleChangePageContrib}
-							/>
-							<ul>
-								{viewDataContrib.currentData().map(data => (
-									<li key={data.id}>
-										{`${new Date(
-											data.begin_date
-										).toLocaleDateString()} - ${new Date(
-											data.end_date
-										).toLocaleDateString()}`}
-									</li>
-								))}
-							</ul>
-							<Pagination
-								count={countContrib}
-								page={pageContrib}
-								onChange={handleChangePageContrib}
-							/>
-						</div>
-						<div className={style.events}>
-							<h3> Évènements </h3>
-							<Pagination
-								count={countEvent}
-								page={pageEvent}
-								onChange={handleChangePageEvent}
-							/>
-							<ul>
-								{viewDataEvent.currentData().map(data => (
-									<li key={data.id}>
-										<EventToken event={data} />
-									</li>
-								))}
-							</ul>
-							<Pagination
-								count={countEvent}
-								page={pageEvent}
-								onChange={handleChangePageEvent}
-							/>
-						</div>
-						{options.command_history ? (
-							<div className={style.orders}>
-								<h3> Commandes </h3>
-								<Pagination
-									count={countOrder}
-									page={pageOrder}
-									onChange={handleChangePageOrder}
-								/>
-								<ul>
-									{viewDataOrder.currentData().map(data => (
-										<li key={data.id}>
-											<a href={`/receipt/${data.id}`}>
-												{data.id}
-											</a>
-										</li>
-									))}
-								</ul>
-								<Pagination
-									count={countOrder}
-									page={pageOrder}
-									onChange={handleChangePageOrder}
-								/>
-							</div>
-						) : (
-							<></>
-						)}
-					</div>
-				</div>
-			</div>
-		</>
-	);
-};
-*/
 
 export default UserProfile;

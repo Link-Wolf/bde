@@ -9,7 +9,7 @@ import style from "../style/Routage.module.scss";
 // Nos pages
 import Home from "./body/Home";
 import Cgu from "./body/Cgu";
-import Events from "./body/Events";
+import Cgv from "./body/Cgv";
 import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
 import AdminEventsGestion from "./body/AdminEventsGestion";
@@ -44,6 +44,10 @@ const Routage = () => {
 					element={<RouteWrapper route={<Cgu />} />}
 				/>
 				<Route
+					path="dollarthings"
+					element={<RouteWrapper route={<Cgv />} />}
+				/>
+				<Route
 					path="contact"
 					element={<RouteWrapper route={<Contact />} />}
 				/>
@@ -52,15 +56,17 @@ const Routage = () => {
 					path="log/redirect"
 					element={<RouteWrapper route={<Log />} />}
 				/>
-				<Route
-					path="clubs"
-					element={
-						<RouteWrapper
-							route={<Clubs />}
-							check={global.config.clearance.other_campus}
-						/>
-					}
-				/>
+				{
+					// <Route
+					// 	path="clubs"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<Clubs />}
+					// 			check={global.config.clearance.other_campus}
+					// 		/>
+					// 	}
+					// />
+				}
 				<Route
 					path="me"
 					element={
@@ -88,24 +94,26 @@ const Routage = () => {
 						/>
 					}
 				/>
-				<Route
-					path="purchase/contrib"
-					element={
-						<RouteWrapper
-							route={<Purchase />}
-							check={global.config.clearance.stud}
-						/>
-					}
-				/>
-				<Route
-					path="purchase/:event"
-					element={
-						<RouteWrapper
-							route={<PrePurchase />}
-							check={global.config.clearance.pool}
-						/>
-					}
-				/>
+				{
+					// <Route
+					// 	path="purchase/contrib"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<Purchase />}
+					// 			check={global.config.clearance.stud}
+					// 		/>
+					// 	}
+					// />
+					// <Route
+					// 	path="purchase/:event"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<PrePurchase />}
+					// 			check={global.config.clearance.pool}
+					// 		/>
+					// 	}
+					// />
+				}
 				<Route
 					path="admin/teammanagement"
 					element={

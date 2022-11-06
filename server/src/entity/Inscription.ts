@@ -31,6 +31,8 @@ export class Inscription {
 	})
 	date: Date
 
-	@Column({ default: 0 })
+	@Column({
+		default: 0, type: "double precision"
+	})
 	price: number
 }

@@ -190,6 +190,8 @@ export class StudService {
 						return status
 					})()
 			}
+			if (ret.true_email === "" || ret.true_email === undefined || ret.true_email === null)
+				return ret
 			const decipher = createDecipheriv('aes-256-cbc', Buffer.from(this._aes.key.data), Buffer.from(this._aes.iv.data));
 			ret.true_email = (Buffer.concat([
 				decipher.update(Buffer.from(JSON.parse(ret.true_email))),
@@ -388,7 +390,6 @@ export class StudService {
 	}
 
 	async logUser(stud: StudDto, requestMaker: string) {
-		console.log(stud)
 		try {
 			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)
@@ -396,7 +397,6 @@ export class StudService {
 			else
 				if (user.clearance <= 7)
 					this.update(user.login, stud, requestMaker)
-			console.log(user)
 			this.logger.log(`Logged student ${user.login}`, requestMaker);
 			return user
 		} catch (error) {

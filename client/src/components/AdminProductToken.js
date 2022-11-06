@@ -1,9 +1,10 @@
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState} from "react";
 import {Accordion, Form} from "react-bootstrap";
-import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import {NotificationManager} from "react-notifications";
+
+import style from "../style/AdminProductToken.module.scss";
 
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
@@ -29,8 +30,8 @@ const AdminProductToken = param => {
 	});
 	const [locked, setLocked] = useState(true);
 	const [update, setUpdate] = useState(false);
-	const [srcImg, setSrcImg] = useState(null);
-	const img = useRef(null);
+	const [thumbnail, setThumbnail] = useState([]);
+	const [album, setAlbum] = useState([]);
 
 	const switchLock = () => {
 		setLocked(false);
@@ -53,7 +54,7 @@ const AdminProductToken = param => {
 
 	const changeThumbnail = async () => {
 		const data = new FormData();
-		data.append("thumbnail", img.current);
+		data.append("thumbnail", thumbnail[0]);
 		await fetch(
 			`${process.env.REACT_APP_API_URL}/goodies/upload_image
 			/${param.data.id}`,
@@ -75,9 +76,44 @@ const AdminProductToken = param => {
 				setUpdate(true);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	};
+
+	const changeAlbum = async () => {
+		const data = new FormData();
+		for (let i = 0; i < album.length; i++) {
+			data.append(`album`, album[i]);
+		}
+		await fetch(
+			`${process.env.REACT_APP_API_URL}/goodies/upload_album
+			/${param.data.id}`,
+			{
+				method: "POST",
+				credentials: "include",
+				body: data
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+			.then(() => {
+				setUpdate(true);
+			})
+			.catch(function(error) {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -123,12 +159,14 @@ const AdminProductToken = param => {
 					}
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 			await changeThumbnail();
+			await changeAlbum();
 			window.location.reload();
 		}
 	};
@@ -162,12 +200,13 @@ const AdminProductToken = param => {
 				return response.blob();
 			})
 			.then(blob => {
-				setSrcImg(URL.createObjectURL(blob));
+				setThumbnail([blob]);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [update, param]);
@@ -194,9 +233,10 @@ const AdminProductToken = param => {
 					}
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 			param.setUpdate(true);
@@ -209,10 +249,9 @@ const AdminProductToken = param => {
 		<>
 			<Accordion.Header>{formState.name}</Accordion.Header>
 			<Accordion.Body>
-				{" "}
-				<Form>
-					<Form.Label>Nom : </Form.Label>
-					<Form.Control
+				<form className={style.form}>
+					<label>Nom</label>
+					<input
 						disabled={locked}
 						name="name"
 						type="text"
@@ -222,16 +261,16 @@ const AdminProductToken = param => {
 						onChange={handleFormChange}
 						required
 					/>
-					<Form.Label>Description : </Form.Label>
-					<Form.Control
+					<label>Description</label>
+					<textarea
 						name="desc"
 						value={formState.desc}
 						disabled={locked}
 						onChange={handleFormChange}
 						id="formDesc"
 					/>
-					<Form.Label>Prix : </Form.Label>
-					<Form.Control
+					<label>Prix</label>
+					<input
 						disabled={locked}
 						type="number"
 						min="0"
@@ -241,51 +280,73 @@ const AdminProductToken = param => {
 						name="cost"
 						onChange={handleFormChange}
 						required
-					/>{" "}
-					€
-					<Form.Control
+					/>
+					<label>Image de couverture</label>
+					<input
 						type="file"
 						id="thumbnail"
+						accept="img/png, img/jpeg"
+						files={thumbnail}
 						onChange={event => {
-							img.current = event.target.files[0];
-							setSrcImg(
-								URL.createObjectURL(event.target.files[0])
-							);
+							setThumbnail(event.target.files);
 						}}
 						disabled={locked}
 					/>
-					<LazyLoadImage
-						height="150px"
-						src={srcImg}
-						width="auto"
-						effect="blur"
-					/>
-					{locked ? (
-						<Button
-							type="button"
-							color="primary"
-							defaultValue={param.index}
-							onClick={switchLock}
-						>
-							Modifier
-						</Button>
-					) : (
-						<Button
-							type="button"
-							color="primary"
-							defaultValue={param.index}
-							onClick={saveProduct}
-						>
-							Enregistrer
-						</Button>
+					{thumbnail.length && (
+						<img
+							height="150px"
+							src={URL.createObjectURL(thumbnail[0])}
+							width="auto"
+						/>
 					)}
-					<Button color="secondary" type="reset" disabled={locked}>
-						Réinitialiser
-					</Button>
-					<Button color="danger" onClick={deleteProduct}>
-						Supprimer
-					</Button>
-				</Form>
+					<label>Album photos</label>
+					<input
+						type="file"
+						id="album"
+						multiple
+						accept="img/png, img/jpeg"
+						files={album}
+						onChange={event => {
+							setAlbum(event.target.files);
+						}}
+						disabled={locked}
+					/>
+					<div>
+						{locked ? (
+							<button
+								type="button"
+								color="primary"
+								defaultValue={param.index}
+								onClick={switchLock}
+							>
+								Modifier
+							</button>
+						) : (
+							<button
+								type="button"
+								color="primary"
+								defaultValue={param.index}
+								onClick={saveProduct}
+							>
+								Enregistrer
+							</button>
+						)}
+						<button
+							color="secondary"
+							type="reset"
+							disabled={locked}
+						>
+							Réinitialiser
+						</button>
+						<button
+							color="danger"
+							type="button"
+							onClick={deleteProduct}
+						>
+							Supprimer
+						</button>
+					</div>
+				</form>
 			</Accordion.Body>
 		</>
 	);
