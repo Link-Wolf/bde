@@ -1,5 +1,5 @@
 .bodyContainer {
-	min-height: 80vh;
+	min-height: calc(100vh - 80px - 120px);
 	background: var(--white);
 	color: var(--black);
 
@@ -10,6 +10,6 @@
 
 .scroll {
 	width: 100vw;
-	height: 92vh;
+	height: calc(100vh - 80px);
 	overflow: auto;
 }

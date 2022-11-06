@@ -1,6 +1,5 @@
 import {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-import emailjs from "@emailjs/browser";
 import {NotificationManager} from "react-notifications";
 import {
 	PayPalScriptProvider,
@@ -15,27 +14,6 @@ const PurchaseButtons = props => {
 	const style = {layout: "vertical"};
 	const [{options}, dispatch] = usePayPalScriptReducer();
 
-	const sendMail = async (date, commande, timestamp, mail) => {
-		await emailjs
-			.send(
-				process.env.REACT_APP_EMAILJS_SERVICE,
-				process.env.REACT_APP_EMAILJS_TEMPLATE_PAYMENT,
-				{
-					date: date,
-					commande: commande,
-					timestamp: timestamp,
-					mail: mail
-				},
-				process.env.REACT_APP_EMAILJS_PUBLICKEY
-			)
-			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération mail: " +
-						error.message
-				);
-			});
-	};
-
 	useEffect(() => {
 		dispatch({
 			type: "resetOptions",
@@ -47,151 +25,117 @@ const PurchaseButtons = props => {
 	}, [currency]);
 
 	return (
-		<div>
-			<PayPalButtons
-				style={style}
-				disabled={false}
-				forceReRender={[props.amount, currency, style]}
-				fundingSource={undefined}
-				createOrder={(data, actions) => {
-					return actions.order
-						.create({
-							purchase_units: [
-								{
-									amount: {
-										currency_code: currency,
-										value: props.amount
-									}
-								}
-							]
-						})
-						.then(orderId => {
-							const body = JSON.stringify({
-								id: orderId,
-								type: props.event ? props.event.id : -1,
-								studLogin: props.session.login,
-								cost: props.amount,
-								source: data.paymentSource,
-								address: `${props.address.address_line_1} ${props.address.address_line_2}`,
-								city: `${props.address.postal_code} ${
-									props.address.city
-								}, ${
-									getLabel(props.address.country_code)
-										.valueMap[
-										props.address.country_code.toLowerCase()
-									]
-								}`
-							});
-							fetch(
-								`${process.env.REACT_APP_API_URL}/order/create`,
-								{
-									method: "POST",
-									credentials: "include",
-									body: body,
-									headers: {
-										"Content-Type": "application/json"
-									}
-								}
-							);
-							return orderId;
-						});
-				}}
-				onApprove={function(data, actions) {
-					return actions.order.capture().then(function() {
-						const body = JSON.stringify({
-							id: data.orderID
-						});
-						fetch(
-							`${process.env.REACT_APP_API_URL}/order/capture`,
+		<PayPalButtons
+			style={style}
+			disabled={false}
+			forceReRender={[props.amount, currency, style]}
+			fundingSource={undefined}
+			createOrder={(data, actions) => {
+				return actions.order
+					.create({
+						purchase_units: [
 							{
-								method: "POST",
-								credentials: "include",
-								body: body,
-								headers: {
-									"Content-Type": "application/json"
+								amount: {
+									currency_code: currency,
+									value: props.amount
 								}
 							}
-						)
-							.then(response => {
-								if (!response.ok) {
-									throw new Error(
-										`This is an HTTP error: The status is ${response.status}`
-									);
-								}
-								return response.json();
-							})
-							.then(async data => {
-								await sendMail(
-									new Date(Date.now()).toLocaleDateString(
-										"fr-FR",
-										{
-											weekday: "long",
-											year: "numeric",
-											month: "long",
-											day: "numeric"
-										}
-									),
-									data.order.id,
-									new Intl.DateTimeFormat("fr-FR", {
-										day: "numeric",
-										month: "short",
-										year: "numeric",
-										hour: "2-digit",
-										minute: "2-digit",
-										second: "2-digit",
-										timeZoneName: "short"
-									}).format(new Date(data.order.date)),
-									props.address.mail
-								);
-							})
-							.then(async () => {
-								if (props.needMail)
-									await fetch(
-										`${process.env.REACT_APP_API_URL}/stud/${props.session.login}`,
-										{
-											credentials: "include",
-											method: "PATCH",
-											body: JSON.stringify({
-												true_email: props.address.mail
-											}),
-											headers: {
-												"Content-Type":
-													"application/json"
-											}
-										}
-									)
-										.then(response => {
-											if (!response.ok) {
-												throw new Error(
-													`This is an HTTP error: The status is ${response.status}`
-												);
-											}
-											props.setNeedMail(false);
-										})
-										.catch(function(error) {
-											console.log(
-												"Il y a eu un problème avec l'opération fetch: " +
-													error.message
-											);
-										});
-							})
-							.then(() => {
-								window.location = `/receipt/${data.orderID}`;
-							});
+						]
+					})
+					.then(orderId => {
+						const body = JSON.stringify({
+							id: orderId,
+							type: props.event ? props.event.id : -1,
+							studLogin: props.session.login,
+							cost: props.amount,
+							source: data.paymentSource,
+							address: `${props.address.address_line_1} ${props.address.address_line_2}`,
+							city: `${props.address.postal_code} ${
+								props.address.city
+							}, ${
+								getLabel(props.address.country_code).valueMap[
+									props.address.country_code.toLowerCase()
+								]
+							}`
+						});
+						fetch(`${process.env.REACT_APP_API_URL}/order/create`, {
+							method: "POST",
+							credentials: "include",
+							body: body,
+							headers: {
+								"Content-Type": "application/json"
+							}
+						});
+						return orderId;
 					});
-				}}
-				onError={err => {
-					NotificationManager.error(
-						"Une erreur s'est produite.",
-						"Erreur",
-						5000
-					); //TODO: text here
-				}}
-				onCancel={() => {
-					window.location = "/home";
-				}}
-			/>
-		</div>
+			}}
+			onApprove={function(data, actions) {
+				return actions.order.capture().then(function() {
+					const body = JSON.stringify({
+						id: data.orderID
+					});
+					fetch(`${process.env.REACT_APP_API_URL}/order/capture`, {
+						method: "POST",
+						credentials: "include",
+						body: body,
+						headers: {
+							"Content-Type": "application/json"
+						}
+					})
+						.then(response => {
+							if (!response.ok) {
+								throw new Error(
+									`This is an HTTP error: The status is ${response.status}`
+								);
+							}
+							return response.json();
+						})
+						.then(async () => {
+							if (props.needMail)
+								await fetch(
+									`${process.env.REACT_APP_API_URL}/stud/${props.session.login}`,
+									{
+										credentials: "include",
+										method: "PATCH",
+										body: JSON.stringify({
+											true_email: props.address.mail
+										}),
+										headers: {
+											"Content-Type": "application/json"
+										}
+									}
+								)
+									.then(response => {
+										if (!response.ok) {
+											throw new Error(
+												`This is an HTTP error: The status is ${response.status}`
+											);
+										}
+										props.setNeedMail(false);
+									})
+									.catch(function(error) {
+										console.log(
+											"Il y a eu un problème avec l'opération fetch: " +
+												error.message
+										);
+									});
+						})
+						.then(() => {
+							window.location = `/receipt/${data.orderID}`;
+						});
+				});
+			}}
+			onError={err => {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			}}
+			onCancel={() => {
+				window.location = "/home";
+			}}
+		/>
 	);
 };
 
@@ -203,7 +147,7 @@ const LegalNote = () => {
 			<a href="/dollarthings" target="_blank" rel="noopener noreferrer">
 				conditions générales de vente{" "}
 			</a>{" "}
-			ci-annexées du site du BDE 42 Mulhouse
+			ci-annexées du site du BDE 42 Mulhouse.
 		</p>
 	);
 };
@@ -214,10 +158,6 @@ const CommandRecap = props => {
 			<thead>
 				<tr>
 					<th colSpan={3}>Résumé de la commande</th>
-				</tr>
-				<tr>
-					<th colSpan={2}>Produit</th>
-					<th> Prix</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -233,7 +173,7 @@ const CommandRecap = props => {
 			<tfoot>
 				<tr>
 					<th colSpan={2}>Total</th>
-					<td>{props.amount}€</td>
+					<th>{props.amount}€</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -244,6 +184,7 @@ const PrePurchase = () => {
 	const [data, setData] = useState();
 	const param = useParams();
 	useEffect(() => {
+		if (param.event === undefined) return;
 		fetch(`${process.env.REACT_APP_API_URL}/event/${param.event}`, {
 			credentials: "include"
 		})
@@ -257,13 +198,17 @@ const PrePurchase = () => {
 			})
 			.then(json => {
 				setData(json);
+			})
+			.catch(err => {
+				window.location = "/home";
 			});
 	}, [param]);
-	if (data == undefined) return;
+	if (data === undefined) return;
 	return <Purchase event={data} />;
 };
 
 const Purchase = props => {
+	const [isSubbed, setIsSubbed] = useState(undefined);
 	const [needMail, setNeedMail] = useState(false);
 	const [contributionStatus, setContributionStatus] = useState(undefined);
 	const [optionsProvider, setOptionsProvider] = useState({
@@ -273,7 +218,7 @@ const Purchase = props => {
 	});
 	const [time, setTime] = useState();
 	const [amount, setAmount] = useState();
-	const [session, setSession] = useState({});
+	const [session, setSession] = useState();
 	const [validated, setValidated] = useState(false);
 	const [addressFormState, setAddressFormState] = useState({
 		postal_code: "",
@@ -347,6 +292,7 @@ const Purchase = props => {
 	}, []);
 
 	useEffect(() => {
+		if (session === undefined || isSubbed === undefined) return;
 		fetch(
 			`${process.env.REACT_APP_API_URL}/contribution/${session.login}`,
 			{
@@ -372,6 +318,16 @@ const Purchase = props => {
 					}
 				});
 				setContributionStatus(tmp);
+				if (
+					(props.event === undefined && tmp) ||
+					(!props.event.for_pool &&
+						session.clearance < global.config.clearance.stud) ||
+					props.event.cost <= 0 ||
+					(props.event.premium_cost <= 0 && tmp) ||
+					session.clearance < global.config.clearance.pool ||
+					isSubbed
+				)
+					window.location = "/home";
 			})
 			.catch(function(error) {
 				console.log(
@@ -379,7 +335,36 @@ const Purchase = props => {
 						error.message
 				);
 			});
-	}, [session]);
+	}, [session, isSubbed]);
+
+	useEffect(() => {
+		if (props.event === undefined) {
+			setIsSubbed(false);
+			return;
+		}
+		fetch(
+			`${process.env.REACT_APP_API_URL}/inscription/${props.event.id}/isSubbed`,
+			{
+				credentials: "include"
+			}
+		)
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(data => {
+				setIsSubbed(data.isSubbed);
+			})
+			.catch(function(error) {
+				console.log(
+					`This is a fetch error: The error is ${error.message}`
+				);
+			});
+	}, [props]);
 
 	const checkTrueMail = async login => {
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${login}/mail`, {
@@ -420,61 +405,76 @@ const Purchase = props => {
 
 	return (
 		<div className={style.purchase}>
-			<div className={style.address}>
-				<AddressForm
-					setState={setAddressFormState}
-					state={addressFormState}
-					validated={validated}
-					needMail={needMail}
-				/>
-				<button
-					disabled={validated}
-					onClick={() => {
-						if (
-							addressFormState.postal_code !== "" &&
-							addressFormState.address_line_1 !== "" &&
-							addressFormState.city !== "" &&
-							!(
-								document
-									.getElementById("emailField")
-									.checkValidity() &&
-								addressFormState.mail
-									.split("@")[1]
-									.split(".")[1]
-									.startsWith("42")
-							)
-						) {
-							setValidated(true);
-							setFixedAddress(addressFormState);
-						}
-					}}
-				>
-					Valider
-				</button>
+			<div className={style.left}>
+				<div className={style.intro}>
+					<p>
+						Dans le cas où vous ne souhaiteriez ou ne pourriez pas
+						procéder à un paiement en ligne sur le site, toute
+						transaction peut se faire en <b>physique</b> par carte
+						bancaire (contact ou sans contact) ou espèces en
+						contactant un membre du BDE.
+					</p>
+					<hr />
+				</div>
+				<div className={style.payment}>
+					<AddressForm
+						setState={setAddressFormState}
+						state={addressFormState}
+						validated={validated}
+						needMail={needMail}
+					/>
+					<button
+						id={style.undo}
+						onClick={() => {
+							window.history.back();
+						}}
+					>
+						Annuler
+					</button>
+					<button
+						id={style.validate}
+						disabled={validated}
+						onClick={() => {
+							if (
+								addressFormState.postal_code !== "" &&
+								addressFormState.address_line_1 !== "" &&
+								addressFormState.city !== "" &&
+								!(
+									document
+										.getElementById("emailField")
+										.checkValidity() &&
+									addressFormState.mail
+										.split("@")[1]
+										.split(".")[1]
+										.startsWith("42")
+								)
+							) {
+								setValidated(true);
+								setFixedAddress(addressFormState);
+							}
+						}}
+					>
+						Valider
+					</button>
 
-				<button
-					onClick={() => {
-						window.history.back();
-					}}
-				>
-					Annuler
-				</button>
-				{validated && (
-					<div hidden={!validated} className={style.paypal}>
-						<PayPalScriptProvider options={optionsProvider}>
-							<PurchaseButtons
-								amount={props.event ? props.event.cost : amount}
-								session={session}
-								address={fixedAddress}
-								setNeedMail={setNeedMail}
-								needMail={needMail}
-								type={props.event ? props.event : "contrib"}
-								event={props.event}
-							/>
-						</PayPalScriptProvider>
-					</div>
-				)}
-				<LegalNote />
+					{validated && (
+						<div hidden={!validated} className={style.paypal}>
+							<PayPalScriptProvider options={optionsProvider}>
+								<PurchaseButtons
+									amount={
+										props.event ? props.event.cost : amount
+									}
+									session={session}
+									address={fixedAddress}
+									setNeedMail={setNeedMail}
+									needMail={needMail}
+									type={props.event ? props.event : "contrib"}
+									event={props.event}
+								/>
+							</PayPalScriptProvider>
+						</div>
+					)}
+				</div>
 			</div>
 			<div className={style.recap}>
 				<CommandRecap
@@ -482,6 +482,7 @@ const Purchase = props => {
 					time={props.event ? "" : time}
 					name={props.event ? props.event.name : ""}
 				/>
+				<LegalNote />
 			</div>
 		</div>
 	);
@@ -502,59 +503,82 @@ const AddressForm = props => {
 
 	return (
 		<form>
-			<div>
-				<input
-					placeholder="Prénom"
-					name="firstname"
-					value={props.state.firstname}
-					onChange={handleChange}
-					disabled
-				/>
-				<input
-					placeholder="Nom de famille"
-					name="lastname"
-					value={props.state.lastname}
-					onChange={handleChange}
-					disabled
-				/>
+			<div className={` ${style.formMargin} ${style.formLine}  `}>
+				<div>
+					<label htmlFor="firstName">Prénom</label>
+					<input
+						id="firstName"
+						placeholder="Prénom"
+						name="firstname"
+						value={props.state.firstname}
+						onChange={handleChange}
+						disabled
+					/>
+				</div>
+				<div>
+					<label htmlFor="lastName">Nom</label>
+					<input
+						id="lastName"
+						placeholder="Nom de famille"
+						name="lastname"
+						value={props.state.lastname}
+						onChange={handleChange}
+						disabled
+					/>
+				</div>
+			</div>{" "}
+			<div className={style.formMargin} id={style.address}>
+				<label htmlFor="address">Adresse de facturation</label>
+				<div className={style.formLine}>
+					<div>
+						<input
+							id="address"
+							placeholder="42 avenue Segfault"
+							name="address_line_1"
+							value={props.state.address_line_1}
+							onChange={handleChange}
+							disabled={props.validated}
+							required
+						/>
+					</div>
+					<div>
+						<input
+							id="address2"
+							placeholder="apt, ... (optionnel)"
+							name="address_line_2"
+							value={props.state.address_line_2}
+							onChange={handleChange}
+							disabled={props.validated}
+						/>
+					</div>
+				</div>
+				<div className={style.formLine}>
+					<div>
+						<input
+							id="city"
+							placeholder="Moulinette-City"
+							name="city"
+							value={props.state.city}
+							onChange={handleChange}
+							disabled={props.validated}
+							required
+						/>
+					</div>
+					<div>
+						<input
+							id="postal"
+							placeholder="42069"
+							name="postal_code"
+							value={props.state.postal_code}
+							onChange={handleChange}
+							disabled={props.validated}
+							required
+						/>
+					</div>
+				</div>
 			</div>
-			<div>
-				<input
-					placeholder="Addresse"
-					name="address_line_1"
-					value={props.state.address_line_1}
-					onChange={handleChange}
-					disabled={props.validated}
-					required
-				/>
-				<input
-					placeholder="Complément d'addresse (optionel)"
-					name="address_line_2"
-					value={props.state.address_line_2}
-					onChange={handleChange}
-					disabled={props.validated}
-				/>
-			</div>
-			<div>
-				<input
-					placeholder="Ville"
-					name="city"
-					value={props.state.city}
-					onChange={handleChange}
-					disabled={props.validated}
-					required
-				/>
-				<input
-					placeholder="Code Postal"
-					name="postal_code"
-					value={props.state.postal_code}
-					onChange={handleChange}
-					disabled={props.validated}
-					required
-				/>
-			</div>
-			<div>
-				Pays
+			<div className={`${style.country} ${style.formMargin}`}>
+				<label htmlFor="country">Pays</label>
 				<select
 					id="country"
 					name="country_code"
@@ -828,7 +852,11 @@ const AddressForm = props => {
 					<option value="ZW">Zimbabwe</option>
 				</select>
 			</div>
-			<div hidden={!props.needMail}>
+			<div
+				className={`${style.mail} ${style.formMargin}`}
+				hidden={!props.needMail}
+			>
+				<label htmlFor="emailField">Mail</label>
 				<input
 					placeholder="Email"
 					name="mail"

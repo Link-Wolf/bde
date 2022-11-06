@@ -1,23 +1,23 @@
 .footer {
-	background-color: #151E23;
+	background-color: var(--black);
 	color: var(--white);
 	width: 100%;
 	text-align: center;
-	height: 12vh;
+	height: 120px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	font-size: 1.5vh;
-	padding: 1vh 0;
+	font-size: 15px;
+	padding: 10px 0;
 	font-family: Futura;
 
 	img {
-		height: 2vh;
+		height: 20px;
 		width: auto;
 	}
 
 	div * {
-		margin: 0 0.1vw;
+		margin: 0 1px;
 	}
 }
 
@@ -28,6 +28,10 @@
 
 		&:hover {
 			color: var(--primary);
+		}
+
+		&:active {
+			color: var(--primary-dark);
 		}
 	}
 }

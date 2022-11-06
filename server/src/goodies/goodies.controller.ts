@@ -1,12 +1,12 @@
 import {
 	Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post,
-	Session, UseInterceptors, UploadedFile, Res, UseGuards
+	Session, UseInterceptors, UploadedFile, Res, UseGuards, UploadedFiles, Req
 } from '@nestjs/common';
 import { GoodiesService } from './goodies.service';
 import { Goodies } from '../entity/Goodies'
 import { GoodiesDto } from './goodies.dto';
 import { GoodiesDtoPipe, FileTypeValidationPipe } from './goodies.pipe';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import * as fs from 'fs';
 import { ClearanceGuard } from '../auth/clearance.guard';
 
@@ -53,9 +53,20 @@ export class GoodiesController {
 	@UseInterceptors(FileInterceptor('thumbnail'))
 	async uploadImage(
 		@Param('id', ParseIntPipe) id: number,
-		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File,
+		@UploadedFile() file: Express.Multer.File,
 		@Session() session: Record<string, any>) {
 		return this.goodiesService.saveThumbnail(id, file, session.login)
+	}
+
+	@Post('upload_album/:id')
+	@UseGuards(new ClearanceGuard(11))
+	@UseInterceptors(FilesInterceptor('album'))
+	async uploadAlbum(
+		@Param('id', ParseIntPipe) id: number,
+		@UploadedFiles() files: Array<Express.Multer.File>,
+		@Session() session: Record<string, any>,
+	) {
+		return this.goodiesService.saveAlbum(id, files, session.login)
 	}
 
 	@Patch(':id')

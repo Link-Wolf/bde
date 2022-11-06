@@ -1,40 +1,54 @@
-import {useState, useRef, useEffect, React} from "react";
-import {useParams} from "react-router-dom";
+import {useState, useEffect, React} from "react";
+import {NotificationManager} from "react-notifications";
+
 import b64ToBlob from "b64-to-blob";
 import jszip from "jszip";
-import {LazyLoadImage} from "react-lazy-load-image-component";
-
-import ProductList from "../../components/ProductList";
 
 import style from "../../style/Product.module.scss";
-
 import load from "../../assets/animations/gear_clockwise.gif";
 
-const Product = () => {
-	const params = useParams();
-
-	if (params.id === undefined) return;
+const Product = props => {
+	const [product, setProduct] = useState({
+		name: "",
+		cost: 42,
+		available: true,
+		desc: ""
+	});
+	if (props.id === undefined) return;
 	return (
 		<>
 			<div className={style.productContainer}>
 				<div className={style.productFile}>
-					<Album id={params.id} />
-					<Description id={params.id} />
+					<h1 id={style.phoneH1}>{product.name}</h1>
+					<Album id={props.id} />
+					<Description
+						session={props.session}
+						id={props.id}
+						product={product}
+						setProduct={setProduct}
+					/>
 				</div>
-				<OtherProducts />
+				<div id={style.exit}>
+					<button
+						id={style.exitButton}
+						onClick={() => props.setPopUp(-1)}
+					>
+						Quitter
+					</button>
+				</div>
 			</div>
 		</>
 	);
 };
 
-const Album = param => {
+const Album = props => {
 	const [album, setAlbum] = useState([load]);
 	const [displayedImage, setDisplayedImage] = useState(0);
 	const [refAlbum, setRefAlbum] = useState(0);
 
 	useEffect(() => {
-		if (param.id == undefined || !param.id) return;
-		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}/album`, {
+		if (props.id == undefined || !props.id) return;
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}/album`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -54,7 +68,6 @@ const Album = param => {
 					const mediaFiles = Object.entries(
 						files
 					).filter(([fileName]) => fileName.endsWith(""));
-					console.log("media", mediaFiles);
 
 					if (!mediaFiles.length) {
 						throw new Error("No media files found in archive");
@@ -66,8 +79,6 @@ const Album = param => {
 							.then(blob => {
 								let tmp = album;
 								tmp[i] = URL.createObjectURL(blob);
-								console.log("image " + i, tmp[i]);
-
 								setAlbum(tmp);
 							})
 							.then(async () => {
@@ -78,11 +89,13 @@ const Album = param => {
 				});
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
-	}, [param.id]);
+	}, [props.id]);
 
 	return (
 		<div className={style.album}>
@@ -91,17 +104,14 @@ const Album = param => {
 					album.map((image, i) => (
 						<li key={i}>
 							<a
+								onMouseOver={() => {
+									setDisplayedImage(i);
+								}}
 								onClick={() => {
 									setDisplayedImage(i);
 								}}
 							>
-								<LazyLoadImage
-									height="auto"
-									className={style.thumbnail}
-									src={image}
-									width="auto"
-									effect="blur"
-								/>
+								<img className={style.thumbnail} src={image} />
 							</a>
 						</li>
 					))
@@ -109,27 +119,20 @@ const Album = param => {
 					<></>
 				)}
 			</ul>
-			<LazyLoadImage
-				height="auto"
+			<img
 				className={style.cover}
+				id={album[displayedImage] === load ? style.load : ""}
 				src={album[displayedImage]}
-				width="auto"
-				effect="blur"
 			/>
 		</div>
 	);
 };
 
-const Description = param => {
-	const [product, setProduct] = useState({
-		name: "█ █ █ █ ",
-		cost: 42,
-		available: true,
-		desc: "█ █ █ █ "
-	});
+const Description = props => {
+	const [size, setSize] = useState("m");
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/goodies/${param.id}`, {
+		fetch(`${process.env.REACT_APP_API_URL}/goodies/${props.id}`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -141,56 +144,111 @@ const Description = param => {
 				return response.json();
 			})
 			.then(d => {
-				console.log(d);
-				setProduct(d);
+				props.setProduct(d);
+				if (d.stock !== d.s + d.m + d.l + d.xl) setSize("stock");
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
-	}, [param.id]);
+	}, [props.id]);
 
 	return (
 		<div className={style.description}>
-			<h1>{product.name}</h1>
-			<p>{product.desc}</p>
-			<ul>
-				<li>
-					<div className={style.price}>
-						Prix: {product.cost.toFixed(2)}
+			<h1 id={style.deskH1}>{props.product.name}</h1>
+			<div className={style.p}>
+				{props.product.desc.split("\n").map((line, i) => (
+					<p eventKey={i}>{line}</p>
+				))}
+			</div>
+			{props.session.clearance > 2 && props.session !== 0 ? (
+				<p id={style.warn}>
+					Ce produit ne peut être acheté que physiquement sur place
+					auprès d'un membre du BDE.
+				</p>
+			) : (
+				<></>
+			)}
+			<div className={style.form}>
+				{props.product.stock ===
+					props.product.s +
+						props.product.m +
+						props.product.l +
+						props.product.xl && props.product.stock !== 0 ? (
+					<div>
+						{" "}
+						<label>Taille</label>
+						<select
+							value={size}
+							onChange={e => {
+								setSize(e.target.value);
+							}}
+						>
+							<option value="s">S</option>
+							<option value="m">M</option>
+							<option value="l">L</option>
+							<option value="xl">XL</option>
+						</select>
 					</div>
-				</li>
-				<li>
-					{product.stock ? (
-						product.stock ===
-						product.s + product.m + product.l + product.xl ? (
-							<div className={style.dispo}>
-								Disponible dans les tailles et quantités
-								suivantes :
-								<div className={style.tailles}>
-									<div>S : {product.s}</div>
-									<div>M : {product.m}</div>
-									<div>L : {product.l}</div>
-									<div>XL : {product.xl}</div>
-								</div>
-							</div>
-						) : (
-							<div className={style.dispo}>
-								Disponible ({product.stock} restants)
-							</div>
-						)
+				) : (
+					<div></div>
+				)}
+				<div>
+					{props.product.stock ? (
+						<>
+							<label>Coloris</label>
+							<input
+								type="radio"
+								name="color"
+								value="black"
+								id="colorBlack"
+								defaultChecked
+							/>
+							<label
+								htmlFor="colorBlack"
+								style={{"--my-color": "#000000"}}
+							/>
+						</>
 					) : (
-						"En rupture de stock :c"
+						""
 					)}
-				</li>
-			</ul>
+				</div>
+			</div>
+			<dl>
+				<div>
+					{props.product.stock ? (
+						<>
+							<dt>Stock pour ce choix</dt>
+							<dd id={style.rest}>
+								{props.product[size]}{" "}
+								{props.product[size] > 1
+									? "pièces restantes"
+									: "pièce restante"}
+							</dd>
+						</>
+					) : props.product.stock !== undefined ? (
+						<div>
+							<dt id={style.rupture}>Rupture de stock</dt>
+						</div>
+					) : (
+						""
+					)}
+				</div>
+				{props.session.clearance > 2 && props.session !== 0 ? (
+					<>
+						<div id={style.price}>
+							<dd>{props.product.cost.toFixed(2)}€</dd>
+						</div>
+					</>
+				) : (
+					<></>
+				)}
+			</dl>
 		</div>
 	);
-};
-
-const OtherProducts = () => {
-	return <ProductList />;
 };
 
 export default Product;

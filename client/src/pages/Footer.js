@@ -22,7 +22,11 @@ function Footer() {
 					effect="blur"
 					hidden
 				/>
-				<a href="https://www.instagram.com/bde_42mulhouse/">
+				<a
+					href="https://www.instagram.com/bde_42mulhouse/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<img
 						height="auto"
 						src={instagram_logo}
@@ -36,7 +40,13 @@ function Footer() {
 					<div>
 						{" "}
 						Hosted by{" "}
-						<a href="https://www.42mulhouse.fr">42 Mulhouse</a>
+						<a
+							href="https://www.42mulhouse.fr"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							42 Mulhouse
+						</a>
 					</div>
 				</div>
 				<div>© 2022 BDE 42 Mulhouse, tous droits réservés</div>

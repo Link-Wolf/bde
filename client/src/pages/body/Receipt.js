@@ -1,50 +1,63 @@
 import {useState, useEffect} from "react";
 import {useParams, Navigate} from "react-router-dom";
+import {NotificationManager} from "react-notifications";
 import {Print} from "../../components/Invoice";
+import emailjs from "@emailjs/browser";
 
 const Receipt = () => {
 	const [type, setType] = useState(undefined);
 	const [dataEvent, setDataEvent] = useState(undefined);
-	const [session, setSession] = useState({});
+	const [session, setSession] = useState();
 	const [loadSession, setLoadSession] = useState(true);
 	const [order, setOrder] = useState({});
 	const [loadOrder, setLoadOrder] = useState(true);
-	const [loadMail, setLoadMail] = useState(false);
 
 	const param = useParams();
 
-	// useEffect(() => {
-	// 	setLoadMail(true);
-	// 	if (session.login === undefined || order === undefined) return;
-	// 	fetch(`${process.env.REACT_APP_API_URL}/stud/${session.login}/mail`, {
-	// 		credentials: "include"
-	// 	})
-	// 		.then(response => {
-	// 			if (!response.ok) {
-	// 				throw new Error(
-	// 					`This is an HTTP error: The status is ${response.status}`
-	// 				);
-	// 			}
-	// 			return response.text();
-	// 		})
-	// 		.then(data => {
-	// 			let tmp = order;
-	// 			// console.log(tmp);
-	// 			if (!data || data === "" || data === undefined) {
-	// 				tmp.stud.true_email = "";
-	// 			} else {
-	// 				tmp.stud.true_email = data;
-	// 			}
-	// 			setOrder(tmp);
-	// 			setLoadMail(false);
-	// 		})
-	// 		.catch(function(error) {
-	// 			console.log(
-	// 				"Il y a eu un problème avec l'opération fetch: " +
-	// 					error.message
-	// 			);
-	// 		});
-	// }, [session, order]);
+	const sendMail = async (date, commande, timestamp, mail) => {
+		await emailjs
+			.send(
+				process.env.REACT_APP_EMAILJS_SERVICE,
+				process.env.REACT_APP_EMAILJS_TEMPLATE_PAYMENT,
+				{
+					date: date,
+					commande: commande,
+					timestamp: timestamp,
+					mail: mail
+				},
+				process.env.REACT_APP_EMAILJS_PUBLICKEY
+			)
+			.catch(function(error) {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	};
+
+	const compMail = async (data, mail) => {
+		if (data.date === undefined) return;
+		await sendMail(
+			new Intl.DateTimeFormat("fr-FR", {
+				weekday: "long",
+				year: "numeric",
+				month: "long",
+				day: "numeric"
+			}).format(new Date(Date.now())),
+			data.id,
+			new Intl.DateTimeFormat("fr-FR", {
+				day: "numeric",
+				month: "short",
+				year: "numeric",
+				hour: "2-digit",
+				minute: "2-digit",
+				second: "2-digit",
+				timeZoneName: "short"
+			}).format(new Date(data.date)),
+			mail
+		);
+	};
 
 	useEffect(() => {
 		setLoadSession(true);
@@ -62,12 +75,19 @@ const Receipt = () => {
 			.then(json => {
 				setSession(json);
 				setLoadSession(false);
+			})
+			.catch(err => {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, []);
 
 	useEffect(() => {
+		if (session === undefined) return;
 		setLoadOrder(true);
-		if (session.login === undefined) return;
 		fetch(`${process.env.REACT_APP_API_URL}/order/${param.id}`, {
 			credentials: "include"
 		})
@@ -86,12 +106,22 @@ const Receipt = () => {
 				if (json.type !== -1) setType("event");
 				else setType("contrib");
 				setOrder(json);
+			})
+			.then(() => {
+				setLoadOrder(false);
+			})
+			.catch(err => {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, [param, session]);
 
 	useEffect(() => {
+		if (session === undefined || type === "contrib") return;
 		setLoadOrder(true);
-		if (session.login === undefined || type === "contrib") return;
 		fetch(`${process.env.REACT_APP_API_URL}/event/${order.type}`, {
 			credentials: "include"
 		})
@@ -106,18 +136,60 @@ const Receipt = () => {
 			.then(json => {
 				setDataEvent(json);
 				setLoadOrder(false);
+			})
+			.catch(err => {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
 			});
 	}, [order]);
+
+	useEffect(() => {
+		if (session === undefined || order === undefined || order.isMailed)
+			return;
+		fetch(`${process.env.REACT_APP_API_URL}/stud/${session.login}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(async stud => {
+				await compMail(order, stud.true_email);
+				await fetch(
+					`${process.env.REACT_APP_API_URL}/order/${param.id}`,
+					{
+						credentials: "include",
+						method: "PATCH",
+						body: JSON.stringify({isMailed: true}),
+						headers: {"Content-Type": "application/json"}
+					}
+				);
+			})
+			.catch(err => {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	}, [session, order]);
 
 	if (
 		loadSession ||
 		loadOrder ||
-		loadMail ||
 		type === undefined ||
-		dataEvent === undefined
+		(type === "event" && dataEvent === undefined)
 	)
 		return <>Loading</>;
-	if (session.login !== order.studLogin) return <Navigate to="/home" />;
+	if (session.login !== order.studLogin || !order.isCompleted)
+		return <Navigate to="/home" />;
 	return (
 		<>
 			Facture :

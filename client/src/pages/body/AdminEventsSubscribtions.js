@@ -32,8 +32,10 @@ const AdminStudents = () => {
 			})
 			.catch(function(error) {
 				setStud([]);
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -59,8 +61,10 @@ const AdminStudents = () => {
 				setUpdate(true);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -128,8 +132,10 @@ const AdminStudents = () => {
 				setAllEvent(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);

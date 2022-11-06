@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import {LazyLoadImage} from "react-lazy-load-image-component";
+import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import burger from "../assets/logos/burger.png";
 
@@ -14,56 +15,57 @@ function Header() {
 	const [rightButton, setRightButton] = useState(<></>);
 
 	useEffect(() => {
-		setTimeout(() => {
-			fetch(`${process.env.REACT_APP_API_URL}/session`, {
-				credentials: "include"
-			})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error: The status is ${response.status}`
-						);
-					}
-					return response.json();
-				})
-				.then(data => {
-					if (data.clearance === global.config.clearance.default) {
-						setLeftButton(
-							<>
-								<a href="/contact">
-									<h1>Contact</h1>
-								</a>
-							</>
-						);
-					}
-					if (data.clearance > global.config.clearance.default) {
-						setLeftButton(
-							<>
-								<a href="/clubs">
-									<h1>Clubs</h1>
-								</a>
-								<a href="/contact">
-									<h1>Contact</h1>
-								</a>
-							</>
-						);
-					}
-					if (data.clearance >= global.config.clearance.admin) {
-						setRightButton(
-							<a href="/admin" className={style.hrbefore}>
-								<hr />
-								<h1>Admin</h1>
-							</a>
-						);
-					}
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
 					);
-				});
-		}, 100);
+				}
+				return response.json();
+			})
+			.then(data => {
+				if (data.clearance === global.config.clearance.default) {
+					setLeftButton(
+						<>
+							<a href="/contact">
+								<h1>Contact</h1>
+							</a>
+						</>
+					);
+				}
+				if (data.clearance > global.config.clearance.default) {
+					setLeftButton(
+						<>
+							{
+								// <a href="/clubs">
+								// 	<h1>Clubs</h1>
+								// </a>
+							}
+							<a href="/contact">
+								<h1>Contact</h1>
+							</a>
+						</>
+					);
+				}
+				if (data.clearance >= global.config.clearance.admin) {
+					setRightButton(
+						<a href="/admin" className={style.hrbefore}>
+							<hr />
+							<h1>Admin</h1>
+						</a>
+					);
+				}
+			})
+			.catch(function(error) {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
 	}, []);
 
 	const toggleBurgerMenu = () => {
@@ -138,7 +140,44 @@ function Header() {
 					<DropdownUser />
 				</div>
 				<div className={style.burger}>
-					<img src={burger} onClick={toggleBurgerMenu} />
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 14 14"
+						onClick={toggleBurgerMenu}
+					>
+						<g>
+							<line
+								x1={13.5}
+								y1={2}
+								x2={0.5}
+								y2={2}
+								fill="none"
+								stroke="var(--white)"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+							<line
+								x1={13.5}
+								y1={7}
+								x2={0.5}
+								y2={7}
+								fill="none"
+								stroke="var(--white)"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+							<line
+								x1={13.5}
+								y1={12}
+								x2={0.5}
+								y2={12}
+								fill="none"
+								stroke="var(--white)"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+							/>
+						</g>
+					</svg>
 				</div>
 			</div>
 		</header>

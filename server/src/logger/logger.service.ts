@@ -12,7 +12,7 @@ export class LoggerService {
 	) { }
 
 	async error(message: string, requestMaker: string, isAdmin = false) {
-		Logger.error(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
+		Logger.error(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		await this.logRepertory.save({
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
@@ -21,13 +21,13 @@ export class LoggerService {
 			type: "error"
 		})
 		if (requestMaker == undefined)
-			this.logfile("error", `(unknown public) : ${message}`)
+			this.logfile("error", `(Public) : ${message}`)
 		else
 			this.logfile("error", `(${requestMaker}) : ${message}`)
 	}
 
 	async warn(message: string, requestMaker: string, isAdmin = false) {
-		Logger.warn(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
+		Logger.warn(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		const t = {
 			date: new Date(Date.now()),
 			login: `${requestMaker}`,
@@ -37,23 +37,23 @@ export class LoggerService {
 		}
 		await this.logRepertory.save(t)
 		if (requestMaker == undefined)
-			this.logfile("warning", `(unknown public) : ${message}`)
+			this.logfile("warning", `(Public) : ${message}`)
 		else
 			this.logfile("warning", `(${requestMaker}) : ${message}`)
 	}
 
 	async log(message: string, requestMaker: string, isAdmin = false) {
-		Logger.log(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
+		Logger.log(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
-			this.logfile("log", `(unknown public) : ${message}`)
+			this.logfile("log", `(Public) : ${message}`)
 		else
 			this.logfile("log", `(${requestMaker}) : ${message}`)
 	}
 
 	async verbose(message: string, requestMaker: string) {
-		Logger.verbose(`${requestMaker === undefined ? "unknown public" : requestMaker} : ${message}`);
+		Logger.verbose(`${requestMaker === undefined ? "Public" : requestMaker} : ${message}`);
 		if (requestMaker == undefined)
-			this.logfile("verbose", `(unknown public) : ${message}`)
+			this.logfile("verbose", `(Public) : ${message}`)
 		else
 			this.logfile("verbose", `(${requestMaker}) : ${message}`)
 	}

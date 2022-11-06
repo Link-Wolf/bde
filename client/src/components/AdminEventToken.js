@@ -2,6 +2,7 @@ import {useEffect, useState, useRef} from "react";
 import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
+import {NotificationManager} from "react-notifications";
 import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -82,34 +83,40 @@ const AdminEventToken = param => {
 	const img = useRef(null);
 
 	const deleteEvent = async () => {
-		if (
-			await isConfirmed(
-				`Désires tu supprimer l'évènement ${param.data.name}`
-			)
-		) {
-			await fetch(
-				`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
-				{
-					method: "DELETE",
-					credentials: "include"
-				}
-			)
-				.then(response => {
-					if (!response.ok) {
-						throw new Error(
-							`This is an HTTP error:
-					 The status is ${response.status}`
-						);
-					}
-					window.location.reload();
-				})
-				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
-					);
-				});
-		}
+		await isConfirmed(
+			`C'est compliqué y a des trucs à gérer qu'on fix bientôt, contacte ### ou Xxxxx si tu veux faire ça stp`
+		);
+
+		//if (
+		// await isConfirmed(
+		// 	`Désires tu supprimer l'évènement ${param.data.name}`
+		// );
+		//)
+		//  {
+		// 	await fetch(
+		// 		`${process.env.REACT_APP_API_URL}/event/${param.data.id}`,
+		// 		{
+		// 			method: "DELETE",
+		// 			credentials: "include"
+		// 		}
+		// 	)
+		// 		.then(response => {
+		// 			if (!response.ok) {
+		// 				throw new Error(
+		// 					`This is an HTTP error:
+		// 			 The status is ${response.status}`
+		// 				);
+		// 			}
+		// 			window.location.reload();
+		// 		})
+		// 		.catch(function(error) {
+		// 			NotificationManager.error(
+		// 				"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+		// 				"Erreur",
+		// 				5000
+		// 			);
+		// 		});
+		// }
 	};
 
 	const switchLock = () => {
@@ -117,7 +124,6 @@ const AdminEventToken = param => {
 	};
 
 	const handleFormChange = event => {
-		console.log(event);
 		let tmp = {...formState};
 		const target = event.target;
 		const value =
@@ -185,9 +191,10 @@ const AdminEventToken = param => {
 				}
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	};
@@ -244,9 +251,10 @@ const AdminEventToken = param => {
 					}
 				})
 				.catch(function(error) {
-					console.log(
-						"Il y a eu un problème avec l'opération fetch: " +
-							error.message
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
 					);
 				});
 			await changeThumbnail();
@@ -355,9 +363,10 @@ const AdminEventToken = param => {
 				setSrcImg(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param]);

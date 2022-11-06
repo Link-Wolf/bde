@@ -1,11 +1,28 @@
 import {React, useState, useEffect} from "react";
 import EventList from "../../components/EventList";
+import EventListPublic from "../../components/EventListPublic";
+import {NotificationManager} from "react-notifications";
 import CheckSet from "../../components/CheckSet";
+import {LoadingSmall, LoadingMicro} from "../../components/Loading";
 
 import style from "../../style/Home.module.scss";
 import frontImage from "../../assets/images/front.webp";
+import blank from "../../assets/placeholders/tmp_profile.png";
+import Product from "./Product.js";
+
+import aguemazi from "../../assets/images/aguemazi.webp";
+import mcacoilo from "../../assets/images/mcacoilo.webp";
+import Link from "../../assets/images/Link.webp";
+import iCARUS from "../../assets/images/iCARUS.webp";
+import mwinter from "../../assets/images/mwinter-.webp";
+import tbrissia from "../../assets/images/tbrissia.webp";
+import mfusil from "../../assets/images/mfusil.webp";
+import tvanbael from "../../assets/images/tvanbael.webp";
+import jdutschk from "../../assets/images/jdutschk.webp";
+import jrasser from "../../assets/images/jrasser.webp";
 
 const Home = () => {
+	const [session, setSession] = useState(0);
 	const [filter, setFilter] = useState({
 		current: true,
 		free: false,
@@ -19,17 +36,47 @@ const Home = () => {
 		available_date: true
 	});
 
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/session`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(json => {
+				setSession(json);
+			});
+	}, []);
+
 	return (
 		<div className={style.homeContainer}>
 			<HeaderHome />
 			<div className={style.lists}>
 				<div>
-					<h2>Nos Evènements</h2>
+					<h2>Nos Évènements</h2>
 					<hr />
-					<EventList filter={filter} className={style.col} />{" "}
-					<Filter filter={filter} setFilter={setFilter} />
+					{session !== 0 ? (
+						session.clearance >= 2 ? (
+							<>
+								<EventList
+									filter={filter}
+									className={style.col}
+								/>
+								<Filter filter={filter} setFilter={setFilter} />
+							</>
+						) : (
+							<EventListPublic />
+						)
+					) : (
+						<></>
+					)}
 				</div>
-				<ProductList />
+				<ProductList session={session} />
 			</div>
 			<Presentation />
 		</div>
@@ -45,17 +92,20 @@ const HeaderHome = () => {
 				<h1>BDE 42 Mulhouse</h1>
 				<span>
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						Nulla eget leo sollicitudin, lacinia dui ut, dictum
-						metus.
+						Bienvenue sur le site de La Frégate, l'association
+						auto-gérée remplissant le rôle du BDE de 42 Mulhouse !
 					</p>
 					<p>
-						Curabitur laoreet iaculis arcu eget elementum. Donec
-						risus magna, rhoncus quis ipsum in, maximus mattis nibh.{" "}
+						Vous y retrouverez les évènements à venir ainsi que la
+						possibilité de vous y inscrire,
 					</p>
 					<p>
-						Donec at nunc eu ipsum ultricies sagittis. Aliquam ac
-						mauris lobortis, consequat quam at, luctus lacus.
+						Mais aussi les informations sur les goodies que nous
+						vous proposons{" "}
+						{
+							//ou encore les clubs de l'école !
+						}
+						et plus encore à l'avenir !
 					</p>
 				</span>
 			</div>
@@ -114,22 +164,22 @@ const Filter = param => {
 				<CheckSet
 					set={[
 						{
-							label: "Free",
+							label: "Gratuit",
 							name: "free",
 							checked: param.filter.free
 						},
 						{
-							label: "Available",
+							label: "Places restantes",
 							name: "available",
 							checked: param.filter.available
 						},
 						{
-							label: "Miammiam glouglou",
+							label: "Consommations",
 							name: "food",
 							checked: param.filter.food
 						},
 						{
-							label: "Dehors",
+							label: "A l'extérieur",
 							name: "outside",
 							checked: param.filter.outside
 						},
@@ -152,11 +202,12 @@ const Filter = param => {
 	);
 };
 
-const ProductList = () => {
-	const [products, setProducts] = useState([{id: 0}, {id: 1}, {id: 2}]);
-	const [thumbnailHoodies, setThumbnailHoodies] = useState(frontImage);
-	const [thumbnailTshirt, setThumbnailTshirt] = useState(frontImage);
-	const [thumbnailCap, setThumbnailCap] = useState(frontImage);
+const ProductList = param => {
+	const [products, setProducts] = useState([]);
+	const [thumbnailHoodies, setThumbnailHoodies] = useState(blank);
+	const [thumbnailTshirt, setThumbnailTshirt] = useState(blank);
+	const [thumbnailCap, setThumbnailCap] = useState(blank);
+	const [popUp, setPopUp] = useState(-1);
 
 	useEffect(() => {
 		if (products[2] === undefined || products[2] === null) return;
@@ -179,9 +230,10 @@ const ProductList = () => {
 				setThumbnailCap(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -207,9 +259,10 @@ const ProductList = () => {
 				setThumbnailHoodies(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -235,9 +288,10 @@ const ProductList = () => {
 				setThumbnailTshirt(URL.createObjectURL(blob));
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [products]);
@@ -258,9 +312,10 @@ const ProductList = () => {
 				setProducts(data);
 			})
 			.catch(function(error) {
-				console.log(
-					"Il y a eu un problème avec l'opération fetch: " +
-						error.message
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
@@ -270,12 +325,47 @@ const ProductList = () => {
 			<h2>NOS PRODUITS</h2>
 			<hr />
 			<div className={style.thumbnailsContainer}>
-				<img src={thumbnailHoodies} />
+				<img
+					src={thumbnailHoodies}
+					onClick={() => {
+						setPopUp(products[0].id);
+					}}
+				/>
 				<div className={style.miniThumbnailsContainer}>
-					<img src={thumbnailTshirt} />
-					<img src={thumbnailCap} />
+					<img
+						src={thumbnailTshirt}
+						onClick={() => {
+							setPopUp(products[1].id);
+						}}
+					/>
+					<img
+						src={thumbnailCap}
+						onClick={() => {
+							setPopUp(products[2].id);
+						}}
+					/>
 				</div>
 			</div>
+			{popUp !== -1 && (
+				<>
+					<div id={style.filter}>
+						<div
+							id={style.outArea}
+							onClick={() => {
+								setPopUp(-1);
+							}}
+						></div>
+						<Product
+							session={param.session}
+							id={popUp}
+							setPopUp={setPopUp}
+							closeEvent={() => {
+								setPopUp(-1);
+							}}
+						/>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };
@@ -283,12 +373,12 @@ const ProductList = () => {
 const EquipePicture = props => {
 	return (
 		<>
-			<a href={`https://profile.intra.42.fr/users/${props.login}`}>
-				<img
-					src={`https://cdn.intra.42.fr/users/${props.login}.jpg`}
-					height={100}
-					width="auto"
-				/>
+			<a
+				href={`https://profile.intra.42.fr/users/${props.login}`}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<img src={props.img} height={100} width="auto" />
 			</a>
 		</>
 	);
@@ -302,41 +392,41 @@ const Presentation = () => {
 			<div className={style.bureauFaces}>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="aguemazi" />
+						<EquipePicture login="aguemazi" img={aguemazi} />
 					</div>
 					<h3>Capitaine</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="tvanbael" />
-						<EquipePicture login="jrasser" />
+						<EquipePicture login="tvanbael" img={tvanbael} />
+						<EquipePicture login="jrasser" img={jrasser} />
 					</div>
-					<h3>Vice Capitaines</h3>
+					<h3>Vice-Capitaines</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="Link" />
-						<EquipePicture login="tbrissia" />
+						<EquipePicture login="Link" img={Link} />
+						<EquipePicture login="tbrissia" img={tbrissia} />
 					</div>
 					<h3>Trésoriers</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="iCARUS" />
-						<EquipePicture login="mcacoilo" />
+						<EquipePicture login="iCARUS" img={iCARUS} />
+						<EquipePicture login="mcacoilo" img={mcacoilo} />
 					</div>
 					<h3>Secrétaires</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="mwinter-" />
-						<EquipePicture login="mfusil" />
+						<EquipePicture login="mwinter-" img={mwinter} />
+						<EquipePicture login="mfusil" img={mfusil} />
 					</div>
 					<h3>Responsables communication</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
-						<EquipePicture login="jdutschk" />
+						<EquipePicture login="jdutschk" img={jdutschk} />
 					</div>
 					<h3>Responsable partenariats</h3>
 				</div>
@@ -346,23 +436,3 @@ const Presentation = () => {
 };
 
 export default Home;
-
-// const getStock = () => {
-// 	fetch(`${process.env.REACT_APP_API_URL}/google`, {
-// 		credentials: "include"
-// 	})
-// 		.then(response => {
-// 			if (!response.ok) {
-// 				throw new Error(
-// 					`This is an HTTP error: The status is` +
-// 						` ${response.status}`
-// 				);
-// 			}
-// 		})
-// 		.catch(function(error) {
-// 			console.log(
-// 				"Il y a eu un problème avec l'opération fetch: " +
-// 					error.message
-// 			);
-// 		});
-// };

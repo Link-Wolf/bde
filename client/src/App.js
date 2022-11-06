@@ -19,9 +19,7 @@ function App() {
 			credentials: "include",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({pass: arg})
-		})
-			.then(response => response.text())
-			.catch(error => console.log("error", error));
+		});
 	};
 
 	return (

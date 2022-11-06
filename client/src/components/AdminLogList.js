@@ -1,6 +1,7 @@
 import {useState, useEffect, React} from "react";
 import usePagination from "./Pagination";
 import {Pagination} from "@mui/material";
+import {NotificationManager} from "react-notifications";
 
 const AdminLogList = param => {
 	const PER_PAGE = 21;
@@ -46,8 +47,10 @@ const AdminLogList = param => {
 				setLoad(false);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, [param.filter]);

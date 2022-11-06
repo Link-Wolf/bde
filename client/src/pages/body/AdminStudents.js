@@ -2,6 +2,7 @@ import {useState, useEffect, React} from "react";
 import usePagination from "../../components/Pagination";
 import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
+import {NotificationManager} from "react-notifications";
 
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
@@ -32,8 +33,10 @@ const AdminStudents = () => {
 				viewData.updateData(actualData);
 			})
 			.catch(function(error) {
-				console.log(
-					`This is a fetch error: The error is ${error.message}`
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
 				);
 			});
 	}, []);
