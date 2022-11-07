@@ -169,12 +169,22 @@
 			}
 
 			#rupture {
-				font-size: 22px;
+				font-size: 20px;
 				font-stretch: normal;
 				font-weight: bold;
 				text-align: left;
 				border-left: none;
 				padding-left: 0;
+			}
+
+			#ruptureContact {
+				font-size: 20px;
+				font-stretch: normal;
+				font-weight: bold;
+				text-align: left;
+				border-left: none;
+				padding-left: 0;
+				margin: 0 -30px;
 			}
 		}
 	}
@@ -267,13 +277,25 @@
 
 					div {
 						&#price {
-							left: 0;
+							left: 20px;
 							font-size: 30px;
 						}
 					}
 
 					#rupture {
-						font-size: 18px;
+						font-size: 16px;
+						text-align: center;
+					}
+
+					#ruptureContact {
+						font-size: 16px;
+						font-stretch: normal;
+						font-weight: bold;
+						text-align: left;
+						border-left: none;
+						padding-left: 0;
+						margin: 0;
+						text-align: center;
 					}
 				}
 			}

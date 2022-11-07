@@ -27,7 +27,7 @@ const AddDirectionSearchBar = param => {
 					param.setUpdate(true);
 					setUpdate(true);
 					NotificationManager.success(
-						`Student ${selectedUser} ajouté au bureau directeur`,
+						`Student ${selectedUser} ajouté aux administrateur·trice·s`,
 						"Validation",
 						5000
 					);
@@ -44,7 +44,7 @@ const AddDirectionSearchBar = param => {
 
 	useEffect(() => {
 		setUpdate(false);
-		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noDirection`, {
+		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noAdmin`, {
 			credentials: "include"
 		})
 			.then(response => {

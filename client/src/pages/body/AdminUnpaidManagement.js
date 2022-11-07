@@ -6,6 +6,8 @@ import {NotificationManager} from "react-notifications";
 import AddUnpaidSearchBar from "../../components/AddUnpaidSearchBar";
 import Mutiny from "../../components/Mutiny";
 
+import style from "../../style/AdminUnpaidManagement.module.scss";
+
 const AdminCaptainManagement = () => {
 	const {isConfirmed} = useConfirm();
 
@@ -19,7 +21,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/admin/unpaid`,
+			`${process.env.REACT_APP_API_URL}/stud/admin/volunteers`,
 			requestOptions
 		)
 			.then(response => {
@@ -48,7 +50,7 @@ const AdminCaptainManagement = () => {
 			credentials: "include"
 		};
 		fetch(
-			`${process.env.REACT_APP_API_URL}/stud/unpaid/yeet/${toYeet}`,
+			`${process.env.REACT_APP_API_URL}/stud/volunteers/yeet/${toYeet}`,
 			requestOptions
 		)
 			.then(response => {
@@ -89,7 +91,8 @@ const AdminCaptainManagement = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.unpaidManagementContainer}>
+				<div id={style.tittle}>Gestion des volontaires</div>
 				<AddUnpaidSearchBar
 					setUpdate={d => {
 						setUpdate(d);

@@ -34,28 +34,28 @@ export class StudController {
 		return this.studService.getMail(login, session.login);
 	}
 
-	@Get('admin/direction')
+	@Get('admin/members')
 	@UseGuards(new ClearanceGuard(11))
-	findDirection(@Session() session: Record<string, any>): Promise<Stud[]> {
-		return this.studService.findDirection(session.login);
+	findAdmins(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findAdmins(session.login);
 	}
 
-	@Get('admin/noDirection')
+	@Get('admin/noAdmin')
 	@UseGuards(new ClearanceGuard(11))
-	findNoDirection(@Session() session: Record<string, any>): Promise<Stud[]> {
-		return this.studService.findNoDirection(session.login);
+	findNoAdmins(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findNoAdmins(session.login);
 	}
 
-	@Get('admin/unpaid')
+	@Get('admin/volunteers')
 	@UseGuards(new ClearanceGuard(11))
-	findUnpaid(@Session() session: Record<string, any>): Promise<Stud[]> {
-		return this.studService.findUnpaid(session.login);
+	findVolunteers(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findVolunteers(session.login);
 	}
 
-	@Get('admin/noUnpaid')
+	@Get('admin/noVolunteers')
 	@UseGuards(new ClearanceGuard(11))
-	findNoUnpaid(@Session() session: Record<string, any>): Promise<Stud[]> {
-		return this.studService.findNoUnpaid(session.login);
+	findNoVolunteer(@Session() session: Record<string, any>): Promise<Stud[]> {
+		return this.studService.findNoVolunteers(session.login);
 	}
 
 	@Post('_')
@@ -75,26 +75,26 @@ export class StudController {
 
 	@Patch('admin/yeet/:login')
 	@UseGuards(new ClearanceGuard(21))
-	removeDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
-		return this.studService.removeDirection(login, session.login);
+	removeAdmin(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.removeAdmin(login, session.login);
 	}
 
 	@Patch('admin/promote/:login')
 	@UseGuards(new ClearanceGuard(21))
-	addDirection(@Session() session: Record<string, any>, @Param('login') login: string) {
-		return this.studService.addDirection(login, session.login);
+	addAdmin(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.addAdmin(login, session.login);
 	}
 
-	@Patch('unpaid/yeet/:login')
+	@Patch('volunteers/yeet/:login')
 	@UseGuards(new ClearanceGuard(11))
-	removeUnpaid(@Session() session: Record<string, any>, @Param('login') login: string) {
-		return this.studService.removeUnpaid(login, session.login);
+	removeVolunteer(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.removeVolunteer(login, session.login);
 	}
 
-	@Patch('unpaid/promote/:login')
+	@Patch('volunteers/promote/:login')
 	@UseGuards(new ClearanceGuard(11))
-	addUnpaid(@Session() session: Record<string, any>, @Param('login') login: string) {
-		return this.studService.addUnpaid(login, session.login);
+	addVolunteer(@Session() session: Record<string, any>, @Param('login') login: string) {
+		return this.studService.addVolunteer(login, session.login);
 	}
 
 	@Patch('admin/:login/mutiny')

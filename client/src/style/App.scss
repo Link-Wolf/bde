@@ -40,6 +40,8 @@ html {
 	--secondary-light: #E7AD9D;
 	--premium-gold: #eee9bb;
 	--premium-gold-logo: gold;
+	--error: rgb(215,113,108);
+	--warn: rgb(224,166,66);
 
 	a {
 		text-decoration: inherit;
@@ -47,10 +49,6 @@ html {
 
 		&:hover {
 			color: var(--primary);
-		}
-
-		&:active {
-			color: var(--primary-dark);
 		}
 	}
 }

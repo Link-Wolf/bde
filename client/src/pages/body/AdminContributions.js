@@ -6,6 +6,8 @@ import {NotificationManager} from "react-notifications";
 
 import AdminCreateContributionToken from "../../components/AdminCreateContributionToken";
 
+import style from "../../style/AdminContributions.module.scss";
+
 const AdminContributions = () => {
 	const [data, setData] = useState([]);
 	const [update, setUpdate] = useState(false);
@@ -49,7 +51,8 @@ const AdminContributions = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
+			<div className={style.contributionsContainer}>
+				<div id={style.tittle}>Gestion des cotisations</div>
 				<Button
 					onClick={() => {
 						setForm(<AdminCreateContributionToken />);
