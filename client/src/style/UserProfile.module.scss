@@ -173,6 +173,26 @@
 							}
 						}
 
+						&[disabled] {
+							& + label {
+								text-align: left;
+								text-transform: uppercase;
+								font-size: 18px;
+								font-weight: bold;
+								border-bottom: solid var(--dark-grey) 1px;
+								font-style: italic;
+								color: var(--dark-grey);
+								width: 300px;
+								background: var(--white);
+								padding: 5px;
+								margin: 0;
+
+								&:hover {
+									cursor: pointer;
+								}
+							}
+						}
+
 						&:checked {
 							& + label {
 								background: var(--lighter-grey);
@@ -183,7 +203,7 @@
 					&:nth-last-of-type(1) {
 						input {
 							& + label {
-								border: none;
+								border: none !important;
 							}
 						}
 					}

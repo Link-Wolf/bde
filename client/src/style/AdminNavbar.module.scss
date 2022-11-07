@@ -1,4 +1,5 @@
 .adminNavbarContainer {
+	position: absolute;
 	margin-right: 5%;
 	left: 0;
 	display: flex;
@@ -77,6 +78,7 @@
 	}
 
 	#panel {
+		padding: 0 40px;
 		transition: 0.5s;
 		background: var(--black);
 		color: var(--white);

@@ -7,6 +7,8 @@ import {NotificationManager} from "react-notifications";
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
 
+import style from "../../style/AdminStudents.module.scss";
+
 const AdminStudents = () => {
 	const PER_PAGE = 21;
 	const [data, setData] = useState([]);
@@ -53,9 +55,11 @@ const AdminStudents = () => {
 			}}
 		>
 			<AdminNavbar />
-			<div>
-				<h1> AdminPannel Students part </h1>
+			<div className={style.studListContainer}>
+				<div id={style.tittle}>Gestion des utilisateurs</div>
 				<button
+					hidden
+					id={style.premium}
 					onClick={() => {
 						setIsFiltered(!isFiltered);
 					}}
@@ -65,56 +69,92 @@ const AdminStudents = () => {
 						: "Montrer les premiums"}
 				</button>
 				<div>
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-					{data.length > 0 && (
-						<ul>
-							{viewData.currentData().map(
+					<table className={style.table}>
+						<thead>
+							<tr>
+								<th className={style.Desclogin}>Login</th>
+								<th className={style.Descname}>Nom Prénom</th>
+								<th className={style.Descpriv} hidden>
+									Privilège
+								</th>
+								<th className={style.Descauth}>
+									Autorisations
+								</th>
+								<th className={style.DescjoinDate}>
+									Première connexion
+								</th>
+							</tr>
+						</thead>
+						{data.length > 0 ? (
+							viewData.currentData().map(
 								user =>
 									(!isFiltered || user.isPremium) && (
-										<li key={user.login}>
-											{user.login}
-											<ul>
-												<li>
-													{user.firstname}{" "}
+										<tr
+											key={user.login}
+											id={style.eachLine}
+										>
+											<td className={style.login}>
+												<a
+													href={`/profile/${user.login}`}
+												>
+													{user.login}
+												</a>
+											</td>
+											<td className={style.name}>
+												{user.firstname}{" "}
+												<label id={style.lastname}>
 													{user.lastname}
-												</li>
-												<li>
-													<img
-														src={
-															user.isPremium
-																? yellowStar
-																: greyStar
-														}
-													/>
-												</li>
-												<li>
-													{
-														{
-															[2]: "Autre Campus",
-															[5]: "Piscineux",
-															[7]: "Student",
-															[9]: "Bénévole",
-															[11]: "Admin",
-															[21]: "Capitaine",
-															[42]: "0uebM@st3r"
-														}[user.clearance]
+												</label>
+											</td>
+											<td className={style.priv} hidden>
+												<img
+													src={
+														user.isPremium
+															? yellowStar
+															: greyStar
 													}
-												</li>
-											</ul>
-										</li>
+												/>
+											</td>
+											<td className={style.auth}>
+												{
+													{
+														[2]: "Autre Campus",
+														[5]: "Piscineux",
+														[7]: "Student",
+														[9]: "Bénévole",
+														[11]: "Admin",
+														[21]: "Capitaine",
+														[42]: "0uebM@st3r"
+													}[user.clearance]
+												}
+											</td>
+											<td className={style.joinDate}>
+												{new Date(
+													user.joinDate
+												).toLocaleDateString("fr-FR", {
+													year: "numeric",
+													month: "2-digit",
+													day: "2-digit",
+													hour: "2-digit",
+													minute: "2-digit"
+												})}
+											</td>
+										</tr>
 									)
-							)}
-						</ul>
-					)}
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
+							)
+						) : (
+							<tr>
+								<td colSpan={4}>Aucuns utilisateurs</td>
+							</tr>
+						)}
+					</table>
+					<div id={style.pagination}>
+						<Pagination
+							count={count}
+							page={page}
+							onChange={handleChangePage}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>

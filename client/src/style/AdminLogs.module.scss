@@ -1,0 +1,191 @@
+.logsContainer {
+	margin-left: 400px;
+
+	#tittle {
+		margin-top: 20px;
+		font-size: 40px;
+		font-stretch: condensed;
+		letter-spacing: 4px;
+		width: 980px;
+		text-align: center;
+	}
+
+	.dropdownContainer {
+		button {
+			border: none;
+			background: var(--lighter-grey);
+
+			&#dropdownButton {
+				width: 100px;
+				height: 30px;
+				color: var(--white);
+				background: var(--secondary);
+				margin: 40px 0;
+
+				&:hover {
+					background: var(--secondary-dark);
+				}
+
+				&:active {
+					background: var(--secondary-dark);
+				}
+			}
+
+			svg {
+				width: 18px;
+			}
+		}
+
+		#dropdownBg {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.5);
+			backdrop-filter: blur(1px);
+			display: none;
+			z-index: 8;
+		}
+
+		hr {
+			margin-bottom: 0;
+		}
+
+		#dropdown {
+			background: var(--lighter-grey);
+			padding: 20px;
+			width: 240px;
+			position: absolute;
+			z-index: 10;
+			display: none;
+			top: -40px;
+			margin-top: 270px;
+
+			input {
+				width: 200px;
+
+				&[type] {
+					width: auto;
+				}
+			};
+		}
+
+		#login {
+			margin: 15px 0 10px;
+		}
+
+		#tri {
+			margin: 20px 0 0;
+		}
+
+		#triDate {
+			margin: 5px 0 0 15px;
+			font-size: 14px;
+		}
+	}
+
+	#results {
+		margin: -67px 0 30px 130px;
+	}
+
+	.logs {
+		.pagination {
+			width: 940px;
+			display: flex;
+			justify-content: center;
+			margin: 50px 0;
+		}
+
+		ul {
+			padding-left: 0;
+			list-style: none;
+		}
+
+		#desc {
+			display: flex;
+			flex-direction: row;
+			margin-bottom: 30px;
+			font-weight: bold;
+			font-size: 20px;
+
+			li {
+				&#descType {
+					width: 60px;
+					text-align: center;
+					margin-right: 20px;
+				}
+
+				&#descLogin {
+					width: 140px;
+					text-align: center;
+				}
+
+				&#descMessage {
+					text-align: center;
+					margin-right: 20px;
+					width: 500px;
+				}
+
+				&#descDate {
+					text-align: center;
+					width: 240px;
+				}
+			}
+		}
+
+		#eachLine {
+			margin-bottom: 10px;
+		}
+
+		.logLine {
+			display: flex;
+			flex-direction: row;
+
+			li {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+
+				&#type {
+					text-transform: uppercase;
+					font-stretch: condensed;
+					letter-spacing: 3px;
+					margin-right: 20px;
+					width: 60px;
+					text-align: center;
+					color: var(--white);
+
+					&[type="warn"] {
+						div {
+							background: var(--warn);
+						}
+					}
+
+					&[type="error"] {
+						div {
+							background: var(--error);
+						}
+					}
+				};
+
+				&#login {
+					color: var(--secondary);
+					width: 140px;
+					padding-left: 20px;
+				}
+
+				&#message {
+					padding-left: 20px;
+					margin-right: 20px;
+					width: 500px;
+				}
+
+				&#date {
+					width: 240px;
+					padding-left: 20px;
+				}
+			}
+		}
+	}
+}

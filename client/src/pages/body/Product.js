@@ -232,6 +232,9 @@ const Description = props => {
 					) : props.product.stock !== undefined ? (
 						<div>
 							<dt id={style.rupture}>Rupture de stock</dt>
+							<dt id={style.ruptureContact}>
+								Faites nous en part <a href="/contact">ici</a> !
+							</dt>
 						</div>
 					) : (
 						""

@@ -24,7 +24,7 @@ const AdminNavbar = () => {
 				true_email:
 					"[192,198,154,214,34,115,164,138,149,222,232,41,86,135,229,118,146,155,51,177,217,153,162,10,100,167,151,10,160,35,75,90]",
 				email: "iCARUS@student.42mulhouse.fr",
-				isDirection: true,
+				isAdmin: true,
 				clearance: 42
 			})
 		}).then(() => {
@@ -39,13 +39,13 @@ const AdminNavbar = () => {
 					email: "Link@student.42mulhouse.fr",
 					true_email:
 						"[90,77,52,54,142,29,121,85,8,1,225,158,17,120,133,71,97,165,130,30,188,78,231,250,2,60,11,2,99,157,38,224]",
-					isDirection: true,
+					isAdmin: true,
 					clearance: 42
 				})
 			});
 		});
 	};
-	const getBlob = async () => {
+	const getLogs = async () => {
 		await fetch(`${process.env.REACT_APP_API_URL}/admin/logs/file`, {
 			credentials: "include"
 		})
@@ -56,7 +56,13 @@ const AdminNavbar = () => {
 			.then(b64zip => {
 				const element = document.createElement("a");
 				element.href = URL.createObjectURL(b64toBlob(b64zip));
-				element.download = "logs" + Date.now() + ".zip";
+				const date = new Date(Date.now());
+				const year = date.toLocaleString("default", {year: "numeric"});
+				const month = date.toLocaleString("default", {
+					month: "2-digit"
+				});
+				const day = date.toLocaleString("default", {day: "2-digit"});
+				element.download = `logs_${year}_${month}_${day}.zip`;
 				document.body.appendChild(element);
 				element.click();
 			})
@@ -188,7 +194,7 @@ const AdminNavbar = () => {
 					</svg>
 				</a>
 				<a href="/admin">
-					<h2>Admin</h2>
+					<h2>Admin </h2>
 				</a>
 				<a href="/admin/students">
 					<h3>Utilisateurs</h3>
@@ -197,7 +203,7 @@ const AdminNavbar = () => {
 					<h3>Évènements</h3>
 				</a>
 				<a href="/admin/events/subscribtions">
-					<h3>Inscriptions aux évènement</h3>
+					<h3>Inscriptions</h3>
 				</a>
 				<a href="/admin/contributions">
 					<h3>Cotisations</h3>
@@ -213,13 +219,13 @@ const AdminNavbar = () => {
 				<a href="/admin/logs">
 					<h3>Logs</h3>
 				</a>
-				<a href="/admin/unpaidmanagement">
+				<a href="/admin/volunteersmanagement">
 					<h3>Gestion volontaires</h3>
 				</a>
 				{session.clearance >= 21 && (
 					<>
 						<a href="/admin/teammanagement">
-							<h3>Gestion bureau</h3>
+							<h3>Gestion admins</h3>
 						</a>
 					</>
 				)}
@@ -228,7 +234,7 @@ const AdminNavbar = () => {
 						<button id={style.bigYellowButton} onClick={initDb}>
 							Init sUS
 						</button>
-						<button onClick={getBlob}>Get Blob</button>
+						<button onClick={getLogs}>Get Logs</button>
 					</div>
 				)}
 			</div>
