@@ -1,29 +1,3 @@
-@fontface {
-	font-family: Futura;
-	src: url("../assets/fonts/Futura-Medium-01.ttf") format("truetype");
-}
-@fontface {
-	font-family: Futura;
-	src: url("../assets/fonts/Futura-MediumItalic-02.ttf") format("truetype");
-	font-style: italic;
-}
-@fontface {
-	font-family: Futura;
-	src: url("../assets/fonts/Futura-Bold-03.ttf") format("truetype");
-	font-weight: bold;
-}
-@fontface {
-	font-family: Futura;
-	src: url("../assets/fonts/Futura-CondensedMedium-04.ttf") format("truetype");
-	font-stretch: condensed;
-}
-@fontface {
-	font-family: Futura;
-	src: url("../assets/fonts/Futura-CondensedExtraBold-05.ttf") format("truetype");
-	font-weight: bold;
-	font-stretch: condensed;
-}
-
 html {
 	hyphens: auto;
 	overflow: hidden;
