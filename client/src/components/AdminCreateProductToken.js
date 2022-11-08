@@ -177,7 +177,7 @@ const AdminProductToken = param => {
 				required
 			/>
 			<label>Description</label>
-			<input
+			<textarea
 				name="desc"
 				value={formState.desc}
 				onChange={handleFormChange}
