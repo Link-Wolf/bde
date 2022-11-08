@@ -1,13 +1,43 @@
+@fontface {
+	font-family: Futura;
+	src: url("assets/fonts/Futura-Medium-01.ttf") format("truetype");
+}
+
+@fontface {
+	font-family: Futura;
+	src: url("assets/fonts/Futura-MediumItalic-02.ttf") format("truetype");
+	font-style: italic;
+}
+
+@fontface {
+	font-family: Futura;
+	src: url("assets/fonts/Futura-Bold-03.ttf") format("truetype");
+	font-weight: bold;
+}
+
+@fontface {
+	font-family: Futura;
+	src: url("assets/fonts/Futura-CondensedMedium-04.ttf") format("truetype");
+	font-stretch: condensed;
+}
+
+@fontface {
+	font-family: Futura;
+	src: url("assets/fonts/Futura-CondensedExtraBold-05.ttf") format("truetype");
+	font-weight: bold;
+	font-stretch: condensed;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
