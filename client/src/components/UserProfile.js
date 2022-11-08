@@ -320,7 +320,12 @@ const Identity = props => {
 					)}
 				</li>
 			</ul>
-			{props.me && <ChangeEmailField login={props.login} />}
+			{props.me && (
+				<ChangeEmailField
+					login={props.login}
+					mail={props.stud.true_email}
+				/>
+			)}
 		</div>
 	);
 };
@@ -427,7 +432,7 @@ const ChangeEmailField = props => {
 			});
 	}, [props]);
 
-	return (
+	return props.mail ? (
 		<div className={style.emailFieldContainer}>
 			<label>Email :</label>
 			<input
@@ -473,6 +478,8 @@ const ChangeEmailField = props => {
 				Enregistrer
 			</button>
 		</div>
+	) : (
+		<></>
 	);
 };
 
