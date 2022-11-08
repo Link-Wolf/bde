@@ -165,30 +165,45 @@ const Price = param => {
 		<>
 			<div className={style.price}>
 				<div />
-				{!param.isPremium && (
-					<a>
+				{param.dataEvent.cost !== 0 ? (
+					<a className={style.no}>
 						<div>
-							Classique
+							Prix
 							<img src={inscCostLogo} />
 						</div>
-						{param.dataEvent.cost},00
+						{(Math.round(param.dataEvent.cost * 100) / 100).toFixed(
+							2
+						)}
 					</a>
+				) : (
+					"Gratuit"
 				)}
-				{(param.isPremium || param.dataEvent.cost !== 0) && (
-					<a
-						className={!param.isPremium ? style.no : style.yes}
-						href="/purchase/contrib"
-					>
-						<div>
-							Prilivège
-							<img src={inscCostLogo} />
-						</div>
-
-						{param.dataEvent.premium_cost !== 0
-							? param.dataEvent.premium_cost
-							: "Gratuit"}
-					</a>
-				)}
+				{
+					// {!param.isPremium && (
+					// 	<a>
+					// 		<div>
+					// 			Classique
+					// 			<img src={inscCostLogo} />
+					// 		</div>
+					// 		{param.dataEvent.cost},00
+					// 	</a>
+					// )}
+					// {(param.isPremium || param.dataEvent.cost !== 0) && (
+					// 	<a
+					// 		className={!param.isPremium ? style.no : style.yes}
+					// 		href="/purchase/contrib"
+					// 	>
+					// 		<div>
+					// 			Prilivège
+					// 			<img src={inscCostLogo} />
+					// 		</div>
+					//
+					// 		{param.dataEvent.premium_cost !== 0
+					// 			? param.dataEvent.premium_cost
+					// 			: "Gratuit"}
+					// 	</a>
+					// )}
+				}
 				<div />
 			</div>
 		</>
