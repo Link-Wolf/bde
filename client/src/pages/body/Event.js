@@ -131,6 +131,7 @@ const Thumbnail = param => {
 };
 
 const Description = param => {
+	if (param.dataEvent.desc == "" || param.dataEvent.desc == undefined) return;
 	return (
 		<>
 			{param.dataEvent.desc.split("\n").map((line, i) => (
