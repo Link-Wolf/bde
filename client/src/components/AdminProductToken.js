@@ -158,6 +158,15 @@ const AdminProductToken = param => {
 						);
 					}
 				})
+				.then(async () => {
+					await changeThumbnail();
+				})
+				.then(async () => {
+					await changeAlbum();
+				})
+				.then(() => {
+					window.location.reload();
+				})
 				.catch(function(error) {
 					NotificationManager.error(
 						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
@@ -165,9 +174,6 @@ const AdminProductToken = param => {
 						5000
 					);
 				});
-			await changeThumbnail();
-			await changeAlbum();
-			window.location.reload();
 		}
 	};
 
@@ -278,6 +284,66 @@ const AdminProductToken = param => {
 						id="formCost"
 						value={formState.cost}
 						name="cost"
+						onChange={handleFormChange}
+						required
+					/>
+					<label>S</label>
+					<input
+						disabled={locked}
+						type="number"
+						min="0"
+						step="1"
+						id="formS"
+						value={formState.s}
+						name="s"
+						onChange={handleFormChange}
+						required
+					/>
+					<label>M</label>
+					<input
+						disabled={locked}
+						type="number"
+						min="0"
+						step="1"
+						id="formM"
+						value={formState.m}
+						name="m"
+						onChange={handleFormChange}
+						required
+					/>
+					<label>L</label>
+					<input
+						disabled={locked}
+						type="number"
+						min="0"
+						step="1"
+						id="formL"
+						value={formState.l}
+						name="l"
+						onChange={handleFormChange}
+						required
+					/>
+					<label>XL</label>
+					<input
+						disabled={locked}
+						type="number"
+						min="0"
+						step="1"
+						id="formXL"
+						value={formState.xl}
+						name="xl"
+						onChange={handleFormChange}
+						required
+					/>
+					<label>Stock</label>
+					<input
+						disabled={locked}
+						type="number"
+						min="0"
+						step="1"
+						id="formStock"
+						value={formState.stock}
+						name="stock"
 						onChange={handleFormChange}
 						required
 					/>
