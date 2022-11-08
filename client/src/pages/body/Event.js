@@ -131,7 +131,13 @@ const Thumbnail = param => {
 };
 
 const Description = param => {
-	return <p>{param.dataEvent.desc}</p>;
+	return (
+		<>
+			{param.dataEvent.desc.split("\n").map((line, i) => (
+				<p eventKey={i}>{line}</p>
+			))}
+		</>
+	);
 };
 
 const Title = param => {
