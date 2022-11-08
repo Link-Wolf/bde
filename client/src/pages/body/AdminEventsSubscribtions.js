@@ -266,16 +266,15 @@ const AdminStudents = () => {
 									{" "}
 									(il doit s'être connecté au moins une fois)
 								</label>
-								<div>
+								<div className={style.addInput}>
 									<input
 										type="text"
-										id="studToAdd"
 										placeholder="Login"
 										autoFocus={true}
 										required
 									/>
 								</div>
-								<div>
+								<div className={style.addInput}>
 									<input
 										type="number"
 										id="cost"
@@ -295,27 +294,34 @@ const AdminStudents = () => {
 						<></>
 					)}
 
-					{stud.length > 0 && (
-						<ul>
-							{stud.map(user => (
-								<li key={user.studLogin}>
-									{user.studLogin}
-									<ul>
-										<li>{user.price}€</li>
-										<li>{user.date}</li>
-										<button
-											onClick={() => {
-												handleRemoveButton(
-													user.studLogin
-												);
-											}}
-										>
-											❌
-										</button>
-									</ul>
-								</li>
-							))}
-						</ul>
+					{stud.length > 0 ? (
+						<>
+							<div id={style.inscrits}>Inscrits actuels</div>
+							<ul>
+								{stud.map(user => (
+									<li key={user.studLogin}>
+										{user.studLogin}
+										<ul>
+											<li>{user.price}€</li>
+											<li>{user.date}</li>
+											<button
+												onClick={() => {
+													handleRemoveButton(
+														user.studLogin
+													);
+												}}
+											>
+												❌
+											</button>
+										</ul>
+									</li>
+								))}
+							</ul>
+						</>
+					) : (
+						<div>
+							Personne ne s'est encore inscrit à cet évènement
+						</div>
 					)}
 				</div>
 			</div>
