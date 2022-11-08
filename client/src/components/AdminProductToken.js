@@ -158,6 +158,15 @@ const AdminProductToken = param => {
 						);
 					}
 				})
+				.then(async () => {
+					await changeThumbnail();
+				})
+				.then(async () => {
+					await changeAlbum();
+				})
+				.then(() => {
+					window.location.reload();
+				})
 				.catch(function(error) {
 					NotificationManager.error(
 						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
@@ -165,9 +174,6 @@ const AdminProductToken = param => {
 						5000
 					);
 				});
-			await changeThumbnail();
-			await changeAlbum();
-			window.location.reload();
 		}
 	};
 

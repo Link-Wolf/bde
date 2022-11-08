@@ -70,21 +70,21 @@ services:
         networks:
             - back_network
 
-    phppgadmin:
-        container_name: fregate_phppgadmin
-        image: bitnami/phppgadmin
+    adminer:
+        container_name: fregate_adminer
+        image: adminer
         restart: always
         environment:
-                DATABASE_HOST: postgres
+                ADMINER_DEFAULT_SERVER : postgres
         depends_on:
             - postgres
         networks:
             - back_network
             - front_network
         ports:
-            - 8443:8443
+            - 4269:8080
         volumes:
-            - bde:/phppgadmin/data
+            - bde:/adminer/data
 volumes:
     bde:
         driver: local
