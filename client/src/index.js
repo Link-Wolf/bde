@@ -4,6 +4,11 @@ import "./index.css";
 import "./config";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./assets/fonts/Futura-Bold-03.ttf";
+import "./assets/fonts/Futura-CondensedExtraBold-05.ttf";
+import "./assets/fonts/Futura-CondensedMedium-04.ttf";
+import "./assets/fonts/Futura-MediumItalic-02.ttf";
+import "./assets/fonts/Futura-Medium-01.ttf";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap.min.css";
