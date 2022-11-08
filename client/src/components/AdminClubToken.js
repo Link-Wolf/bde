@@ -219,6 +219,8 @@ const AdminClubToken = param => {
 					/>
 					<Form.Label>Description : </Form.Label>
 					<Form.Control
+						as="textarea"
+						rows={3}
 						name="desc"
 						value={formState.desc}
 						disabled={locked}
