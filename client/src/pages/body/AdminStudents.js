@@ -124,7 +124,7 @@ const AdminStudents = () => {
 														[9]: "Bénévole",
 														[11]: "Admin",
 														[21]: "Capitaine",
-														[42]: "0uebM@st3r"
+														[42]: "Webmaster"
 													}[user.clearance]
 												}
 											</td>
