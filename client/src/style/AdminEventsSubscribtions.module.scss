@@ -31,12 +31,28 @@
 		}
 	}
 
+	#inscrits {
+		width: 980px;
+		text-align: center;
+		font-style: italic;
+		font-size: 20px;
+	}
+
 	.studChoice {
 		margin-top: 30px;
+		margin-bottom: 60px;
 		font-size: 20px;
 
 		.enfantDeSatan {
-			display: inline;
+			display: inline-block;
+
+			button {
+				margin-left: -500px;
+			}
+
+			.addInput {
+				width: 210px;
+			}
 		}
 
 		#details {
