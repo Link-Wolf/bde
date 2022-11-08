@@ -133,11 +133,13 @@ const Thumbnail = param => {
 const Description = param => {
 	if (param.dataEvent.desc == "" || param.dataEvent.desc == undefined) return;
 	return (
-		<>
+		<div id={style.desc}>
 			{param.dataEvent.desc.split("\n").map((line, i) => (
-				<p eventKey={i}>{line}</p>
+				<p className={style.pDesc} eventKey={i}>
+					{line}
+				</p>
 			))}
-		</>
+		</div>
 	);
 };
 

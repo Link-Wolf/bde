@@ -135,7 +135,7 @@
 					padding: 0 calc(var(--padding)) 0 0;
 					margin: 0;
 
-					p {
+					#desc {
 						padding: 0 calc(var(--padding));
 						max-height: var(--desc-max);
 						min-height: var(--desc-min);
@@ -347,7 +347,7 @@
 
 				div {
 					&:nth-of-type(1) {
-						p {
+						#desc {
 							font-size: 14px;
 							min-height: 50px;
 							max-height: 95px;
