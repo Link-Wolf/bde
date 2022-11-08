@@ -145,6 +145,8 @@ const AdminCreateClubToken = param => {
 				/>
 				<Form.Label>Description : </Form.Label>
 				<Form.Control
+					as="textarea"
+					rows={3}
 					name="desc"
 					value={formState.desc}
 					onChange={handleFormChange}
