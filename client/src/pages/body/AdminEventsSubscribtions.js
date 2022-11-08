@@ -148,12 +148,19 @@ const AdminStudents = () => {
 		if (
 			!document.getElementById("cost").validity.valid ||
 			!document.getElementById("studToAdd").validity.valid
-		)
+		) {
+			NotificationManager.error(
+				`Les 2 champs doivent être remplis`,
+				"Erreur",
+				5000
+			);
 			return;
-		let confirm = await isConfirmed(
-			`Tu es certain de vouloir inscrire ${toSub} de force ?`
-		);
-		if (confirm) {
+		}
+		if (
+			await isConfirmed(
+				`Tu es certain de vouloir inscrire ${toSub} de force ?`
+			)
+		) {
 			if (toSub !== "") {
 				const check = await checkStud(selectedEvent, toSub, cost);
 				if (check == 1) {
@@ -194,14 +201,14 @@ const AdminStudents = () => {
 			<div className={style.subscribtionsContainer}>
 				<div id={style.tittle}>Inscriptions aux évènements</div>
 				<div>
-					<Form>
-						Event :
-						<Form.Select
+					<form className={style.eventChoice}>
+						<label>Evènement :</label>
+						<select
 							onChange={updateSelectedEvent}
 							value={selectedEvent}
 						>
 							<option value="" disabled hidden>
-								Choose here
+								Choix de l'évènement
 							</option>
 							{allEvent.map(event => {
 								return (
@@ -211,36 +218,23 @@ const AdminStudents = () => {
 										id={`event_${event.id}`}
 										event={event}
 									>
-										{`${event.name} (${event.begin_date})`}
+										{event.name} (
+										{new Date(
+											event.begin_date
+										).toLocaleDateString("fr-FR", {
+											year: "2-digit",
+											month: "2-digit",
+											day: "2-digit",
+											hour: "2-digit",
+											minute: "2-digit"
+										})}
+										)
 									</option>
 								);
 							})}
-						</Form.Select>
-					</Form>
-
-					{subForm ? (
-						<FormGroup>
-							<Form.Label>
-								Entrez le login du student à inscrire de force
-								(iel doit s'être connecté au moins une fois) et
-								le prix qu'iel a payé.
-							</Form.Label>
-							<Form.Control
-								type="text"
-								id="studToAdd"
-								placeholder="Login"
-								autoFocus={true}
-								required
-							/>
-							<Form.Control
-								type="number"
-								id="cost"
-								placeholder="Prix"
-								autoFocus={true}
-								required
-							/>
-							<p>
-								Il reste{" "}
+						</select>
+						{subForm ? (
+							<label id={style.places}>
 								{allEvent.find(event => {
 									return event.id == selectedEvent;
 								}).nb_places !== -42
@@ -248,18 +242,55 @@ const AdminStudents = () => {
 											return event.id == selectedEvent;
 									  }).nb_places
 									: "∞"}{" "}
-								places normales dont{" "}
+								places restantes (dont{" "}
 								{
 									allEvent.find(event => {
 										return event.id == selectedEvent;
 									}).nb_premium_places
 								}{" "}
-								places premiums.
-							</p>
-							<Button value="button" onClick={handleSubButton}>
-								Inscrire
-							</Button>
-						</FormGroup>
+								places premiums)
+							</label>
+						) : (
+							<></>
+						)}
+					</form>
+
+					{subForm ? (
+						<form className={style.studChoice}>
+							<div className={style.enfantDeSatan}>
+								<label>
+									Login du student à inscrire et le prix payé
+									en cas d'évènement payant
+								</label>
+								<label id={style.details}>
+									{" "}
+									(il doit s'être connecté au moins une fois)
+								</label>
+								<div>
+									<input
+										type="text"
+										id="studToAdd"
+										placeholder="Login"
+										autoFocus={true}
+										required
+									/>
+								</div>
+								<div>
+									<input
+										type="number"
+										id="cost"
+										placeholder="Prix"
+										autoFocus={true}
+										required
+									/>
+								</div>
+							</div>
+							<div className={style.enfantDeSatan}>
+								<button type="button" onClick={handleSubButton}>
+									Inscrire
+								</button>
+							</div>
+						</form>
 					) : (
 						<></>
 					)}
@@ -272,7 +303,7 @@ const AdminStudents = () => {
 									<ul>
 										<li>{user.price}€</li>
 										<li>{user.date}</li>
-										<Button
+										<button
 											onClick={() => {
 												handleRemoveButton(
 													user.studLogin
@@ -280,7 +311,7 @@ const AdminStudents = () => {
 											}}
 										>
 											❌
-										</Button>
+										</button>
 									</ul>
 								</li>
 							))}
