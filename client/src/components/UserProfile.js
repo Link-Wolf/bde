@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import QRCode from "react-qr-code";
+import {QRCodeSVG} from "qrcode.react";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import usePagination from "./Pagination";
@@ -348,13 +348,11 @@ const QR = props => {
 					}}
 				>
 					<div className={style.qrPopup}>
-						<QRCode
+						<QRCodeSVG
 							value={`http://${window.location.host}/profile/${props.login}`}
-							level="H"
 							bgColor="var(--white)"
 							fgColor="var(--black)"
-							size={256}
-							viewBox={`0 0 256 256`}
+							level="H"
 						/>
 					</div>
 				</div>
