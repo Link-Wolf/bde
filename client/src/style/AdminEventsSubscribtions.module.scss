@@ -9,4 +9,64 @@
 		width: 980px;
 		text-align: center;
 	}
+
+	.eventChoice {
+		margin-top: 50px;
+		font-size: 20px;
+
+		label {
+			width: 110px;
+		}
+
+		select {
+			margin: 0 0 0 25px;
+			font-size: 15px;
+			width: auto;
+		}
+
+		#places {
+			font-size: 16px;
+			width: 320px;
+			margin-left: 15px;
+		}
+	}
+
+	.studChoice {
+		margin-top: 30px;
+		font-size: 20px;
+
+		.enfantDeSatan {
+			display: inline;
+		}
+
+		#details {
+			font-size: 18px;
+			font-style: italic;
+			margin-left: 10px;
+		}
+
+		input {
+			font-size: 15px;
+			margin: 10px 0 0 135px;
+		}
+	}
+
+	button {
+		border: none;
+		width: 100px;
+		height: 40px;
+		color: var(--white);
+		background: var(--secondary);
+		margin: 40px 0;
+
+		&:hover {
+			background: var(--secondary-dark);
+		}
+
+		&:active {
+			background: var(--secondary-dark);
+		}
+	}
+
+	.studChoice {}
 }
