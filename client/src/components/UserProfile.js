@@ -653,7 +653,7 @@ const SubscribedEvents = props => {
 				)}
 			</div>
 			<ul id={style.eventList}>
-				{viewData.length ? (
+				{data.length ? (
 					viewData.currentData().map(data => (
 						<li key={data.id}>
 							<EventToken event={data} user />
