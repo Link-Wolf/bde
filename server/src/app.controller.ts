@@ -35,6 +35,7 @@ export class AppController {
 
 	@Get('session')
 	async getSession(@Session() session: Record<string, any>) {
+		this.logger.log(`Got session`, session.login)
 		return {
 			clearance: session.clearance ? session.clearance : 0,
 			image_url: session.image_url ? session.image_url : -42,

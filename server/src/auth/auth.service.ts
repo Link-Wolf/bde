@@ -75,9 +75,11 @@ export class AuthService {
 								mail: response.data.email
 							}
 						})
-						.catch(error => { return error })
+						.catch(error => { throw error })
 				})
-				.catch(error => { return error })
-		} catch (error) { return error }
+				.catch(error => { throw error })
+		} catch (error) {
+			throw error
+		}
 	}
 }
