@@ -1,31 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { StudService } from '../stud/stud.service';
-import axios from 'axios';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		private studService: StudService,
+		private httpService: HttpService
 	) { }
 
 	async loginIntra(code: string) {
 		try {
-			return axios.post('https://api.intra.42.fr/oauth/token', {
+			return this.httpService.post('https://api.intra.42.fr/oauth/token', {
 				redirect_uri: process.env.APP_URL + "/log",
 				code: code,
 				grant_type: "authorization_code",
 				client_id: process.env.INTRA_UID,
 				client_secret: process.env.INTRA_SECRET
-			})
+			}).toPromise()
 				.then(async response => {
 					const token = response.data.access_token;
 					const header = {
 						'Authorization': `Bearer ${token}`
 					}
-					return axios.get(
+					return this.httpService.get(
 						"https://api.intra.42.fr/v2/me",
 						{ headers: header })
-						.then(async response => {
+						.toPromise().then(async response => {
 
 							let recent = 0;
 							if (response.data.cursus_users.length != 1) {
