@@ -58,7 +58,7 @@ const Home = () => {
 			<HeaderHome />
 			<div className={style.lists}>
 				<div>
-					<h2>Nos Évènements</h2>
+					<h2>Nos Evenements</h2>
 					<hr />
 					{session !== 0 ? (
 						session.clearance >= 2 ? (

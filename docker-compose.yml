@@ -26,6 +26,7 @@ services:
             POSTGRES_HOST: ${POSTGRES_HOST}
             POSTGRES_PORT: ${POSTGRES_PORT}
             POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_DB: ${POSTGRES_DB}
             REDIS_CRYPT_KEY: ${REDIS_CRYPT_KEY}
             REDIS_PASSWORD: ${REDIS_PASSWORD}
             REDIS_HOST: ${REDIS_HOST}
