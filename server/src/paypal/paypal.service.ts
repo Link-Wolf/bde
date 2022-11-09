@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
+import { HttpService } from '@nestjs/axios';
 import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
 export class PaypalService {
-	constructor(private readonly logger: LoggerService) { };
+	constructor(
+		private readonly logger: LoggerService,
+		private httpService: HttpService
+	) { };
 
 	async generateClientToken(login: string) {
 		try {
 
 			const accessToken = await this.generateAccessToken(login);
-			const response = await axios(`${process.env.PAYPAL_BASE}/v1/identity/generate-token`, {
-				method: "post",
+			const response = this.httpService.post(`${process.env.PAYPAL_BASE}/v1/identity/generate-token`, {
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
 					"Accept-Language": "en_US",
@@ -32,8 +34,7 @@ export class PaypalService {
 			const auth = Buffer
 				.from(process.env.PAYPAL_ID + ":" + process.env.PAYPAL_SECRET)
 				.toString("base64");
-			const response = await axios(`${process.env.PAYPAL_BASE}/v1/oauth2/token`, {
-				method: "post",
+			const response = this.httpService.post(`${process.env.PAYPAL_BASE}/v1/oauth2/token`, {
 				data: "grant_type=client_credentials",
 				headers: {
 					Authorization: `Basic ${auth}`,
