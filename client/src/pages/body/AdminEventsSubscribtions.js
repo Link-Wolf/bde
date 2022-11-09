@@ -268,6 +268,7 @@ const AdminStudents = () => {
 								</label>
 								<div className={style.addInput}>
 									<input
+										id="studToAdd"
 										type="text"
 										placeholder="Login"
 										autoFocus={true}
