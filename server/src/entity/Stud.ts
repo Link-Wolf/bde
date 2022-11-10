@@ -48,10 +48,14 @@ export class Stud {
 	})
 	joinDate: Date
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	img_medium: string;
 
-	@Column()
+	@Column({
+		nullable: true,
+	})
 	img_small: string;
 
 	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
