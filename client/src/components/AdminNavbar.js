@@ -6,7 +6,7 @@ import burger from "../assets/logos/burger.png";
 
 const AdminNavbar = () => {
 	const [session, setSession] = useState({clearance: 0});
-	const [expended, setExpended] = useState(true);
+	const [log, setLog] = useState([]);
 	const {isConfirmed} = useConfirm();
 	const initDb = async () => {
 		const confirm = await isConfirmed(
@@ -117,6 +117,33 @@ const AdminNavbar = () => {
 			});
 	}, []);
 
+	const saveLog = async () => {
+		const data = new FormData();
+		data.append("log", log[0]);
+		await fetch(`${process.env.REACT_APP_API_URL}/admin/logs/file`, {
+			method: "POST",
+			credentials: "include",
+			body: data
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error:
+					 The status is ${response.status}`
+					);
+				}
+			})
+			.then(() => {
+				NotificationManager.success("C'est le log", ":)", 5000);
+			})
+			.catch(function(error) {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	};
 	return (
 		<div className={style.adminNavbarContainer}>
 			<a
@@ -230,12 +257,25 @@ const AdminNavbar = () => {
 					</>
 				)}
 				{session.clearance >= 42 && (
-					<div id={style.buttonContainer}>
-						<button id={style.bigYellowButton} onClick={initDb}>
-							Init sUS
-						</button>
-						<button onClick={getLogs}>Get Logs</button>
-					</div>
+					<>
+						<div id={style.buttonContainer}>
+							<button id={style.bigYellowButton} onClick={initDb}>
+								Init sUS
+							</button>
+							<button onClick={getLogs}>Get Logs</button>
+							<input
+								type="file"
+								id="log"
+								files={log}
+								onChange={event => {
+									setLog(event.target.files);
+								}}
+							/>
+							<button type="button" onClick={saveLog}>
+								Enregistrer
+							</button>
+						</div>
+					</>
 				)}
 			</div>
 		</div>
