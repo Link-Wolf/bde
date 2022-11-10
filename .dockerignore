@@ -5,3 +5,4 @@ server/build
 .dockerignore
 Dockerfile
 Dockerfile.prod
+client/.env

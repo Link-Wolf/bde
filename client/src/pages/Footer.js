@@ -53,6 +53,9 @@ function Footer() {
 				<div>
 					<a href="/legalthings"> Mentions légales</a>
 				</div>
+				<div className={style.version}>
+					v{process.env.REACT_APP_VERSION}
+				</div>
 			</div>
 		</footer>
 	);
