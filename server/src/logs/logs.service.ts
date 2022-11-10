@@ -1,11 +1,9 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, MoreThanOrEqual, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Logs } from '../entity/Logs'
-import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
-import { StudService } from '../stud/stud.service';
-import { LogsDto, LogsFilterDto } from './logs.dto';
+import { LogsFilterDto } from './logs.dto';
 import JSZip = require('jszip');
 import * as fs from 'fs';
 
@@ -52,6 +50,30 @@ export class LogsService {
 		catch (err) {
 			this.logger.error(`Failed -> Blob all logs`, login, true)
 			throw err;
+		}
+	}
+
+	async uploadLog(file: Express.Multer.File, login: any) {
+		try {
+
+			let path = `logs/11-09-2022.log`
+			let ret = fs.writeFile(
+				path,
+				file.buffer,
+				(err) => {
+					if (err) {
+						this.logger.error(`Failed -> Upload log (${err})`,
+							login, true);
+						throw err
+					}
+					else {
+						this.logger.log(`Uploaded log`, login, true)
+					}
+				})
+			return (ret);
+		} catch (error) {
+			this.logger.error(`Failed -> Upload log on database (${error})`, login, true);
+			throw error
 		}
 	}
 
