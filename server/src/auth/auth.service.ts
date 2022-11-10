@@ -64,6 +64,10 @@ export class AuthService {
 								img_small: response.data.image.versions.small,
 								true_email: null
 							}
+							if (!stud.img_small || stud.img_small === undefined)
+								stud.img_small = "https://cdn.discordapp.com/attachments/907303542438629406/1040284333967163473/pas_de_pp.png"
+							if (!stud.img_medium || stud.img_medium === undefined)
+								stud.img_medium = "https://cdn.discordapp.com/attachments/907303542438629406/1040284333967163473/pas_de_pp.png"
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");
 
@@ -71,7 +75,7 @@ export class AuthService {
 								login: retStud.login,
 								firstname: retStud.firstname,
 								lastname: retStud.lastname,
-								image_url: response.data.image.versions.small,
+								image_url: retStud.img_small,
 								clearance: retStud.clearance,
 								mail: response.data.email
 							}
