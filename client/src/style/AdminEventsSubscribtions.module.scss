@@ -15,7 +15,7 @@
 		font-size: 20px;
 
 		label {
-			width: 110px;
+			width: 120px;
 		}
 
 		select {
@@ -26,7 +26,7 @@
 
 		#places {
 			font-size: 16px;
-			width: 320px;
+			width: 360px;
 			margin-left: 15px;
 		}
 	}
@@ -36,6 +36,58 @@
 		text-align: center;
 		font-style: italic;
 		font-size: 20px;
+		margin-bottom: 40px;
+	}
+
+	ul {
+		padding-left: 0;
+		list-style: none;
+
+		#eachSub {
+			width: 980px;
+
+			&:nth-of-type(2n) {
+				background-color: var(--lighter-grey);
+			}
+
+			.subLine {
+				display: flex;
+				flex-direction: row;
+
+				li {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+
+					&#login {
+						color: var(--primary);
+						width: 180px;
+						padding-left: 60px;
+						margin-right: 20px;
+						padding-top: 3px;
+					}
+
+					&#price {
+						padding-left: 80px;
+						margin-right: 20px;
+						width: 200px;
+						padding-top: 3px;
+					}
+
+					&#date {
+						width: 280px;
+						padding-left: 60px;
+						margin-right: 20px;
+						padding-top: 3px;
+					}
+
+					&#button {
+						padding-left: 80px;
+						width: 260px;
+					}
+				}
+			}
+		}
 	}
 
 	.studChoice {
@@ -63,7 +115,7 @@
 
 		input {
 			font-size: 15px;
-			margin: 10px 0 0 135px;
+			margin: 10px 0 0 147px;
 		}
 	}
 
@@ -81,6 +133,18 @@
 
 		&:active {
 			background: var(--secondary-dark);
+		}
+	}
+
+	#unsub {
+		border-radius: 5px;
+		margin: 0;
+		background: none;
+		width: 30px;
+		height: 30px;
+
+		&:hover {
+			background-color: var(--black);
 		}
 	}
 
