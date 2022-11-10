@@ -295,34 +295,65 @@ const AdminStudents = () => {
 						<></>
 					)}
 
-					{stud.length > 0 ? (
-						<>
-							<div id={style.inscrits}>Inscrits actuels</div>
-							<ul>
-								{stud.map(user => (
-									<li key={user.studLogin}>
-										{user.studLogin}
-										<ul>
-											<li>{user.price}€</li>
-											<li>{user.date}</li>
-											<button
-												onClick={() => {
-													handleRemoveButton(
-														user.studLogin
-													);
-												}}
-											>
-												❌
-											</button>
-										</ul>
-									</li>
-								))}
-							</ul>
-						</>
+					{selectedEvent ? (
+						stud.length > 0 ? (
+							<>
+								<div id={style.inscrits}>Inscrits actuels</div>
+								<ul>
+									{stud.map(user => (
+										<li
+											id={style.eachSub}
+											key={user.studLogin}
+										>
+											<ul className={style.subLine}>
+												<li id={style.login}>
+													<a
+														href={`/profile/${user.studLogin}`}
+													>
+														{user.studLogin}
+													</a>
+												</li>
+												<li id={style.price}>
+													{user.price} €
+												</li>
+												<li id={style.date}>
+													{new Date(
+														user.date
+													).toLocaleDateString(
+														"fr-FR",
+														{
+															year: "numeric",
+															month: "2-digit",
+															day: "2-digit",
+															hour: "2-digit",
+															minute: "2-digit"
+														}
+													)}
+												</li>
+												<li id={style.button}>
+													<button
+														id={style.unsub}
+														onClick={() => {
+															handleRemoveButton(
+																user.studLogin
+															);
+														}}
+													>
+														❌
+													</button>
+												</li>
+											</ul>
+										</li>
+									))}
+								</ul>
+							</>
+						) : (
+							<div>
+								Personne ne s'est encore inscrit à cet évènement
+							</div>
+						)
 					) : (
-						<div>
-							Personne ne s'est encore inscrit à cet évènement
-						</div>
+						<></>
 					)}
 				</div>
 			</div>
