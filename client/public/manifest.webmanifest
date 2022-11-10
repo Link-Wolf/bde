@@ -1,0 +1,32 @@
+{
+    "theme_color": "#3B7E9C",
+    "background_color": "#E9ECED",
+    "display": "browser",
+    "scope": "/",
+    "start_url": "/",
+    "name": "La Fr\u00e9gate",
+    "short_name": "La Fr\u00e9gate",
+    "description": "La Fr\u00e9gate est le BDE de l'\u00e9cole 42 Mulhouse ! Elle organise des \u00e9v\u00e8nements pour les students et propose des goodies aux couleurs de l'\u00e9cole",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
