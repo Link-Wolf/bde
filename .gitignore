@@ -5,6 +5,7 @@ build/
 tmp/
 temp/
 .env*
+*.log
 *.constant.*
 coverage/
 .DS_Store
