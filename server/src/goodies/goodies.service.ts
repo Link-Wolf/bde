@@ -85,8 +85,8 @@ export class GoodiesService {
 
 	async saveAlbum(id: number, files: Array<Express.Multer.File>, login: any) {
 		try {
-			let path: any
-			if (files.length === 0) {
+			let path = `assets/album/goodies/${id}/`
+			if (files.length === 0 && !fs.existsSync(path)) {
 				path = "assets/placeholders/album"
 				this.goodiesRepository.update(id, {
 					album_path: path
@@ -94,7 +94,7 @@ export class GoodiesService {
 				this.logger.log(`Saved album of goodies ${id}`, login, true)
 			}
 			else {
-				path = `assets/album/goodies/${id}/`
+				console.log(fs.existsSync(path))
 				if (!fs.existsSync(path)) {
 					fs.mkdirSync(path);
 				}
