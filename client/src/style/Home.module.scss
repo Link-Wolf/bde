@@ -142,7 +142,7 @@
 					padding: 10px;
 					border: solid var(--dark-grey) 1px;
 					width: 200px;
-					z-index: 9999;
+					z-index: 2;
 					display: none;
 					position: relative;
 					background: var(--light-grey);
@@ -163,7 +163,6 @@
 					background: rgba(0,0,0,0.5);
 					backdrop-filter: blur(1px);
 					display: none;
-					z-index: 8;
 				}
 			}
 		}
@@ -311,13 +310,12 @@
 	width: 100vw;
 	height: 100vh;
 	animation: 0.2s linear 0s blurAppear;
-	z-index: 42;
+	z-index: 2;
 
 	#outArea {
 		width: 100vw;
 		height: 100vh;
 		position: absolute;
-		z-index: -1;
 	}
 }
 @keyframes blurAppear {
