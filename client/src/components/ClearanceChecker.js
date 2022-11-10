@@ -6,7 +6,10 @@ const ClearanceChecker = data => {
 	const [ret, setRet] = useState(<> </>);
 
 	useEffect(() => {
-		if (data.securityLevel < global.config.clearance.unpaid)
+		if (
+			data.securityLevel < global.config.clearance.unpaid ||
+			data.securityLevel === undefined
+		)
 			fetch(`${process.env.REACT_APP_API_URL}/session`, {
 				credentials: "include"
 			})
