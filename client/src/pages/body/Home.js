@@ -385,7 +385,7 @@ const Presentation = () => {
 						<EquipePicture login="tvanbael" img={tvanbael} />
 						<EquipePicture login="jrasser" img={jrasser} />
 					</div>
-					<h3>Vice-Capitaines</h3>
+					<h3>Lieutenants</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
@@ -406,13 +406,21 @@ const Presentation = () => {
 						<EquipePicture login="mwinter-" img={mwinter} />
 						<EquipePicture login="mfusil" img={mfusil} />
 					</div>
-					<h3>Responsables communication</h3>
+					<h3>
+						Responsables
+						<br />
+						communication
+					</h3>
 				</div>
 				<div className={style.pole}>
 					<div className={style.equipePictureContainer}>
 						<EquipePicture login="jdutschk" img={jdutschk} />
 					</div>
-					<h3>Responsable partenariats</h3>
+					<h3>
+						Responsable
+						<br />
+						partenariats
+					</h3>
 				</div>
 			</div>
 		</div>
