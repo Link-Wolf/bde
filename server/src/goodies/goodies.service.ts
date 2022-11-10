@@ -13,7 +13,6 @@ import JSZip = require('jszip');
 
 @Injectable()
 export class GoodiesService {
-
 	constructor(
 		@InjectRepository(Goodies)
 		private goodiesRepository: Repository<Goodies>,
@@ -121,6 +120,22 @@ export class GoodiesService {
 			}
 		} catch (error) {
 			this.logger.error(`Failed -> Save thumbnail of goodies ${id} on database (${error})`, login, true);
+			throw error
+		}
+	}
+
+	resetAlbum(id: number, login: any) {
+		try {
+			let path = `assets/album/goodies/${id}/`
+			fs.rmSync(path, { recursive: true, force: true });
+			path = "assets/placeholders/album"
+			this.goodiesRepository.update(id, {
+				album_path: path
+			})
+			this.logger.log(`Reseted album of goodies ${id}`, login, true)
+			return;
+		} catch (error) {
+			this.logger.error(`Failed -> Reset thumbnail of goodies ${id} on database (${error})`, login, true);
 			throw error
 		}
 	}
