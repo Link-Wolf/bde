@@ -81,9 +81,11 @@ services:
             - postgres
         volumes:
             - api:/server/app/assets
+            - logs:/server/app/logs
 
 volumes:
     api:
+    logs:
 networks:
     back_network:
         driver: bridge
