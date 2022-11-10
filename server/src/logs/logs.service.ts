@@ -53,30 +53,6 @@ export class LogsService {
 		}
 	}
 
-	async uploadLog(file: Express.Multer.File, login: any) {
-		try {
-
-			let path = `logs/11-09-2022.log`
-			let ret = fs.writeFile(
-				path,
-				file.buffer,
-				(err) => {
-					if (err) {
-						this.logger.error(`Failed -> Upload log (${err})`,
-							login, true);
-						throw err
-					}
-					else {
-						this.logger.log(`Uploaded log`, login, true)
-					}
-				})
-			return (ret);
-		} catch (error) {
-			this.logger.error(`Failed -> Upload log on database (${error})`, login, true);
-			throw error
-		}
-	}
-
 	async findAll(filterDto: LogsFilterDto, requestMaker: string): Promise<Logs[]> {
 		try {
 			let match = `SELECT * FROM "logs" WHERE '1' = '1'`;
