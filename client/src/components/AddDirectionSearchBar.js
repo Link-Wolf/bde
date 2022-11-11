@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import {NotificationManager} from "react-notifications";
 
+import style from "../style/AdminCaptainManagement.module.scss";
+
 const AddDirectionSearchBar = param => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
@@ -27,7 +29,7 @@ const AddDirectionSearchBar = param => {
 					param.setUpdate(true);
 					setUpdate(true);
 					NotificationManager.success(
-						`Student ${selectedUser} ajouté aux administrateur·trice·s`,
+						`Student ${selectedUser} ajouté aux administrateurs`,
 						"Validation",
 						5000
 					);
@@ -68,19 +70,25 @@ const AddDirectionSearchBar = param => {
 	}, [update]);
 
 	return (
-		<>
-			<datalist id="captain_list">
-				{userList.map((user, i) => (
-					<option key={i} value={user.login} />
-				))}
-			</datalist>
-			<input
-				list="captain_list"
-				value={selectedUser}
-				onChange={e => setSelectedUser(e.target.value)}
-			/>
-			<button onClick={promoteUser}>Promouvoir</button>
-		</>
+		<div id={style.searchBar}>
+			<label>Login du student à ajouter aux administrateurs</label>
+			<label id={style.details}>
+				(il doit s'être connecté au moins une fois)
+			</label>
+			<div>
+				<datalist id="captain_list">
+					{userList.map((user, i) => (
+						<option key={i} value={user.login} />
+					))}
+				</datalist>
+				<input
+					list="captain_list"
+					value={selectedUser}
+					onChange={e => setSelectedUser(e.target.value)}
+				/>
+				<button onClick={promoteUser}>Promouvoir</button>
+			</div>
+		</div>
 	);
 };
 
