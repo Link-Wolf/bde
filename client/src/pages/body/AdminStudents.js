@@ -100,7 +100,6 @@ const AdminStudents = () => {
 					<div id={style.dropdownBg} onClick={filterHanddler}></div>
 					<div id={style.dropdown}>
 						<div>
-							<label>Login</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -109,9 +108,9 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="login"
 							/>
+							<label>Login</label>
 						</div>
 						<div>
-							<label>Prénom</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -120,10 +119,10 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="firstname"
 							/>
+							<label>Prénom</label>
 						</div>
 						<div>
 							{" "}
-							<label>Nom</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -132,9 +131,9 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="lastname"
 							/>
+							<label>Nom</label>
 						</div>
 						<div>
-							<label>Connexion</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -143,9 +142,9 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="joinDate"
 							/>
+							<label>Connexion</label>
 						</div>
 						<div>
-							<label>Autorisations</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -154,6 +153,7 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="role"
 							/>
+							<label>Autorisations</label>
 						</div>
 						<hr />
 						<div>
