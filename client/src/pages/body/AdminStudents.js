@@ -89,7 +89,7 @@ const AdminStudents = () => {
 				<div id={style.tittle}>Gestion des utilisateurs</div>
 				<div className={style.dropdownContainer}>
 					<button id={style.dropdownButton} onClick={filterHanddler}>
-						Filtrer
+						Trier
 					</button>
 					<div id={style.dropdownBg} onClick={filterHanddler}></div>
 					<div id={style.dropdown}>
@@ -128,7 +128,7 @@ const AdminStudents = () => {
 							/>
 						</div>
 						<div>
-							<label>Date d'inscription</label>
+							<label>Connexion</label>
 							<input
 								type="radio"
 								name="sortField"
@@ -139,7 +139,7 @@ const AdminStudents = () => {
 							/>
 						</div>
 						<div>
-							<label>Role</label>
+							<label>Autorisations</label>
 							<input
 								type="radio"
 								name="sortField"
