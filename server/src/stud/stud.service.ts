@@ -24,7 +24,35 @@ export class StudService {
 		this._aes = JSON.parse(process.env.AES)
 	}
 
-
+	async findFilterd(
+		sort: { asc: boolean, sortField: string },
+		requestMaker: string
+	) {
+		try {
+			let order = {};
+			order[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
+			let studs = await this.studRepository.find({ order: order });
+			for (let stud of studs) {
+				stud.isPremium = await (async () => {
+					let status = false;
+					let data = await this.contributionService.findForUser(stud.login, requestMaker);
+					data.forEach((item) => {
+						if (new Date(item.end_date) > new Date(Date.now()) &&
+							new Date(item.begin_date) <= new Date(Date.now())) {
+							status = true;
+						}
+					});
+					return status;
+				})();
+			}
+			this.logger.log(`Got all students`, requestMaker);
+			return studs;
+		}
+		catch (error) {
+			this.logger.error(`Failed -> Get all students on database (${error})`, requestMaker)
+			throw error;
+		}
+	}
 
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
@@ -75,6 +103,7 @@ export class StudService {
 				})();
 			}
 			this.logger.log(`Got all admin members`, requestMaker, true);
+			console.log(studs)
 			return studs;
 		}
 		catch (error) {

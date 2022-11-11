@@ -1,16 +1,20 @@
 import {useState, useEffect, React} from "react";
+import usePagination from "../../components/Pagination";
+import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
 import useConfirm from "../../components/useConfirm";
 import {NotificationManager} from "react-notifications";
 
 import style from "../../style/AdminEventsSubscribtions.module.scss";
 
-import {Form, Button, FormGroup} from "react-bootstrap";
-
 const AdminStudents = () => {
 	const {isConfirmed} = useConfirm();
 
+	const PER_PAGE = 10;
 	const [stud, setStud] = useState([]);
+	const [page, setPage] = useState(1);
+	const [count, setCount] = useState(0);
+	const viewData = usePagination(stud, PER_PAGE);
 	const [check, setCheck] = useState(false);
 	const [allEvent, setAllEvent] = useState([]);
 	const [selectedEvent, setSelectedEvent] = useState("");
@@ -191,6 +195,12 @@ const AdminStudents = () => {
 			setSubForm(true);
 		}
 	}, [selectedEvent, update]);
+
+	const handleChangePage = (e, p) => {
+		setPage(p);
+		viewData.jump(p);
+	};
+
 	return (
 		<div
 			style={{
@@ -256,7 +266,7 @@ const AdminStudents = () => {
 					</form>
 
 					{subForm ? (
-						<form className={style.studChoice}>
+						<form>
 							<div className={style.enfantDeSatan}>
 								<label>
 									Login du student à inscrire et le prix payé
@@ -286,7 +296,11 @@ const AdminStudents = () => {
 								</div>
 							</div>
 							<div className={style.enfantDeSatan}>
-								<button type="button" onClick={handleSubButton}>
+								<button
+									className={style.subButton}
+									type="button"
+									onClick={handleSubButton}
+								>
 									Inscrire
 								</button>
 							</div>
@@ -295,34 +309,72 @@ const AdminStudents = () => {
 						<></>
 					)}
 
-					{stud.length > 0 ? (
-						<>
-							<div id={style.inscrits}>Inscrits actuels</div>
-							<ul>
-								{stud.map(user => (
-									<li key={user.studLogin}>
-										{user.studLogin}
-										<ul>
-											<li>{user.price}€</li>
-											<li>{user.date}</li>
-											<button
-												onClick={() => {
-													handleRemoveButton(
-														user.studLogin
-													);
-												}}
-											>
-												❌
-											</button>
-										</ul>
-									</li>
-								))}
-							</ul>
-						</>
+					{selectedEvent ? (
+						stud.length > 0 ? (
+							<>
+								<div id={style.inscrits}>Inscrits actuels</div>
+								<ul>
+									{viewData.currentData().map(user => (
+										<li
+											id={style.eachSub}
+											key={user.studLogin}
+										>
+											<ul className={style.subLine}>
+												<li id={style.login}>
+													<a
+														href={`/profile/${user.studLogin}`}
+													>
+														{user.studLogin}
+													</a>
+												</li>
+												<li id={style.price}>
+													{user.price} €
+												</li>
+												<li id={style.date}>
+													{new Date(
+														user.date
+													).toLocaleDateString(
+														"fr-FR",
+														{
+															year: "numeric",
+															month: "2-digit",
+															day: "2-digit",
+															hour: "2-digit",
+															minute: "2-digit"
+														}
+													)}
+												</li>
+												<li id={style.button}>
+													<button
+														id={style.unsub}
+														onClick={() => {
+															handleRemoveButton(
+																user.studLogin
+															);
+														}}
+													>
+														❌
+													</button>
+												</li>
+											</ul>
+										</li>
+									))}
+								</ul>
+								<div id={style.pagination}>
+									<Pagination
+										count={count}
+										page={page}
+										onChange={handleChangePage}
+									/>
+								</div>
+							</>
+						) : (
+							<div>
+								Personne ne s'est encore inscrit à cet évènement
+							</div>
+						)
 					) : (
-						<div>
-							Personne ne s'est encore inscrit à cet évènement
-						</div>
+						<></>
 					)}
 				</div>
 			</div>

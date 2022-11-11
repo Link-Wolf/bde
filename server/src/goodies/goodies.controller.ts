@@ -85,6 +85,15 @@ export class GoodiesController {
 		return this.goodiesService.removeOne(id, session.login);
 	}
 
+	@Delete('album/:id')
+	@UseGuards(new ClearanceGuard(11))
+	resetAlbum(
+		@Param('id', ParseIntPipe) id: number,
+		@Session() session: Record<string, any>
+	) {
+		return this.goodiesService.resetAlbum(id, session.login)
+	}
+
 	@Delete('')
 	@UseGuards(new ClearanceGuard(11))
 	removeAll(@Session() session: Record<string, any>) {

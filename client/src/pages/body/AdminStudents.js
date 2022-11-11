@@ -2,7 +2,9 @@ import {useState, useEffect, React} from "react";
 import usePagination from "../../components/Pagination";
 import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
+import CheckSet from "../../components/CheckSet";
 import {NotificationManager} from "react-notifications";
+import ToggleButton from "../../components/ToggleButton";
 
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
@@ -16,11 +18,20 @@ const AdminStudents = () => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const viewData = usePagination(data, PER_PAGE);
+	const [filter, setFilter] = useState({
+		sortField: "login",
+		asc: false
+	});
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
-			credentials: "include"
-		})
+		fetch(
+			`${process.env.REACT_APP_API_URL}/stud?sort=${JSON.stringify(
+				filter
+			)}`,
+			{
+				credentials: "include"
+			}
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -41,7 +52,32 @@ const AdminStudents = () => {
 					5000
 				);
 			});
-	}, []);
+	}, [filter]);
+
+	const handleFormChange = event => {
+		let tempFilter = {...filter};
+		const target = event.target;
+		const value =
+			target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		tempFilter[name] = value;
+		setFilter(tempFilter);
+	};
+
+	const handleButtonChange = () => {
+		let tempFilter = {...filter};
+		tempFilter["asc"] = !filter.asc;
+		setFilter(tempFilter);
+	};
+
+	const filterHanddler = () => {
+		if (document.getElementById(style.dropdown).style.display === "block")
+			document.getElementById(style.dropdown).style.display = "none";
+		else document.getElementById(style.dropdown).style.display = "block";
+		if (document.getElementById(style.dropdownBg).style.display === "block")
+			document.getElementById(style.dropdownBg).style.display = "none";
+		else document.getElementById(style.dropdownBg).style.display = "block";
+	};
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
@@ -57,17 +93,80 @@ const AdminStudents = () => {
 			<AdminNavbar />
 			<div className={style.studListContainer}>
 				<div id={style.tittle}>Gestion des utilisateurs</div>
-				<button
-					hidden
-					id={style.premium}
-					onClick={() => {
-						setIsFiltered(!isFiltered);
-					}}
-				>
-					{isFiltered
-						? "Montrer tout le monde"
-						: "Montrer les premiums"}
-				</button>
+				<div className={style.dropdownContainer}>
+					<button id={style.dropdownButton} onClick={filterHanddler}>
+						Trier
+					</button>
+					<div id={style.dropdownBg} onClick={filterHanddler}></div>
+					<div id={style.dropdown}>
+						<div>
+							<input
+								type="radio"
+								name="sortField"
+								value="login"
+								checked={filter.sortField === "login"}
+								onChange={handleFormChange}
+								id="login"
+							/>
+							<label>Login</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="sortField"
+								value="firstname"
+								checked={filter.sortField === "firstname"}
+								onChange={handleFormChange}
+								id="firstname"
+							/>
+							<label>Prénom</label>
+						</div>
+						<div>
+							{" "}
+							<input
+								type="radio"
+								name="sortField"
+								value="lastname"
+								checked={filter.sortField === "lastname"}
+								onChange={handleFormChange}
+								id="lastname"
+							/>
+							<label>Nom</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="sortField"
+								value="joinDate"
+								checked={filter.sortField === "joinDate"}
+								onChange={handleFormChange}
+								id="joinDate"
+							/>
+							<label>Connexion</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="sortField"
+								value="clearance"
+								checked={filter.sortField === "clearance"}
+								onChange={handleFormChange}
+								id="role"
+							/>
+							<label>Autorisations</label>
+						</div>
+						<hr />
+						<div>
+							<label id={style.tri}>Inverser l'ordre</label>
+						</div>
+						<ToggleButton
+							name="asc"
+							checked={filter.asc}
+							onChange={handleFormChange}
+							id="asc"
+						/>
+					</div>
+				</div>
 				<div>
 					<table className={style.table}>
 						<thead>

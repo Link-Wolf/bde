@@ -142,12 +142,12 @@
 					padding: 10px;
 					border: solid var(--dark-grey) 1px;
 					width: 200px;
-					z-index: 9999;
+					z-index: 2;
 					display: none;
 					position: relative;
 					background: var(--light-grey);
-					top: -212px;
-					left: 157px;
+					top: -210px;
+					left: 160px;
 
 					input {
 						margin: 5px;
@@ -163,7 +163,6 @@
 					background: rgba(0,0,0,0.5);
 					backdrop-filter: blur(1px);
 					display: none;
-					z-index: 8;
 				}
 			}
 		}
@@ -283,7 +282,7 @@
 						padding: 15px;
 						font-size: 1.2em;
 						left: calc((100vw - 80px) / 2);
-						top: 46px;
+						top: -10px;
 
 						input {
 							width: 20px;
@@ -311,7 +310,7 @@
 	width: 100vw;
 	height: 100vh;
 	animation: 0.2s linear 0s blurAppear;
-	z-index: 42;
+	z-index: 2;
 
 	#outArea {
 		width: 100vw;
