@@ -23,9 +23,14 @@ const AdminStudents = () => {
 	});
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
-			credentials: "include"
-		})
+		fetch(
+			`${process.env.REACT_APP_API_URL}/stud?sort=${JSON.stringify(
+				filter
+			)}`,
+			{
+				credentials: "include"
+			}
+		)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(
@@ -46,7 +51,7 @@ const AdminStudents = () => {
 					5000
 				);
 			});
-	}, []);
+	}, [filter]);
 
 	const handleFormChange = event => {
 		let tempFilter = {...filter};
