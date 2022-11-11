@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, Session, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, Session, UseGuards, Query } from '@nestjs/common';
 import { Stud } from '../entity/Stud';
 import { StudDto } from './stud.dto';
 import { StudService } from './stud.service';
@@ -10,10 +10,13 @@ export class StudController {
 	constructor(private studService: StudService) { }
 
 	@Get() @UseGuards(new ClearanceGuard(5))
-
 	findAll(
-		@Session() session: Record<string, any>): Promise<Stud[]> {
-		return this.studService.findAll(session.login);
+		@Session() session: Record<string, any>,
+		@Query() query: string
+	): Promise<Stud[]> {
+		if (query.sort === undefined)
+			return this.studService.findAll(session.login);
+		return this.studService.findFilterd(JSON.parse(query.sort), session.login)
 	}
 
 	@Get('minecraft')
