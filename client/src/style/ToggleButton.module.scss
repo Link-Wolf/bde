@@ -3,13 +3,8 @@
   display: inline-block;
   width: 45px;
   height: 25.5px;
-
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    display: none;
-  }
+  margin-top: 10px;
+  margin-left: 10px;
 
   .slider {
     position: absolute;
@@ -22,19 +17,26 @@
     background-color: var(--lighter-grey);
     -webkit-transition: 0.4s;
     transition: 0.4s;
+  }
 
-    &:before {
-      position: absolute;
-      content: "";
-      height: 19.5px;
-      width: 19.5px;
-      border-radius: 50%;
-      left: 3px;
-      bottom: 3px;
-      background-color: var(--white);
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-    }
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 19.5px;
+    width: 19.5px;
+    border-radius: 50%;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--white);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
   }
 
   input:checked + .slider {
