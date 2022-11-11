@@ -2,6 +2,7 @@ import {useState, useEffect, React} from "react";
 import usePagination from "../../components/Pagination";
 import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
+import CheckSet from "../../components/CheckSet";
 import {NotificationManager} from "react-notifications";
 
 import yellowStar from "../../assets/logos/yellow_star.svg";
@@ -16,6 +17,10 @@ const AdminStudents = () => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const viewData = usePagination(data, PER_PAGE);
+	const [filter, setFilter] = useState({
+		sortField: "login",
+		asc: true
+	});
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
@@ -43,6 +48,31 @@ const AdminStudents = () => {
 			});
 	}, []);
 
+	const handleFormChange = event => {
+		let tempFilter = {...filter};
+		const target = event.target;
+		const value =
+			target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+		tempFilter[name] = value;
+		setFilter(tempFilter);
+	};
+
+	const handleButtonChange = () => {
+		let tempFilter = {...filter};
+		tempFilter["asc"] = !filter.asc;
+		setFilter(tempFilter);
+	};
+
+	const filterHanddler = () => {
+		if (document.getElementById(style.dropdown).style.display === "block")
+			document.getElementById(style.dropdown).style.display = "none";
+		else document.getElementById(style.dropdown).style.display = "block";
+		if (document.getElementById(style.dropdownBg).style.display === "block")
+			document.getElementById(style.dropdownBg).style.display = "none";
+		else document.getElementById(style.dropdownBg).style.display = "block";
+	};
+
 	const handleChangePage = (e, p) => {
 		setPage(p);
 		viewData.jump(p);
@@ -57,17 +87,107 @@ const AdminStudents = () => {
 			<AdminNavbar />
 			<div className={style.studListContainer}>
 				<div id={style.tittle}>Gestion des utilisateurs</div>
-				<button
-					hidden
-					id={style.premium}
-					onClick={() => {
-						setIsFiltered(!isFiltered);
-					}}
-				>
-					{isFiltered
-						? "Montrer tout le monde"
-						: "Montrer les premiums"}
-				</button>
+				<div className={style.dropdownContainer}>
+					<button id={style.dropdownButton} onClick={filterHanddler}>
+						Filtrer
+					</button>
+					<div id={style.dropdownBg} onClick={filterHanddler}></div>
+					<div id={style.dropdown}>
+						<div>
+							<label>Login</label>
+							<input
+								type="radio"
+								name="sortField"
+								value="login"
+								checked={filter.sortField === "login"}
+								onChange={handleFormChange}
+								id="login"
+							/>
+						</div>
+						<div>
+							<label>Prénom</label>
+							<input
+								type="radio"
+								name="sortField"
+								value="firstname"
+								checked={filter.sortField === "firstname"}
+								onChange={handleFormChange}
+								id="firstname"
+							/>
+						</div>
+						<div>
+							{" "}
+							<label>Nom</label>
+							<input
+								type="radio"
+								name="sortField"
+								value="lastname"
+								checked={filter.sortField === "lastname"}
+								onChange={handleFormChange}
+								id="lastname"
+							/>
+						</div>
+						<div>
+							<label>Date d'inscription</label>
+							<input
+								type="radio"
+								name="sortField"
+								value="joinDate"
+								checked={filter.sortField === "joinDate"}
+								onChange={handleFormChange}
+								id="joinDate"
+							/>
+						</div>
+						<div>
+							<label>Role</label>
+							<input
+								type="radio"
+								name="sortField"
+								value="role"
+								checked={filter.sortField === "role"}
+								onChange={handleFormChange}
+								id="role"
+							/>
+						</div>
+						<hr />
+						<div>
+							<label id={style.tri}>Sens de tri</label>
+						</div>
+						<button onClick={handleButtonChange}>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 14 14"
+							>
+								<g>
+									<polyline
+										points="2.5 3.5 5.5 0.5 5.5 13.5"
+										fill="none"
+										stroke={
+											filter.asc
+												? "var(--primary-dark)"
+												: "var(--secondary-dark)"
+										}
+										strokeWidth="10%"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+									<polyline
+										points="11.5 10.5 8.5 13.5 8.5 0.5"
+										fill="none"
+										stroke={
+											!filter.asc
+												? "var(--primary-dark)"
+												: "var(--secondary-dark)"
+										}
+										strokeWidth="10%"
+										strokeLinecap="round"
+										strokeLinejoin="round"
+									/>
+								</g>
+							</svg>
+						</button>
+					</div>
+				</div>
 				<div>
 					<table className={style.table}>
 						<thead>
