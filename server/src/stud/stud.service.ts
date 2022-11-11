@@ -103,6 +103,7 @@ export class StudService {
 				})();
 			}
 			this.logger.log(`Got all admin members`, requestMaker, true);
+			console.log(studs)
 			return studs;
 		}
 		catch (error) {
