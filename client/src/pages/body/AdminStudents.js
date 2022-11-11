@@ -148,8 +148,8 @@ const AdminStudents = () => {
 							<input
 								type="radio"
 								name="sortField"
-								value="role"
-								checked={filter.sortField === "role"}
+								value="clearance"
+								checked={filter.sortField === "clearance"}
 								onChange={handleFormChange}
 								id="role"
 							/>
