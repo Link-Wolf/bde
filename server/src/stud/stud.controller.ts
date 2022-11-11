@@ -12,7 +12,7 @@ export class StudController {
 	@Get() @UseGuards(new ClearanceGuard(5))
 	findAll(
 		@Session() session: Record<string, any>,
-		@Query() query: string
+		@Query() query: any
 	): Promise<Stud[]> {
 		if (query.sort === undefined)
 			return this.studService.findAll(session.login);

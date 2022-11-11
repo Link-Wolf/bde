@@ -30,7 +30,7 @@ export class StudService {
 	) {
 		try {
 			let order;
-			oorder[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
+			order[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
 			let studs = await this.studRepository.find({ order });
 			// if (studs.length == 0) {
 			// 	this.logger.warn(`No stud found`)
