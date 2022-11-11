@@ -251,6 +251,40 @@ const AdminProductToken = param => {
 		}
 	};
 
+	const deleteProduct = async () => {
+		if (
+			await isConfirmed(
+				`Désires tu supprimer le produit ${param.data.name}`
+			)
+		) {
+			await fetch(
+				`${process.env.REACT_APP_API_URL}/goodies/album/${param.data.id}`,
+				{
+					method: "DELETE",
+					credentials: "include"
+				}
+			)
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(
+							`This is an HTTP error:
+					 The status is ${response.status}`
+						);
+					}
+				})
+				.catch(function(error) {
+					NotificationManager.error(
+						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+						"Erreur",
+						5000
+					);
+				});
+			param.setUpdate(true);
+			setUpdate(true);
+			setLocked(true);
+		}
+	};
+
 	return (
 		<>
 			<Accordion.Header>{formState.name}</Accordion.Header>
@@ -403,6 +437,13 @@ const AdminProductToken = param => {
 							disabled={locked}
 						>
 							Réinitialiser
+						</button>
+						<button
+							type="button"
+							disabled={locked}
+							onClick={resetAlbum}
+						>
+							Vider l'album
 						</button>
 						<button
 							color="danger"
