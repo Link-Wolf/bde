@@ -90,22 +90,23 @@
 		}
 	}
 
+	.enfantDeSatan {
+		display: inline-block;
+
+		button {
+			margin-left: -400px;
+		}
+
+		.addInput {
+			width: 210px;
+			margin: 10px 0 0 135px;
+		}
+	}
+
 	.studChoice {
 		margin-top: 30px;
 		margin-bottom: 60px;
 		font-size: 20px;
-
-		.enfantDeSatan {
-			display: inline-block;
-
-			button {
-				margin-left: -500px;
-			}
-
-			.addInput {
-				width: 210px;
-			}
-		}
 
 		#details {
 			font-size: 18px;
