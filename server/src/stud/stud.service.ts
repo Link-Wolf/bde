@@ -29,13 +29,9 @@ export class StudService {
 		requestMaker: string
 	) {
 		try {
-			let order;
+			let order = {};
 			order[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
 			let studs = await this.studRepository.find({ order: order });
-			// if (studs.length == 0) {
-			// 	this.logger.warn(`No stud found`)
-			// }
-			// else
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
 					let status = false;
