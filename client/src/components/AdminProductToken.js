@@ -89,7 +89,7 @@ const AdminProductToken = param => {
 			});
 	};
 
-	const changeAlbum = async () => {
+	const resetAlbum = async () => {
 		const data = new FormData();
 		for (let i = 0; i < album.length; i++) {
 			data.append(`album`, album[i]);
