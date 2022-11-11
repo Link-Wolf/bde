@@ -8,3 +8,5 @@ const ToggleButton = props => {
 		</label>
 	);
 };
+
+export default ToggleButton;
