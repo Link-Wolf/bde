@@ -262,7 +262,7 @@ const AdminProductToken = param => {
 		}
 	};
 
-	const deleteProduct = async () => {
+	const deleteAlbum = async () => {
 		if (
 			await isConfirmed(
 				`Désires tu supprimer le produit ${param.data.name}`
