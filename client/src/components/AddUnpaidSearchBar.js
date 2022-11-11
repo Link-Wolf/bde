@@ -29,7 +29,7 @@ const AddDirectionSearchBar = param => {
 					param.setUpdate(true);
 					setUpdate(true);
 					NotificationManager.success(
-						`Student ${selectedUser} ajouté aux volontaires`,
+						`Le student ${selectedUser} est ajouté aux volontaires`,
 						"Validation",
 						5000
 					);
