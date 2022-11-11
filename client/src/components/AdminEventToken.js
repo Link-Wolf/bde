@@ -117,7 +117,7 @@ const AdminEventToken = param => {
 
 		if (
 			await isConfirmed(
-				`Désires tu supprimer l'évènement ${param.data.name}`
+				`Désires tu supprimer l'évènement ${param.data.name} ?`
 			)
 		) {
 			await fetch(
