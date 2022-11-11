@@ -98,22 +98,38 @@ const AdminCaptainManagement = () => {
 						setUpdate(d);
 					}}
 				/>
-				{data.length > 0
-					? data.map(item => (
-							<li key={item.login}>
-								<label>{item.login} </label>
-								<label>{item.firstname} </label>
-								<label>{item.lastname} </label>
-								<button
-									onClick={() => {
-										yeetMember(item.login);
-									}}
-								>
-									X
-								</button>
+				{data.length > 0 ? (
+					<ul>
+						{data.map(item => (
+							<li id={style.eachUnpaid} key={item.login}>
+								<ul className={style.unpaidLine}>
+									<li id={style.login}>
+										<a href={`/profile/${item.login}`}>
+											{item.login}
+										</a>
+									</li>
+									<li id={style.firstname}>
+										{item.firstname}{" "}
+									</li>
+									<li id={style.lastname}>
+										{item.lastname}{" "}
+									</li>
+									<li id={style.yeet}>
+										<button
+											onClick={() => {
+												yeetMember(item.login);
+											}}
+										>
+											❌
+										</button>
+									</li>
+								</ul>
 							</li>
-					  ))
-					: "Aucun volontaire"}
+						))}
+					</ul>
+				) : (
+					"Aucun volontaire"
+				)}
 			</div>
 		</div>
 	);

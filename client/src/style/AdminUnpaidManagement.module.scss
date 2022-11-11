@@ -9,4 +9,97 @@
 		width: 980px;
 		text-align: center;
 	}
+
+	ul {
+		padding-left: 0;
+		list-style: none;
+	}
+
+	#eachUnpaid {
+		margin-bottom: 10px;
+	}
+
+	.unpaidLine {
+		display: flex;
+		flex-direction: row;
+
+		li {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+
+			&#login {
+				width: 200px;
+				padding-left: 40px;
+				margin-right: 20px;
+			}
+
+			&#firstname {
+				padding-left: 40px;
+				margin-right: 20px;
+				width: 220px;
+				margin-right: 20px;
+			}
+
+			&#lastname {
+				width: 220px;
+				padding-left: 40px;
+				margin-right: 20px;
+				text-transform: uppercase;
+			}
+
+			&#yeet {
+				width: 280px;
+				padding-left: 40px;
+
+				button {
+					background: none;
+					border: none;
+					border-radius: 5px;
+					width: 30px;
+					height: 30px;
+
+					&:hover {
+						background-color: var(--black);
+					}
+				}
+			}
+		}
+	}
+}
+
+#searchBar {
+	margin-top: 50px;
+
+	label {
+		font-size: 20px;
+	}
+
+	#details {
+		font-size: 18px;
+		font-style: italic;
+		margin-left: 10px;
+	}
+
+	div {
+		margin: 30px 0 100px 135px;
+
+		button {
+			padding: 5px 15px;
+			width: 120px;
+			margin: 0 100px;
+			border: solid var(--secondary-dark) 1px;
+			background: var(--secondary);
+			color: var(--white);
+			text-align: center;
+
+			&:hover {
+				background: var(--secondary-dark);
+			}
+
+			&:active {
+				background: var(--secondary-dark);
+			}
+		}
+	}
 }

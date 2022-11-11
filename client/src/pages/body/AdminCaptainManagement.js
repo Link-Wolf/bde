@@ -76,32 +76,32 @@ const AdminCaptainManagement = () => {
 	const yeetMember = async login => {
 		if (
 			await isConfirmed(
-				`Voulez vous exclure ${login} des administrateur·trice·s ?`
+				`Voulez vous exclure ${login} des administrateurs ?`
 			)
 		) {
 			if (
 				await isConfirmed(
-					`Voulez vous VRAIMENT exclure ${login} des administrateur·trice·s ?`
+					`Voulez vous VRAIMENT exclure ${login} des administrateurs ?`
 				)
 			) {
 				if (
 					await isConfirmed(
-						`Êtes vous absolument certain de vouloir exclure ${login} des administrateur·trice·s ? Cette action est réversible`
+						`Êtes vous absolument certain de vouloir exclure ${login} des administrateurs ? Cette action est réversible`
 					)
 				) {
 					if (
 						await isConfirmed(
-							`Il est encore temps de changer d'avis. Exclure non-définitivement ${login} des administrateur·trice·s ?`
+							`Il est encore temps de changer d'avis. Exclure non-définitivement ${login} des administrateurs ?`
 						)
 					) {
 						if (
 							!(await isConfirmed(
-								`Souhaiteriez vous ne pas exclure ${login} des administrateur·trice·s et annuler l'opération ?`
+								`Souhaiteriez vous ne pas exclure ${login} des administrateurs et annuler l'opération ?`
 							))
 						) {
 							yeetConfirm(login);
 							NotificationManager.success(
-								`${login} a bien été retiré·e des administrateur·trice·s`,
+								`${login} ne fait à présent plus parti des administrateurs`,
 								"Validation",
 								5000
 							);
@@ -126,22 +126,52 @@ const AdminCaptainManagement = () => {
 						setUpdate(d);
 					}}
 				/>
-				{data.length > 0
-					? data.map(item => (
-							<li key={item.login}>
-								<label>{item.login} </label>
-								<label>{item.firstname} </label>
-								<label>{item.lastname} </label>
-								<button
-									onClick={() => {
-										yeetMember(item.login);
-									}}
-								>
-									X
-								</button>
+				{data.length > 0 ? (
+					<ul>
+						{data.map(item => (
+							<li key={item.eachAdmin} key={item.login}>
+								<ul className={style.adminLine}>
+									<li id={style.login}>
+										<a href={`/profile/${item.login}`}>
+											{item.login}
+										</a>{" "}
+									</li>
+									<li id={style.firstname}>
+										{item.firstname}{" "}
+									</li>
+									<li id={style.lastname}>
+										{item.lastname}{" "}
+									</li>
+									<li id={style.role}>
+										{
+											{
+												[2]: "Autre Campus",
+												[5]: "Piscineux",
+												[7]: "Student",
+												[9]: "Bénévole",
+												[11]: "Admin",
+												[21]: "Capitaine",
+												[42]: "Webmaster"
+											}[item.clearance]
+										}
+									</li>
+									<li id={style.yeet}>
+										<button
+											onClick={() => {
+												yeetMember(item.login);
+											}}
+										>
+											❌
+										</button>
+									</li>
+								</ul>
 							</li>
-					  ))
-					: "Il n'y a aucun administrateur"}
+						))}
+					</ul>
+				) : (
+					"Il n'y a aucun administrateur"
+				)}
+				<hr />
 				<Mutiny />
 			</div>
 		</div>

@@ -1,6 +1,8 @@
 import {useState, useEffect} from "react";
 import {NotificationManager} from "react-notifications";
 
+import style from "../style/AdminUnpaidManagement.module.scss";
+
 const AddDirectionSearchBar = param => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
@@ -27,7 +29,7 @@ const AddDirectionSearchBar = param => {
 					param.setUpdate(true);
 					setUpdate(true);
 					NotificationManager.success(
-						`Student ${selectedUser} ajouté aux volontaires`,
+						`Le student ${selectedUser} est ajouté aux volontaires`,
 						"Validation",
 						5000
 					);
@@ -68,19 +70,25 @@ const AddDirectionSearchBar = param => {
 	}, [update]);
 
 	return (
-		<>
-			<datalist id="unpaid_list">
-				{userList.map((user, i) => (
-					<option key={i} value={user.login} />
-				))}
-			</datalist>
-			<input
-				list="unpaid_list"
-				value={selectedUser}
-				onChange={e => setSelectedUser(e.target.value)}
-			/>
-			<button onClick={promoteUser}>Promouvoir</button>
-		</>
+		<div id={style.searchBar}>
+			<label>Login du student à ajouter aux volontaires</label>
+			<label id={style.details}>
+				(il doit s'être connecté au moins une fois)
+			</label>
+			<div>
+				<datalist id="unpaid_list">
+					{userList.map((user, i) => (
+						<option key={i} value={user.login} />
+					))}
+				</datalist>
+				<input
+					list="unpaid_list"
+					value={selectedUser}
+					onChange={e => setSelectedUser(e.target.value)}
+				/>
+				<button onClick={promoteUser}>Promouvoir</button>
+			</div>
+		</div>
 	);
 };
 
