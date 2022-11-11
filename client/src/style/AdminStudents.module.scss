@@ -14,6 +14,81 @@
 		}
 	}
 
+	.dropdownContainer {
+		button {
+			border: none;
+			background: var(--lighter-grey);
+
+			&#dropdownButton {
+				width: 100px;
+				height: 30px;
+				color: var(--white);
+				background: var(--secondary);
+				margin: 40px 0;
+
+				&:hover {
+					background: var(--secondary-dark);
+				}
+
+				&:active {
+					background: var(--secondary-dark);
+				}
+			}
+
+			svg {
+				width: 18px;
+			}
+		}
+
+		#dropdownBg {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.5);
+			backdrop-filter: blur(1px);
+			display: none;
+		}
+
+		hr {
+			margin-bottom: 0;
+		}
+
+		#dropdown {
+			background: var(--lighter-grey);
+			padding: 20px;
+			width: 240px;
+			position: absolute;
+			z-index: 2;
+			display: none;
+			top: -40px;
+			margin-top: 270px;
+
+			input {
+				width: 200px;
+
+				&[type] {
+					width: auto;
+				}
+			};
+		}
+
+		#login {
+			margin: 15px 0 10px;
+		}
+
+		#tri {
+			margin: 20px 0 0;
+		}
+
+		#triDate {
+			margin: 5px 0 0 15px;
+			font-size: 14px;
+		}
+	}
+
+
 	#tittle {
 		margin: 20px 0;
 		font-size: 40px;

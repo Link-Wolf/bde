@@ -89,7 +89,7 @@ const AdminProductToken = param => {
 			});
 	};
 
-	const resetAlbum = async () => {
+	const changeAlbum = async () => {
 		const data = new FormData();
 		for (let i = 0; i < album.length; i++) {
 			data.append(`album`, album[i]);
@@ -262,7 +262,7 @@ const AdminProductToken = param => {
 		}
 	};
 
-	const deleteAlbum = async () => {
+	const resetAlbum = async () => {
 		if (
 			await isConfirmed(
 				`Désires tu supprimer le produit ${param.data.name}`
