@@ -20,7 +20,7 @@ const AdminStudents = () => {
 	const viewData = usePagination(data, PER_PAGE);
 	const [filter, setFilter] = useState({
 		sortField: "login",
-		asc: true
+		asc: false
 	});
 
 	useEffect(() => {
