@@ -159,24 +159,28 @@ const Routage = () => {
 						/>
 					}
 				/>
-				<Route
-					path="admin/events/subscribtions"
-					element={
-						<RouteWrapper
-							route={<AdminEventsSubscribtions />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				<Route
-					path="admin/contributions"
-					element={
-						<RouteWrapper
-							route={<AdminContributions />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
+				{
+					// <Route
+					// 	path="admin/events/subscribtions"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<AdminEventsSubscribtions />}
+					// 			check={global.config.clearance.admin}
+					// 		/>
+					// 	}
+					// />
+				}
+				{
+					// <Route
+					// 	path="admin/contributions"
+					// 	element={
+					// 		<RouteWrapper
+					// 			route={<AdminContributions />}
+					// 			check={global.config.clearance.admin}
+					// 		/>
+					// 	}
+					// />
+				}
 				<Route
 					path="admin/logs"
 					element={
