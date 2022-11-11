@@ -4,6 +4,7 @@ import {Pagination} from "@mui/material";
 import AdminNavbar from "../../components/AdminNavbar";
 import CheckSet from "../../components/CheckSet";
 import {NotificationManager} from "react-notifications";
+import ToggleButton from "../../components/ToggleButton";
 
 import yellowStar from "../../assets/logos/yellow_star.svg";
 import greyStar from "../../assets/logos/grey_star.svg";
@@ -158,39 +159,14 @@ const AdminStudents = () => {
 						<div>
 							<label id={style.tri}>Sens de tri</label>
 						</div>
-						<button onClick={handleButtonChange}>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 14 14"
-							>
-								<g>
-									<polyline
-										points="2.5 3.5 5.5 0.5 5.5 13.5"
-										fill="none"
-										stroke={
-											filter.asc
-												? "var(--primary-dark)"
-												: "var(--secondary-dark)"
-										}
-										strokeWidth="10%"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-									<polyline
-										points="11.5 10.5 8.5 13.5 8.5 0.5"
-										fill="none"
-										stroke={
-											!filter.asc
-												? "var(--primary-dark)"
-												: "var(--secondary-dark)"
-										}
-										strokeWidth="10%"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</g>
-							</svg>
-						</button>
+						<label from="asc">DESC</label>
+						<ToggleButton
+							name="asc"
+							checked={filter.asc}
+							onChange={handleFormChange}
+							id="asc"
+						/>
+						<label from="asc">ASC</label>
 					</div>
 				</div>
 				<div>
