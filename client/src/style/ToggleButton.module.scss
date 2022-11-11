@@ -28,8 +28,8 @@
       height: 13px;
       width: 13px;
       border-radius: 50%;
-      left: 4px;
-      bottom: 4px;
+      left: 2px;
+      bottom: 2px;
       background-color: var(--white);
       -webkit-transition: 0.4s;
       transition: 0.4s;
@@ -41,7 +41,7 @@
   }
 
   input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary);
+    box-shadow: 0 0 0.5px var(--primary);
   }
 
   input:checked + .slider:before {
