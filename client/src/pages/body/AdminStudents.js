@@ -157,16 +157,14 @@ const AdminStudents = () => {
 						</div>
 						<hr />
 						<div>
-							<label id={style.tri}>Sens de tri</label>
+							<label id={style.tri}>Inverser l'ordre</label>
 						</div>
-						<label from="asc">DESC</label>
 						<ToggleButton
 							name="asc"
 							checked={filter.asc}
 							onChange={handleFormChange}
 							id="asc"
 						/>
-						<label from="asc">ASC</label>
 					</div>
 				</div>
 				<div>
