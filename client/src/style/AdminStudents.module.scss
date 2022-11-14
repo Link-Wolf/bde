@@ -96,10 +96,18 @@
 		letter-spacing: 4px;
 		width: 980px;
 		text-align: center;
+
+		br {
+			display: none;
+		}
 	}
 
 	.table {
 		width: 980px;
+
+		br {
+			display: none;
+		}
 
 		.Desclogin {
 			width: 140px;
@@ -182,6 +190,204 @@
 		&:active,
 		&:hover {
 			background: var(--secondary-dark);
+		}
+	}
+}
+@media (max-width: 100vh) {
+	.studListContainer {
+		margin-left: 1vw;
+
+		#eachLine {
+			margin-bottom: 10px;
+		}
+
+		div {
+			#pagination {
+				width: 98vw;
+				display: flex;
+				justify-content: center;
+				margin: 50px 0;
+			}
+		}
+
+		.dropdownContainer {
+			button {
+				border: none;
+				background: var(--lighter-grey);
+
+				&#dropdownButton {
+					width: 100px;
+					height: 30px;
+					color: var(--white);
+					background: var(--secondary);
+					margin: 40px 0;
+
+					&:hover {
+						background: var(--secondary-dark);
+					}
+
+					&:active {
+						background: var(--secondary-dark);
+					}
+				}
+
+				svg {
+					width: 18px;
+				}
+			}
+
+			#dropdownBg {
+				width: 100vw;
+				height: 100vh;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: rgba(0,0,0,0.5);
+				backdrop-filter: blur(1px);
+				display: none;
+			}
+
+			hr {
+				margin-bottom: -10px;
+			}
+
+			#dropdown {
+				background: var(--light-grey);
+				padding: 20px;
+				width: 200px;
+				position: absolute;
+				z-index: 2;
+				display: none;
+				top: -20px;
+				margin-top: 270px;
+
+				input {
+					width: 200px;
+
+					&[type] {
+						width: auto;
+						margin-right: 20px;
+					}
+				};
+			}
+
+			#login {
+				margin: 15px 0 10px;
+			}
+
+			#tri {
+				margin: 20px 0 0;
+			}
+
+			#triDate {
+				margin: 5px 0 0 15px;
+				font-size: 14px;
+			}
+		}
+
+		#tittle {
+			margin: 20px 0;
+			font-size: 10vw;
+			font-stretch: condensed;
+			letter-spacing: 0.7vw;
+			width: 98vw;
+			text-align: center;
+
+			br {
+				display: inline;
+			}
+		}
+
+		.table {
+			width: 98vw;
+			font-size: 3vw;
+
+			br {
+				display: inline;
+			}
+
+			.Desclogin {
+				width: 14vw;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.Descname {
+				width: 28vw;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.Descpriv {
+				text-align: center;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.Descauth {
+				width: 28vw;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.DescjoinDate {
+				min-width: 28vw;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.login {
+				width: 14vw;
+				padding-left: 0;
+			}
+
+			.name {
+				width: 28vw;
+				padding-left: 0;
+
+				#lastname {
+					text-transform: uppercase;
+				}
+			}
+
+			.priv {
+				text-align: center;
+				padding: 0 20px;
+			}
+
+			.auth {
+				width: 28vw;
+				padding-left: 0;
+			}
+
+			.joinDate {
+				min-width: 28vw;
+				padding-left: 0;
+			}
+
+			th {
+				text-align: center;
+				height: 70px;
+			}
+		}
+
+		ul {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+		}
+
+		button#premium {
+			border: none;
+			background: var(--secondary);
+			color: var(--white);
+			width: 200px;
+			height: 30px;
+
+			&:active,
+			&:hover {
+				background: var(--secondary-dark);
+			}
 		}
 	}
 }

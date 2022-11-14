@@ -24,6 +24,7 @@
 
 	.popUp {
 		width: 700px;
+		max-width: 100vw;
 		background: var(--white);
 		border: solid var(--primary) 2px;
 		padding: 30px 80px;
