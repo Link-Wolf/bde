@@ -8,6 +8,10 @@
 		letter-spacing: 4px;
 		width: 980px;
 		text-align: center;
+
+		br {
+			display: none;
+		}
 	}
 
 	.eventChoice {
@@ -156,6 +160,172 @@
 			display: flex;
 			justify-content: center;
 			margin: 50px 0;
+		}
+	}
+}
+@media (max-width: 100vh) {
+	.subscribtionsContainer {
+		margin-left: 1vw;
+
+		#tittle {
+			margin-top: 20px;
+			font-size: 10vw;
+			font-stretch: condensed;
+			letter-spacing: 0.7vw;
+			width: 98vw;
+			text-align: center;
+
+			br {
+				display: inline;
+			}
+		}
+
+		.eventChoice {
+			margin-top: 50px;
+			font-size: 6vw;
+
+			label {
+				width: auto;
+			}
+
+			select {
+				margin: 0;
+				font-size: 4vw;
+				width: auto;
+			}
+
+			#places {
+				font-size: 5vw;
+				width: 92vw;
+				margin-left: 4vw;
+			}
+		}
+
+		#inscrits {
+			width: 98vw;
+			text-align: center;
+			font-style: italic;
+			font-size: 7vw;
+			margin-bottom: 5px;
+		}
+
+		ul {
+			padding-left: 0;
+			list-style: none;
+
+			#eachSub {
+				width: 98vw;
+
+				&:nth-of-type(2n) {
+					background-color: var(--lighter-grey);
+				}
+
+				.subLine {
+					display: flex;
+					flex-direction: row;
+
+					li {
+						display: flex;
+						flex-direction: column;
+						justify-content: flex-start;
+
+						&#login {
+							color: var(--primary);
+							width: auto;
+							margin: 0 2vw;
+							padding: 0;
+						}
+
+						&#price {
+							margin: 0 2vw;
+							padding: 0;
+							width: auto;
+						}
+
+						&#date {
+							width: auto;
+							margin: 0 2vw;
+							padding: 0;
+						}
+
+						&#button {
+							padding-left: 0;
+							width: auto;
+						}
+					}
+				}
+			}
+		}
+
+		.enfantDeSatan {
+			display: block;
+			width: 98vw;
+			font-size: 6vw;
+
+			button {
+				margin-left: 0;
+			}
+
+			.addInput {
+				width: 40vw;
+				margin: 0;
+			}
+		}
+
+		.studChoice {
+			margin-top: 30px;
+			margin-bottom: 60px;
+			font-size: 5vw;
+
+			#details {
+				font-size: 18px;
+				font-style: italic;
+				margin-left: 10px;
+			}
+
+			input {
+				font-size: 15px;
+				margin: 10px 0 0 147px;
+			}
+		}
+
+		.subButton {
+			border: none;
+			width: 100px;
+			height: 40px;
+			color: var(--white);
+			background: var(--secondary);
+			margin: 40px 0;
+
+			&:hover {
+				background: var(--secondary-dark);
+			}
+
+			&:active {
+				background: var(--secondary-dark);
+			}
+		}
+
+		#unsub {
+			border: none;
+			border-radius: 5px;
+			margin: 0;
+			background: none;
+			width: 30px;
+			height: 30px;
+
+			&:hover {
+				background-color: var(--black);
+			}
+		}
+
+		div {
+			#pagination {
+				width: 94vw;
+				display: flex;
+				justify-content: center;
+				margin: 50px 0;
+			}
 		}
 	}
 }
