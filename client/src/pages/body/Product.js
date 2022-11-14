@@ -223,10 +223,19 @@ const Description = props => {
 						<>
 							<dt>Stock pour ce choix</dt>
 							<dd id={style.rest}>
-								{props.product[size]}{" "}
-								{props.product[size] > 1
-									? "pièces restantes"
-									: "pièce restante"}
+								{props.product[size] == 0 ? (
+									<>
+										Rupture, réserve ta pièce en nous le
+										disant <a href="/contact">ici</a> !
+									</>
+								) : (
+									<>
+										{props.product[size]}{" "}
+										{props.product[size] > 1
+											? "pièces restantes"
+											: "pièce restante"}
+									</>
+								)}
 							</dd>
 						</>
 					) : props.product.stock !== undefined ? (
