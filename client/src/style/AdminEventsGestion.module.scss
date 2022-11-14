@@ -8,5 +8,27 @@
 		letter-spacing: 4px;
 		width: 980px;
 		text-align: center;
+
+		br {
+			display: none;
+		}
+	}
+}
+@media (max-width: 100vh) {
+	.eventsContainer {
+		margin-left: 1vw;
+
+		#tittle {
+			margin-top: 20px;
+			font-size: 40px;
+			font-stretch: condensed;
+			letter-spacing: 0.7vw;
+			width: 98vw;
+			text-align: center;
+
+			br {
+				display: inline;
+			}
+		}
 	}
 }
