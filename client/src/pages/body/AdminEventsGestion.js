@@ -68,7 +68,9 @@ const AdminEventsGestion = param => {
 		>
 			<AdminNavbar />
 			<div className={style.eventsContainer}>
-				<div id={style.tittle}>Gestion des évènements</div>
+				<div id={style.tittle}>
+					Gestion des <br /> évènements
+				</div>
 				<Button onClick={createNewEvent}>New</Button>
 				<Accordion>
 					{newEvent}

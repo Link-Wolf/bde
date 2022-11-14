@@ -209,7 +209,10 @@ const AdminStudents = () => {
 		>
 			<AdminNavbar />
 			<div className={style.subscribtionsContainer}>
-				<div id={style.tittle}>Inscriptions aux évènements</div>
+				<div id={style.tittle}>
+					Inscriptions aux <br />
+					évènements
+				</div>
 				<div>
 					<form className={style.eventChoice}>
 						<label>Evènement :</label>

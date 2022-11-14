@@ -68,7 +68,9 @@ const AdminShopGestion = param => {
 			>
 				<AdminNavbar />
 				<div className={style.shopGestionContainer}>
-					<div id={style.tittle}>Gestion des produits</div>
+					<div id={style.tittle}>
+						Gestion des <br /> produits
+					</div>
 					<Button onClick={createNewProduct}>New</Button>
 					<Accordion>
 						{newProduct}
