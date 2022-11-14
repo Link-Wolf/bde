@@ -165,10 +165,16 @@ const Description = props => {
 				))}
 			</div>
 			{props.session.clearance > 2 && props.session !== 0 ? (
-				<p id={style.warn}>
-					Ce produit ne peut être acheté que physiquement sur place
-					auprès d'un membre du BDE.
-				</p>
+				<>
+					<p id={style.warn}>
+						Ce produit ne peut être acheté que physiquement sur
+						place auprès d'un membre du BDE.
+					</p>
+					<p id={style.warn}>
+						Tu ne trouves pas ta taille ? Demande la nous vite{" "}
+						<a href="/contact">ici</a> avant la prochaine commande !
+					</p>
+				</>
 			) : (
 				<></>
 			)}
