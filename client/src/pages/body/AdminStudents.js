@@ -92,7 +92,9 @@ const AdminStudents = () => {
 		>
 			<AdminNavbar />
 			<div className={style.studListContainer}>
-				<div id={style.tittle}>Gestion des utilisateurs</div>
+				<div id={style.tittle}>
+					Gestion des <br /> utilisateurs
+				</div>
 				<div className={style.dropdownContainer}>
 					<button id={style.dropdownButton} onClick={filterHanddler}>
 						Trier
@@ -180,7 +182,8 @@ const AdminStudents = () => {
 									Autorisations
 								</th>
 								<th className={style.DescjoinDate}>
-									Première connexion
+									Première <br />
+									connexion
 								</th>
 							</tr>
 						</thead>
