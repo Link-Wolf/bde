@@ -165,7 +165,7 @@ const AdminNavbar = () => {
 					id={style.expendButton}
 					onClick={() => {
 						document.getElementById(style.panel).style.left =
-							"-800px";
+							"-100vw";
 					}}
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
