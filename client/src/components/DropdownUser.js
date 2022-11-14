@@ -50,7 +50,7 @@ const DropdownUser = param => {
 			<div>
 				<a href={"/me"}>
 					{param.mobile ? (
-						<h1> Profile </h1>
+						<h1> Profil </h1>
 					) : (
 						<img
 							src={
