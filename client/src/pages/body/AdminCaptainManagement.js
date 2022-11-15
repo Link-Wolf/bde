@@ -120,7 +120,9 @@ const AdminCaptainManagement = () => {
 		>
 			<AdminNavbar />
 			<div className={style.captainManagementContainer}>
-				<div id={style.tittle}>Gestion des administrateurs</div>
+				<div id={style.tittle}>
+					Gestion des <br /> administrateurs
+				</div>
 				<AddDirectionSearchBar
 					setUpdate={d => {
 						setUpdate(d);

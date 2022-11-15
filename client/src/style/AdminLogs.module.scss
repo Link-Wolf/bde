@@ -188,3 +188,200 @@
 		}
 	}
 }
+@media (max-width: 100vh) {
+	.logsContainer {
+		margin-left: 1vw;
+
+		#tittle {
+			margin-top: 20px;
+			font-size: 40px;
+			font-stretch: condensed;
+			letter-spacing: 4px;
+			width: 98vw;
+			text-align: center;
+		}
+
+		.dropdownContainer {
+			button {
+				border: none;
+				background: var(--lighter-grey);
+
+				&#dropdownButton {
+					width: 100px;
+					height: 30px;
+					color: var(--white);
+					background: var(--secondary);
+					margin: 40px 0;
+
+					&:hover {
+						background: var(--secondary-dark);
+					}
+
+					&:active {
+						background: var(--secondary-dark);
+					}
+				}
+
+				svg {
+					width: 18px;
+				}
+			}
+
+			#dropdownBg {
+				width: 100vw;
+				height: 100vh;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: rgba(0,0,0,0.5);
+				backdrop-filter: blur(1px);
+				display: none;
+			}
+
+			hr {
+				margin-bottom: 0;
+			}
+
+			#dropdown {
+				background: var(--lighter-grey);
+				padding: 20px;
+				width: 240px;
+				position: absolute;
+				z-index: 2;
+				display: none;
+				top: -40px;
+				margin-top: 270px;
+
+				input {
+					width: 200px;
+
+					&[type] {
+						width: auto;
+					}
+				};
+			}
+
+			#login {
+				margin: 15px 0 10px;
+			}
+
+			#tri {
+				margin: 20px 0 0;
+			}
+
+			#triDate {
+				margin: 5px 0 0 15px;
+				font-size: 14px;
+			}
+		}
+
+		#results {
+			margin: -67px 0 30px 130px;
+		}
+
+		.logs {
+			.pagination {
+				width: 98vw;
+				display: flex;
+				justify-content: center;
+				margin: 50px 0;
+			}
+
+			ul {
+				padding-left: 0;
+				list-style: none;
+			}
+
+			#desc {
+				display: flex;
+				flex-direction: row;
+				margin-bottom: 30px;
+				font-weight: bold;
+				font-size: 20px;
+
+				li {
+					&#descType {
+						width: 60px;
+						text-align: center;
+						margin-right: 20px;
+						display: none;
+					}
+
+					&#descLogin {
+						width: 140px;
+						text-align: center;
+						display: none;
+					}
+
+					&#descMessage {
+						text-align: center;
+						margin-right: 20px;
+						width: 500px;
+						display: none;
+					}
+
+					&#descDate {
+						text-align: center;
+						width: 240px;
+						display: none;
+					}
+				}
+			}
+
+			#eachLine {
+				margin-bottom: 10px;
+			}
+
+			.logLine {
+				display: flex;
+				flex-direction: column;
+
+				li {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-start;
+
+					&#type {
+						text-transform: uppercase;
+						font-stretch: condensed;
+						letter-spacing: 3px;
+						margin-right: 20px;
+						width: 60px;
+						text-align: center;
+						color: var(--white);
+						display: none;
+
+						&[type="warn"] {
+							& + * + #message {
+								background: var(--warn);
+							}
+						}
+
+						&[type="error"] {
+							& + * + #message {
+								background: var(--error);
+							}
+						}
+					};
+
+					&#login {
+						color: var(--secondary);
+						width: 140px;
+						padding-left: 20px;
+					}
+
+					&#message {
+						padding-left: 20px;
+						margin-right: 20px;
+						width: 98vw;
+					}
+
+					&#date {
+						width: 98vw;
+						padding-left: 20px;
+					}
+				}
+			}
+		}
+	}
+}
