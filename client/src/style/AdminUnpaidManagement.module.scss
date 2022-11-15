@@ -178,7 +178,7 @@
 
 		.unpaidLine {
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
 
 			li {
 				display: flex;
@@ -186,7 +186,7 @@
 				justify-content: flex-start;
 
 				&#login {
-					width: 200px;
+					width: auto;
 					padding-left: 40px;
 					margin-right: 20px;
 				}
@@ -194,19 +194,19 @@
 				&#firstname {
 					padding-left: 40px;
 					margin-right: 20px;
-					width: 220px;
+					width: auto;
 					margin-right: 20px;
 				}
 
 				&#lastname {
-					width: 220px;
+					width: auto;
 					padding-left: 40px;
 					margin-right: 20px;
 					text-transform: uppercase;
 				}
 
 				&#yeet {
-					width: 280px;
+					width: auto;
 					padding-left: 40px;
 
 					button {
