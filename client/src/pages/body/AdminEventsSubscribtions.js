@@ -317,9 +317,7 @@ const AdminStudents = () => {
 							<>
 								<div id={style.inscrits}>
 									Inscrits actuels{" "}
-									<label id={style.results}>
-										({data.length})
-									</label>
+									<label>({stud.length})</label>
 								</div>
 								<ul>
 									{viewData.currentData().map(user => (
