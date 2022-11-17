@@ -315,7 +315,12 @@ const AdminStudents = () => {
 					{selectedEvent ? (
 						stud.length > 0 ? (
 							<>
-								<div id={style.inscrits}>Inscrits actuels</div>
+								<div id={style.inscrits}>
+									Inscrits actuels{" "}
+									<label id={style.results}>
+										({data.length})
+									</label>
+								</div>
 								<ul>
 									{viewData.currentData().map(user => (
 										<li
