@@ -10,6 +10,7 @@ const AdminLogs = () => {
 		warn: true,
 		error: true,
 		isAdmin: false,
+		hideAdminUpdate: true,
 		sort: "date",
 		asc: false,
 		login: ""
@@ -71,6 +72,11 @@ const AdminLogs = () => {
 									label: "Admin",
 									name: "isAdmin",
 									checked: filter.isAdmin
+								},
+								{
+									label: "Masquer admin updates",
+									name: "hideAdminUpdate",
+									checked: filter.hideAdminUpdate
 								}
 							]}
 							onChange={handleFormChange}
