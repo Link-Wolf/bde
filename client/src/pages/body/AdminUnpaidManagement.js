@@ -92,7 +92,9 @@ const AdminCaptainManagement = () => {
 		>
 			<AdminNavbar />
 			<div className={style.unpaidManagementContainer}>
-				<div id={style.tittle}>Gestion des volontaires</div>
+				<div id={style.tittle}>
+					Gestion des <br /> volontaires
+				</div>
 				<AddUnpaidSearchBar
 					setUpdate={d => {
 						setUpdate(d);

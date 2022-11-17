@@ -15,7 +15,6 @@ const AdminStudents = () => {
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const viewData = usePagination(stud, PER_PAGE);
-	const [check, setCheck] = useState(false);
 	const [allEvent, setAllEvent] = useState([]);
 	const [selectedEvent, setSelectedEvent] = useState("");
 	const [update, setUpdate] = useState(false);
@@ -35,6 +34,7 @@ const AdminStudents = () => {
 			})
 			.then(actualData => {
 				setStud(actualData);
+				setCount(Math.ceil(actualData.length / PER_PAGE));
 			})
 			.catch(function(error) {
 				setStud([]);
@@ -137,7 +137,7 @@ const AdminStudents = () => {
 			.then(actualData => {
 				setAllEvent(actualData);
 			})
-			.catch(function(error) {
+			.catch(function() {
 				NotificationManager.error(
 					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 					"Erreur",

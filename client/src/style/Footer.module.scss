@@ -25,3 +25,12 @@
 		font-size: 10px;
 	}
 }
+@media (max-width: 100vh) {
+	.footer {
+		font-size: 4vw;
+	}
+
+	img {
+		height: 5vw;
+	}
+}
