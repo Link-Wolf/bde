@@ -76,6 +76,14 @@ export class LogsService {
 				} `
 			match += `; `
 			let logs = await this.logsRepository.query(match);
+			if (filterDto.hideAdminUpdate) {
+				for (let index = 0; index < logs.length; index++) {
+					if (logs[index].message === "Updated session (admin)") {
+						logs.splice(index, 1);
+						index--;
+					}
+				}
+			}
 			this.logger.log(`Got all filtered logs`, requestMaker, true);
 			return logs;
 		} catch (error) {

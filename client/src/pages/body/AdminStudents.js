@@ -168,6 +168,7 @@ const AdminStudents = () => {
 							id="asc"
 						/>
 					</div>
+					<div id={style.results}>{data.length} résultats</div>
 				</div>
 				<div>
 					<table className={style.table}>
