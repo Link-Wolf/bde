@@ -123,7 +123,7 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/event/current`, {
+		fetch(`${process.env.REACT_APP_API_URL}/event`, {
 			credentials: "include"
 		})
 			.then(response => {
