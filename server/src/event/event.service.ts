@@ -133,6 +133,17 @@ export class EventService {
 		}
 	}
 
+	async findAllAdmin(requestMaker: string): Promise<Event[]> {
+		try {
+			let events = await this.eventRepository.find({ order: { begin_date: "DESC" } });
+			this.logger.log(`Got all events`, requestMaker);
+			return events;
+		} catch (error) {
+			this.logger.error(`Failed -> Get all events on database (${error})`, requestMaker);
+			throw error
+		}
+	}
+
 	async findCurrent(requestMaker: string): Promise<Event[]> {
 		try {
 			let events = await this.eventRepository.findBy({
