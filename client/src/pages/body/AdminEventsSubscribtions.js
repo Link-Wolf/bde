@@ -123,7 +123,7 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/event/current`, {
+		fetch(`${process.env.REACT_APP_API_URL}/event/all`, {
 			credentials: "include"
 		})
 			.then(response => {
@@ -268,7 +268,9 @@ const AdminStudents = () => {
 						)}
 					</form>
 
-					{subForm ? (
+					{subForm &&
+					selectedEvent.end_date &&
+					selectedEvent.end_date > new Date(Date.now()) ? (
 						<form>
 							<div className={style.enfantDeSatan}>
 								<label>
@@ -309,7 +311,9 @@ const AdminStudents = () => {
 							</div>
 						</form>
 					) : (
-						<></>
+						<form>
+							<div className={style.enfantDeSatan}></div>
+						</form>
 					)}
 
 					{selectedEvent ? (
@@ -351,16 +355,26 @@ const AdminStudents = () => {
 													)}
 												</li>
 												<li id={style.button}>
-													<button
-														id={style.unsub}
-														onClick={() => {
-															handleRemoveButton(
-																user.studLogin
-															);
-														}}
-													>
-														❌
-													</button>
+													{selectedEvent.end_date &&
+													selectedEvent.end_date >
+														new Date(Date.now()) ? (
+														<button
+															id={style.unsub}
+															onClick={() => {
+																handleRemoveButton(
+																	user.studLogin
+																);
+															}}
+														>
+															❌
+														</button>
+													) : (
+														<button
+															id={style.unsub}
+														>
+															✖️
+														</button>
+													)}
 												</li>
 											</ul>
 										</li>
