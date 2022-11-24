@@ -252,9 +252,17 @@ const AdminEventToken = param => {
 				isOutside: bodyState.isOutside,
 				consos: bodyState.consos,
 				sponso: bodyState.sponso,
-				begin_date: bodyState.begin_date,
-				available_date: bodyState.available_date,
-				end_date: bodyState.hasEndDate ? bodyState.end_date : null,
+				begin_date: new Date(bodyState.begin_date).setHours(
+					new Date(bodyState.begin_date).getHours() - 1
+				),
+				available_date: new Date(bodyState.available_date).setHours(
+					new Date(bodyState.available_date).getHours() - 1
+				),
+				end_date: bodyState.hasEndDate
+					? new Date(bodyState.end_date).setHours(
+							new Date(bodyState.end_date).getHours() - 1
+					  )
+					: null,
 				for_pool: bodyState.for_pool
 			});
 			var requestOptions = {
@@ -401,7 +409,14 @@ const AdminEventToken = param => {
 	return (
 		<>
 			<Accordion.Header>
-				{formState.name} {formState.begin_date}
+				{formState.name} -{" "}
+				{new Intl.DateTimeFormat("fr-FR", {
+					year: "numeric",
+					month: "2-digit",
+					day: "2-digit",
+					hour: "2-digit",
+					minute: "2-digit"
+				}).format(new Date(formState.begin_date))}
 			</Accordion.Header>
 			<Accordion.Body>
 				{" "}
