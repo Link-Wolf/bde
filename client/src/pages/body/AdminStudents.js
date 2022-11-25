@@ -182,9 +182,12 @@ const AdminStudents = () => {
 								<th className={style.Descauth}>
 									Autorisations
 								</th>
+								<th className={style.DesclastCo}>
+									Dernières <br />
+									connexions
+								</th>
 								<th className={style.DescjoinDate}>
-									Première <br />
-									connexion
+									Inscriptions
 								</th>
 							</tr>
 						</thead>
@@ -231,13 +234,34 @@ const AdminStudents = () => {
 													}[user.clearance]
 												}
 											</td>
+											<td className={style.lastCo}>
+												{new Date(
+													user.last_co
+												).toLocaleDateString("fr-FR", {
+													year: "numeric",
+													month: "2-digit",
+													day: "2-digit"
+												})}
+												<br />
+												{new Date(
+													user.last_co
+												).toLocaleTimeString("fr-FR", {
+													hour: "2-digit",
+													minute: "2-digit"
+												})}
+											</td>
 											<td className={style.joinDate}>
 												{new Date(
 													user.joinDate
 												).toLocaleDateString("fr-FR", {
 													year: "numeric",
 													month: "2-digit",
-													day: "2-digit",
+													day: "2-digit"
+												})}
+												<br />
+												{new Date(
+													user.joinDate
+												).toLocaleTimeString("fr-FR", {
 													hour: "2-digit",
 													minute: "2-digit"
 												})}
