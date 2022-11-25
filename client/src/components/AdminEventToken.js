@@ -253,14 +253,14 @@ const AdminEventToken = param => {
 				consos: bodyState.consos,
 				sponso: bodyState.sponso,
 				begin_date: new Date(bodyState.begin_date).setHours(
-					new Date(bodyState.begin_date).getHours() - 1
+					new Date(bodyState.begin_date).getHours()
 				),
 				available_date: new Date(bodyState.available_date).setHours(
-					new Date(bodyState.available_date).getHours() - 1
+					new Date(bodyState.available_date).getHours()
 				),
 				end_date: bodyState.hasEndDate
 					? new Date(bodyState.end_date).setHours(
-							new Date(bodyState.end_date).getHours() - 1
+							new Date(bodyState.end_date).getHours()
 					  )
 					: null,
 				for_pool: bodyState.for_pool
