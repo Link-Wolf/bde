@@ -241,7 +241,7 @@ const AdminStudents = () => {
 													year: "numeric",
 													month: "2-digit",
 													day: "2-digit"
-												})}
+												})}{" "}
 												<br />
 												{new Date(
 													user.last_co
@@ -257,7 +257,7 @@ const AdminStudents = () => {
 													year: "numeric",
 													month: "2-digit",
 													day: "2-digit"
-												})}
+												})}{" "}
 												<br />
 												{new Date(
 													user.joinDate
