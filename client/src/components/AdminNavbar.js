@@ -127,10 +127,14 @@ const AdminNavbar = () => {
 						`This is an HTTP error: The status is ${response.status}`
 					);
 				}
-				return response.text();
+				return response.json();
 			})
 			.then(views => {
-				setViewCount(views);
+				let count = 0;
+				for (const view of views) {
+					count += view.count;
+				}
+				setViewCount(count);
 			})
 			.catch(function() {
 				NotificationManager.error(

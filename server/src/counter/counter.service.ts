@@ -19,12 +19,11 @@ export class CounterService {
 			console.log(counters)
 			if (counters.length === 0)
 				throw new NotFoundException(`Counter doesn't exists`)
-			const visitCounter = counters[0].count;
 			this.logger.log(
 				`Got visit counter`,
 				session.login
 			)
-			return visitCounter;
+			return counters;
 		} catch (err) {
 			this.logger.error(
 				`Failed -> Get visit counter on database (${err})`,
@@ -43,8 +42,8 @@ export class CounterService {
 			session.last = Date.now();
 			let counters = await this.counterRepository.find();
 			if (counters.length === 0)
-				counters[0] = { id: 1, count: 0 };
-			counters[0] = { id: 1, count: counters[0].count + 1 };
+				counters[0] = { id: session.login === undefined ? "randomConnard" : session.login, count: 0 };
+			counters[0] = { id: session.login === undefined ? "randomConnard" : session.login, count: counters[0].count + 1 };
 			console.log(`inc ` + counters)
 			let counter = await this.counterRepository.save(counters[0])
 			this.logger.log(
