@@ -104,9 +104,7 @@ export class EventFilterDtoPipe implements PipeTransform {
 export class FileTypeValidationPipe implements PipeTransform {
 	transform(value: any, _metadata: ArgumentMetadata) {
 		if (value == undefined) {
-			return {
-				err: undefined
-			}
+			return undefined
 		}
 		else if (value.mimetype.split('/')[0] === "image")
 			return value

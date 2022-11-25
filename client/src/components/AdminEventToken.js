@@ -79,9 +79,8 @@ const AdminEventToken = param => {
 		for_pool: true
 	});
 	const [locked, setLocked] = useState(true);
-	const [srcImg, setSrcImg] = useState(null);
-	const img = useRef(null);
 	const [session, setSession] = useState({clearance: 0});
+	const [thumbnail, setThumbnail] = useState([]);
 
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/session`, {
@@ -199,7 +198,7 @@ const AdminEventToken = param => {
 
 	const changeThumbnail = async () => {
 		const data = new FormData();
-		data.append("thumbnail", img.current);
+		data.append("thumbnail", thumbnail[0]);
 		await fetch(
 			`${process.env.REACT_APP_API_URL}/event/upload_image
 			/${param.data.id}`,
@@ -253,14 +252,14 @@ const AdminEventToken = param => {
 				consos: bodyState.consos,
 				sponso: bodyState.sponso,
 				begin_date: new Date(bodyState.begin_date).setHours(
-					new Date(bodyState.begin_date).getHours() - 1
+					new Date(bodyState.begin_date).getHours()
 				),
 				available_date: new Date(bodyState.available_date).setHours(
-					new Date(bodyState.available_date).getHours() - 1
+					new Date(bodyState.available_date).getHours()
 				),
 				end_date: bodyState.hasEndDate
 					? new Date(bodyState.end_date).setHours(
-							new Date(bodyState.end_date).getHours() - 1
+							new Date(bodyState.end_date).getHours()
 					  )
 					: null,
 				for_pool: bodyState.for_pool
@@ -395,7 +394,7 @@ const AdminEventToken = param => {
 				return response.blob();
 			})
 			.then(blob => {
-				setSrcImg(URL.createObjectURL(blob));
+				setThumbnail([blob]);
 			})
 			.catch(function(error) {
 				NotificationManager.error(
@@ -570,23 +569,24 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						checked={formState.for_pool}
 					/>
-					<Form.Control
+					<input
 						type="file"
 						id="thumbnail"
+						accept="img/png, img/jpeg"
+						files={thumbnail}
 						onChange={event => {
-							img.current = event.target.files[0];
-							setSrcImg(
-								URL.createObjectURL(event.target.files[0])
-							);
+							setThumbnail(event.target.files);
 						}}
 						disabled={locked}
 					/>
-					<LazyLoadImage
-						height="150px"
-						src={srcImg}
-						width="auto"
-						effect="blur"
-					/>
+					{thumbnail.length && (
+						<img
+							height="150px"
+							src={URL.createObjectURL(thumbnail[0])}
+							width="auto"
+							effect="blur"
+						/>
+					)}
 					{locked ? (
 						<Button
 							type="button"
