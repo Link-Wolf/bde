@@ -6,7 +6,7 @@ import burger from "../assets/logos/burger.png";
 
 const AdminNavbar = () => {
 	const [session, setSession] = useState({clearance: 0});
-	const [expended, setExpended] = useState(true);
+	const [viewCount, setViewCount] = useState(0);
 	const {isConfirmed} = useConfirm();
 	const initDb = async () => {
 		const confirm = await isConfirmed(
@@ -108,7 +108,7 @@ const AdminNavbar = () => {
 			.then(data => {
 				setSession(data);
 			})
-			.catch(function(error) {
+			.catch(function() {
 				NotificationManager.error(
 					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 					"Erreur",
@@ -116,6 +116,34 @@ const AdminNavbar = () => {
 				);
 			});
 	}, []);
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/counter`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				return response.json();
+			})
+			.then(views => {
+				let count = 0;
+				for (const view of views) {
+					count += view.count;
+				}
+				setViewCount(count);
+			})
+			.catch(function() {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	});
 
 	return (
 		<div className={style.adminNavbarContainer}>
@@ -231,6 +259,7 @@ const AdminNavbar = () => {
 						</a>
 					</>
 				)}
+				<p>{viewCount}</p>
 				{session.clearance >= 42 && (
 					<>
 						<div id={style.buttonContainer}>
