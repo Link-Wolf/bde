@@ -54,10 +54,10 @@ export class EventService {
 		}
 	}
 
-	saveThumbnail(id: number, file: Express.Multer.File, login: any) {
+	async saveThumbnail(id: number, file: Express.Multer.File, login: any) {
 		try {
 			let path: any
-			if ('err' in file) {
+			if (file === undefined) {
 				let nb = Math.floor(Math.random() * 5)
 				path = "assets/placeholders/thumbnails/placeholder" + nb + ".jpg"
 				this.eventRepository.update(id, {
