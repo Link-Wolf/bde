@@ -62,6 +62,7 @@ export class AuthService {
 								email: response.data.email,
 								img_medium: response.data.image.versions.large,
 								img_small: response.data.image.versions.small,
+								last_co: new Date(Date.now()),
 								true_email: null
 							}
 							if (!stud.img_small || stud.img_small === undefined)
@@ -70,7 +71,6 @@ export class AuthService {
 								stud.img_medium = "https://cdn.discordapp.com/attachments/907303542438629406/1040284333967163473/pas_de_pp.png"
 							const retStud = await this.studService
 								.logUser(stud, "42intra-API");
-
 							return {
 								login: retStud.login,
 								firstname: retStud.firstname,
