@@ -295,8 +295,10 @@ const AdminStudents = () => {
 						)}
 					</form>
 
-					{(subForm && !selectedEventData.end_date) ||
-					selectedEventData.end_date > new Date(Date.now()) ? (
+					{subForm &&
+					(!selectedEventData.end_date ||
+						new Date(selectedEventData.end_date) >
+							new Date(Date.now())) ? (
 						<form>
 							<div className={style.enfantDeSatan}>
 								<label>
@@ -382,8 +384,9 @@ const AdminStudents = () => {
 												</li>
 												<li id={style.button}>
 													{!selectedEventData.end_date ||
-													selectedEventData.end_date >
-														new Date(Date.now()) ? (
+													new Date(
+														selectedEventData.end_date
+													) > new Date(Date.now()) ? (
 														<button
 															id={style.unsub}
 															onClick={() => {
