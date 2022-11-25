@@ -138,7 +138,13 @@
 		}
 
 		.DescjoinDate {
-			min-width: 280px;
+			min-width: 240px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		.DesclastCo {
+			min-width: 240px;
 			font-weight: bold;
 			font-size: 20px;
 		}
@@ -168,8 +174,13 @@
 		}
 
 		.joinDate {
-			min-width: 280px;
-			padding-left: 60px;
+			min-width: 240px;
+			padding-left: 40px;
+		}
+
+		.lastCo {
+			min-width: 240px;
+			padding-left: 40px;
 		}
 
 		th {
@@ -315,13 +326,13 @@
 			}
 
 			.Desclogin {
-				width: 14vw;
+				width: 16vw;
 				font-weight: bold;
 				font-size: 3vw;
 			}
 
 			.Descname {
-				width: 28vw;
+				width: 25vw;
 				font-weight: bold;
 				font-size: 3vw;
 			}
@@ -333,24 +344,30 @@
 			}
 
 			.Descauth {
-				width: 28vw;
+				width: 23vw;
 				font-weight: bold;
 				font-size: 3vw;
 			}
 
 			.DescjoinDate {
-				min-width: 28vw;
+				min-width: 23vw;
+				font-weight: bold;
+				font-size: 3vw;
+			}
+
+			.DesclastCo {
+				min-width: 23vw;
 				font-weight: bold;
 				font-size: 3vw;
 			}
 
 			.login {
-				width: 14vw;
+				width: 16vw;
 				padding-left: 0;
 			}
 
 			.name {
-				width: 28vw;
+				width: 25vw;
 				padding-left: 0;
 
 				#lastname {
@@ -364,13 +381,21 @@
 			}
 
 			.auth {
-				width: 28vw;
+				width: 23vw;
 				padding-left: 0;
+				text-align: center;
 			}
 
 			.joinDate {
-				min-width: 28vw;
+				min-width: 23vw;
 				padding-left: 0;
+				text-align: center;
+			}
+
+			.lastCo {
+				min-width: 23vw;
+				padding-left: 0;
+				text-align: center;
 			}
 
 			th {
