@@ -1,13 +1,15 @@
 import {
 	Column,
 	Entity,
-	PrimaryGeneratedColumn,
+	PrimaryColumn,
 } from "typeorm";
 
 @Entity()
 export class Counter {
-	@PrimaryGeneratedColumn()
-	id: number
+	@PrimaryColumn(
+		{ default: "randomConnard" }
+	)
+	id: string
 
 	@Column({
 		default: 0
