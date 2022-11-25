@@ -12,6 +12,7 @@ const AdminStudents = () => {
 
 	const PER_PAGE = 10;
 	const [stud, setStud] = useState([]);
+	const [selectedEventData, setSelectedEventData] = useState({});
 	const [page, setPage] = useState(1);
 	const [count, setCount] = useState(0);
 	const viewData = usePagination(stud, PER_PAGE);
@@ -123,6 +124,30 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/event/${selectedEvent}`, {
+			credentials: "include"
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error(
+						`This is an HTTP error: The status is ${response.status}`
+					);
+				}
+				if (response) return response.json();
+			})
+			.then(actualData => {
+				setSelectedEventData(actualData);
+			})
+			.catch(function(error) {
+				NotificationManager.error(
+					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
+					"Erreur",
+					5000
+				);
+			});
+	}, [selectedEvent]);
+
+	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/event/all`, {
 			credentials: "include"
 		})
@@ -167,6 +192,7 @@ const AdminStudents = () => {
 		) {
 			if (toSub !== "") {
 				const check = await checkStud(selectedEvent, toSub, cost);
+				console.log(`here ` + check);
 				if (check == 1) {
 					NotificationManager.success(
 						`Inscription de ${toSub} à l'évènement`,
@@ -194,7 +220,8 @@ const AdminStudents = () => {
 			getStud(selectedEvent);
 			setSubForm(true);
 		}
-	}, [selectedEvent, update]);
+		console.log(selectedEventData);
+	}, [selectedEventData, update]);
 
 	const handleChangePage = (e, p) => {
 		setPage(p);
@@ -268,9 +295,8 @@ const AdminStudents = () => {
 						)}
 					</form>
 
-					{subForm &&
-					selectedEvent.end_date &&
-					selectedEvent.end_date > new Date(Date.now()) ? (
+					{(subForm && !selectedEventData.end_date) ||
+					selectedEventData.end_date > new Date(Date.now()) ? (
 						<form>
 							<div className={style.enfantDeSatan}>
 								<label>
@@ -355,8 +381,8 @@ const AdminStudents = () => {
 													)}
 												</li>
 												<li id={style.button}>
-													{selectedEvent.end_date &&
-													selectedEvent.end_date >
+													{!selectedEventData.end_date ||
+													selectedEventData.end_date >
 														new Date(Date.now()) ? (
 														<button
 															id={style.unsub}

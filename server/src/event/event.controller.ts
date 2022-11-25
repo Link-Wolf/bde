@@ -71,7 +71,7 @@ export class EventController {
 	@UseGuards(new ClearanceGuard(11))
 	async uploadImage(
 		@Param('id', ParseIntPipe) id: number,
-		@UploadedFile(new FileTypeValidationPipe()) file: Express.Multer.File,
+		@UploadedFile() file: Express.Multer.File,
 		@Session() session: Record<string, any>) {
 		return this.eventService.saveThumbnail(id, file, session.login)
 	}
