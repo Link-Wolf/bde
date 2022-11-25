@@ -259,9 +259,9 @@ const AdminNavbar = () => {
 						</a>
 					</>
 				)}
-				<p>{viewCount}</p>
 				{session.clearance >= 42 && (
 					<>
+						<p>{viewCount}</p>
 						<div id={style.buttonContainer}>
 							<button id={style.bigYellowButton} onClick={initDb}>
 								Init sUS
