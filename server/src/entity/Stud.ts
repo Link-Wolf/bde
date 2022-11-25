@@ -49,6 +49,12 @@ export class Stud {
 	joinDate: Date
 
 	@Column({
+		type: 'timestamptz',
+		default: new Date(Date.now())
+	})
+	last_co: Date
+
+	@Column({
 		nullable: true,
 	})
 	img_medium: string;
