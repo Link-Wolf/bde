@@ -124,6 +124,7 @@ const AdminStudents = () => {
 	};
 
 	useEffect(() => {
+		if (selectedEvent === "") return;
 		fetch(`${process.env.REACT_APP_API_URL}/event/${selectedEvent}`, {
 			credentials: "include"
 		})

@@ -25,6 +25,8 @@ import { OrderModule } from './order/order.module';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
+import { CounterModule } from './counter/counter.module';
+import { Counter } from './entity/Conter';
 
 
 @Module({
@@ -40,7 +42,17 @@ import { GoogleModule } from './google/google.module';
 			username: process.env.POSTGRES_USER,
 			password: process.env.POSTGRES_PASSWORD,
 			database: process.env.POSTGRES_DB,
-			entities: [Stud, Contribution, Event, Logs, Goodies, Club, Order, Inscription],
+			entities: [
+				Stud,
+				Contribution,
+				Event,
+				Logs,
+				Goodies,
+				Club,
+				Order,
+				Inscription,
+				Counter
+			],
 			synchronize: true
 		}),
 		StudModule,
@@ -55,6 +67,7 @@ import { GoogleModule } from './google/google.module';
 		PaypalModule,
 		OrderModule,
 		GoogleModule,
+		CounterModule,
 	],
 	controllers: [AppController],
 	providers: [
