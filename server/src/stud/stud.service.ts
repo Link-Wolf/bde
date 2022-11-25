@@ -30,7 +30,7 @@ export class StudService {
 	) {
 		try {
 			let order = {};
-			order[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
+			order[`${sort.sortField}`] = `${sort.asc ? "DESC" : "ASC"}`
 			let studs = await this.studRepository.find({ order: order });
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
