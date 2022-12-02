@@ -9,6 +9,7 @@ import DropdownUser from "../components/DropdownUser";
 
 import style from "../style/Header.module.scss";
 
+import new_thing from "../assets/logos/new.png";
 import bde_logo from "../assets/logos/fregate_white.png";
 
 function Header() {
@@ -48,6 +49,10 @@ function Header() {
 							<a href="/contact">
 								<h1>Contact</h1>
 							</a>
+							<a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
+								<h1>Soutenir</h1>
+							</a>
+							<img src={new_thing} />
 						</>
 					);
 				}
