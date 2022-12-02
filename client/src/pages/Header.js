@@ -3,6 +3,7 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import burger from "../assets/logos/burger.png";
+import noyel from "../assets/logos/noyel_bonnet.png";
 
 import DropdownUser from "../components/DropdownUser";
 
@@ -142,7 +143,12 @@ function Header() {
 								style={{"fill-rule": "nonzero"}}
 							/>
 						</svg>
-
+						<img
+							id={style.noyel}
+							src={noyel}
+							height="200"
+							width="200"
+						/>
 						<h1>La Frégate</h1>
 					</a>
 				</div>

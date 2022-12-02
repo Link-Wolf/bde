@@ -30,6 +30,13 @@
 
 	.leftContainer {
 		display: flex;
+
+		#noyel {
+			position: absolute;
+			transform: translate(-43px,-83px) rotate(-40deg) scale(0.16);
+			left: 0;
+			top: 0;
+		}
 	}
 
 	.admin {
