@@ -138,6 +138,11 @@
 				width: 40px;
 			}
 		}
+
+		img {
+			position: absolute;
+			transform: translate(135px,-65px) rotate(15deg) scale(0.6);
+		}
 	}
 }
 @media screen and (min-width: 100vh) {
@@ -154,6 +159,11 @@
 
 		.buttonContainer {
 			display: flex;
+
+			img {
+				position: absolute;
+				transform: translate(155px,-385px) rotate(15deg) scale(0.036);
+			}
 		}
 
 		.admin {
