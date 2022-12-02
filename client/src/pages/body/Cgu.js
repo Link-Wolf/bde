@@ -133,7 +133,7 @@ const Cgu = () => {
 							</a>
 						</p>
 						<h2>Conditions générales de ventes</h2>
-						<h3>Clause n° 1 : Objet et champ d'application</h3>
+						<h3>Klaus n° 1 : Objet et champ d'application</h3>
 						<p>
 							Les présentes conditions générales de vente (CGV)
 							constituent le socle de la négociation commerciale
@@ -149,14 +149,14 @@ const Cgu = () => {
 							personnelle mais ne peut avoir pour objet la
 							revente, la commercialisation, ou la distribution
 							professionnelles desdits Produits. Toute acceptation
-							du devis/bon de commande en ce compris la clause «
-							Je reconnais avoir pris connaissance et j'accepte
-							les conditions générales de vente ci-annexées »
-							implique l'adhésion sans réserve de l'acheteur aux
-							"Clauses" des présentes conditions générales de
-							vente.
+							du devis/bon de commande en ce compris la klaus « Je
+							reconnais avoir pris connaissance et j'accepte les
+							conditions générales de vente ci-annexées » implique
+							l'adhésion sans réserve de l'acheteur aux
+							(Santa)"Klaus's" des présentes conditions générales
+							de vente.
 						</p>
-						<h3>Clause n° 2 : Prix</h3>
+						<h3>Klaus n° 2 : Prix</h3>
 						<p>
 							Les prix des marchandises vendues sont ceux en
 							vigueur au jour de la prise de commande et sont
@@ -168,7 +168,7 @@ const Cgu = () => {
 							prix indiqués lors de l'enregistrement de la
 							commande.
 						</p>
-						<h3>Clause n° 3 : Rabais et ristournes </h3>
+						<h3>Klaus n° 3 : Rabais et ristournes </h3>
 						<p>
 							Les tarifs proposés comprennent les rabais et
 							ristournes que l'association BDE 42 Mulhouse serait
@@ -176,19 +176,19 @@ const Cgu = () => {
 							la prise en charge par l'acheteur de certaines
 							prestations.
 						</p>
-						<h3>Clause n° 4 : Escompte</h3>
+						<h3>Klaus n° 4 : Escompte</h3>
 						<p>
 							Aucun escompte ne sera consenti en cas de paiement
 							anticipé.
 						</p>
-						<h3>Clause n° 5 : Modalités de paiement</h3>
+						<h3>Klaus n° 5 : Modalités de paiement</h3>
 						<p>
 							Le règlement des commandes s'effectue : soit par
 							carte bancaire sans contacts ; soit en espèce. Les
 							règlements seront effectués aux conditions suivantes
 							: Paiement comptant.
 						</p>
-						<h3>Clause n° 6 : Retard de paiement</h3>
+						<h3>Klaus n° 6 : Retard de paiement</h3>
 						<p>
 							En cas de défaut de paiement total ou partiel des
 							marchandises livrées à l'échéance, l'acheteur doit
@@ -209,16 +209,16 @@ const Cgu = () => {
 							des frais de recouvrement. Articles 441-10 et D.
 							441-5 du code de commerce.
 						</p>
-						<h3>Clause n° 7 : Clause résolutoire</h3>
+						<h3>Klaus n° 7 : Klaus résolutoire</h3>
 						<p>
 							Si dans les quinze jours qui suivent la mise en
-							oeuvre de la clause "Retard de paiement", l'acheteur
+							oeuvre de la klaus "Retard de paiement", l'acheteur
 							ne s'est pas acquitté des sommes restant dues, la
 							vente sera résolue de plein droit et pourra ouvrir
 							droit à l'allocation de dommages et intérêts au
 							profit de l'association BDE 42 Mulhouse.
 						</p>
-						<h3>Clause n° 8 : Clause de réserve de propriété</h3>
+						<h3>Klaus n° 8 : Klaus de réserve de propriété</h3>
 						<p>
 							L'association BDE 42 Mulhouse conserve la propriété
 							des biens vendus jusqu'au paiement intégral du prix,
@@ -229,7 +229,7 @@ const Cgu = () => {
 							cadre de la procédure collective, les marchandises
 							vendues et restées impayées.
 						</p>
-						<h3>Clause n° 9 : Livraison </h3>
+						<h3>Klaus n° 9 : Livraison </h3>
 						<p>
 							La livraison est effectuée par la remise directe de
 							la marchandise à l'acheteur si le Produit est
@@ -250,7 +250,7 @@ const Cgu = () => {
 							écrit dans les cinq jours suivant la livraison, par
 							courrier recommandé AR adressé à l'association.
 						</p>
-						<h3>Clause n° 10 : Force majeure</h3>
+						<h3>Klaus n° 10 : Force majeure</h3>
 						<p>
 							La responsabilité de l'association BDE 42 Mulhouse
 							ne pourra pas être mise en oeuvre si la
@@ -262,7 +262,7 @@ const Cgu = () => {
 							irrésistible au sens de l'article 1148 du Code
 							civil.
 						</p>
-						<h3>Clause n° 11 : Principe de rétractation</h3>
+						<h3>Klaus n° 11 : Principe de rétractation</h3>
 						<p>
 							Le cocontractant du BDE 42 Mulhouse qui garantit
 							avoir la qualité de consommateur telle que définie
@@ -340,7 +340,7 @@ const Cgu = () => {
 							des manipulations autres que celles qui sont
 							nécessaires.
 						</p>
-						<h3>Clause n° 12 : Tribunal compétent</h3>
+						<h3>Klaus n° 12 : Tribunal compétent</h3>
 						<p>
 							Tout litige relatif à l'interprétation et à
 							l'exécution des présentes conditions générales de
