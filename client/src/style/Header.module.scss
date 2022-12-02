@@ -33,7 +33,9 @@
 
 		#noyel {
 			position: absolute;
-			transform: translate(-43px,-83px) rotate(-40deg) scale(0.16);
+			height: 200px;
+			width: 200px;
+			transform: translate(-80px,-80px) rotate(-40deg) scale(0.16);
 			left: 0;
 			top: 0;
 		}
@@ -140,6 +142,14 @@
 }
 @media screen and (min-width: 100vh) {
 	.container {
+		.leftContainer {
+			#noyel {
+				position: absolute;
+				transform: translate(-43px,-83px) rotate(-40deg) scale(0.16);
+				left: 0;
+				top: 0;
+			}
+		}
 		padding: 10px 50px;
 
 		.buttonContainer {
