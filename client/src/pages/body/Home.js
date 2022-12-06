@@ -309,20 +309,23 @@ const ProductList = param => {
 			<h2>NOS PRODUITS</h2>
 			<hr />
 			<div className={style.thumbnailsContainer}>
-				<img alt=""
+				<img
+					alt=""
 					src={thumbnailHoodies}
 					onClick={() => {
 						setPopUp(products[0].id);
 					}}
 				/>
 				<div className={style.miniThumbnailsContainer}>
-					<img alt=""
+					<img
+						alt=""
 						src={thumbnailTshirt}
 						onClick={() => {
 							setPopUp(products[1].id);
 						}}
 					/>
-					<img alt=""
+					<img
+						alt=""
 						src={thumbnailCap}
 						onClick={() => {
 							setPopUp(products[2].id);
@@ -358,6 +361,7 @@ const EquipePicture = props => {
 	return (
 		<>
 			<a
+				id={`vers le profil intranet 42 de ${props.login}`}
 				href={`https://profile.intra.42.fr/users/${props.login}`}
 				target="_blank"
 				rel="noopener noreferrer"

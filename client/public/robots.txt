@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /home
 Allow: /contact
-Disallow: /
