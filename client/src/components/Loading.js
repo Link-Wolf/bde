@@ -6,19 +6,19 @@ import gear_medium from "../assets/animations/gear_clockwise.gif";
 import gear_micro from "../assets/animations/gear_clockwise.gif";
 
 const Loading = () => {
-	return <img src={gear} />;
+	return <img alt="" src={gear} />;
 };
 
 const LoadingSmall = () => {
-	return <img src={gear_small} />;
+	return <img alt="" src={gear_small} />;
 };
 
 const LoadingMedium = () => {
-	return <img src={gear_medium} />;
+	return <img alt="" src={gear_medium} />;
 };
 
 const LoadingMicro = () => {
-	return <img src={gear_micro} />;
+	return <img alt="" src={gear_micro} />;
 };
 
 export default Loading;

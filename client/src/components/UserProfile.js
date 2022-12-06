@@ -104,7 +104,7 @@ const UserProfile = props => {
 const ProfilePicture = props => {
 	return (
 		<div className={style.profilePictureContainer}>
-			<img
+			<img alt=""
 				src={props.stud.img_medium}
 				className={props.stud.isPremium ? style.premium : ""}
 			/>

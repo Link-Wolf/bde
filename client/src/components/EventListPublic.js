@@ -11,7 +11,7 @@ const EventListPublic = param => {
 				La Frégate organise divers évènements en tant que BDE pour faire
 				vivre et animer le campus !
 			</p>
-			<img src={patchwork} />
+			<img alt="" src={patchwork} />
 			<p>
 				Étudiant à 42 ?{" "}
 				<a href={`${process.env.REACT_APP_INTRA_REDIRECT}`}>

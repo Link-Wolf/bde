@@ -52,7 +52,7 @@ function Header() {
 							<a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
 								<h1>Soutenir</h1>
 							</a>
-							<img src={new_thing} />
+							<img alt="" src={new_thing} />
 						</>
 					);
 				}
@@ -149,6 +149,7 @@ function Header() {
 							/>
 						</svg>
 						<img
+							alt=""
 							id={style.noyel}
 							src={noyel}
 							height="200"

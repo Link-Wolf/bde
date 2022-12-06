@@ -86,7 +86,7 @@ const Home = () => {
 const HeaderHome = () => {
 	return (
 		<div className={style.frontImage}>
-			<img src={frontImage} />
+			<img alt="" src={frontImage} />
 			<div className={style.color} />
 			<div className={style.text}>
 				<h1>BDE 42 Mulhouse</h1>
@@ -309,20 +309,20 @@ const ProductList = param => {
 			<h2>NOS PRODUITS</h2>
 			<hr />
 			<div className={style.thumbnailsContainer}>
-				<img
+				<img alt=""
 					src={thumbnailHoodies}
 					onClick={() => {
 						setPopUp(products[0].id);
 					}}
 				/>
 				<div className={style.miniThumbnailsContainer}>
-					<img
+					<img alt=""
 						src={thumbnailTshirt}
 						onClick={() => {
 							setPopUp(products[1].id);
 						}}
 					/>
-					<img
+					<img alt=""
 						src={thumbnailCap}
 						onClick={() => {
 							setPopUp(products[2].id);
@@ -362,7 +362,7 @@ const EquipePicture = props => {
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<img src={props.img} height={100} width="auto" />
+				<img alt="" src={props.img} height={100} width="auto" />
 			</a>
 		</>
 	);
