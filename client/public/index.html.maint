@@ -89,10 +89,10 @@
 </head>
 
 <body>
-	<img class="top-left big" src="gear_clockwise.gif" />
-	<img class="bottom-right big" src="gear_clockwise.gif" />
-	<img class="top-right small" src="gear_anti_clockwise.gif" />
-	<img class="bottom medium" src="gear_anti_clockwise.gif" />
+	<img alt="" class="top-left big" src="gear_clockwise.gif" />
+	<img alt="" class="bottom-right big" src="gear_clockwise.gif" />
+	<img alt="" class="top-right small" src="gear_anti_clockwise.gif" />
+	<img alt="" class="bottom medium" src="gear_anti_clockwise.gif" />
 	<div class="container">
 		<p>Le site est actuellement en maintenance</p>
 	</div>

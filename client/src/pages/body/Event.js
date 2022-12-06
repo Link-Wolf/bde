@@ -125,7 +125,7 @@ const Thumbnail = param => {
 
 	return (
 		<div className={style.thumbnail}>
-			<img src={thumbnail} />
+			<img alt="" src={thumbnail} />
 		</div>
 	);
 };
@@ -152,7 +152,7 @@ const DateDuration = param => {
 	return (
 		<div>
 			<div>
-				<img src={dateTimeLogo} />
+				<img alt="" src={dateTimeLogo} />
 				{new Intl.DateTimeFormat("fr-FR", {
 					day: "numeric",
 					month: "short",
@@ -162,7 +162,7 @@ const DateDuration = param => {
 				}).format(new Date(param.dataEvent.begin_date))}
 			</div>
 			<div>
-				<img src={durationLogo} />
+				<img alt="" src={durationLogo} />
 				{param.duration}
 			</div>
 		</div>
@@ -178,7 +178,7 @@ const Price = param => {
 					<a className={style.no}>
 						<div>
 							Prix
-							<img src={inscCostLogo} />
+							<img alt="" src={inscCostLogo} />
 						</div>
 						{(Math.round(param.dataEvent.cost * 100) / 100).toFixed(
 							2
@@ -192,7 +192,7 @@ const Price = param => {
 					// 	<a>
 					// 		<div>
 					// 			Classique
-					// 			<img src={inscCostLogo} />
+					// 			<img alt="" src={inscCostLogo} />
 					// 		</div>
 					// 		{param.dataEvent.cost},00
 					// 	</a>
@@ -204,7 +204,7 @@ const Price = param => {
 					// 	>
 					// 		<div>
 					// 			Prilivège
-					// 			<img src={inscCostLogo} />
+					// 			<img alt="" src={inscCostLogo} />
 					// 		</div>
 					//
 					// 		{param.dataEvent.premium_cost !== 0
@@ -223,7 +223,7 @@ const Details = param => {
 	return (
 		<ul>
 			<li>
-				<img src={nbPlacesLogo} />
+				<img alt="" src={nbPlacesLogo} />
 				<br />
 				{param.dataEvent.subbed} /{" "}
 				{param.dataEvent.nb_places === -42 ? (
@@ -233,27 +233,27 @@ const Details = param => {
 				)}
 			</li>
 			<li>
-				<img src={locationLogo} />
+				<img alt="" src={locationLogo} />
 				<br />
 				{param.dataEvent.place}
 			</li>
 			<li>
-				<img src={isOutsideLogo} />
+				<img alt="" src={isOutsideLogo} />
 				<br />
 				{param.dataEvent.isOutside ? "Dehors" : "À l'école"}
 			</li>
 			<li>
-				<img src={param.dataEvent.consos ? conso : fadedConso} />
+				<img alt="" src={param.dataEvent.consos ? conso : fadedConso} />
 				<br />
 				{param.dataEvent.consos ? "Consommations" : ""}
 			</li>
 			<li>
-				<img src={param.dataEvent.for_pool ? pool : fadedPool} />
+				<img alt="" src={param.dataEvent.for_pool ? pool : fadedPool} />
 				<br />
 				{param.dataEvent.for_pool ? "Piscineux" : ""}
 			</li>
 			<li>
-				<img src={param.dataEvent.sponso ? sponso : fadedSponso} />
+				<img alt="" src={param.dataEvent.sponso ? sponso : fadedSponso} />
 				<br />
 				{param.dataEvent.sponso ? "Sponsorisé" : ""}
 			</li>
