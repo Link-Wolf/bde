@@ -8,14 +8,14 @@ function Footer() {
 	return (
 		<footer className={style.footer} id="footer">
 			<div>
-				<img
+				<img alt=""
 					height="auto"
 					src={twitter_logo}
 					width="auto"
 					effect="blur"
 					hidden
 				/>
-				<img
+				<img alt=""
 					height="auto"
 					src={discord_logo}
 					width="auto"
@@ -27,7 +27,7 @@ function Footer() {
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<img
+					<img alt=""
 						height="auto"
 						src={instagram_logo}
 						width="auto"

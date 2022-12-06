@@ -22,7 +22,7 @@ const NoPage = () => {
 					<h3>tu es sur de ton chemin ?</h3>
 				</div>
 				<div className={style.boat}>
-					<img src={boat} />
+					<img alt="" src={boat} />
 				</div>
 				<div
 					className={style.torch}

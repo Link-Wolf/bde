@@ -52,7 +52,7 @@ const DropdownUser = param => {
 					{param.mobile ? (
 						<h1> Profil </h1>
 					) : (
-						<img
+						<img alt=""
 							src={
 								img.profile !== blank ? img.profile : img.login
 							}
@@ -64,7 +64,7 @@ const DropdownUser = param => {
 					{param.mobile ? (
 						<h1> Logout </h1>
 					) : (
-						<img id={style.logout} src={img.logout} height="3vh" />
+						<img alt="" id={style.logout} src={img.logout} height="3vh" />
 					)}
 				</a>
 			</div>

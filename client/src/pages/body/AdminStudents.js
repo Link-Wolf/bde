@@ -213,7 +213,7 @@ const AdminStudents = () => {
 												</label>
 											</td>
 											<td className={style.priv} hidden>
-												<img
+												<img alt=""
 													src={
 														user.isPremium
 															? yellowStar
