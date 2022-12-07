@@ -8,14 +8,16 @@ function Footer() {
 	return (
 		<footer className={style.footer} id="footer">
 			<div>
-				<img alt=""
+				<img
+					alt=""
 					height="auto"
 					src={twitter_logo}
 					width="auto"
 					effect="blur"
 					hidden
 				/>
-				<img alt=""
+				<img
+					alt=""
 					height="auto"
 					src={discord_logo}
 					width="auto"
@@ -23,11 +25,13 @@ function Footer() {
 					hidden
 				/>
 				<a
+					aria-label="logo d'instagram redirigeant vers l'instagram du BDE"
 					href="https://www.instagram.com/bde_42mulhouse/"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<img alt=""
+					<img
+						alt=""
 						height="auto"
 						src={instagram_logo}
 						width="auto"
