@@ -361,7 +361,7 @@ const EquipePicture = props => {
 	return (
 		<>
 			<a
-				id={`vers le profil intranet 42 de ${props.login}`}
+				aria-label={`vers le profil intranet 42 de ${props.login}`}
 				href={`https://profile.intra.42.fr/users/${props.login}`}
 				target="_blank"
 				rel="noopener noreferrer"
