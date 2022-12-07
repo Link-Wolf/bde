@@ -35,6 +35,10 @@ function Header() {
 							<a href="/contact">
 								<h1>Contact</h1>
 							</a>
+							<a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
+								<h1>Soutenir</h1>
+							</a>
+							<img alt="" src={new_thing} />
 						</>
 					);
 				}
