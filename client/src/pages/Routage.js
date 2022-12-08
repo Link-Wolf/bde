@@ -30,11 +30,16 @@ import Header from "./Header";
 import Footer from "./Footer";
 import AdminUnpaidManagement from "./body/AdminUnpaidManagement";
 
+const Redirect = () => {
+	window.location.replace("/home");
+	return <></>;
+};
+
 const Routage = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="" element={<Navigate to="/home" />} />
+				<Route path="" element={<Redirect />} />
 				<Route
 					path="home"
 					element={<RouteWrapper route={<Home />} />}
