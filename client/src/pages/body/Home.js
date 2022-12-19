@@ -86,7 +86,7 @@ const Home = () => {
 const HeaderHome = () => {
 	return (
 		<div className={style.frontImage}>
-			<img src={frontImage} />
+			<img alt="" src={frontImage} />
 			<div className={style.color} />
 			<div className={style.text}>
 				<h1>BDE 42 Mulhouse</h1>
@@ -310,6 +310,7 @@ const ProductList = param => {
 			<hr />
 			<div className={style.thumbnailsContainer}>
 				<img
+					alt=""
 					src={thumbnailHoodies}
 					onClick={() => {
 						setPopUp(products[0].id);
@@ -317,12 +318,14 @@ const ProductList = param => {
 				/>
 				<div className={style.miniThumbnailsContainer}>
 					<img
+						alt=""
 						src={thumbnailTshirt}
 						onClick={() => {
 							setPopUp(products[1].id);
 						}}
 					/>
 					<img
+						alt=""
 						src={thumbnailCap}
 						onClick={() => {
 							setPopUp(products[2].id);
@@ -358,11 +361,12 @@ const EquipePicture = props => {
 	return (
 		<>
 			<a
+				aria-label={`vers le profil intranet 42 de ${props.login}`}
 				href={`https://profile.intra.42.fr/users/${props.login}`}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
-				<img src={props.img} height={100} width="auto" />
+				<img alt="" src={props.img} height={100} width="auto" />
 			</a>
 		</>
 	);

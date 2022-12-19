@@ -30,7 +30,7 @@ export class StudService {
 	) {
 		try {
 			let order = {};
-			order[`${sort.sortField}`] = `${sort.asc ? "ASC" : "DESC"}`
+			order[`${sort.sortField}`] = `${sort.asc ? "DESC" : "ASC"}`
 			let studs = await this.studRepository.find({ order: order });
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
@@ -420,12 +420,15 @@ export class StudService {
 
 	async logUser(stud: StudDto, requestMaker: string) {
 		try {
+			stud
 			let user = await this.findOne(stud.login, requestMaker);
 			if (!user)
 				user = await this.create(stud, requestMaker)
-			else
-				if (user.clearance <= 7)
-					this.update(user.login, stud, requestMaker)
+			else {
+				if (user.clearance > 7)
+					stud.clearance = user.clearance;
+				this.update(user.login, stud, requestMaker)
+			}
 			this.logger.log(`Logged student ${user.login}`, requestMaker);
 			return user
 		} catch (error) {
