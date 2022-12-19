@@ -12,21 +12,21 @@ const ProductList = () => {
 			<Placeholder as="h1" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
-			<img src={grey} width="150px" />
+			<img alt="" src={grey} width="150px" />
 			<Placeholder as="p" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
 			<Placeholder as="h1" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
-			<img src={grey} width="150px" />
+			<img alt="" src={grey} width="150px" />
 			<Placeholder as="p" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
 			<Placeholder as="h1" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>
-			<img src={grey} width="150px" />
+			<img alt="" src={grey} width="150px" />
 			<Placeholder as="p" animation="glow">
 				<Placeholder xs={6} />
 			</Placeholder>

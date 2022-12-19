@@ -30,6 +30,15 @@
 
 	.leftContainer {
 		display: flex;
+
+		#noyel {
+			position: absolute;
+			height: 200px;
+			width: 200px;
+			transform: translate(-80px,-80px) rotate(-40deg) scale(0.16);
+			left: 0;
+			top: 0;
+		}
 	}
 
 	.admin {
@@ -129,14 +138,32 @@
 				width: 40px;
 			}
 		}
+
+		img {
+			position: absolute;
+			transform: translate(135px,-65px) rotate(15deg) scale(0.6);
+		}
 	}
 }
 @media screen and (min-width: 100vh) {
 	.container {
+		.leftContainer {
+			#noyel {
+				position: absolute;
+				transform: translate(-43px,-83px) rotate(-40deg) scale(0.16);
+				left: 0;
+				top: 0;
+			}
+		}
 		padding: 10px 50px;
 
 		.buttonContainer {
 			display: flex;
+
+			img {
+				position: absolute;
+				transform: translate(155px,-385px) rotate(15deg) scale(0.036);
+			}
 		}
 
 		.admin {

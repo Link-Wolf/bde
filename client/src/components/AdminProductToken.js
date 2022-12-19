@@ -406,7 +406,7 @@ const AdminProductToken = param => {
 						disabled={locked}
 					/>
 					{thumbnail.length && (
-						<img
+						<img alt=""
 							height="150px"
 							src={URL.createObjectURL(thumbnail[0])}
 							width="auto"

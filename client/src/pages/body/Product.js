@@ -111,7 +111,7 @@ const Album = props => {
 									setDisplayedImage(i);
 								}}
 							>
-								<img className={style.thumbnail} src={image} />
+								<img alt="" className={style.thumbnail} src={image} />
 							</a>
 						</li>
 					))
@@ -119,7 +119,7 @@ const Album = props => {
 					<></>
 				)}
 			</ul>
-			<img
+			<img alt=""
 				className={style.cover}
 				id={album[displayedImage] === load ? style.load : ""}
 				src={album[displayedImage]}

@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /home
+Allow: /contact
+Sitemap: https://bde.42mulhouse.fr/sitemap.xml

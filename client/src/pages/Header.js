@@ -3,11 +3,13 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import burger from "../assets/logos/burger.png";
+import noyel from "../assets/logos/noyel_bonnet.png";
 
 import DropdownUser from "../components/DropdownUser";
 
 import style from "../style/Header.module.scss";
 
+import new_thing from "../assets/logos/new.png";
 import bde_logo from "../assets/logos/fregate_white.png";
 
 function Header() {
@@ -33,6 +35,10 @@ function Header() {
 							<a href="/contact">
 								<h1>Contact</h1>
 							</a>
+							<a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
+								<h1>Soutenir</h1>
+							</a>
+							<img alt="" src={new_thing} />
 						</>
 					);
 				}
@@ -47,6 +53,10 @@ function Header() {
 							<a href="/contact">
 								<h1>Contact</h1>
 							</a>
+							<a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
+								<h1>Soutenir</h1>
+							</a>
+							<img alt="" src={new_thing} />
 						</>
 					);
 				}
@@ -67,6 +77,13 @@ function Header() {
 				);
 			});
 	}, []);
+
+	useEffect(() => {
+		fetch(`${process.env.REACT_APP_API_URL}/counter`, {
+			credentials: "include",
+			method: "POST"
+		}).catch(() => {});
+	});
 
 	const toggleBurgerMenu = () => {
 		if (document.getElementById(style.burgerMenu).style.left === "0px") {
@@ -135,7 +152,13 @@ function Header() {
 								style={{"fill-rule": "nonzero"}}
 							/>
 						</svg>
-
+						<img
+							alt=""
+							id={style.noyel}
+							src={noyel}
+							height="200"
+							width="200"
+						/>
 						<h1>La Frégate</h1>
 					</a>
 				</div>

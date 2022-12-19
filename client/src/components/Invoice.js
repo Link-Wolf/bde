@@ -17,7 +17,7 @@ class Invoice extends React.Component {
 										<tbody>
 											<tr>
 												<td className={style.title}>
-													<img
+													<img alt=""
 														src={logo}
 														style={style.img}
 													/>

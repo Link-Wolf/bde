@@ -51,7 +51,7 @@ const EventToken = param => {
 				}}
 			>
 				<div className={style.eventTokenContainer}>
-					<img src={imgSrc} />
+					<img alt="" src={imgSrc} />
 					<div>
 						<h1>{param.event.name}</h1>
 						<div>
@@ -63,21 +63,21 @@ const EventToken = param => {
 						</div>
 						<ul>
 							<li>
-								<img
+								<img alt=""
 									src={
 										param.event.consos ? conso : fadedConso
 									}
 								/>
 							</li>
 							<li>
-								<img
+								<img alt=""
 									src={
 										param.event.for_pool ? pool : fadedPool
 									}
 								/>
 							</li>
 							<li>
-								<img
+								<img alt=""
 									src={
 										param.event.sponso
 											? sponso
