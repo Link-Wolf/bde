@@ -241,6 +241,10 @@
 						&:hover {
 							background: var(--secondary-dark);
 						}
+						&:disabled {
+							background: var(--lighter-grey);
+							color: var(--dark-grey);
+						}
 					}
 				}
 			}

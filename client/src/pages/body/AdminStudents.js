@@ -144,6 +144,17 @@ const AdminStudents = () => {
 								onChange={handleFormChange}
 								id="joinDate"
 							/>
+							<label>Inscription</label>
+						</div>
+						<div>
+							<input
+								type="radio"
+								name="sortField"
+								value="last_co"
+								checked={filter.sortField === "last_co"}
+								onChange={handleFormChange}
+								id="last_co"
+							/>
 							<label>Connexion</label>
 						</div>
 						<div>

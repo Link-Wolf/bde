@@ -78,13 +78,6 @@ function Header() {
 			});
 	}, []);
 
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/counter`, {
-			credentials: "include",
-			method: "POST"
-		}).catch(() => {});
-	});
-
 	const toggleBurgerMenu = () => {
 		if (document.getElementById(style.burgerMenu).style.left === "0px") {
 			document.getElementById(style.burgerMenu).style.width = "0";
