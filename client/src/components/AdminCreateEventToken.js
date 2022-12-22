@@ -32,12 +32,14 @@ const AdminCreateEventToken = param => {
 		begin_date: parseDate(new Date(Date.now())),
 		end_date: parseDate(new Date(Date.now())),
 		available_date: parseDate(new Date(Date.now())),
+		sub_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: false,
+		hasSubDate: false,
 		sponso: false,
 		consos: false,
 		isOutside: false,
@@ -49,12 +51,14 @@ const AdminCreateEventToken = param => {
 		begin_date: parseDate(new Date(Date.now())),
 		end_date: parseDate(new Date(Date.now())),
 		available_date: parseDate(new Date(Date.now())),
+		sub_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: false,
+		hasSubDate: false,
 		sponso: false,
 		consos: false,
 		isOutside: false,
@@ -78,7 +82,15 @@ const AdminCreateEventToken = param => {
 	};
 
 	const saveEvent = async () => {
-		if (!document.getElementById("createEventForm").checkValidity()) return;
+		if (!document.getElementById("createEventForm").checkValidity())
+		{ 
+			NotificationManager.warning(
+				"Renseignes tous les champs obligatoires",
+				"Attention",
+				5000
+			);
+			return;
+		}
 		const confirm = await isConfirmed(`Désires tu créer cet évènement ?`);
 		if (confirm) {
 			var myHeaders = new Headers();
@@ -96,6 +108,7 @@ const AdminCreateEventToken = param => {
 				sponso: bodyState.sponso,
 				begin_date: bodyState.begin_date,
 				available_date: bodyState.available_date,
+				sub_date: bodyState.hasSubDate ? bodyState.sub_date : null,
 				end_date: bodyState.hasEndDate ? bodyState.end_date : null,
 				for_pool: bodyState.for_pool
 			});
@@ -183,25 +196,43 @@ const AdminCreateEventToken = param => {
 					type="datetime-local"
 					required
 				/>
-				{" - "}
-				<Form.Control
-					id="formEndDate"
-					name="end_date"
-					min={formState.begin_date}
-					disabled={!formState.hasEndDate}
-					value={formState.end_date}
-					onChange={handleFormChange}
-					type="datetime-local"
-				/>
 				<Form.Switch
 					name="hasEndDate"
 					id="hasEndDate"
 					checked={formState.hasEndDate}
 					onChange={handleFormChange}
 				/>
-				<Form.Label>Date de disponibilité : </Form.Label>
+				<Form.Label 
+					hidden={!formState.hasEndDate}
+				>Date de fin : </Form.Label>
 				<Form.Control
 					id="formEndDate"
+					name="end_date"
+					min={formState.begin_date}
+					hidden={!formState.hasEndDate}
+					value={formState.end_date}
+					onChange={handleFormChange}
+					type="datetime-local"
+				/>
+				<Form.Switch
+					name="hasSubDate"
+					id="hasSubDate"
+					checked={formState.hasSubDate}
+					onChange={handleFormChange}
+				/>
+				<Form.Label hidden={!formState.hasSubDate}>Date de fin d'inscription : </Form.Label>
+				<Form.Control
+					id="formSubDate"
+					name="sub_date"
+					min={formState.begin_date}
+					hidden={!formState.hasSubDate}
+					value={formState.sub_date}
+					onChange={handleFormChange}
+					type="datetime-local"
+				/>
+				<Form.Label>Date de disponibilité : </Form.Label>
+				<Form.Control
+					id="formAvailableDate"
 					name="available_date"
 					value={formState.available_date}
 					onChange={handleFormChange}
