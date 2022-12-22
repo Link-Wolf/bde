@@ -33,12 +33,14 @@ const AdminEventToken = param => {
 		begin_date: parseDate(new Date(Date.now())),
 		end_date: parseDate(new Date(Date.now())),
 		available_date: parseDate(new Date(Date.now())),
+		sub_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
+		hasSubDate: true,
 		sponso: true,
 		consos: true,
 		isOutside: true,
@@ -50,12 +52,14 @@ const AdminEventToken = param => {
 		begin_date: "",
 		end_date: "",
 		available_date: "",
+		sub_date: "",
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
+		hasSubDate: true,
 		sponso: true,
 		consos: true,
 		isOutside: true,
@@ -67,12 +71,14 @@ const AdminEventToken = param => {
 		begin_date: parseDate(new Date(Date.now())),
 		end_date: parseDate(new Date(Date.now())),
 		available_date: parseDate(new Date(Date.now())),
+		sub_date: parseDate(new Date(Date.now())),
 		place: "",
 		nb_places: 0,
 		nb_premium_places: 0,
 		cost: 0,
 		premium_cost: 0,
 		hasEndDate: true,
+		hasSubDate: true,
 		sponso: true,
 		consos: true,
 		isOutside: true,
@@ -231,8 +237,14 @@ const AdminEventToken = param => {
 				.getElementById(`updateEventForm${param.index}`)
 				.checkValidity()
 		)
+		{
+			NotificationManager.warning(
+				"Renseignes tous les champs obligatoires",
+				"Attention",
+				5000
+			);
 			return;
-
+		}
 		if (
 			await isConfirmed(
 				`Désires tu modifier l'évènement ${param.data.name}`
@@ -262,6 +274,11 @@ const AdminEventToken = param => {
 							new Date(bodyState.end_date).getHours()
 					  )
 					: null,
+				sub_date: bodyState.hasSubDate
+				? new Date(bodyState.sub_date).setHours(
+						new Date(bodyState.sub_date).getHours()
+					)
+				: null,
 				for_pool: bodyState.for_pool
 			});
 			var requestOptions = {
@@ -336,6 +353,19 @@ const AdminEventToken = param => {
 			two_digiter(available_date.getHours()) +
 			":" +
 			two_digiter(available_date.getMinutes());
+		tmp.hasSubDate = param.data.sub_date !== null;
+		tmp.sub_date = tmp.sub_date ? tmp.sub_date : null;
+		let sub_date = new Date(Date.parse(tmp.sub_date));
+		tmp.sub_date =
+			two_digiter(sub_date.getFullYear()) +
+			"-" +
+			two_digiter(sub_date.getMonth() + 1) +
+			"-" +
+			two_digiter(sub_date.getDate()) +
+			"T" +
+			two_digiter(sub_date.getHours()) +
+			":" +
+			two_digiter(sub_date.getMinutes());
 		tmp.isOutside = param.data.isOutside;
 		tmp.sponso = param.data.sponso;
 		tmp.consos = param.data.consos;
@@ -373,6 +403,16 @@ const AdminEventToken = param => {
 			two_digiter(available_date.getHours()) +
 			":" +
 			two_digiter(available_date.getMinutes());
+		tmpBody.sub_date =
+			two_digiter(sub_date.getFullYear()) +
+			"-" +
+			two_digiter(sub_date.getMonth() + 1) +
+			"-" +
+			two_digiter(sub_date.getDate()) +
+			"T" +
+			two_digiter(sub_date.getHours()) +
+			":" +
+			two_digiter(sub_date.getMinutes());
 		setBodyState(tmpBody);
 	}, [param.data]);
 
@@ -444,7 +484,13 @@ const AdminEventToken = param => {
 						onChange={handleFormChange}
 						required
 					/>
-					{" - "}
+					<Form.Switch
+						disabled={locked}
+						name="hasEndDate"
+						id="hasEndDate"
+						checked={formState.hasEndDate}
+						onChange={handleFormChange}
+					/>
 					<Form.Control
 						id="formEndDate"
 						min={formState.begin_date}
@@ -456,10 +502,20 @@ const AdminEventToken = param => {
 					/>
 					<Form.Switch
 						disabled={locked}
-						name="hasEndDate"
-						id="hasEndDate"
-						checked={formState.hasEndDate}
+						name="hasSubDate"
+						id="hasSubDate"
+						checked={formState.hasSubDate}
 						onChange={handleFormChange}
+					/>
+					<Form.Label hidden={locked || !formState.hasSubDate}>Date de fin d'inscription : </Form.Label>
+					<Form.Control
+						id="formSubDate"
+						name="sub_date"
+						min={formState.begin_date}
+						hidden={locked || !formState.hasSubDate}
+						value={formState.sub_date}
+						onChange={handleFormChange}
+						type="datetime-local"
 					/>
 					<Form.Label>Date de disponibilité : </Form.Label>
 					<Form.Control

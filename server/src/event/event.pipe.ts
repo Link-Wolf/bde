@@ -41,6 +41,8 @@ export class EventDtoPipe implements PipeTransform {
 		if ("available_date" in value && value.available_date !== null)
 			value.available_date = new Date(value.available_date)
 		else value.available_date = new Date(Date.now())
+		if ("sub_date" in value && value.sub_date !== null)
+			value.sub_date = new Date(value.sub_date)
 		if ("end_date" in value && value.end_date !== null)
 			value.end_date = new Date(value.end_date)
 		if ("desc" in value && value.desc === "")
