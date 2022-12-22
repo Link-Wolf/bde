@@ -25,7 +25,6 @@ import { OrderModule } from './order/order.module';
 import { Order } from './entity/Order';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
-import { CounterModule } from './counter/counter.module';
 import { Counter } from './entity/Conter';
 
 
@@ -67,7 +66,6 @@ import { Counter } from './entity/Conter';
 		PaypalModule,
 		OrderModule,
 		GoogleModule,
-		CounterModule,
 	],
 	controllers: [AppController],
 	providers: [

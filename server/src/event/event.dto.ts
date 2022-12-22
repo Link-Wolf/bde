@@ -12,6 +12,7 @@ export class EventDto {
 	begin_date: Date;
 	end_date: Date;
 	available_date: Date;
+	sub_date: Date;
 	album: boolean
 }
 

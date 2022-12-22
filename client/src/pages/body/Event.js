@@ -427,7 +427,8 @@ const SubscribeButton = param => {
 		<div className={style.buttons}>
 			<button onClick={param.closeEvent}>Fermer</button>
 			<button
-				disabled={param.isSubbed === undefined}
+				disabled={param.isSubbed === undefined || (param.dataEvent.sub_date && new Date(param.dataEvent.sub_date) < new Date(Date.now()))}
+				title={param.isSubbed === undefined || (param.dataEvent.sub_date && new Date(param.dataEvent.sub_date) < new Date(Date.now())) ? "La date d'inscription est passée" : ""}
 				onClick={param.isSubbed ? unsub : sub}
 				className={style.subButton}
 			>
