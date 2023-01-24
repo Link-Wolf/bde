@@ -3,7 +3,8 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import burger from "../assets/logos/burger.png";
-import noyel from "../assets/logos/noyel_bonnet.png";
+//import noyel from "../assets/logos/noyel_bonnet.png";
+import noyel from "../assets/placeholders/tmp_profile.png"
 
 import DropdownUser from "../components/DropdownUser";
 
