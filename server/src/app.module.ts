@@ -23,9 +23,10 @@ import { GoodiesModule } from './goodies/goodies.module';
 import { PaypalModule } from './paypal/paypal.module';
 import { OrderModule } from './order/order.module';
 import { Order } from './entity/Order';
+import { Donation } from './entity/Donation';
+import { DonationModule } from './donation/donation.module';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
-import { Counter } from './entity/Conter';
 
 
 @Module({
@@ -50,7 +51,7 @@ import { Counter } from './entity/Conter';
 				Club,
 				Order,
 				Inscription,
-				Counter
+				Donation
 			],
 			synchronize: true
 		}),
@@ -58,6 +59,7 @@ import { Counter } from './entity/Conter';
 		ClubModule,
 		ContributionModule,
 		EventModule,
+		DonationModule,
 		GoodiesModule,
 		InscriptionModule,
 		LogsModule,
