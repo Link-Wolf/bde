@@ -4,7 +4,6 @@ import { HttpExceptionFilter } from './http-exception.filter';
 import helmet from 'helmet';
 import * as compression from 'compression';
 //import * as csurf from 'csurf';
-import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
 const express = require('express');
 const server = express();
@@ -31,7 +30,6 @@ async function bootstrap() {
 	app.use(
 		compression(),
 		helmet(),
-		cookieParser("hi this is the secret"),
 		session(
 			{
 				store: new RedisStore({ client: redisClient }),

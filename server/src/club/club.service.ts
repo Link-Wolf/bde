@@ -20,7 +20,7 @@ export class ClubService {
 
 	async findAll(requestMaker: string): Promise<Club[]> {
 		try {
-			let clubs = await this.manager.query(`SELECT * FROM "club"`);
+			let clubs = await this.clubRepository.find(); //wtf was that before ?? query select * from club ????
 			this.logger.log(`Got all clubs`, requestMaker);
 			return clubs;
 		} catch (error) {
