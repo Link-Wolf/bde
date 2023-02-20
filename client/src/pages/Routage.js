@@ -14,17 +14,18 @@ import NoPage from "./body/NoPage";
 import Contact from "./body/Contact";
 import AdminEventsGestion from "./body/AdminEventsGestion";
 import AdminEventsSubscribtions from "./body/AdminEventsSubscribtions";
-import AdminContributions from "./body/AdminContributions";
+// import AdminContributions from "./body/AdminContributions";
 import AdminLogs from "./body/AdminLogs";
 import AdminCaptainManagement from "./body/AdminCaptainManagement";
 import AdminStudents from "./body/AdminStudents";
-import AdminClubs from "./body/AdminClubs";
+// import AdminClubs from "./body/AdminClubs";
 import Log from "./body/Log";
 import Me from "./body/Me";
-import Clubs from "./body/Clubs";
+// import Clubs from "./body/Clubs";
 import Profile from "./body/Profile";
 import AdminShopGestion from "./body/AdminShopGestion";
-import {Purchase, PrePurchase} from "./body/Purchase";
+// import {Purchase, PrePurchase} from "./body/Purchase";
+import PingPong from "./body/PingPong";
 import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -43,6 +44,10 @@ const Routage = () => {
 				<Route
 					path="home"
 					element={<RouteWrapper route={<Home />} />}
+				/>
+				<Route
+					path="pingpong"
+					element={<RouteWrapper route={<PingPong />} />}
 				/>
 				<Route
 					path="legalthings"
