@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { Donation } from '../entity/Donation';
 import { LoggerService } from '../logger/logger.service';
-import { DonationDto } from './dto/donation.dto';
+import { DonationDto } from './donation.dto';
 
 @Injectable()
 export class DonationService {
