@@ -11,7 +11,7 @@ export class Donation {
 
     @Column({
         nullable: false,
-        type: "double",
+        type: "double precision",
     })
     amount: number;
 
