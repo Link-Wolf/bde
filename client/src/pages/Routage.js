@@ -1,8 +1,9 @@
-import {Navigate, Routes, Route, BrowserRouter} from "react-router-dom";
+import { Navigate, Routes, Route, BrowserRouter } from "react-router-dom";
 
 import ClearanceChecker from "../components/ClearanceChecker";
 
-import {NotificationContainer} from "react-notifications";
+import { NotificationContainer } from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 import style from "../style/Routage.module.scss";
 
@@ -32,211 +33,211 @@ import Footer from "./Footer";
 import AdminUnpaidManagement from "./body/AdminUnpaidManagement";
 
 const Redirect = () => {
-	window.location.replace("/home");
-	return <></>;
+    window.location.replace("/home");
+    return <></>;
 };
 
 const Routage = () => {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="" element={<Redirect />} />
-				<Route
-					path="home"
-					element={<RouteWrapper route={<Home />} />}
-				/>
-				<Route
-					path="pingpong"
-					element={<RouteWrapper route={<PingPong />} />}
-				/>
-				<Route
-					path="legalthings"
-					element={<RouteWrapper route={<Cgu />} />}
-				/>
-				<Route
-					path="dollarthings"
-					element={<RouteWrapper route={<Cgv />} />}
-				/>
-				<Route
-					path="contact"
-					element={<RouteWrapper route={<Contact />} />}
-				/>
-				<Route path="log" element={<Log />} />
-				<Route
-					path="log/redirect"
-					element={<RouteWrapper route={<Log />} />}
-				/>
-				{
-					// <Route
-					// 	path="clubs"
-					// 	element={
-					// 		<RouteWrapper
-					// 			route={<Clubs />}
-					// 			check={global.config.clearance.other_campus}
-					// 		/>
-					// 	}
-					// />
-				}
-				<Route
-					path="me"
-					element={
-						<RouteWrapper
-							route={<Me />}
-							check={global.config.clearance.other_campus}
-						/>
-					}
-				/>
-				<Route
-					path="profile/:login"
-					element={
-						<RouteWrapper
-							route={<Profile />}
-							check={global.config.clearance.unpaid}
-						/>
-					}
-				/>
-				<Route
-					path="receipt/:id"
-					element={
-						<RouteWrapper
-							route={<Receipt />}
-							check={global.config.clearance.other_campus}
-						/>
-					}
-				/>
-				{
-					// <Route
-					// 	path="purchase/contrib"
-					// 	element={
-					// 		<RouteWrapper
-					// 			route={<Purchase />}
-					// 			check={global.config.clearance.stud}
-					// 		/>
-					// 	}
-					// />
-					// <Route
-					// 	path="purchase/:event"
-					// 	element={
-					// 		<RouteWrapper
-					// 			route={<PrePurchase />}
-					// 			check={global.config.clearance.pool}
-					// 		/>
-					// 	}
-					// />
-				}
-				<Route
-					path="admin/teammanagement"
-					element={
-						<RouteWrapper
-							route={<AdminCaptainManagement />}
-							check={global.config.clearance.bde_director}
-						/>
-					}
-				/>
-				<Route
-					path="admin/volunteersmanagement"
-					element={
-						<RouteWrapper
-							route={<AdminUnpaidManagement />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				<Route
-					path="admin/shop"
-					element={
-						<RouteWrapper
-							route={<AdminShopGestion />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				{
-					// <Route
-					// 	path="admin/clubs"
-					// 	element={
-					// 		<RouteWrapper
-					// 			route={<AdminClubs />}
-					// 			check={global.config.clearance.admin}
-					// 		/>
-					// 	}
-					// />
-				}
-				<Route
-					path="admin/events/gestion"
-					element={
-						<RouteWrapper
-							route={<AdminEventsGestion />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				<Route
-					path="admin/events/subscribtions"
-					element={
-						<RouteWrapper
-							route={<AdminEventsSubscribtions />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				{
-					// <Route
-					// 	path="admin/contributions"
-					// 	element={
-					// 		<RouteWrapper
-					// 			route={<AdminContributions />}
-					// 			check={global.config.clearance.admin}
-					// 		/>
-					// 	}
-					// />
-				}
-				<Route
-					path="admin/logs"
-					element={
-						<RouteWrapper
-							route={<AdminLogs />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
-				<Route
-					path="admin/students"
-					element={
-						<RouteWrapper
-							route={<AdminStudents />}
-							check={global.config.clearance.admin}
-						/>
-					}
-				/>
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="" element={<Redirect />} />
+                <Route
+                    path="home"
+                    element={<RouteWrapper route={<Home />} />}
+                />
+                {/* <Route
+                    path="pingpong"
+                    element={<RouteWrapper route={<PingPong />} />}
+                /> */}
+                <Route
+                    path="legalthings"
+                    element={<RouteWrapper route={<Cgu />} />}
+                />
+                <Route
+                    path="dollarthings"
+                    element={<RouteWrapper route={<Cgv />} />}
+                />
+                <Route
+                    path="contact"
+                    element={<RouteWrapper route={<Contact />} />}
+                />
+                <Route path="log" element={<Log />} />
+                <Route
+                    path="log/redirect"
+                    element={<RouteWrapper route={<Log />} />}
+                />
+                {
+                    // <Route
+                    // 	path="clubs"
+                    // 	element={
+                    // 		<RouteWrapper
+                    // 			route={<Clubs />}
+                    // 			check={global.config.clearance.other_campus}
+                    // 		/>
+                    // 	}
+                    // />
+                }
+                <Route
+                    path="me"
+                    element={
+                        <RouteWrapper
+                            route={<Me />}
+                            check={global.config.clearance.other_campus}
+                        />
+                    }
+                />
+                <Route
+                    path="profile/:login"
+                    element={
+                        <RouteWrapper
+                            route={<Profile />}
+                            check={global.config.clearance.unpaid}
+                        />
+                    }
+                />
+                <Route
+                    path="receipt/:id"
+                    element={
+                        <RouteWrapper
+                            route={<Receipt />}
+                            check={global.config.clearance.other_campus}
+                        />
+                    }
+                />
+                {
+                    // <Route
+                    // 	path="purchase/contrib"
+                    // 	element={
+                    // 		<RouteWrapper
+                    // 			route={<Purchase />}
+                    // 			check={global.config.clearance.stud}
+                    // 		/>
+                    // 	}
+                    // />
+                    // <Route
+                    // 	path="purchase/:event"
+                    // 	element={
+                    // 		<RouteWrapper
+                    // 			route={<PrePurchase />}
+                    // 			check={global.config.clearance.pool}
+                    // 		/>
+                    // 	}
+                    // />
+                }
+                <Route
+                    path="admin/teammanagement"
+                    element={
+                        <RouteWrapper
+                            route={<AdminCaptainManagement />}
+                            check={global.config.clearance.bde_director}
+                        />
+                    }
+                />
+                <Route
+                    path="admin/volunteersmanagement"
+                    element={
+                        <RouteWrapper
+                            route={<AdminUnpaidManagement />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                <Route
+                    path="admin/shop"
+                    element={
+                        <RouteWrapper
+                            route={<AdminShopGestion />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                {
+                    // <Route
+                    // 	path="admin/clubs"
+                    // 	element={
+                    // 		<RouteWrapper
+                    // 			route={<AdminClubs />}
+                    // 			check={global.config.clearance.admin}
+                    // 		/>
+                    // 	}
+                    // />
+                }
+                <Route
+                    path="admin/events/gestion"
+                    element={
+                        <RouteWrapper
+                            route={<AdminEventsGestion />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                <Route
+                    path="admin/events/subscribtions"
+                    element={
+                        <RouteWrapper
+                            route={<AdminEventsSubscribtions />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                {
+                    // <Route
+                    // 	path="admin/contributions"
+                    // 	element={
+                    // 		<RouteWrapper
+                    // 			route={<AdminContributions />}
+                    // 			check={global.config.clearance.admin}
+                    // 		/>
+                    // 	}
+                    // />
+                }
+                <Route
+                    path="admin/logs"
+                    element={
+                        <RouteWrapper
+                            route={<AdminLogs />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                <Route
+                    path="admin/students"
+                    element={
+                        <RouteWrapper
+                            route={<AdminStudents />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
 
-				<Route
-					path="admin/*"
-					element={<Navigate to="/admin/students" replace />}
-				/>
+                <Route
+                    path="admin/*"
+                    element={<Navigate to="/admin/students" replace />}
+                />
 
-				<Route path="*" element={<NoPage />} />
-			</Routes>
-		</BrowserRouter>
-	);
+                <Route path="*" element={<NoPage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 };
 
-const RouteWrapper = params => {
-	return (
-		<>
-			<ClearanceChecker
-				securityLevel={params.check}
-				unauthorized={<NoPage />}
-			>
-				<Header />
-				<NotificationContainer />
-				<div className={style.scroll}>
-					<div className={style.bodyContainer}>{params.route}</div>
-					<Footer />
-				</div>
-			</ClearanceChecker>
-		</>
-	);
+const RouteWrapper = (params) => {
+    return (
+        <>
+            <ClearanceChecker
+                securityLevel={params.check}
+                unauthorized={<NoPage />}
+            >
+                <Header />
+                <NotificationContainer />
+                <div className={style.scroll}>
+                    <div className={style.bodyContainer}>{params.route}</div>
+                    <Footer />
+                </div>
+            </ClearanceChecker>
+        </>
+    );
 };
 
 export default Routage;

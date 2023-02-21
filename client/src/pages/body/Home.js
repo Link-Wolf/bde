@@ -10,6 +10,7 @@ import frontImage from "../../assets/images/front.webp";
 import blank from "../../assets/placeholders/tmp_profile.png";
 import Product from "../../components/Product.js";
 
+import aguemazi from "../../assets/images/aguemazi.webp";
 import bcheronn from "../../assets/images/bcheronn.webp";
 import llion from "../../assets/images/llion.webp";
 import Link from "../../assets/images/Link.webp";
@@ -403,6 +404,16 @@ const Presentation = () => {
                 </div>
                 <div className={style.pole}>
                     <div className={style.equipePictureContainer}>
+                        <EquipePicture login="agallet" img={agallet} />
+                    </div>
+                    <h3>
+                        Responsable
+                        <br />
+                        partenariats
+                    </h3>
+                </div>
+                <div className={style.pole}>
+                    <div className={style.equipePictureContainer}>
                         <EquipePicture login="dmuller" img={dmuller} />
                         <EquipePicture login="isitbon" img={isitbon} />
                     </div>
@@ -412,26 +423,13 @@ const Presentation = () => {
                         communication
                     </h3>
                 </div>
-                <div className={style.pole}>
+                <div className={style.pole} style={{ width: "450px" }}>
                     <div className={style.equipePictureContainer}>
                         <EquipePicture login="ddelacou" img={ddelacou} />
                         <EquipePicture login="llion" img={llion} />
+                        <EquipePicture login="aguemazi" img={aguemazi} />
                     </div>
-                    <h3>
-                        Events et
-                        <br />
-                        animation
-                    </h3>
-                </div>
-                <div className={style.pole}>
-                    <div className={style.equipePictureContainer}>
-                        <EquipePicture login="agallet" img={agallet} />
-                    </div>
-                    <h3>
-                        Responsable
-                        <br />
-                        partenariats
-                    </h3>
+                    <h3>Events et animation</h3>
                 </div>
             </div>
         </div>

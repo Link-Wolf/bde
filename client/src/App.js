@@ -2,8 +2,8 @@
 // import "./App.css";
 import ConfirmContextProvider from "./components/ConfirmContextProvider";
 import ConfirmModal from "./components/ConfirmModal";
-import NotificationContextProvider from "./components/NotificationContextProvider";
-import { ReactNotifications } from "react-notifications-component";
+// import NotificationContextProvider from "./components/NotificationContextProvider";
+// import { ReactNotifications } from "react-notifications-component";
 
 import "./style/App.scss";
 import "swiper/css/bundle";
@@ -22,15 +22,22 @@ function App() {
     };
 
     return (
-        <NotificationContextProvider>
+        <>
+            {
+                // <NotificationContextProvider>
+            }
+
             <ConfirmContextProvider>
                 <div className={`App`}>
-                    <ReactNotifications />
+                    {/* {<ReactNotifications />} */}
                     <Routage />
                     <ConfirmModal />
                 </div>
             </ConfirmContextProvider>
-        </NotificationContextProvider>
+            {
+                // </NotificationContextProvider>
+            }
+        </>
     );
 }
 
