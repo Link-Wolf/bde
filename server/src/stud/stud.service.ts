@@ -5,7 +5,7 @@ import {
 	BadRequestException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Not } from 'typeorm';
+import { Repository, Not, LessThan } from 'typeorm';
 import { Stud } from '../entity/Stud';
 import { LoggerService } from '../logger/logger.service';
 import { StudDto } from './stud.dto';
@@ -86,8 +86,7 @@ export class StudService {
 	async findAdmins(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
-				isAdmin: true,
-				clearance: Not(21)
+				clearance: 11
 			});
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
@@ -103,7 +102,6 @@ export class StudService {
 				})();
 			}
 			this.logger.log(`Got all admin members`, requestMaker, true);
-			console.log(studs)
 			return studs;
 		}
 		catch (error) {
@@ -115,7 +113,7 @@ export class StudService {
 	async findNoAdmins(requestMaker: string): Promise<Stud[]> {
 		try {
 			let studs = await this.studRepository.findBy({
-				isAdmin: false,
+				clearance: LessThan(11)
 			});
 			for (let stud of studs) {
 				stud.isPremium = await (async () => {
@@ -290,11 +288,11 @@ export class StudService {
 				this.logger.error(`Failed -> Add admin member with login ${login} : stud does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to add admin member with login ${login} : stud does not exist`)
 			}
-			if (user.isAdmin) {
+			if (user.clearance >= 11) {
 				this.logger.error(`Failed -> Add admin member with login ${login} : stud is already a admin member`, requestMaker, true);
 				throw new ConflictException(`Failed to add admin member with login ${login} : stud is already a admin member`)
 			}
-			let updatedOne = `UPDATE stud SET "isAdmin" = 't' WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "clearance" = '11' WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
 			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '11' WHERE login = '${login}' AND "clearance" < 42`);
 			this.logger.warn(`Added admin member ${login}`, requestMaker, true);
@@ -311,11 +309,11 @@ export class StudService {
 			if (!user) {
 				this.logger.error(`Failed -> Yeet admin member with login ${login} : admin member does not exist`, requestMaker, true);
 				throw new NotFoundException(`Failed to yeet admin member with login ${login} : admin member does not exist`)
-			} if (!user.isAdmin) {
+			} if (user.clearance < 11) {
 				this.logger.error(`Failed -> Add admin member with login ${login} : stud isn't admin member`, requestMaker), true;
 				throw new ConflictException(`Failed to add admin member with login ${login} : stud isn't admin member`)
 			}
-			let updatedOne = `UPDATE stud SET "isAdmin" = 'f' WHERE login = '${login}'`;
+			let updatedOne = `UPDATE stud SET "clearance" = 7 WHERE login = '${login}'`;
 			let ret = await this.studRepository.query(updatedOne);
 			ret = await this.studRepository.query(`UPDATE stud SET "clearance" = '7' WHERE login = '${login}' AND "clearance" < 42`);
 			this.logger.warn(`Yeeted admin member ${login}`, requestMaker, true);
@@ -445,7 +443,7 @@ export class StudService {
 				this.logger.error(`Failed -> Give the tricorn to ${login} : there is not any current Captain`, requestMaker, true);
 				throw new NotFoundException(`Failed to give the tricorn to ${login} : there is not any current Captain`)
 			}
-			if (!newCaptain || !newCaptain.isAdmin) {
+			if (!newCaptain || newCaptain.clearance < 11) {
 				this.logger.error(`Failed -> Give the tricorn to ${login} : new captain does not exist or isn't a direction member`, requestMaker, true);
 				throw new ConflictException(`Failed to give the tricorn to ${login} : new captain does not exist or isn't a direction member`)
 			}
