@@ -27,6 +27,8 @@ import { Donation } from './entity/Donation';
 import { DonationModule } from './donation/donation.module';
 import { Inscription } from './entity/Inscription';
 import { GoogleModule } from './google/google.module';
+import { PingPongGame } from './entity/PingPongGame';
+import { PingPongGameModule } from './pingPongGame/pingPongGame.module';
 
 
 @Module({
@@ -51,7 +53,8 @@ import { GoogleModule } from './google/google.module';
 				Club,
 				Order,
 				Inscription,
-				Donation
+				Donation,
+				PingPongGame
 			],
 			synchronize: true
 		}),
@@ -68,6 +71,7 @@ import { GoogleModule } from './google/google.module';
 		PaypalModule,
 		OrderModule,
 		GoogleModule,
+		PingPongGameModule
 	],
 	controllers: [AppController],
 	providers: [
