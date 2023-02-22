@@ -25,12 +25,6 @@ export class Stud {
 	})
 	lastname: string
 
-	@Column({
-		nullable: true,
-		default: false
-	})
-	isAdmin: boolean
-
 	@Column({ default: 0 })
 	clearance: number
 
