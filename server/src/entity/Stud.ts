@@ -9,6 +9,7 @@ import { Event } from "./Event";
 import { Order } from "./Order";
 import { Club } from "./Club";
 import { Inscription } from "./Inscription";
+import { PingPongGame } from "./PingPongGame";
 
 @Entity()
 export class Stud {
@@ -91,6 +92,20 @@ export class Stud {
 		cascade: true
 	})
 	inscription: Event[]
+
+	@OneToMany(() => PingPongGame, (game) => game.publisher, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+		cascade: true
+	})
+	declaredPingPongGames: PingPongGame[]
+
+	@OneToMany(() => PingPongGame, (game) => game.adversary, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+		cascade: true
+	})
+	acceptedPingPongGames: PingPongGame[]
 
 	isPremium: boolean;
 }
