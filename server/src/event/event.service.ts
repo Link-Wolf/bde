@@ -115,7 +115,7 @@ export class EventService {
 				if (filterDto.sponso)
 					match += ` AND "sponso" = 't'`
 				if (filterDto.available_date)
-					match += ` AND "available_date" < '${new Date(Date.now()).toLocaleString()}'`
+					match += ` AND "available_date" < '${new Date(Date.now()).toISOString()}'`
 			}
 			match += ` ORDER BY ${filterDto.sort} ${
 				filterDto.asc ? "ASC"
