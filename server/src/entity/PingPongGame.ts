@@ -22,26 +22,19 @@ export class PingPongGame
 	@Column()
 	date: Date;
 
-	@ManyToOne(
-		() => Stud,
-		(stud) => stud.declaredPingPongGames,
+	@ManyToOne(() => Stud, (stud) => stud.declaredPingPongGames,
 		{
-
-		}
-	)
-	@JoinColumn(
-		{
-			name: "publisher_login"
-		}
-	)
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE"
+		})
+	@JoinColumn({ name: "publisher_login" })
 	publisher: Stud;
 
 	@ManyToOne(() => Stud, (stud) => stud.acceptedPingPongGames,
 		{
 			onDelete: "CASCADE",
 			onUpdate: "CASCADE"
-		}
-	)
-	@JoinColumn({name: "adversary_login"})
+		})
+	@JoinColumn({ name: "adversary_login "})
 	adversary: Stud;
 }
