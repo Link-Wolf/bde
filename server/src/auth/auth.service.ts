@@ -57,7 +57,6 @@ export class AuthService {
 									? response.data.usual_first_name
 									: response.data.first_name,
 								lastname: response.data.last_name,
-								isAdmin: false,
 								clearance: clear,
 								email: response.data.email,
 								img_medium: response.data.image.versions.large,
