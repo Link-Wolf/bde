@@ -4,9 +4,10 @@ import { PingPongGame } from '../entity/PingPongGame';
 import { PingPongGameController } from './pingPongGame.controller';
 import { PingPongGameService } from './pingPongGame.service';
 import { LoggerModule } from '../logger/logger.module';
+import { StudModule } from '../stud/stud.module';
 @Module(
 {
-	  imports: [TypeOrmModule.forFeature([PingPongGame]), LoggerModule],
+	  imports: [TypeOrmModule.forFeature([PingPongGame]), StudModule, LoggerModule],
 	  controllers: [PingPongGameController],
 	  providers: [PingPongGameService],
 	  exports: [PingPongGameService]
