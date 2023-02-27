@@ -35,6 +35,6 @@ export class PingPongGame
 			onDelete: "CASCADE",
 			onUpdate: "CASCADE"
 		})
-	@JoinColumn({ name: "adversary_login "})
+	@JoinColumn({ name: "adversary_login"})
 	adversary: Stud;
 }

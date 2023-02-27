@@ -3,6 +3,7 @@ import { Injectable, ArgumentMetadata, PipeTransform } from "@nestjs/common";
 @Injectable()
 export class PingPongGamePipe implements PipeTransform {
   transform(value: any, _metadata: ArgumentMetadata) {
+    console.log(value)
     if ("publisher_score" in value)
         value.publisher_score = Number(value.publisher_score);
     if ("adversary_score" in value)

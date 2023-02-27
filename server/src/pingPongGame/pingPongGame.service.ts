@@ -59,15 +59,15 @@ export class PingPongGameService
         try {
             let publisher = await this.studService.findOne(pingPongGame.publisher_login, requestMaker);
             let adversary = await this.studService.findOne(pingPongGame.adversary_login, requestMaker);
+            if (!publisher || !adversary || publisher === undefined || adversary === undefined)
+            {
+                this.logger.error(`Failed -> Create ping pong game : one of the players does not exist`, requestMaker);
+                throw new NotFoundException(`Failed -> Create ping pong game : one of the players does not exist`);
+            }
             if (publisher.login == adversary.login)
             {
                 this.logger.error(`Failed -> Create ping pong game : publisher and adversary are the same`, requestMaker);
                 throw new NotAcceptableException(`Failed -> Create ping pong game : publisher and adversary are the same`);
-            }
-            if (!publisher || !adversary)
-            {
-                this.logger.error(`Failed -> Create ping pong game : one of the players does not exist`, requestMaker);
-                throw new NotFoundException(`Failed -> Create ping pong game : one of the players does not exist`);
             }
             let ret = await this.pingPongGameRepository.save(pingPongGame);
             this.logger.log(`Created new ping pong game`, requestMaker);
