@@ -22,7 +22,7 @@ export class EventService {
 		private manager: EntityManager
 	) { }
 
-	findEventSubbed(login: string, rm: string): Promise<Event[]> {
+	async findEventSubbed(login: string, rm: string): Promise<Event[]> {
 		try {
 			let ret = this.eventRepository.query(`SELECT * FROM event WHERE id IN (SELECT "eventId" FROM inscription WHERE "studLogin" = '${login}');`);
 			this.logger.log(`Got all events ${login} subbed to`, rm)
