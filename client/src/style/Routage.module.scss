@@ -8,11 +8,6 @@
 	}
 }
 
-.scroll {
-	min-width: 100vw;
-	height: calc(100vh - 80px);
-	overflow: auto;
-}
 @media (max-width:100vh) {
 	.bodyContainer {
 		min-height: calc(100vh - 80px - 120px);
@@ -22,12 +17,5 @@
 		* {
 			font-family: Futura;
 		}
-	}
-
-	.scroll {
-		min-width: 100vw;
-		height: calc(100vh - 80px);
-		overflow-y: auto;
-		overflow-x: hidden;
 	}
 }

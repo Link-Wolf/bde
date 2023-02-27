@@ -46,10 +46,10 @@ const Routage = () => {
                     path="home"
                     element={<RouteWrapper route={<Home />} />}
                 />
-                {/* <Route
+                <Route
                     path="pingpong"
                     element={<RouteWrapper route={<PingPong />} />}
-                /> */}
+                />
                 <Route
                     path="legalthings"
                     element={<RouteWrapper route={<Cgu />} />}
@@ -231,7 +231,7 @@ const RouteWrapper = (params) => {
             >
                 <Header />
                 <NotificationContainer />
-                <div className={style.scroll}>
+                <div>
                     <div className={style.bodyContainer}>{params.route}</div>
                     <Footer />
                 </div>
