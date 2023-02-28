@@ -207,7 +207,13 @@ const Description = (props) => {
                         </select>
                     </div>
                 ) : (
-                    <div></div>
+                    <div>
+                        {" "}
+                        <label>Taille</label>
+                        <select defaultValue="unique" disabled>
+                            <option value="unique">Taille unique</option>
+                        </select>
+                    </div>
                 )}
                 <div>
                     {props.product.stock ? (
