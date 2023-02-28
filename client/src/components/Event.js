@@ -46,8 +46,9 @@ const Event = (param) => {
                         new Date(actualData.begin_date);
                     const span_hour = span / 1000 / 60 / 60;
                     const span_days = span_hour / 24;
-                    if (span_hour >= 24) setDuration(`${span_days} jour(s)`);
-                    else setDuration(`${span_hour} heure(s)`);
+                    if (span_hour >= 72)
+                        setDuration(`${Math.round(span_days)} jour(s)`);
+                    else setDuration(`${Math.round(span_hour)} heure(s)`);
                 }
             })
             .catch(function (error) {
