@@ -1,0 +1,175 @@
+.pingPongGameContainer {
+	margin-left: 400px;
+
+	#eachLine {
+		margin-bottom: 10px;
+	}
+
+	div {
+		#pagination {
+			width: 940px;
+			display: flex;
+			justify-content: center;
+			margin: 50px 0;
+		}
+	}
+
+	.dropdownContainer {
+		button {
+			border: none;
+			background: var(--lighter-grey);
+
+			&#dropdownButton {
+				width: 100px;
+				height: 30px;
+				color: var(--white);
+				background: var(--secondary);
+				margin: 40px 0;
+
+				&:hover {
+					background: var(--secondary-dark);
+				}
+
+				&:active {
+					background: var(--secondary-dark);
+				}
+			}
+
+			svg {
+				width: 18px;
+			}
+		}
+
+		#dropdownBg {
+			width: 100vw;
+			height: 100vh;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,0.5);
+			backdrop-filter: blur(1px);
+			display: none;
+		}
+
+		hr {
+			margin-bottom: -10px;
+		}
+
+		#dropdown {
+			background: var(--light-grey);
+			padding: 20px;
+			width: 200px;
+			position: absolute;
+			z-index: 2;
+			display: none;
+			top: -20px;
+			margin-top: 270px;
+
+			input {
+				width: 150px;
+
+				&[type] {
+					width: auto;
+					margin-right: 20px;
+				}
+			};
+
+            div {
+                input {
+                    width: 140px;
+                }
+            }
+		}
+
+		#login {
+			margin: 15px 0 10px;
+		}
+
+		#tri {
+			margin: 20px 0 0;
+		}
+
+		#triDate {
+			margin: 5px 0 0 15px;
+			font-size: 14px;
+		}
+
+		#results {
+			margin: -67px 0 30px 130px;
+		}
+	}
+
+	#tittle {
+		margin: 20px 0;
+		font-size: 40px;
+		font-stretch: condensed;
+		letter-spacing: 4px;
+		width: 980px;
+		text-align: center;
+
+		br {
+			display: none;
+		}
+	}
+
+	.table {
+		width: 980px;
+
+		br {
+			display: none;
+		}
+
+        th {
+			text-align: center;
+			height: 70px;
+		}
+
+		.DescPublisher, .DescAdversary, .DescScorePublisher, .DescScoreAdversary {
+			width: 180px;
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+        .DescScoreAdversary, .DescScorePublisher {
+            width: 140px;
+        }
+
+        .DescDate {
+            width: 300px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .score {
+            text-align: center;
+        }
+
+        .date {
+            padding-left : 60px;
+        }
+
+		.player {
+			width: 140px;
+            text-align: center;
+		}
+	}
+
+	ul {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	button#delGame {
+		border: none;
+		border-radius: 5px;
+		margin: 0;
+		background: none;
+		width: 30px;
+		height: 30px;
+
+		&:hover {
+			background-color: var(--black);
+		}
+	}
+}

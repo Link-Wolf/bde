@@ -198,6 +198,9 @@ const AdminNavbar = () => {
                 <a href="/admin/students">
                     <h3>Utilisateurs</h3>
                 </a>
+                <a href="/admin/pingpong">
+                    <h3>Ping Pong</h3>
+                </a>
                 <a href="/admin/events/gestion">
                     <h3>Évènements</h3>
                 </a>
