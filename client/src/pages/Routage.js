@@ -49,16 +49,16 @@ const Routage = () => {
                 />
                 <Route
                     path="pingpong"
-                    element={<RouteWrapper route={<PingPong />} />}
-                />
-                <Route
-                    path="legalthings"
                     element={
                         <RouteWrapper
-                            route={<Cgu />}
+                            route={<PingPong />}
                             check={global.config.clearance.other_campus}
                         />
                     }
+                />
+                <Route
+                    path="legalthings"
+                    element={<RouteWrapper route={<Cgu />} />}
                 />
                 <Route
                     path="dollarthings"
