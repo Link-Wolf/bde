@@ -1,0 +1,312 @@
+.submitForm {
+    .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .scoreField input {
+            text-align: center;
+        }
+
+        .playerField input {
+            text-align: center;
+        }
+
+        .scoreText {
+            font-family: arcade;
+        }
+
+        button {
+            border: none;
+            height: 40px;
+            width: 100px;
+            font-size: 1.2em;
+            border-radius: 20px;
+            background-color: rgb(215, 55, 55);
+            color: white;
+            font-family: arcade;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            transform: scale(0.8);
+
+            &:hover {
+                background-color: rgb(215, 55, 55);
+                transform: scale(1);
+            }
+
+            &:disabled {
+                background-color: rgb(181, 138, 138);
+                transform: scale(0.8);
+                cursor: not-allowed;
+            }
+        }
+    }
+}
+
+.intro {
+    padding: 30px 10vw 20px;
+
+   ul{ li {
+        list-style-type: challenge_counter;
+        margin-left:70px;
+        padding-left: 20px;
+    }}
+
+    h1 {
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #tos {
+        padding: 0 2.5vw;
+        font-style: italic;
+        margin-top: 20px;
+        font-size: 0.8em;
+        text-align: center;
+    }
+}
+
+.rankingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    // background-color: #f5f5f5;
+
+
+    th, td {
+        // border: red solid 5px;
+    }
+
+    a:not([href]):not([tabindex]) {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    
+    th {
+        padding-bottom: 10px;
+    }
+
+    tr {
+        &:nth-of-type(2n) {
+            td {
+                background-color: var(--lighter-grey); 
+            }
+        }
+        &:nth-of-type(2n+1) {
+            td {
+                background-color: var(--white); 
+            }
+        }
+        &:nth-of-type(1) {
+            td {
+                background-color: var(--gold); 
+            }
+        }
+        &:nth-of-type(2) {
+            td {
+                background-color: var(--silver); 
+            }
+        }
+        &:nth-of-type(3) {
+            td {
+                background-color: var(--bronze); 
+            }
+        }
+        .rank {
+            background-color: var(--white) !important;
+            text-align: center;
+        }
+    }
+
+    td {
+        padding: 5px 0;
+    }
+
+    .head_player {
+        width: 180px;
+        align-items: center;
+        text-align: center;
+    }
+
+
+
+    .head_rank {
+        width: 60px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .head_wins {
+        width: 220px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .head_played_games {
+        width: 180px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .head_total_pts {
+        width: 180px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .head_unique_opponents {
+        width: 220px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .head_last_match {
+        width: 240px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .player_field {
+        width: 160px;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+
+// MOBILE
+@media (any-pointer: coarse) {
+    .submitForm{
+        
+        img {
+            width: 12vw;
+            height: 12vw;
+            margin: 0 4vw;
+
+            &.pp_desktop {
+                display: none;
+            }
+
+            &.pp_mobile {
+                width: 16vw;
+                height: 16vw;
+            }
+        }
+
+        .row {
+            margin: 1.5vw 0;
+
+            .playerField input {
+                width: 38vw;
+            }
+
+            .scoreField input {
+                width: 16vw;
+            }
+
+            .scoreText
+            {
+                margin: 0 7vw;
+            }
+        }
+    }
+
+    .rankingContainer{
+        width: 98vw;
+        margin: 0 calc((100% - 98vw) / 2);
+        margin: 12vw 0 0;
+
+        .head_total_pts, .head_last_match, .head_unique_opponents {
+            display: none;
+        }
+
+        .pp {
+            img {
+                width: 8vw;
+                 height: 8vw;
+        }
+        }
+
+        .rank {
+            img {
+                width: auto;
+                height: 1em;
+                margin-right: 2vw;
+            }
+        }
+
+        .head_player {
+            width: 30vw;
+            align-items: center;
+            text-align: center;
+        }
+
+    }
+}
+
+// DESKTOP
+@media (any-pointer: fine) {
+    .submitForm {
+            .row {
+                margin: 10px 0;
+
+                img {
+                    width: 60px;
+                    height: 60px;
+                    margin: 0 10px;
+
+                    &.pp_mobile {
+                        display: none;
+                    }
+                }
+
+                .playerField input {
+                    width: 200px;
+                }
+
+                .scoreField input {
+                    width: 60px;
+                }
+
+                .scoreText
+                {
+                    margin: 0 10px;
+                }
+            }
+        }
+
+    .rankingContainer{
+        width: 1600px;
+        margin: 0 calc((100% - 1600px) / 2);
+        padding: 40px 20px 0;
+
+        .rank {
+            img {
+                width: 60px;
+                margin-right: 5px;
+            }
+        }
+
+        .pp {
+            width: 60px;
+            text-align: left;
+
+            img {
+                margin-left: 5px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        .head_pp {
+            width: 60px;
+            align-items: center;
+            text-align: center;
+        }
+}
+}
