@@ -101,7 +101,7 @@ const HeaderHome = () => {
                     </p>
                     <p>
                         Mais aussi les informations sur les goodies que nous
-                        vous proposons{" "}
+                        vous proposons, un classement de ping pong,{" "}
                         {
                             //ou encore les clubs de l'école !
                         }
