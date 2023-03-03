@@ -42,7 +42,7 @@ function Header() {
                             <a href="https://www.paypal.com/donate/?hosted_button_id=D7XUHP2EYCESS">
                                 <h1>Soutenir</h1>
                             </a>
-                            <img alt="" src={new_thing} />
+                            {/* <img alt="" src={new_thing} /> */}
                         </>
                     );
                 }
@@ -54,9 +54,9 @@ function Header() {
                                 // 	<h1>Clubs</h1>
                                 // </a>
                             }
-                            {/* <a href="/pingpong">
-                                <h1>Ping Pong</h1>
-                            </a> */}
+                            <a href="/pingpong">
+                                <h1>Ping-Pong</h1>
+                            </a>
                             <a href="/contact">
                                 <h1>Contact</h1>
                             </a>
