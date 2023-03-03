@@ -96,8 +96,14 @@ const EventList = (param) => {
                 </div>
                 <ul className={style.eventList}>
                     {data.length ? (
-                        (telephone ? data : viewData.currentData()).map(
-                            (item) => (
+                        (telephone ? data : viewData.currentData())
+                            .sort((a, b) => {
+                                return (
+                                    new Date(a.begin_date) -
+                                    new Date(b.begin_date)
+                                );
+                            })
+                            .map((item) => (
                                 <li key={item.id}>
                                     <EventToken
                                         setPopUpEvent={setPopUpEvent}
@@ -105,8 +111,7 @@ const EventList = (param) => {
                                         type="event"
                                     />
                                 </li>
-                            )
-                        )
+                            ))
                     ) : (
                         <p>
                             {" "}
