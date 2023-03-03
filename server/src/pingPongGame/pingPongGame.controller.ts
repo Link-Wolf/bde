@@ -14,6 +14,12 @@ export class PingPongGameController
     constructor(private pingPongGameService: PingPongGameService) { }
 
 	@Get('')
+	findRanking(@Session() session: Record<string, any>): Promise<PingPongGame[]>
+	{
+		return this.pingPongGameService.findRanking(session.login);
+	}
+
+	@Get('all')
 	findAll(@Session() session: Record<string, any>): Promise<PingPongGame[]>
 	{
 		return this.pingPongGameService.findAll(session.login);
