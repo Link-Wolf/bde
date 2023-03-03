@@ -28,6 +28,17 @@
 	font-stretch: condensed;
 }
 
+@font-face {
+	font-family: Arcade;
+	src: url("./assets/fonts/Arcade.ttf") format("truetype");
+}
+
+@counter-style challenge_counter {
+	system: fixed;
+	symbols: ⚔️ 💯 🏓;
+	suffix: " ";
+}
+
 body {
 	margin: 0;
 	font-family: BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
