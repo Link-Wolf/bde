@@ -19,6 +19,12 @@ export class StudController {
 		return this.studService.findFilterd(JSON.parse(query.sort), session.login)
 	}
 
+	@Get('login')
+	@UseGuards(new ClearanceGuard(5))
+	findAllLogin(@Session() session: Record<string, any>): Promise<string[]> {
+		return this.studService.findAllLogin(session.login);
+	}
+
 	@Get('minecraft')
 	@UseGuards(new ClearanceGuard(5))
 	findMe(@Session() session: Record<string, any>): Promise<Stud> {
