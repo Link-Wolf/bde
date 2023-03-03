@@ -53,6 +53,21 @@ export class StudService {
 			throw error;
 		}
 	}
+	async findAllLogin(requestMaker: string): Promise<string[]> {
+		try {
+			let studs = await this.studRepository.find({ order: { login: "ASC" } });
+			let ret = [];
+			for (let i = 0; i < studs.length; i++) {
+				ret.push(studs[i].login);
+			}
+			this.logger.log(`Got all students login`, requestMaker);
+			return ret;
+		}
+		catch (error) {
+			this.logger.error(`Failed -> Get all students login on database (${error})`, requestMaker)
+			throw error;
+		}
+	}
 
 	async findAll(requestMaker: string): Promise<Stud[]> {
 		try {
