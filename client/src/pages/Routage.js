@@ -31,6 +31,7 @@ import Receipt from "./body/Receipt";
 import Header from "./Header";
 import Footer from "./Footer";
 import AdminUnpaidManagement from "./body/AdminUnpaidManagement";
+import AdminPingPongGame from "./body/AdminPingPongGame";
 
 const Redirect = () => {
     window.location.replace("/home");
@@ -52,7 +53,12 @@ const Routage = () => {
                 />
                 <Route
                     path="legalthings"
-                    element={<RouteWrapper route={<Cgu />} />}
+                    element={
+                        <RouteWrapper
+                            route={<Cgu />}
+                            check={global.config.clearance.other_campus}
+                        />
+                    }
                 />
                 <Route
                     path="dollarthings"
@@ -139,6 +145,15 @@ const Routage = () => {
                     element={
                         <RouteWrapper
                             route={<AdminUnpaidManagement />}
+                            check={global.config.clearance.admin}
+                        />
+                    }
+                />
+                <Route
+                    path="admin/pingpong"
+                    element={
+                        <RouteWrapper
+                            route={<AdminPingPongGame />}
                             check={global.config.clearance.admin}
                         />
                     }
