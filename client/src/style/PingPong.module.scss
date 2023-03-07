@@ -218,8 +218,8 @@
 
     .rankingContainer{
         width: 98vw;
-        margin: 0 calc((100% - 98vw) / 2);
-        margin: 12vw 0 0;
+        margin: 12vw calc((100% - 98vw) / 2) 0;
+        padding-bottom: 5vw;
 
         .head_total_pts, .head_last_match, .head_unique_opponents {
             display: none;
