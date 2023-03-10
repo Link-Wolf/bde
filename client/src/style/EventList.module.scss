@@ -5,18 +5,18 @@
 	left: 0;
 	background: rgba(0,0,0,0.5);
 	backdrop-filter: blur(50px);
-	width: 100vw;
-	height: 100vh;
+	width: 200vw;
+	height: 200vh;
 	animation: 0.2s linear 0s blurAppear;
 	z-index: 2;
 
 	#outArea {
 		width: 100vw;
 		height: 100vh;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 1;
+		z-index: -1;
 	}
 }
 
