@@ -183,6 +183,7 @@
 	}
 }
 
+//mobile
 @media (any-pointer: coarse) {
 	.homeContainer {
 		.frontImage {
@@ -268,6 +269,7 @@
 	}
 }
 
+//pc
 @media (any-pointer: fine) {
 	.homeContainer {
 		.frontImage {
@@ -334,7 +336,6 @@
 		}
 	}
 }
-
 
 #filter {
 	position: fixed;
