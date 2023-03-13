@@ -193,7 +193,6 @@ const AdminStudents = () => {
         ) {
             if (toSub !== "") {
                 const check = await checkStud(selectedEvent, toSub, cost);
-                console.log(`here ` + check);
                 if (check == 1) {
                     NotificationManager.success(
                         `Inscription de ${toSub} à l'évènement`,
@@ -221,7 +220,6 @@ const AdminStudents = () => {
             getStud(selectedEvent);
             setSubForm(true);
         }
-        console.log(selectedEventData);
     }, [selectedEventData, update]);
 
     const handleChangePage = (e, p) => {
