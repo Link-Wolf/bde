@@ -105,17 +105,23 @@
 }
 @media (max-width: 100vh) {
 	.contactContainer {
-		padding: 2vw;
+
+		.background {
+			padding: 0 3%;
+		}
 
 		form {
 			margin: 0 calc((100% - 95%) / 2);
 			width: 95%;
-			padding-top: 15%;
+			padding-top: 5%;
 
 			.section {
 				margin: 20px;
 				display: flex;
 				flex-direction: column;
+			}
+
+			h1 {
 			}
 
 			button {
