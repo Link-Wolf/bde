@@ -182,7 +182,7 @@
 			padding: 0;
 
 			.listContainer {
-				height: 1050px;
+				height: auto;
 
 				div {
 					height: auto;
@@ -396,13 +396,16 @@
 		.profileInfoContainer {
 			flex-direction: column;
 			--image-size: 150px;
+			width: 96vw;
 
 			.profilePictureContainer {
+				padding-left: 0;
+
 				margin: 0 calc((96vw - 150px)/2);
 
 				svg {
 					width: 20px;
-					left: 60px;
+					left: calc(var(--image-size) / 2.2);
 					top: -7px;
 				}
 			}
@@ -470,7 +473,15 @@
 								text-align: center;
 								font-weight: normal;
 							}
+
+							&[disabled] {
+								& + label {
+									width: 64vw;
+								}
+							}
 						}
+
+						
 
 						&:nth-last-of-type(1) {
 							input {
