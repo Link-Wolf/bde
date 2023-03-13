@@ -54,6 +54,19 @@ const Contact = () => {
 
     const sendMail = async () => {
         if (
+            document
+                .getElementById("emailField")
+                .value.toString()
+                .endsWith("student.42mulhouse.fr") === true
+        ) {
+            NotificationManager.warning(
+                "Veuillez ne pas utiliser votre adresse mail stud 42 pour des raisons de redirection",
+                "Erreur",
+                5000
+            );
+            return;
+        }
+        if (
             formState.mail === "" ||
             formState.name === "" ||
             formState.subject === "" ||
@@ -67,6 +80,7 @@ const Contact = () => {
             );
             return;
         }
+
         if (formState.login === -42) formState.login = "Exterieur à 42";
         setLock(true);
         setLoading(true);
@@ -242,88 +256,110 @@ const Contact = () => {
     if (loading)
         return (
             <div className={style.contactContainer}>
-                <div id={style.loading}>
-                    <LoadingMedium />
+                <div className={style.background}>
+                    <div className={style.background_true}>
+                        <div id={style.loading}>
+                            <LoadingMedium />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     return (
         <div className={style.contactContainer}>
-            <form>
-                <div className={style.section}>
-                    <label>Sujet</label>
-                    <select
-                        aria-label="Sélectionnez le sujet"
-                        value={formState.subject}
-                        onChange={handleFormChange}
-                        name="subject"
-                        required
-                        disabled={lock}
-                    >
-                        <option value="" disabled hidden>
-                            Sélectionnez le sujet ici..
-                        </option>
-                        <option value="Idées et suggestions">
-                            Suggestions / Idées
-                        </option>
-                        <option value="Partenariat">Partenariat</option>
-                        <option value="Réclamation">Réclamation</option>
-                        <option value="Club">Club</option>
-                        <option value="Boutique">Boutique</option>
-                        <option value="Feedback">
-                            Retour sur un évènement
-                        </option>
-                        <option value="Lettre de Noël">
-                            Lettre au Père Noël
-                        </option>
-                        <option value="Autre">Autre</option>
-                    </select>
+            <div className={style.background}>
+                <div className={style.background_true}>
+                    <form>
+                        <div className={`${style.title} ${style.section}`}>
+                            <h1>Nous contacter</h1>
+                            <p>
+                                Remplissez ce court formulaire et nous vous
+                                recontacterons sous peu
+                            </p>
+                            <hr />
+                        </div>
+                        <div className={style.section}>
+                            <label>Sujet</label>
+                            <select
+                                aria-label="Sélectionnez le sujet"
+                                value={formState.subject}
+                                onChange={handleFormChange}
+                                name="subject"
+                                required
+                                disabled={lock}
+                            >
+                                <option value="" disabled hidden>
+                                    Sélectionnez le sujet ici..
+                                </option>
+                                <option value="Idées et suggestions">
+                                    Suggestions / Idées
+                                </option>
+                                <option value="Partenariat">Partenariat</option>
+                                <option value="Réclamation">Réclamation</option>
+                                <option value="Club">Club</option>
+                                <option value="Boutique">Boutique</option>
+                                <option value="Feedback">
+                                    Retour sur un évènement
+                                </option>
+                                <option value="Lettre de Noël">
+                                    Lettre au Père Noël
+                                </option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+                        <div className={style.section}>
+                            <label>Message</label>
+                            <textarea
+                                placeholder="Votre messsage"
+                                value={formState.message}
+                                onChange={handleFormChange}
+                                name="message"
+                                required
+                                disabled={lock}
+                                minLength={10}
+                            />
+                        </div>
+                        <div className={style.section} hidden={idForm}>
+                            <label>Nom</label>
+                            <input
+                                placeholder="Jean-Billy"
+                                value={formState.name}
+                                onChange={handleFormChange}
+                                name="name"
+                                required
+                                disabled={lock}
+                            />
+                        </div>
+                        <div
+                            className={style.section}
+                            hidden={!needMail && idForm}
+                        >
+                            <label>Email</label>
+                            <input
+                                disabled={lock}
+                                type="email"
+                                placeholder="me@exemple.net"
+                                value={formState.mail}
+                                onChange={handleFormChange}
+                                name="mail"
+                                id="emailField"
+                                required
+                            />
+                            <p id={style.mail_warn}>
+                                Nous ne partagerons jamais votre mail.
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            variant="outline-primary"
+                            disabled={lock}
+                            onClick={sendMail}
+                        >
+                            Envoyer
+                        </button>
+                    </form>
                 </div>
-                <div className={style.section}>
-                    <label>Message</label>
-                    <textarea
-                        placeholder="Votre messsage"
-                        value={formState.message}
-                        onChange={handleFormChange}
-                        name="message"
-                        required
-                        disabled={lock}
-                        minLength={10}
-                    />
-                </div>
-                <div className={style.section} hidden={idForm}>
-                    <label>Nom</label>
-                    <input
-                        placeholder="Jean-Billy"
-                        value={formState.name}
-                        onChange={handleFormChange}
-                        name="name"
-                        required
-                        disabled={lock}
-                    />
-                </div>
-                <div className={style.section} hidden={!needMail && idForm}>
-                    <label>Email</label>
-                    <input
-                        disabled={lock}
-                        type="email"
-                        placeholder="me@exemple.net"
-                        value={formState.mail}
-                        onChange={handleFormChange}
-                        name="mail"
-                        id="emailField"
-                        required
-                    />
-                    <p>Nous ne partagerons jamais votre mail.</p>
-                </div>
-                <button
-                    variant="outline-primary"
-                    disabled={lock}
-                    onClick={sendMail}
-                >
-                    Envoyer
-                </button>
-            </form>
+            </div>
         </div>
     );
 };
