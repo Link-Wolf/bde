@@ -240,17 +240,21 @@ const Contact = () => {
     if (sent)
         return (
             <div className={style.contactContainer}>
-                <form>
-                    <p id={style.pouet}>Merci pour votre retour !</p>
-                    <button
-                        id={style.resend}
-                        onClick={() => {
-                            setSent(false);
-                        }}
-                    >
-                        Envoyer un nouveau message
-                    </button>
-                </form>
+                <div className={style.background}>
+                    <div className={style.background_true}>
+                        <form>
+                            <p id={style.pouet}>Merci pour votre retour !</p>
+                            <button
+                                id={style.resend}
+                                onClick={() => {
+                                    setSent(false);
+                                }}
+                            >
+                                Envoyer un nouveau message
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     if (loading)
