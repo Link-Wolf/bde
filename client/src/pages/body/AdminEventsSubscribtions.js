@@ -281,7 +281,7 @@ const AdminStudents = () => {
                                           return event.id == selectedEvent;
                                       }).nb_places
                                     : "∞"}{" "}
-                                places restantes (dont{" "}
+                                places totales (dont{" "}
                                 {
                                     allEvent.find((event) => {
                                         return event.id == selectedEvent;
@@ -302,7 +302,7 @@ const AdminStudents = () => {
                             <div className={style.enfantDeSatan}>
                                 <label>
                                     Login du student à inscrire et le prix payé
-                                    en cas d'évènement payant
+                                    en cas d'évènement payant{" "}
                                 </label>
                                 <label id={style.details}>
                                     {" "}
