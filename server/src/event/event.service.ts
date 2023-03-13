@@ -1,4 +1,5 @@
 import {
+	BadRequestException,
 	Injectable, NotFoundException, StreamableFile
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -209,6 +210,13 @@ export class EventService {
 			if (!stud) {
 				this.logger.error(`Failed -> Subscribe student ${login} to event ${id} : student ${login} does not exist`, requestMaker)
 				throw new NotFoundException(`Failed to subscribe student ${login} to event ${id} : student ${login} does not exist`)
+			}
+			let subs = await this.findEventSubbed(login, requestMaker);
+			for (let i = 0; i < subs.length; i++) {
+				if (subs[i].id == id) {
+					this.logger.error(`Failed -> Subscribe student ${login} to event ${id} : student ${login} is already subscribed to event ${id}`, requestMaker)
+					throw new BadRequestException(`Failed to subscribe student ${login} to event ${id} : student ${login} is already subscribed to event ${id}`)
+				}
 			}
 			let ret = await this.eventRepository.query(`INSERT INTO inscription("eventId", "studLogin", price, date) VALUES(${id}, '${login}', ${cost}, NOW())`);
 			this.logger.log(`Subscribed student ${login} to event ${id} `, requestMaker);
