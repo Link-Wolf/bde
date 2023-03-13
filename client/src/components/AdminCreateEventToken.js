@@ -264,7 +264,7 @@ const AdminCreateEventToken = (param) => {
                 <Form.Control
                     type="number"
                     min="0"
-                    step="1"
+                    step="0.01"
                     id="formCost"
                     value={formState.cost}
                     name="cost"
@@ -276,7 +276,7 @@ const AdminCreateEventToken = (param) => {
                     type="number"
                     min="0"
                     id="formPremiumCost"
-                    step="1"
+                    step="0.01"
                     name="premium_cost"
                     onChange={handleFormChange}
                     value={formState.premium_cost}
