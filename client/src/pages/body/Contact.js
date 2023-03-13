@@ -305,9 +305,6 @@ const Contact = () => {
                                 <option value="Feedback">
                                     Retour sur un évènement
                                 </option>
-                                <option value="Lettre de Noël">
-                                    Lettre au Père Noël
-                                </option>
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>
