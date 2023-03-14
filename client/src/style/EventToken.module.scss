@@ -56,7 +56,9 @@
 	// 	display: none;
 	// }
 }
-@media (max-width: 100vh) {
+
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.eventTokenContainer {
 		border: solid var(--light-grey) 1px;
 		width: 200px;

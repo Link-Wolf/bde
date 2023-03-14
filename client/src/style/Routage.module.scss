@@ -8,7 +8,8 @@
 	}
 }
 
-@media (max-width:100vh) {
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.bodyContainer {
 		min-height: calc(100vh - 80px - 120px);
 		background: var(--white);

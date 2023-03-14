@@ -251,7 +251,9 @@
 		}
 	}
 }
-@media (max-width: 100vh) {
+
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.eventContainer {
 		margin: 20px 3vw 0;
 		width: 94vw;
