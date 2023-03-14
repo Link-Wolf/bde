@@ -67,7 +67,8 @@
 	font-weight: bold;
 }
 
-@media only screen and (max-width: 600px) {
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.invoice-box table tr.top table td {
 		width: 100%;
 		display: block;

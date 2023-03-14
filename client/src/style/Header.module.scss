@@ -145,7 +145,7 @@
 		}
 	}
 }
-@media screen and (min-width: 100vh) {
+@media screen and (min-width: 100vh) and (any-pointer: fine) {
 	.container {
 		.leftContainer {
 			#noyel {

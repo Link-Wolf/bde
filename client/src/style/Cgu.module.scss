@@ -66,7 +66,9 @@
 		}
 	}
 }
-@media (max-width: 100vh) {
+
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.cgu_container {
 		.cgu {
 			padding: 20px 7%;

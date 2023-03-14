@@ -12,7 +12,9 @@
 		margin: 10px calc((400px - var(--imgsize)) / 2) 20px;
 	}
 }
-@media (max-width: 100vh) {
+
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.container {
 		width: 100vw;
 		text-align: justify;

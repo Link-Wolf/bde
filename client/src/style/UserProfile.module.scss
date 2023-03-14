@@ -1,10 +1,13 @@
 .profileContainer {
+	padding: 20px;
 
 	.profileInfoContainer {
+		--image-size: 300px;
 		display: flex;
 		width: calc(var(--image-size) * 2 + 40px + 250px + 120px);
 
 		.profilePictureContainer {
+			margin-left: 300px;
 			position: relative;
 			height: calc(var(--image-size));
 			width: calc(var(--image-size));
@@ -26,25 +29,39 @@
 
 			svg {
 				margin: 20px;
+				width: 40px;
 				position: absolute;
 				transform: rotate(9deg);
+				left: calc(var(--image-size) / 2.2);
+				top: 0;
 			}
 		}
 
 		.identityContainer {
 			text-align: left;
+			margin: 0 40px 0 120px;
 			padding: 20px 0;
 
 			h1 {
+				font-size: 30px;
 				text-transform: uppercase;
 				font-weight: bold;
 			}
 
 			ul {
 				padding: 0;
+				margin: 0 0 50px;
 				list-style-type: none;
 
-				li {					
+				li {
+					margin: 0 0 25px;
+
+					&:nth-of-type(1) {
+						font-size: 20px;
+					}
+
+					b {}
+
 					svg {
 						width: 40px;
 						height: 40px;
@@ -94,11 +111,13 @@
 	}
 
 	.emailFieldContainer {
+		margin: 0;
 		display: flex;
 
 		label {
 			padding: 5px;
 			margin: 5px 0;
+			width: 60px;
 		}
 
 		input {
@@ -122,12 +141,15 @@
 
 	.historySelectorContainer {
 		display: flex;
+		margin: 50px 0 50px 300px;
 
 		.historySelector {
 			ul {
 				padding: 0;
+				width: 300px;
 
 				li {
+					width: 300px;
 					list-style-type: none;
 
 					input[type="radio"] {
@@ -138,7 +160,10 @@
 						& + label {
 							text-align: left;
 							text-transform: uppercase;
+							font-size: 18px;
+							font-weight: bold;
 							border-bottom: solid var(--dark-grey) 1px;
+							width: 300px;
 							background: var(--white);
 							padding: 5px;
 							margin: 0;
@@ -159,7 +184,7 @@
 								color: var(--dark-grey);
 								width: 300px;
 								background: var(--white);
-								padding: 5px;
+								padding: 5px 5px 5px 20px;
 								margin: 0;
 
 								&:hover {
@@ -174,11 +199,20 @@
 							}
 						}
 					}
+
+					&:nth-last-of-type(1) {
+						input {
+							& + label {
+								border: none !important;
+							}
+						}
+					}
 				}
 			}
 		}
 
 		.historyContent {
+			margin: 0 0 0 120px;
 			padding: 0;
 
 			.listContainer {
@@ -196,6 +230,8 @@
 					margin: 0;
 					padding: 0;
 					list-style: none;
+
+					li {}
 				}
 
 				.pagination {
@@ -209,6 +245,9 @@
 				}
 
 				&#contrib {
+					width: 380px;
+
+					h3 {}
 
 					ul#malist {
 						text-align: center;
@@ -224,6 +263,9 @@
 				}
 
 				&#event {
+					width: 380px;
+
+					h3 {}
 
 					ul {
 						&#eventList {
@@ -253,7 +295,10 @@
 				}
 
 				&#order {
+					width: 380px;
 					text-align: center;
+
+					h3 {}
 
 					ul#MALISTE {
 						li {
@@ -289,107 +334,17 @@
 	}
 }
 
-//pc
-@media (any-pointer: fine) {
-	.profileContainer {
-		padding: 20px;
+#load {
+	padding: calc((100vh - 350px) / 2) calc((100vw - 150px) / 2);
 
-		.profileInfoContainer {
-			--image-size: 300px;
-			
-			.profilePictureContainer {
-				margin: 0 0 0 300px;				
-
-				svg {					
-					width: 40px;					
-					left: calc(var(--image-size) / 2.2);
-					top: 0;
-				}
-			}
-
-			.identityContainer {				
-				margin: 0 40px 0 120px;				
-
-				h1 {
-					font-size: 30px;					
-				}
-
-				ul {
-					margin: 0 0 50px;
-
-					li {
-						margin: 0 0 25px;
-
-						&:nth-of-type(1) {
-							font-size: 20px;
-						}
-					}
-				}
-			}
-		}
-
-		.emailFieldContainer {
-			margin: 0;
-
-			label {
-				width: 60px;
-			}
-		}
-
-		.historySelectorContainer {
-			margin: 50px 0 50px 300px;
-
-			.historySelector {
-				ul {
-					width: 300px;
-
-					li {
-						width: 300px;
-
-						input[type="radio"] {
-
-							& + label {
-								font-size: 18px;
-								font-weight: bold;
-								width: 300px;
-							}
-						}
-
-						&:nth-last-of-type(1) {
-							input {
-								& + label {
-									border: none !important;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			.historyContent {
-				margin: 0 0 0 120px;
-
-				.listContainer {
-
-					&#contrib {
-						width: 380px;
-					}
-
-					&#event {
-						width: 380px;
-					}
-
-					&#order {
-						width: 380px;
-					}
-				}
-			}
-		}
+	img {
+		width: 150px !important;
+		height: 150px !important;
 	}
 }
 
-//mobile
-@media (any-pointer: coarse) {
+//mobile version, OR pc version with vw <= vh
+@media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.profileContainer {
 		padding: 20px 2vw;
 
@@ -400,12 +355,15 @@
 
 			.profilePictureContainer {
 				padding-left: 0;
-
 				margin: 0 calc((96vw - 150px)/2);
+
+				img {
+					&.premium {}
+				}
 
 				svg {
 					width: 20px;
-					left: calc(var(--image-size) / 2.2);
+					left: 60px;
 					top: -7px;
 				}
 			}
@@ -431,6 +389,22 @@
 						&:nth-of-type(1) {
 							font-size: 15px;
 						}
+
+						b {}
+
+						svg {}
+					}
+				}
+			}
+
+			.qrContainer {
+				button {
+					&:hover {}
+				}
+
+				.blurryBg {
+					.qrPopup {
+						svg {}
 					}
 				}
 			}
@@ -449,6 +423,10 @@
 			input {
 				font-size: 15px;
 				width: 40vw;
+			}
+
+			button {
+				&:hover {}
 			}
 		}
 
@@ -472,6 +450,8 @@
 								font-stretch: condensed;
 								text-align: center;
 								font-weight: normal;
+
+								&:hover {}
 							}
 
 							&[disabled] {
@@ -479,9 +459,11 @@
 									width: 64vw;
 								}
 							}
-						}
 
-						
+							&:checked {
+								& + label {}
+							}
+						}
 
 						&:nth-last-of-type(1) {
 							input {
@@ -501,33 +483,73 @@
 				.listContainer {
 					width: 96vw;
 
+					div {}
+
+					h3 {}
+
+					ul {
+						li {}
+					}
+
 					.pagination {
 						margin: 20px 0;
+
+						ul {}
 					}
 
 					&#contrib {
 						width: 96vw;
+
+						h3 {}
+
+						ul#malist {
+							li {
+								p {}
+							}
+						}
 					}
 
 					&#event {
 						width: 96vw;
+
+						h3 {}
+
+						ul {
+							&#eventList {
+								li {
+									hr {}
+
+									a {}
+
+									&:nth-last-of-type(1) {
+										hr {}
+									}
+								}
+							}
+						}
 					}
 
 					&#order {
 						width: 96vw;
+
+						h3 {}
+
+						ul#MALISTE {
+							li {
+								button {
+									&.evenement {
+										&:hover {}
+									}
+
+									&.cotisation {
+										&:hover {}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 }
-
-#load {
-	padding: calc((100vh - 350px) / 2) calc((100vw - 150px) / 2);
-
-	img {
-		width: 150px !important;
-		height: 150px !important;
-	}
-}
-
