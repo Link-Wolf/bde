@@ -517,8 +517,15 @@ const PingPong = () => {
                                             );
                                     } else if (sortThing == "last_match") {
                                         if (sortOrder == "asc")
-                                            return a.last_match - b.last_match;
-                                        else return b.last_match - a.last_match;
+                                            return (
+                                                new Date(a.last_match) -
+                                                new Date(b.last_match)
+                                            );
+                                        else
+                                            return (
+                                                new Date(b.last_match) -
+                                                new Date(a.last_match)
+                                            );
                                     }
                                 })
                                 .map((player, i) => (
