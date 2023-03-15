@@ -273,6 +273,8 @@
 				margin-top: 30px;
 
 				&.eventFilter {
+					width: auto;
+
 					#dropdownButton {
 						padding: 5px;
 						margin: 10px calc((100vw - 80px) / 2);
