@@ -347,6 +347,7 @@
 @media (any-pointer: coarse), (max-width: 100vh) and (any-pointer: fine) {
 	.profileContainer {
 		padding: 20px 2vw;
+		width: 100%;
 
 		.profileInfoContainer {
 			flex-direction: column;
