@@ -7,6 +7,9 @@ import jszip from "jszip";
 import style from "../style/Product.module.scss";
 import load from "../assets/animations/gear_clockwise.gif";
 
+/**
+ * @brief Displays a product popup
+ */
 const Product = (props) => {
     const [product, setProduct] = useState({
         name: "",
@@ -41,6 +44,10 @@ const Product = (props) => {
     );
 };
 
+/**
+ *  @brief Displays the album of a product
+ * @param id The id of the product
+ */
 const Album = (props) => {
     const [album, setAlbum] = useState([load]);
     const [displayedImage, setDisplayedImage] = useState(0);
@@ -135,6 +142,9 @@ const Album = (props) => {
     );
 };
 
+/**
+ * @brief Displays the description of a product and the size selection form
+ */
 const Description = (props) => {
     const [size, setSize] = useState("m");
 

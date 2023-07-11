@@ -5,6 +5,11 @@ import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminLogs.module.scss";
 
+/**
+ * @brief Displays the logs from the database
+ * @param param contains the filters to apply to the logs presented
+ * @returns {JSX.Element} the logs from the database
+ */
 const AdminLogList = param => {
 	const PER_PAGE = 21;
 	const [data, setData] = useState([]);
@@ -13,6 +18,9 @@ const AdminLogList = param => {
 	const viewData = usePagination(data, PER_PAGE);
 	const [load, setLoad] = useState(false);
 
+	/**
+	 * @brief get with a POST the logs from the database, because i guess query params where too difficult for us
+	 */
 	useEffect(() => {
 		setLoad(true);
 		fetch(`${process.env.REACT_APP_API_URL}/admin/logs/get`, {
@@ -57,6 +65,9 @@ const AdminLogList = param => {
 			});
 	}, [param.filter]);
 
+	/**
+	 * @brief change the page displayed
+	 */
 	const handleChangePage = (e, p) => {
 		setPage(p);
 		viewData.jump(p);

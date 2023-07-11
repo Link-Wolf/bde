@@ -1,44 +1,35 @@
-import { Module, CacheModule } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ContributionModule } from './contribution/contribution.module';
-import { Contribution } from './entity/Contribution';
-import { Goodies } from './entity/Goodies';
-import { Event } from './entity/Event';
-import { Stud } from './entity/Stud';
-import { Club } from './entity/Club';
-import { StudModule } from './stud/stud.module';
-import { ClubModule } from './club/club.module';
-import { EventModule } from './event/event.module';
-import { InscriptionModule } from './inscription/inscription.module';
-import { LoggerModule } from './logger/logger.module';
-import { LogsModule } from './logs/logs.module';
-import { Logs } from './entity/Logs';
-import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
-import { GoodiesModule } from './goodies/goodies.module';
-//import { JwtAuthGuard } from './auth/jwtAuth.guard';
-//import { APP_GUARD } from '@nestjs/core';
-import { PaypalModule } from './paypal/paypal.module';
-import { OrderModule } from './order/order.module';
-import { Order } from './entity/Order';
-import { Donation } from './entity/Donation';
-import { DonationModule } from './donation/donation.module';
-import { Inscription } from './entity/Inscription';
-import { GoogleModule } from './google/google.module';
-import { PingPongGame } from './entity/PingPongGame';
-import { PingPongGameModule } from './pingPongGame/pingPongGame.module';
-
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { Goodies } from "./entity/Goodies";
+import { Event } from "./entity/Event";
+import { Stud } from "./entity/Stud";
+import { Club } from "./entity/Club";
+import { StudModule } from "./stud/stud.module";
+import { ClubModule } from "./club/club.module";
+import { EventModule } from "./event/event.module";
+import { InscriptionModule } from "./inscription/inscription.module";
+import { LoggerModule } from "./logger/logger.module";
+import { LogsModule } from "./logs/logs.module";
+import { Logs } from "./entity/Logs";
+import { AuthModule } from "./auth/auth.module";
+import { ConfigModule } from "@nestjs/config";
+import { GoodiesModule } from "./goodies/goodies.module";
+import { Donation } from "./entity/Donation";
+import { DonationModule } from "./donation/donation.module";
+import { Inscription } from "./entity/Inscription";
+import { PingPongGame } from "./entity/PingPongGame";
+import { PingPongGameModule } from "./pingPongGame/pingPongGame.module";
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: ['.env'],
+			envFilePath: [".env"],
 		}),
 		TypeOrmModule.forRoot({
-			type: 'postgres',
+			type: "postgres",
 			port: +process.env.POSTGRES_PORT,
 			host: process.env.POSTGRES_HOST,
 			username: process.env.POSTGRES_USER,
@@ -46,21 +37,18 @@ import { PingPongGameModule } from './pingPongGame/pingPongGame.module';
 			database: process.env.POSTGRES_DB,
 			entities: [
 				Stud,
-				Contribution,
 				Event,
 				Logs,
 				Goodies,
 				Club,
-				Order,
 				Inscription,
 				Donation,
-				PingPongGame
+				PingPongGame,
 			],
-			synchronize: true
+			synchronize: true,
 		}),
 		StudModule,
 		ClubModule,
-		ContributionModule,
 		EventModule,
 		DonationModule,
 		GoodiesModule,
@@ -68,14 +56,9 @@ import { PingPongGameModule } from './pingPongGame/pingPongGame.module';
 		LogsModule,
 		LoggerModule,
 		AuthModule,
-		PaypalModule,
-		OrderModule,
-		GoogleModule,
-		PingPongGameModule
+		PingPongGameModule,
 	],
 	controllers: [AppController],
-	providers: [
-		AppService,
-	],
+	providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

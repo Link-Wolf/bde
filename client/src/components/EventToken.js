@@ -10,11 +10,18 @@ import fadedSponso from "../assets/logos/fadedSponso.svg";
 import fadedPool from "../assets/logos/fadedPool.svg";
 import dateTime from "../assets/logos/date.svg";
 
+/**
+ * @brief the event miniature for the event list
+ */
 const EventToken = (param) => {
     const [imgSrc, setImgSrc] = useState(null);
     let style;
     if (param.user) style = styleUser;
     else style = styleBasic;
+
+    /**
+     * @brief fetch the event thumbnail
+     */
     useEffect(() => {
         fetch(
             `${process.env.REACT_APP_API_URL}/event/${param.event.id}/thumbnail`,

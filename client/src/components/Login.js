@@ -2,6 +2,10 @@ import {useSearchParams, Navigate} from "react-router-dom";
 import {NotificationManager} from "react-notifications";
 import {useState, useEffect} from "react";
 
+/**
+ * @brief Handles the login process with the API and redirects the user to the
+ * 	  page he was before the login process (or to /home if he was not on any).
+ */
 const Login = () => {
 	const [searchParams] = useSearchParams();
 	const [ret, setRet] = useState(<></>);

@@ -1,5 +1,8 @@
 import style from "../style/FormField.module.scss";
 
+/**
+ * @brief A component to render a form field
+ */
 const FormField = ({
     label,
     name,

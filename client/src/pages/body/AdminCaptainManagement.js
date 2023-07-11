@@ -130,8 +130,8 @@ const AdminCaptainManagement = () => {
 				/>
 				{data.length > 0 ? (
 					<ul>
-						{data.map(item => (
-							<li key={item.eachAdmin} key={item.login}>
+						{data.map((item, i) => (
+							<li key={i} >
 								<ul className={style.adminLine}>
 									<li id={style.login}>
 										<a href={`/profile/${item.login}`}>

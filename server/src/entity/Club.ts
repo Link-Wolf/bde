@@ -10,51 +10,50 @@ import { Stud } from "./Stud";
 @Entity()
 export class Club {
 	@PrimaryGeneratedColumn()
-	id: number
-
-	@Column({
-		nullable: false
-	})
-	name: string
-
-	@Column({
-		nullable: false
-	})
-	desc: string
+	id: number;
 
 	@Column({
 		nullable: false,
-		type: "integer"
 	})
-	cost: number
+	name: string;
 
 	@Column({
-		nullable: false
+		nullable: false,
 	})
-	access: string
+	desc: string;
+
+	@Column({
+		nullable: false,
+		type: "integer",
+	})
+	cost: number;
+
+	@Column({
+		nullable: false,
+	})
+	access: string;
 
 	@Column({
 		type: "text",
 		nullable: false,
 	})
-	goal: string
+	goal: string;
 
-	@ManyToOne(() => Stud, (stud) => stud.clubs,
-		{
-			onDelete: 'CASCADE',
-			onUpdate: 'CASCADE'
-		})
+	@ManyToOne(() => Stud, (stud) => stud.clubs, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	@JoinColumn({ name: "login" })
-	contact: Stud
+	contact: Stud;
 
 	@Column({
-		nullable: true
+		nullable: true,
 	})
-	link: string
+	link: string;
 
 	@Column({
 		type: "text",
 		nullable: true,
 	})
-	details: string
+	details: string;
 }

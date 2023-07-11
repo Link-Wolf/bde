@@ -1,3 +1,6 @@
+/**
+ * A component that renders a set of checkboxes or radio buttons.
+ */
 const CheckSet = param => {
 	return (
 		<fieldset>

@@ -1,9 +1,14 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryGeneratedColumn,
+} from "typeorm";
 import { Stud } from "./Stud";
 
 @Entity()
-export class PingPongGame
-{
+export class PingPongGame {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -22,19 +27,17 @@ export class PingPongGame
 	@Column()
 	date: Date;
 
-	@ManyToOne(() => Stud, (stud) => stud.declaredPingPongGames,
-		{
+	@ManyToOne(() => Stud, (stud) => stud.declaredPingPongGames, {
 		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
-		})
+		onUpdate: "CASCADE",
+	})
 	@JoinColumn({ name: "publisher_login" })
 	publisher: Stud;
 
-	@ManyToOne(() => Stud, (stud) => stud.acceptedPingPongGames,
-		{
-			onDelete: "CASCADE",
-			onUpdate: "CASCADE"
-		})
-	@JoinColumn({ name: "adversary_login"})
+	@ManyToOne(() => Stud, (stud) => stud.acceptedPingPongGames, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
+	@JoinColumn({ name: "adversary_login" })
 	adversary: Stud;
 }

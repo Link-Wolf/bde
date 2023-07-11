@@ -1,67 +1,67 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Goodies {
 	@PrimaryGeneratedColumn()
-	id: number
+	id: number;
 
 	@Column({
 		nullable: false,
 		type: "text",
 	})
-	name: string
+	name: string;
 
 	@Column({
 		nullable: false,
-		type: "double precision"
+		type: "double precision",
 	})
-	cost: number
+	cost: number;
 
 	@Column({
 		type: "text",
 		nullable: false,
 	})
-	desc: string
+	desc: string;
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "integer",
 	})
-	s: number
+	s: number;
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "integer",
 	})
-	m: number
+	m: number;
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "integer",
 	})
-	l: number
+	l: number;
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "integer",
 	})
-	xl: number
+	xl: number;
 
 	@Column({
 		nullable: false,
-		type: "integer"
+		type: "integer",
 	})
-	stock: number
+	stock: number;
 
 	@Column({
-		type: 'text',
-		nullable: true
+		type: "text",
+		nullable: true,
 	})
-	thumbnail_filename: string
+	thumbnail_filename: string;
 
 	@Column({
-		type: 'text',
-		nullable: true
+		type: "text",
+		nullable: true,
 	})
-	album_path: string
+	album_path: string;
 }

@@ -10,6 +10,9 @@ import Event from "./Event.js";
 import usePagination from "./Pagination";
 import { Pagination } from "@mui/material";
 
+/**
+ * @brief print the list of events with pagination
+ */
 const EventList = (param) => {
     const PER_PAGE = 3;
     const [page, setPage] = useState(1);
@@ -19,6 +22,9 @@ const EventList = (param) => {
     const [popUpEvent, setPopUpEvent] = useState(-1);
     const viewData = usePagination(data, PER_PAGE);
 
+    /**
+     * @brief fetch the events from the server
+     */
     useEffect(() => {
         const requestOptions = {
             method: "post",

@@ -13,7 +13,7 @@ export class EventDto {
 	end_date: Date;
 	available_date: Date;
 	sub_date: Date;
-	album: boolean
+	album: boolean;
 }
 
 export class EventFilterDto {
@@ -22,11 +22,11 @@ export class EventFilterDto {
 	available: boolean; //encore des places
 	// subed: boolean; //billy est inscrit
 	food: boolean; //ya du miam miam ou du glou glou
-	unlimited: boolean;//pouvoir illimité
-	outside: boolean;// pas a 42
-	sponso: boolean;// thunas
-	asc: boolean;// tri order (default desc)
-	sort: string;//tri selon (default date)
+	unlimited: boolean; //pouvoir illimité
+	outside: boolean; // pas a 42
+	sponso: boolean; // thunas
+	asc: boolean; // tri order (default desc)
+	sort: string; //tri selon (default date)
 	album: boolean;
-	available_date: boolean
+	available_date: boolean;
 }

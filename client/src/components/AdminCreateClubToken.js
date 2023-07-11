@@ -5,6 +5,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+/**
+ * @brief	Form to create a new club
+ * @param	{Object} param contains a function to close the form from the parent
+ * @returns	{JSX.Element} the form to create a new club
+ */
 const AdminCreateClubToken = param => {
 	const {isConfirmed} = useConfirm();
 
@@ -29,6 +34,9 @@ const AdminCreateClubToken = param => {
 		details: ""
 	});
 
+	/**
+	 * @brief	Handle the change of the form and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -43,6 +51,9 @@ const AdminCreateClubToken = param => {
 		setFormState(tmp);
 	};
 
+	/**
+	 * @brief Create the club and does the necessary checks
+	 */
 	const checkStud = async () => {
 		await fetch(
 			`${process.env.REACT_APP_API_URL}/stud/${bodyState.login}`,
@@ -122,6 +133,9 @@ const AdminCreateClubToken = param => {
 			});
 	};
 
+	/**
+	 * @brief Asks for confirmation and create the club
+	 */
 	const saveClub = async () => {
 		if (!document.getElementById("createClubForm").checkValidity()) return;
 		const confirm = await isConfirmed(`Désires tu créer ce club ?`);

@@ -4,35 +4,34 @@ import { Event } from "./Event";
 
 @Entity()
 export class Inscription {
-	@ManyToOne(() => Stud, (stud) => stud.inscription,
-		{
-			onDelete: 'CASCADE',
-			onUpdate: 'CASCADE'
-		})
+	@ManyToOne(() => Stud, (stud) => stud.inscription, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	@JoinColumn({ name: "studLogin" })
-	stud: Stud
+	stud: Stud;
 
 	@PrimaryColumn()
-	studLogin: string
+	studLogin: string;
 
-	@ManyToOne(() => Event, (event) => event.inscription,
-		{
-			onDelete: 'CASCADE',
-			onUpdate: 'CASCADE'
-		})
+	@ManyToOne(() => Event, (event) => event.inscription, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	@JoinColumn({ name: "eventId" })
-	event: Event
+	event: Event;
 
 	@PrimaryColumn()
-	eventId: number
+	eventId: number;
 
 	@Column({
-		type: 'timestamptz',
+		type: "timestamptz",
 	})
-	date: Date
+	date: Date;
 
 	@Column({
-		default: 0, type: "double precision"
+		default: 0,
+		type: "double precision",
 	})
-	price: number
+	price: number;
 }

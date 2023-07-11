@@ -160,7 +160,7 @@
 					position: absolute;
 					top: 0;
 					left: 0;
-					background: rgba(0,0,0,0.5);
+					background: rgba(0, 0, 0, 0.5);
 					backdrop-filter: blur(1px);
 					display: none;
 				}
@@ -303,11 +303,11 @@
 }
 
 #filter {
-	position: absolute;
+	position: fixed;
 	overflow: auto;
 	top: 0;
 	left: 0;
-	background: rgba(0,0,0,0.5);
+	background: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(50px);
 	width: 100vw;
 	height: 100vh;
@@ -317,18 +317,20 @@
 	#outArea {
 		width: 100vw;
 		height: 100vh;
-		position: absolute;
+		position: fixed;
+		top: 0;
+		left: 0;
 		z-index: -1;
 	}
 }
 @keyframes blurAppear {
 	0% {
 		backdrop-filter: blur(0px);
-		background: rgba(0,0,0,0);
+		background: rgba(0, 0, 0, 0);
 	}
 
 	100% {
 		backdrop-filter: blur(50px);
-		background: rgba(0,0,0,0.5);
+		background: rgba(0, 0, 0, 0.5);
 	}
 }

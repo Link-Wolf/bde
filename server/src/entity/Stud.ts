@@ -1,12 +1,5 @@
-import {
-	Column,
-	Entity,
-	OneToMany,
-	PrimaryColumn
-} from "typeorm";
-import { Contribution } from "./Contribution";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import { Event } from "./Event";
-import { Order } from "./Order";
 import { Club } from "./Club";
 import { Inscription } from "./Inscription";
 import { PingPongGame } from "./PingPongGame";
@@ -14,40 +7,40 @@ import { PingPongGame } from "./PingPongGame";
 @Entity()
 export class Stud {
 	@PrimaryColumn()
-	login: string
+	login: string;
 
 	@Column({
-		nullable: false
+		nullable: false,
 	})
-	firstname: string
+	firstname: string;
 
 	@Column({
-		nullable: false
+		nullable: false,
 	})
-	lastname: string
+	lastname: string;
 
 	@Column({ default: 0 })
-	clearance: number
+	clearance: number;
 
 	@Column()
-	email: string
+	email: string;
 
 	@Column({
 		nullable: true,
-		default: null
+		default: null,
 	})
-	true_email: string
+	true_email: string;
 
 	@Column({
-		type: 'timestamptz',
+		type: "timestamptz",
 	})
-	joinDate: Date
+	joinDate: Date;
 
 	@Column({
-		type: 'timestamptz',
-		default: new Date(Date.now())
+		type: "timestamptz",
+		default: new Date(Date.now()),
 	})
-	last_co: Date
+	last_co: Date;
 
 	@Column({
 		nullable: true,
@@ -59,47 +52,33 @@ export class Stud {
 	})
 	img_small: string;
 
-	@OneToMany(() => Contribution, (contribution) => contribution.stud, {
-		onDelete: "CASCADE",
-		onUpdate: "CASCADE",
-		cascade: true
-	})
-	contributions: Contribution[];
-
-	@OneToMany(() => Order, (order) => order.stud, {
-		onDelete: "CASCADE",
-		onUpdate: "CASCADE",
-		cascade: true
-	})
-	orders: Order[]
-
 	@OneToMany(() => Club, (club) => club.contact, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade: true
+		cascade: true,
 	})
-	clubs: Club[]
+	clubs: Club[];
 
 	@OneToMany(() => Inscription, (inscription) => inscription.stud, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade: true
+		cascade: true,
 	})
-	inscription: Event[]
+	inscription: Event[];
 
 	@OneToMany(() => PingPongGame, (game) => game.publisher, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade: true
+		cascade: true,
 	})
-	declaredPingPongGames: PingPongGame[]
+	declaredPingPongGames: PingPongGame[];
 
 	@OneToMany(() => PingPongGame, (game) => game.adversary, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
-		cascade: true
+		cascade: true,
 	})
-	acceptedPingPongGames: PingPongGame[]
+	acceptedPingPongGames: PingPongGame[];
 
 	isPremium: boolean;
 }

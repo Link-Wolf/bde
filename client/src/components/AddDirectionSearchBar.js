@@ -3,11 +3,20 @@ import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminCaptainManagement.module.scss";
 
+/**
+ *	@brief Handle the search bar and the menu to add a student to the admin list
+ *	@param {Object} param	Contains the function to update the list of admins
+ *		to the parent component
+ *	@return {JSX} Return the JSX to display
+ */
 const AddDirectionSearchBar = param => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
 	const [update, setUpdate] = useState(false);
 
+	/**
+	 * @brief Promote a student to admin
+	 */
 	const promoteUser = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
@@ -35,7 +44,7 @@ const AddDirectionSearchBar = param => {
 					);
 					setSelectedUser("");
 				})
-				.catch(function(error) {
+				.catch(function() {
 					NotificationManager.error(
 						"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 						"Erreur",
@@ -44,6 +53,9 @@ const AddDirectionSearchBar = param => {
 				});
 	};
 
+	/**
+	 * @brief Fetch the list of students that are not admins
+	 */
 	useEffect(() => {
 		setUpdate(false);
 		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noAdmin`, {
@@ -60,7 +72,7 @@ const AddDirectionSearchBar = param => {
 			.then(data => {
 				setUserList(data);
 			})
-			.catch(function(error) {
+			.catch(function() {
 				NotificationManager.error(
 					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 					"Erreur",

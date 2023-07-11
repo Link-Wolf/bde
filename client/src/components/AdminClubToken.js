@@ -6,6 +6,11 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+/**
+ * @brief	Display the form to manage club
+ * @param	{Object} param Contains the data of the club to manage
+ * @return	{JSX.Element} The form to manage club
+ */
 const AdminClubToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
@@ -40,6 +45,9 @@ const AdminClubToken = param => {
 	});
 	const [locked, setLocked] = useState(true);
 
+	/**
+	 *	@brief	Delete the club specified in the state
+	 */
 	const deleteClub = async () => {
 		if (
 			await isConfirmed(`Désires tu supprimer le club ${param.data.name}`)
@@ -74,6 +82,9 @@ const AdminClubToken = param => {
 		setLocked(false);
 	};
 
+	/**
+	 * @brief	Handle the form change and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -87,6 +98,9 @@ const AdminClubToken = param => {
 		setBodyState(tmp);
 	};
 
+	/**
+	 * @brief	Create the club specified in the state
+	 */
 	const checkStud = async () => {
 		await fetch(
 			`${process.env.REACT_APP_API_URL}/stud/${bodyState.login}`,
@@ -166,6 +180,9 @@ const AdminClubToken = param => {
 			});
 	};
 
+	/**
+	 * @brief	Asks the user to confirm the action of creating a club
+	 */
 	const saveClub = async () => {
 		if (
 			!document
@@ -181,6 +198,9 @@ const AdminClubToken = param => {
 		}
 	};
 
+	/**
+	 * @brief	Bad code to set the default form state
+	 */
 	useEffect(() => {
 		if (param.data === undefined || param.data === "" || !param.data)
 			return;

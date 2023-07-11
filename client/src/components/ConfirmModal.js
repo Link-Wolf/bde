@@ -2,6 +2,9 @@ import React, {useEffect} from "react";
 import useConfirm from "./useConfirm";
 import style from "../style/ConfirmModal.module.scss";
 
+/**
+ * @brief The popup that appears for you to confirm an action.
+ */
 const ConfirmModal = () => {
 	const {prompt = "", isOpen = false, proceed, cancel} = useConfirm();
 

@@ -1,11 +1,13 @@
-import {useEffect, useState, useRef} from "react";
+import {useEffect, useState} from "react";
 import {Accordion, Form} from "react-bootstrap";
 import {Button} from "reactstrap";
 import useConfirm from "./useConfirm";
 import {NotificationManager} from "react-notifications";
-import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+/**
+ * @brief Parse the date the to the format used by the API
+ */
 const parseDate = date => {
 	return (
 		two_digiter(date.getFullYear()) +
@@ -20,11 +22,19 @@ const parseDate = date => {
 	);
 };
 
+/**
+ * @brief Add a 0 before the number if it's under 10
+ */
 const two_digiter = nb => {
 	if (nb < 10) return "0" + nb;
 	return nb;
 };
 
+/**
+ * @brief Component to manage the event
+ * @param param data: the event data
+ * @returns {JSX.Element} the component to manage the event
+ */
 const AdminEventToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
@@ -88,6 +98,9 @@ const AdminEventToken = param => {
 	const [session, setSession] = useState({clearance: 0});
 	const [thumbnail, setThumbnail] = useState([]);
 
+	/**
+	 * Check the session to verify who is logged
+	 */
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"
@@ -112,6 +125,9 @@ const AdminEventToken = param => {
 			});
 	}, []);
 
+	/**
+	 * Tell the API to delete the event
+	 */
 	const deleteEvent = async () => {
 		if (session.clearance < 42) {
 			await isConfirmed(
@@ -155,6 +171,9 @@ const AdminEventToken = param => {
 		setLocked(false);
 	};
 
+	/**
+	 * @brief Handle form changes and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -202,6 +221,9 @@ const AdminEventToken = param => {
 		setBodyState(tmpBody);
 	};
 
+	/**
+	 * @brief Tell the API to update the thumbnail
+	 */
 	const changeThumbnail = async () => {
 		const data = new FormData();
 		data.append("thumbnail", thumbnail[0]);
@@ -231,6 +253,9 @@ const AdminEventToken = param => {
 			});
 	};
 
+	/**
+	 * @brief Tell the API to update the event
+	 */
 	const saveEvent = async () => {
 		if (
 			!document
@@ -313,6 +338,9 @@ const AdminEventToken = param => {
 		}
 	};
 
+	/**
+	 * @brief code from the bottom pit of hell that parses the date to the format the form wants
+	 */
 	useEffect(() => {
 		if (param.data === undefined || param.data === "" || !param.data)
 			return;
@@ -416,6 +444,9 @@ const AdminEventToken = param => {
 		setBodyState(tmpBody);
 	}, [param.data]);
 
+	/**
+	 * @brief get the thumbnail of the event
+	 */
 	useEffect(() => {
 		if (param === undefined || param === "" || !param) return;
 		fetch(
