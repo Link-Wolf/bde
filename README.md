@@ -65,7 +65,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## About The Project 
+## About The Project 🎯
 
 <div align="center">
   <a>
@@ -78,7 +78,7 @@
 
 <!-- GETTING STARTED -->
 
-## Getting Started
+## Getting Started 🏃
 
 It's our beloved website so please be kind with it, even if it's not perfect, it's our first website and we are proud of it.
 The few next parts will be split in two parts, the first one for a dockerized version and the second one for a non-dockerized version.
@@ -168,7 +168,7 @@ Be sure to launch the server before the client and to have Redis running in the 
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Usage 🚀
 
 <div align="center">
  <a>
@@ -277,7 +277,7 @@ We won't explain how to use the website step by step, it's pretty intuitive, but
 
 <!-- ROADMAP -->
 
-## TODO (and TOFIX)
+## TODO (and TOFIX) 🚧
 
 Ultimately and honnestly, the website would deserve to be entirely rewrite from scratch, but we (Link & iCARUS) don't have the time to do so, so unless someone wants to do it, we will keep it as it is. And in this case, there are a lot of things to fix and to add, so here is a list of a few things that we would have liked to do:
 
@@ -303,7 +303,7 @@ See the [open issues](https://gitlab.42mulhouse.fr/Link/bde-website/-/issues) fo
 
 <!-- CONTRIBUTING -->
 
-## Contributing
+## Contributing 🤝
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Same goes if you find a bug, please open an issue with the tag "bug".
 Don't forget to give the project a star! Thanks again!
@@ -318,7 +318,7 @@ Don't forget to give the project a star! Thanks again!
 
 <!-- CONTACT -->
 
-## Contact
+## Contact 👤
 
 42born2code Slack and 42Intra:
 
