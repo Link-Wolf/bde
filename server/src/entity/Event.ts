@@ -4,116 +4,116 @@ import { Inscription } from "./Inscription";
 @Entity()
 export class Event {
 	@PrimaryGeneratedColumn()
-	id: number
+	id: number;
 
 	@Column({
 		nullable: false,
 		type: "text",
 	})
-	name: string
+	name: string;
 
 	@Column({
 		nullable: false,
-		type: "double precision"
+		type: "double precision",
 	})
-	cost: number
+	cost: number;
 
 	@Column({
 		nullable: false,
-		type: "text"
+		type: "text",
 	})
-	place: string
+	place: string;
 
 	@Column({
 		type: "double precision",
 		nullable: true,
-		default: 0
+		default: 0,
 	})
-	premium_cost: number
+	premium_cost: number;
 
 	@Column({
 		type: "integer",
 		nullable: true,
-		default: -42
+		default: -42,
 	})
-	nb_places: number
+	nb_places: number;
 
 	@Column({
 		type: "integer",
 		nullable: true,
-		default: 0
+		default: 0,
 	})
-	nb_premium_places: number
+	nb_premium_places: number;
 
 	@Column({
 		type: "text",
 		nullable: true,
 	})
-	desc: string
+	desc: string;
 
 	@Column({
 		type: "bool",
 		nullable: false,
 	})
-	isOutside: boolean
+	isOutside: boolean;
 
 	@Column({
 		type: "bool",
 		nullable: false,
 	})
-	for_pool: boolean
+	for_pool: boolean;
 
 	@Column({
 		type: "bool",
 		nullable: true,
 	})
-	album: boolean
+	album: boolean;
 
 	@Column({
 		type: "timestamptz",
 		nullable: false,
 	})
-	available_date: Date
+	available_date: Date;
 
 	@Column({
 		type: "timestamptz",
 		nullable: true,
 	})
-	sub_date: Date
+	sub_date: Date;
 
 	@Column({
 		type: "bool",
 		nullable: false,
 	})
-	consos: boolean
+	consos: boolean;
 
 	@Column({
 		type: "bool",
 		nullable: false,
 	})
-	sponso: boolean
+	sponso: boolean;
 
 	@Column({
-		type: 'timestamptz',
-		nullable: false
+		type: "timestamptz",
+		nullable: false,
 	})
-	begin_date: Date
+	begin_date: Date;
 
 	@Column({
-		type: 'timestamptz',
-		nullable: true
+		type: "timestamptz",
+		nullable: true,
 	})
-	end_date: Date
+	end_date: Date;
 
 	@Column({
-		type: 'text',
-		nullable: true
+		type: "text",
+		nullable: true,
 	})
-	thumbnail_filename: string
+	thumbnail_filename: string;
 
 	@OneToMany(() => Inscription, (inscription) => inscription.event, {
 		onDelete: "CASCADE",
-		onUpdate: "CASCADE"
+		onUpdate: "CASCADE",
 	})
-	inscription: Inscription[]
+	inscription: Inscription[];
 }

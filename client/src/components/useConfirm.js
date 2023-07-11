@@ -1,6 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import {ConfirmContext} from "./ConfirmContextProvider";
 
+/**
+ * @brief Function to use the confirm dialog
+ */
 const useConfirm = () => {
 	const [confirm, setConfirm] = useContext(ConfirmContext);
 	const [needsCleanup, setNeedsCleanup] = useState(false);

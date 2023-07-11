@@ -6,6 +6,11 @@ import {NotificationManager} from "react-notifications";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import style from "../style/AdminProductToken.module.scss";
 
+/**
+ * @brief Component for the admin page to create a new product
+ * @param param Contains the function to cancel the creation of a product
+ * @returns {JSX.Element} The component to create a new product
+ */
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
 
@@ -32,6 +37,9 @@ const AdminProductToken = param => {
 	const [thumbnail, setThumbnail] = useState([]);
 	const [album, setAlbum] = useState([]);
 
+	/**
+	 * @brief Function to handle the change of the form inputs and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -46,6 +54,9 @@ const AdminProductToken = param => {
 		setFormState(tmp);
 	};
 
+	/**
+	 * @brief Function to handle the
+	 */
 	const saveProduct = async () => {
 		const confirm = await isConfirmed(
 			`Désires tu créer ce nouveau produit ?`

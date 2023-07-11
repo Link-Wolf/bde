@@ -3,11 +3,21 @@ import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminUnpaidManagement.module.scss";
 
-const AddDirectionSearchBar = param => {
+/**
+ *	@brief Handle the search bar and the menu to add a student to the
+ *		unpaid list (like admin but less powerfull)
+ *	@param {Object} param	Contains the function to update the list of admins
+ *		to the parent component
+ *	@return {JSX} Return the JSX to display
+ */
+const AddUnpaidSearchBar = param => {
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
 	const [update, setUpdate] = useState(false);
 
+	/**
+	 * @brief Promote a student to the unpaid list
+	 */
 	const promoteUser = () => {
 		if (userList.some(i => i.login.includes(selectedUser)))
 			fetch(
@@ -44,6 +54,10 @@ const AddDirectionSearchBar = param => {
 				});
 	};
 
+	/**
+	 *	@brief Fetch the list of students that are not volunteers
+	 *		(they have to be connected at least once)
+	 */
 	useEffect(() => {
 		setUpdate(false);
 		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/noVolunteers`, {
@@ -92,4 +106,4 @@ const AddDirectionSearchBar = param => {
 	);
 };
 
-export default AddDirectionSearchBar;
+export default AddUnpaidSearchBar;

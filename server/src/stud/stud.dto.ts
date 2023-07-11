@@ -7,5 +7,5 @@ export class StudDto {
 	true_email: string;
 	img_small: string;
 	img_medium: string;
-	last_co: Date
+	last_co: Date;
 }

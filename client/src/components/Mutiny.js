@@ -4,14 +4,21 @@ import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminCaptainManagement.module.scss";
 
+/**
+ * @brief Component for the mutiny page of the admin panel
+ * @returns {JSX.Element}
+ * @details This component is used to transfer the captain powers to another student
+ */
 const Mutiny = () => {
 	const {isConfirmed} = useConfirm();
 
 	const [userList, setUserList] = useState([]);
 	const [selectedUser, setSelectedUser] = useState("");
 
+	/**
+	 * @brief Function to transfer the captain powers to another student
+	 */
 	const tricorn = async () => {
-		console.log("test");
 		if (userList.some(i => i.login.includes(selectedUser))) {
 			if (
 				await isConfirmed(
@@ -43,7 +50,7 @@ const Mutiny = () => {
 					.then(() => {
 						window.location = "/home";
 					})
-					.catch(function(error) {
+					.catch(function() {
 						NotificationManager.error(
 							"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
 							"Erreur",
@@ -54,6 +61,9 @@ const Mutiny = () => {
 		}
 	};
 
+	/**
+	 * @brief Function to get the list of all the students that are admin (potential new captains)
+	 */
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/stud/admin/members`, {
 			credentials: "include"

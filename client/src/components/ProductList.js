@@ -6,6 +6,9 @@ import {NotificationManager} from "react-notifications";
 import style from "../style/ProductList.module.css";
 import grey from "../assets/placeholders/grey.png";
 
+/**
+ * @brief      This function is used to display the list of goodies available in the shop
+*/
 const ProductList = () => {
 	const [ret, setRet] = useState(
 		<div className={style.scroll_container_40vw}>
@@ -34,6 +37,9 @@ const ProductList = () => {
 	);
 	const [data, setData] = useState([]);
 
+	/**
+	 * @brief      This function is used to fetch the goodies from the API
+	 */
 	useEffect(() => {
 		const requestOptions = {
 			method: "get",

@@ -4,6 +4,11 @@ import {NotificationManager} from "react-notifications";
 import Placeholder from "react-bootstrap/Placeholder";
 import useConfirm from "./useConfirm";
 
+/**
+ * @brief	Display the form to manage contribution
+ * @param	{Object} param Contains the data of the contribution to manage
+ * @return	{JSX.Element} The form to manage contribution
+ */
 const AdminContribToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
@@ -27,6 +32,9 @@ const AdminContribToken = param => {
 		setLocked(false);
 	};
 
+	/**
+	 * @brief	Handle the change of the form and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -55,11 +63,17 @@ const AdminContribToken = param => {
 		setFormState(tmp);
 	};
 
+	/**
+	 * @brief	Format to a %02d the number
+	 */
 	const two_digiter = nb => {
 		if (nb < 10) return "0" + nb;
 		return nb;
 	};
 
+	/**
+	 * @brief	Set default value of the form (bad code)
+	 */
 	useEffect(() => {
 		if (param === undefined || param === "" || !param) return;
 		let tmp = {...param.data};
@@ -90,6 +104,9 @@ const AdminContribToken = param => {
 		setFormState(tmp);
 	}, [param]);
 
+	/**
+	 * @brief	Handle the submit of the form to edit the contribution
+	 */
 	const saveContrib = async () => {
 		if (
 			await isConfirmed(

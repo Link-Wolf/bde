@@ -3,6 +3,9 @@ import {React} from "react";
 import style from "../style/EventListPublic.module.scss";
 import patchwork from "../assets/images/events.webp";
 
+/**
+ * @brief      Prints a short description of the events we do as the BDE of 42
+ */
 const EventListPublic = param => {
 	return (
 		<div className={style.container}>

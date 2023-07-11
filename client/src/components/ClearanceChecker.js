@@ -1,6 +1,11 @@
 import {useState, useEffect} from "react";
 import {NotificationManager} from "react-notifications";
 
+/**
+ * @brief This component checks if the user has the clearance to access the page
+ * @param data contains the necessary level of clearance to access the page
+ * @return the children of the component if the user has the clearance, else it returns the unauthorized message
+ */
 const ClearanceChecker = data => {
 	const [clearance, setClearance] = useState(-42);
 	const [ret, setRet] = useState(<> </>);

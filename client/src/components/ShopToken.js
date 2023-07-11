@@ -3,6 +3,9 @@ import {LazyLoadImage} from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {NotificationManager} from "react-notifications";
 
+/**
+ * @brief Component that display the goodies miniatures in the shop
+ */
 const ShopToken = param => {
 	const [imgSrc, setImgSrc] = useState(null);
 

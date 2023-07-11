@@ -5,6 +5,9 @@ import { NotificationManager } from "react-notifications";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+/**
+ * @brief Parse a date to a string with the format YYYY-MM-DDTHH:MM
+ */
 const parseDate = (date) => {
     return (
         two_digiter(date.getFullYear()) +
@@ -19,11 +22,19 @@ const parseDate = (date) => {
     );
 };
 
+/**
+ * @brief Add a 0 before a number if it's less than 10
+ */
 const two_digiter = (nb) => {
     if (nb < 10) return "0" + nb;
     return nb;
 };
 
+/**
+ * @brief Component to create an event
+ * @param {Object} param Contains a function to tell parent to cancel creation
+ * @return {JSX.Element} Return the component to create an event
+ */
 const AdminCreateEventToken = (param) => {
     const { isConfirmed } = useConfirm();
     const [formState, setFormState] = useState({
@@ -67,6 +78,9 @@ const AdminCreateEventToken = (param) => {
     const img = useRef(null);
     const [srcImg, setSrcImg] = useState(null);
 
+    /**
+     * @brief Handle the change of form and update the state
+     */
     const handleFormChange = (event) => {
         let tmp = { ...formState };
         const target = event.target;
@@ -81,6 +95,9 @@ const AdminCreateEventToken = (param) => {
         setFormState(tmp);
     };
 
+    /**
+     * @brief Saves the event to the database and does the necessary checks
+     */
     const saveEvent = async () => {
         if (!document.getElementById("createEventForm").checkValidity()) {
             NotificationManager.warning(
@@ -90,7 +107,7 @@ const AdminCreateEventToken = (param) => {
             );
             return;
         }
-        const confirm = await isConfirmed(`Désires tu créer cet évènement ?`);
+        const confirm = await isConfirmed(`Désires tu créer cet évènement ?`);// DESC: check if the user wants to create the event
         if (confirm) {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -156,6 +173,9 @@ const AdminCreateEventToken = (param) => {
         }
     };
 
+    /**
+     * @brief Change the thumbnail of the event in the database
+     */
     const changeThumbnail = async (id) => {
         const data = new FormData();
         data.append("thumbnail", img.current);

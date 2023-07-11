@@ -12,15 +12,19 @@ import Loading from "./Loading";
 
 const PER_PAGE = 6;
 
-/*
- *	props:
+/**
+ * @brief Display the profile of a student (as if you are not them)
+ *	@param props:
  *		me:		boolean, true if user is watching it's own profile, false else
  *		login:	string, login of the stud
  */
 const UserProfile = props => {
 	const [stud, setStud] = useState();
 	const [blackHole, setBlackHole] = useState();
-
+	
+	/**
+	 * @brief Get the data of the student
+	 */
 	useEffect(() => {
 		if (!props.login) return;
 		fetch(`${process.env.REACT_APP_API_URL}/stud/${props.login}`, {
@@ -69,36 +73,16 @@ const UserProfile = props => {
 						),
 						title: "Evenements"
 					},
-					{
-						content: (
-							<ContributionHistory
-								login={props.login}
-								setBlackHole={setBlackHole}
-							/>
-						),
-						title: "Bientôt",
-						disabled: true
-						// title: "Cotisations"
-					}
-					// 	,
-					// ...(props.me
-					// 	? [
-					// 			{
-					// 				content: (
-					// 					<OrderHistory login={props.login} />
-					// 				),
-					// 				title: "Commandes"
-					// 			}
-					// 	  ]
-					// 	: [])
+
 				]}
 			/>
 		</div>
 	);
 };
 
-/*
- *	props:
+/**
+ * @brief Display the profile picture of the student
+ *	@param props:
  *		stud:	object, db data of the student
  */
 const ProfilePicture = props => {
@@ -153,8 +137,9 @@ const ProfilePicture = props => {
 	);
 };
 
-/*
- *	props:
+/**
+ * @brief Display the QR code of the student
+ * @param	props:
  *		stud:	object, db data of the student
  */
 const Identity = props => {
@@ -330,8 +315,9 @@ const Identity = props => {
 	);
 };
 
-/*
- *	props:
+/**
+ * @brief	Component to display the QR code of a stud
+ *	@param props:
  *		login:	string, login of the stud
  */
 const QR = props => {
@@ -366,8 +352,9 @@ const QR = props => {
 	);
 };
 
-/*
- *	props:
+/**
+ * @brief Component to change the email of a stud
+ *	@param props:
  *		login:	string, login of the stud
  */
 const ChangeEmailField = props => {
@@ -483,124 +470,9 @@ const ChangeEmailField = props => {
 	);
 };
 
-/*
- *	props:
- *		login:	string, login of the stud
- */
-const ContributionHistory = props => {
-	const [page, setPage] = useState(1);
-	const [count, setCount] = useState(0);
-	const [data, setData] = useState([]);
-	const viewData = usePagination(data, 3);
-
-	const handleChangePage = (e, p) => {
-		setPage(p);
-		viewData.jump(p);
-	};
-
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/contribution/${props.login}`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				setData(data);
-				data.forEach((item, i) => {
-					if (
-						new Date(item.end_date) > Date.now() &&
-						new Date(item.begin_date) <= Date.now()
-					) {
-						props.setBlackHole(
-							Math.ceil(
-								(new Date(item.end_date).getTime() -
-									new Date(Date.now()).getTime()) /
-									(1000 * 3600 * 24)
-							)
-						);
-					}
-				});
-				setCount(Math.ceil(data.length / 3));
-				viewData.updateData(data);
-			})
-			.catch(function(error) {
-				NotificationManager.error(
-					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
-					"Erreur",
-					5000
-				);
-			});
-	}, [props]);
-
-	return (
-		<div className={style.listContainer} id={style.contrib}>
-			<h3> Historique des cotisations</h3>
-			<div className={style.pagination}>
-				{data.length > 3 && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
-			</div>
-			<ul id={style.malist}>
-				{viewData.length ? (
-					viewData.currentData().map(data => (
-						<li key={data.id}>
-							<div>
-								<p>{`${new Date(
-									data.begin_date
-								).toLocaleDateString()} - ${new Date(
-									data.end_date
-								).toLocaleDateString()}`}</p>
-								<p>
-									{
-										//text here
-										[
-											"Pas encore commencée",
-											"En cours",
-											"Echue"
-										][
-											+(
-												new Date(data.begin_date) <
-												new Date(Date.now())
-											) +
-												+(
-													new Date(data.end_date) <
-													new Date(Date.now())
-												)
-										]
-									}
-								</p>
-							</div>
-						</li>
-					))
-				) : (
-					<div>Aucune cotisation active ou passée</div>
-				)}
-			</ul>
-			<div className={style.pagination}>
-				{data.length > 3 && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
-			</div>
-		</div>
-	);
-};
-
-/*
- *	props:
+/**
+ *  @brief Component to display the events a stud is subscribed to
+ *	@param props:
  *		login:	string, login of the stud
  */
 const SubscribedEvents = props => {
@@ -680,101 +552,9 @@ const SubscribedEvents = props => {
 	);
 };
 
-/*
- *	props:
- *		login:	string, login of the stud
- */
-const OrderHistory = props => {
-	const [page, setPage] = useState(1);
-	const [count, setCount] = useState(0);
-	const [data, setData] = useState([]);
-	const viewData = usePagination(data, PER_PAGE);
-
-	const handleChangePage = (e, p) => {
-		setPage(p);
-		viewData.jump(p);
-	};
-
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_API_URL}/order/stud/${props.login}`, {
-			credentials: "include"
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error(
-						`This is an HTTP error: The status is ${response.status}`
-					);
-				}
-				return response.json();
-			})
-			.then(data => {
-				setData(data);
-				setCount(Math.ceil(data.length / PER_PAGE));
-				viewData.updateData(data);
-			})
-			.catch(function(error) {
-				NotificationManager.error(
-					"Une erreur est survenue, réessayez plus tard (si le problème subsiste contactez nous)",
-					"Erreur",
-					5000
-				);
-			});
-	}, [props]);
-
-	return (
-		<div className={style.listContainer} id={style.order}>
-			<h3> Commandes </h3>
-			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
-			</div>
-			<ul id={style.MALISTE}>
-				{viewData.length ? (
-					viewData.currentData().map(data => (
-						<li key={data.id}>
-							<button
-								className={
-									style[
-										data.type === -1
-											? "cotisation"
-											: "evenement"
-									]
-								}
-								onClick={() => {
-									window.location = `/receipt/${data.id}`;
-								}}
-							>
-								{data.type === -1 ? "Cotisation" : "évènement"}{" "}
-								<span style={{fontFamily: "monospace"}}>
-									{data.id}
-								</span>
-							</button>
-						</li>
-					))
-				) : (
-					<div>Aucune commande passée</div>
-				)}
-			</ul>
-			<div className={style.pagination}>
-				{data.length > PER_PAGE && (
-					<Pagination
-						count={count}
-						page={page}
-						onChange={handleChangePage}
-					/>
-				)}
-			</div>
-		</div>
-	);
-};
-
-/*
- *	props:
+/**
+ * @brief Select which history to display (only one created for now)
+ * @param	props:
  *		fields:	[{content, title}]
  */
 const HistorySelector = props => {

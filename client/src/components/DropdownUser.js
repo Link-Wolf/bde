@@ -7,6 +7,9 @@ import blank from "../assets/placeholders/tmp_profile.png";
 
 import style from "../style/Header.module.scss";
 
+/**
+ * @brief      Component that display the user profile picture and the login/logout button depending on the user's state
+ */
 const DropdownUser = param => {
 	const [img, setImg] = useState({
 		profile: undefined,
@@ -14,6 +17,9 @@ const DropdownUser = param => {
 		logout: blank
 	});
 
+	/**
+	 * @brief      Fetch the user's profile picture and data then set the state accordingly
+	 */
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_API_URL}/session`, {
 			credentials: "include"

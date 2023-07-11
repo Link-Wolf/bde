@@ -24,7 +24,7 @@ services:
         image: postgres
         restart: always
         ports:
-            - 5432:5432
+            - 5433:5432
         environment:
             POSTGRES_DB: ${POSTGRES_DB}
             POSTGRES_USER: ${POSTGRES_USER}
@@ -37,7 +37,7 @@ services:
         image: adminer
         restart: always
         environment:
-                ADMINER_DEFAULT_SERVER : postgres
+            ADMINER_DEFAULT_SERVER: postgres
         depends_on:
             - postgres
         networks:
@@ -52,7 +52,7 @@ services:
             context: .
             dockerfile: server.dockerfile
         ports:
-            - 4242:4242
+            - 6942:4242
         networks:
             - back_network
             - front_network
@@ -72,9 +72,6 @@ services:
             CONTRIBUTION_TIME: ${CONTRIBUTION_TIME}
             CONTRIBUTION_PRICE: ${CONTRIBUTION_PRICE}
             AES: ${AES}
-            PAYPAL_BASE: ${PAYPAL_BASE}
-            PAYPAL_ID: ${REACT_APP_PAYPAL_ID}
-            PAYPAL_SECRET: ${PAYPAL_SECRET}
         restart: unless-stopped
         depends_on:
             - redis

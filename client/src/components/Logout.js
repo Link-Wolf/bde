@@ -2,6 +2,9 @@ import {Navigate} from "react-router-dom";
 import {NotificationManager} from "react-notifications";
 import {useEffect, useState} from "react";
 
+/**
+ * @brief Handles the logout of the user by sending a request to the server and redirecting the user to the home page
+ */
 const Logout = () => {
 	const [ret, setRet] = useState(<> </>);
 

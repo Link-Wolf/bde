@@ -1,11 +1,16 @@
 import {useEffect, useState} from "react";
-import {Accordion, Form} from "react-bootstrap";
+import {Accordion} from "react-bootstrap";
 import useConfirm from "./useConfirm";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {NotificationManager} from "react-notifications";
 
 import style from "../style/AdminProductToken.module.scss";
 
+/**
+ * @brief The form to edit a product
+ * @param param The data of the product
+ * @returns {JSX.Element}
+ */
 const AdminProductToken = param => {
 	const {isConfirmed} = useConfirm();
 	const [formState, setFormState] = useState({
@@ -38,6 +43,9 @@ const AdminProductToken = param => {
 		setUpdate(true);
 	};
 
+	/**
+	 * @brief Handle the change of the form and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {
 			...formState
@@ -56,6 +64,9 @@ const AdminProductToken = param => {
 		setFormState(tmp);
 	};
 
+	/**
+	 * @brief Fetch the API to update the product thumbnail
+	 */
 	const changeThumbnail = async () => {
 		const data = new FormData();
 		data.append("thumbnail", thumbnail[0]);
@@ -89,6 +100,9 @@ const AdminProductToken = param => {
 			});
 	};
 
+	/**
+	 * @brief Fetch the API to update the product album
+	 */
 	const changeAlbum = async () => {
 		const data = new FormData();
 		for (let i = 0; i < album.length; i++) {
@@ -124,6 +138,9 @@ const AdminProductToken = param => {
 			});
 	};
 
+	/**
+	 * @brief Fetch the API to update the product
+	 */
 	const saveProduct = async () => {
 		if (
 			await isConfirmed(
@@ -184,6 +201,9 @@ const AdminProductToken = param => {
 		}
 	};
 
+	/**
+	 * @brief init the form with the product data
+	 */
 	useEffect(() => {
 		if (param.data === undefined || param.data === "" || !param.data)
 			return;
@@ -198,6 +218,9 @@ const AdminProductToken = param => {
 		setBodyState(tmpBody);
 	}, [param.data]);
 
+	/**
+	 * @brief Fetch the API to get the product thumbnail
+	 */
 	useEffect(() => {
 		if (param === undefined || param === "" || !param) return;
 		setUpdate(false);
@@ -227,6 +250,9 @@ const AdminProductToken = param => {
 			});
 	}, [update, param]);
 
+	/**
+	 * @brief Fetch the API to delete the product
+	 */
 	const deleteProduct = async () => {
 		if (
 			await isConfirmed(
@@ -262,6 +288,9 @@ const AdminProductToken = param => {
 		}
 	};
 
+	/**
+	 * @brief Fetch the API to delete the product album
+	 */
 	const resetAlbum = async () => {
 		if (
 			await isConfirmed(

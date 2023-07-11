@@ -1,28 +1,24 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Donation {
-    @PrimaryGeneratedColumn()
-    id: number;
+	@PrimaryGeneratedColumn()
+	id: number;
 
-    @Column({
-        nullable: false,
-        type: "double precision",
-    })
-    amount: number;
+	@Column({
+		nullable: false,
+		type: "double precision",
+	})
+	amount: number;
 
-    @Column({
-        nullable: false,
-    })
-    name: string;
+	@Column({
+		nullable: false,
+	})
+	name: string;
 
-    @Column({
-        type: "timestamptz",
-        nullable: false,
-    })
-    date: Date;
+	@Column({
+		type: "timestamptz",
+		nullable: false,
+	})
+	date: Date;
 }

@@ -3,6 +3,10 @@ import {Button} from "react-bootstrap";
 import {NotificationManager} from "react-notifications";
 import "react-notifications/lib/notifications.css";
 
+/**
+ * @brief Create a new contribution for a student
+ * @returns {JSX.Element} The page to create a new contribution
+ */
 const AdminCreateContributionToken = () => {
 	const [formState, setFormState] = useState({
 		studLogin: "",
@@ -19,6 +23,9 @@ const AdminCreateContributionToken = () => {
 	const [userList, setUserList] = useState([]);
 	const [update, setUpdate] = useState(false);
 
+	/**
+	 * @brief Handle the change of the form and update the state
+	 */
 	const handleFormChange = event => {
 		let tmp = {...formState};
 		const target = event.target;
@@ -47,11 +54,17 @@ const AdminCreateContributionToken = () => {
 		setFormState(tmp);
 	};
 
+	/**
+	 * @brief Add a 0 before a number if it's under 10
+	 */
 	const two_digiter = nb => {
 		if (nb < 10) return "0" + nb;
 		return nb;
 	};
 
+	/**
+	 * @brief Save the new contribution in the database
+	 */
 	const saveNewContrib = async () => {
 		if (new Date(bodyState.end_date) <= new Date(bodyState.begin_date)) {
 			NotificationManager.error(
@@ -106,6 +119,9 @@ const AdminCreateContributionToken = () => {
 			});
 	}; //
 
+	/**
+	 * @brief Get the list of all the students to fill the datalist
+	 */
 	useEffect(() => {
 		setUpdate(false);
 		fetch(`${process.env.REACT_APP_API_URL}/stud`, {
