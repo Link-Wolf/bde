@@ -22,8 +22,7 @@
   <p align="center">
    <em>Cool website isn't it ?</em><br/>
     First dockerized website of the BDE developped from scratch by <a href="https://github.com/Link-Wolf">Link</a> & <a href="https://github.com/sur4c1">iCARUS</a>, started less than 5 month after started the cursus, way before attempting Inception
-    <br />
-    <br />
+    <br /> <br />
     <a href="https://gitlab.42mulhouse.fr/Link/bde-website/-/issues">Report Bug</a>
     ·
     <a href="https://gitlab.42mulhouse.fr/Link/bde-website/-/issues">Request Feature</a>
