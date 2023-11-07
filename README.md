@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a>
-    <img src="https://www.42mulhouse.fr/wp-content/uploads/2022/06/logo-42-Mulhouse-white.svg" alt="Logo" width="192" height="80">
+    <img src="https://cdn.discordapp.com/attachments/1077614284634337321/1077617617734488165/FREGATE1.png?ex=6553969d&is=6541219d&hm=ad725aa48b6993e83f2e17a7f30b6ea4d623413e28e49bc90745fa435bcc02ba&" alt="Logo" height="300px">
   </a>
 
   <h3 align="center">BDE Website</h3>
