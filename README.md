@@ -14,18 +14,18 @@
 <br />
 <div align="center">
   <a>
-    <img src="https://cdn.discordapp.com/attachments/1077614284634337321/1077617617734488165/FREGATE1.png?ex=6553969d&is=6541219d&hm=ad725aa48b6993e83f2e17a7f30b6ea4d623413e28e49bc90745fa435bcc02ba&" alt="Logo" height="300px">
+    <img src="https://www.42mulhouse.fr/wp-content/uploads/2022/06/logo-42-Mulhouse-white.svg" alt="Logo" width="192" height="80">
   </a>
 
   <h3 align="center">BDE Website</h3>
 
   <p align="center">
    <em>Cool website isn't it ?</em><br/>
-    First dockerized website of the BDE developped from scratch by <a href="https://github.com/Link-Wolf">Link</a> & <a href="https://github.com/sur4c1">iCARUS</a>, started less than 5 month after started the cursus, way before attempting Inception
+    First dockerized website of the BDE developped from scratch by <a href="https://github.com/Link-Wolf">Link</a> & <a href="https://github.com/sur4c1">iCARUS</a>
     <br /> <br />
-    <a href="https://gitlab.42mulhouse.fr/Link/bde-website/-/issues">Report Bug</a>
+    <a href="https://github.com/Link-Wolf/bde/-/issues">Report Bug</a>
     ·
-    <a href="https://gitlab.42mulhouse.fr/Link/bde-website/-/issues">Request Feature</a>
+    <a href="https://github.com/Link-Wolf/bde/-/issues">Request Feature</a>
   </p>
 </div>
 
@@ -55,8 +55,6 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#todo">TODO</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
@@ -68,7 +66,7 @@
 
 <div align="center">
   <a>
-    <img src="https://cdn.discordapp.com/attachments/453159761639112706/1126807216868053104/image.png" alt="home page of the website">
+    <img src="assets/HomePage.png" alt="home page of the website">
   </a>
 </div>
 </br>
@@ -106,7 +104,7 @@ If you don't want to use docker, or prefer to launch it locally to make changes 
 1. Clone the repo
 
     ```sh
-    $> git clone ssh://git@gitlab.42mulhouse.fr:422/Link/bde-website.git
+    $> git clone git@github.com:Link-Wolf/bde.git
     ```
 
 2. Start it using docker-compose
@@ -134,7 +132,7 @@ Now you will need to launch the server and the client separately, here are the s
 1. Clone the repo
 
     ```sh
-    $> git clone ssh://git@gitlab.42mulhouse.fr:422/Link/bde-website.git
+    $> git clone git@github.com:Link-Wolf/bde.git
     ```
 
 2. Launch Redis in a terminal
@@ -169,12 +167,6 @@ Be sure to launch the server before the client and to have Redis running in the 
 
 ## Usage 🚀
 
-<div align="center">
- <a>
-   <!-- <img src=TODO: alt="usage example"> -->
- </a>
-</div>
-
 Because we admit that you're not that old and/or disconnected, first we'll just list the main features currently available
 
 -   Connection/Registration by using the 42 API
@@ -197,81 +189,80 @@ We won't explain how to use the website step by step, it's pretty intuitive, but
 
 **To access the admin panel, you need to be logged in with an account that has sufficient `clearance`**
 
-<img align="right" width="auto" height="1000" src="https://cdn.discordapp.com/attachments/907303542438629406/1128283392081936536/image.png">
+<img align="right" width="auto" height="1000" src="assets/AdminPage.png">
 
+-   List all the registered users
+-   Sort them ascending/descending by:
+    -   Login
+    -   Name
+    -   Surname
+    -   Registration date
+    -   Last connection date
+    -   Authorization level
+-   Ping Pong Game management
+    -   List all the games submitted
+    -   Delete a game
+    -   Sort them ascending/descending by:
+        -   Date
+        -   Score
+    -   Filter them by login
+-   Event management
+    -   List all the events
+    -   Delete an event
+    -   Modification of an event
+    -   Creation of an event
+        -   Name
+        -   Begin date
+        -   End date (or not)
+        -   End of subscription date (or not), must be before the end date
+        -   Available date, when the event will be visible on the website
+        -   Description
+        -   Price
+        -   Price for premium members (see below "`premium` members")
+        -   Number of slots (-42 if there is no limit)
+        -   Number of slots for premium members (see below "`premium` members")
+        -   Place
+        -   A picture to illustrate the event
+        -   Checkbox for some infos
+            -   Is the event outside of 42
+            -   Is the event sponsored (we hope, one day)
+            -   Is there any consumption
+            -   Is it available for the piscineux
+-   Subscriptions management
+    -   List all the subscriptions for the given event, showing
+        -   The login
+        -   The price payed
+        -   The date
+    -   Delete a subscription
+    -   Force subscribe a user to an event
+-   Products management
+    -   List all the products
+    -   Delete a product
+    -   Modification of a product
+    -   Creation of a product
+        -   Name
+        -   Description
+        -   Price
+        -   A picture to illustrate the product
+        -   The total stock for this product AND the stock for each size
+            -   **We didn't manage to do it properly or manage to connect the website to the google sheet we used to manage our stocks, so it has to be edited for each sale, and if the total stock isn't equal to the sum of all the size's stock, we admit it's a unique size (like the caps). It's really dirty**
+-   Logs
+    -   For all the logs created by the backend, we only display the warning and errors
+    -   Filter them by:
+        -   Warn
+        -   Error
+        -   Admin (if the log was created by an admin action)
+        -   Login
+        -   Masquing or not the logs created by the admin navigation, because there is specific logs and check by accessing each admin page
+    -   Sort them ascending/descending by:
+        -   Date
+-   Admin management
+    -   List all admins
+    -   Demote an admin
+    -   Promote a user to admin
+    -   Bequeath our powers to someone else
+        -   The idea here is that the BDE Captain is the only one (with the webmaster) to be able to access this page, manage his admins, but since he can't demote himself, he can bequeath his Captain powers to someone else, and then demote himself
 
-*   List all the registered users
-*   Sort them ascending/descending by:
-	*   Login
-	*   Name
-	*   Surname
-	*   Registration date
-	*   Last connection date
-	*   Authorization level
-*   Ping Pong Game management
-    *   List all the games submitted
-    *   Delete a game
-    *   Sort them ascending/descending by:
-        *   Date
-        *   Score
-    *   Filter them by login
-*   Event management
-    *   List all the events
-    *   Delete an event
-    *   Modification of an event
-    *   Creation of an event
-        *   Name
-        *   Begin date
-        *   End date (or not)
-        *   End of subscription date (or not), must be before the end date
-        *   Available date, when the event will be visible on the website
-        *   Description
-        *   Price
-        *   Price for premium members (see below "`premium` members")
-        *   Number of slots (-42 if there is no limit)
-        *   Number of slots for premium members (see below "`premium` members")
-        *   Place
-        *   A picture to illustrate the event
-        *   Checkbox for some infos
-            *   Is the event outside of 42
-            *   Is the event sponsored (we hope, one day)
-            *   Is there any consumption
-            *   Is it available for the piscineux
-*   Subscriptions management
-    *   List all the subscriptions for the given event, showing
-        *   The login
-        *   The price payed
-        *   The date
-    *   Delete a subscription
-    *   Force subscribe a user to an event
-*   Products management
-    *   List all the products
-    *   Delete a product
-    *   Modification of a product
-    *   Creation of a product
-        *   Name
-        *   Description
-        *   Price
-        *   A picture to illustrate the product
-        *   The total stock for this product AND the stock for each size
-            *   **We didn't manage to do it properly or manage to connect the website to the google sheet we used to manage our stocks, so it has to be edited for each sale, and if the total stock isn't equal to the sum of all the size's stock, we admit it's a unique size (like the caps). It's really dirty**
-*   Logs
-    *   For all the logs created by the backend, we only display the warning and errors
-    *   Filter them by:
-        *   Warn
-        *   Error
-        *   Admin (if the log was created by an admin action)
-        *   Login
-        *   Masquing or not the logs created by the admin navigation, because there is specific logs and check by accessing each admin page
-    *   Sort them ascending/descending by:
-        *   Date
-*   Admin management
-    *   List all admins
-    *   Demote an admin
-    *   Promote a user to admin
-    *   Bequeath our powers to someone else
-        *   The idea here is that the BDE Captain is the only one (with the webmaster) to be able to access this page, manage his admins, but since he can't demote himself, he can bequeath his Captain powers to someone else, and then demote himself
- 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
@@ -296,37 +287,6 @@ Ultimately and honnestly, the website would deserve to be entirely rewrite from 
 -   Globally, admin pages are either not CSSed on mobile, or not enough, so it's not really user friendly and/or responsive
 -   Admin side pannel doesn't extend to the bottom if the page content is taller than the screen and if you scroll down
 
-See the [open issues](https://gitlab.42mulhouse.fr/Link/bde-website/-/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing 🤝
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Same goes if you find a bug, please open an issue with the tag "bug".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
-## Contact 👤
-
-42born2code Slack and 42Intra:
-
--   Link - [Link](https://profile.intra.42.fr/users/Link)
--   iCARUS - [iCARUS](https://profile.intra.42.fr/users/iCARUS)
-
-Mail:
-
--   Link@student.42mulhouse.fr
--   iCARUS@student.42mulhouse.fr
+See the [open issues](https://github.com/Link-Wolf/bde/-/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
